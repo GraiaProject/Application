@@ -34,3 +34,9 @@ class NotSupportedVersion(Exception):
 
 class DeprecatedImpl(Exception):
     pass
+
+class EntangledSuperposition(Exception):
+    pass
+
+class MissingNecessaryOne(Exception):
+    pass
