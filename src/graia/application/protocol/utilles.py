@@ -1,6 +1,10 @@
+from typing import Union
+from graia.broadcast.entities.dispatcher import BaseDispatcher
+from graia.broadcast.interfaces.dispatcher import DispatcherInterface
 from .exceptions import (AccountMuted, AccountNotFound, InvaildArgument,
                          InvaildAuthkey, InvaildSession, NotSupportedVersion,
                          TooLongMessage, UnauthorizedSession, UnknownTarget)
+from ..context import enter_context
 
 
 def requireAuthenticated(func):
@@ -55,7 +59,25 @@ code_exceptions_mapping = {
     400: InvaildArgument
 }
 
-def raise_for_return_code(code: int):
+def raise_for_return_code(code: Union[dict, int]):
+    if isinstance(code, dict):
+        code = code.get("code")
     exception_code = code_exceptions_mapping.get(code)
     if exception_code:
         raise exception_code
+
+class AppMiddlewareAsDispatcher(BaseDispatcher):
+    def __init__(self, app) -> None:
+        self.app = app
+
+    def catch(self, interface: "DispatcherInterface"):
+        with enter_context(self.app, interface.event):
+            yield
+
+def context_enter_auto(context):
+    def wrapper1(func):
+        def wrapper2(*args, **kwargs):
+            with context:
+                return func(*args, **kwargs)
+        return wrapper2
+    return wrapper1

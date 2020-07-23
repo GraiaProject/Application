@@ -56,6 +56,18 @@ version = "3.0.4"
 
 [[package]]
 category = "main"
+description = "PEP 567 Backport"
+marker = "python_version < \"3.7\""
+name = "contextvars"
+optional = false
+python-versions = "*"
+version = "2.4"
+
+[package.dependencies]
+immutables = ">=0.9"
+
+[[package]]
+category = "main"
 description = "A backport of the dataclasses module for Python 3.6"
 marker = "python_version < \"3.7\""
 name = "dataclasses"
@@ -69,7 +81,7 @@ description = "a highly customizable, elegantly designed event system based on a
 name = "graia-broadcast"
 optional = false
 python-versions = ">=3.6,<4.0"
-version = "0.0.2"
+version = "0.0.3"
 
 [package.dependencies]
 iterwrapper = ">=0.1.2,<0.2.0"
@@ -94,6 +106,15 @@ version = "1.1.0"
 
 [package.dependencies]
 idna = ">=2.0"
+
+[[package]]
+category = "main"
+description = "Immutable Collections"
+marker = "python_version < \"3.7\""
+name = "immutables"
+optional = false
+python-versions = ">=3.5"
+version = "0.14"
 
 [[package]]
 category = "main"
@@ -151,7 +172,7 @@ idna = ">=2.0"
 multidict = ">=4.0"
 
 [metadata]
-content-hash = "2bcdbe85f1f523f01b2c7b9202c514de99e296ff38506407a34fd4b3bbbc0277"
+content-hash = "00a32f6535a9da74498d0bedea4bcef18d43c4a01fdb7ec9ca0e9957bc8cde5e"
 python-versions = "^3.6"
 
 [metadata.files]
@@ -181,13 +202,16 @@ chardet = [
     {file = "chardet-3.0.4-py2.py3-none-any.whl", hash = "sha256:fc323ffcaeaed0e0a02bf4d117757b98aed530d9ed4531e3e15460124c106691"},
     {file = "chardet-3.0.4.tar.gz", hash = "sha256:84ab92ed1c4d4f16916e05906b6b75a6c0fb5db821cc65e70cbd64a3e2a5eaae"},
 ]
+contextvars = [
+    {file = "contextvars-2.4.tar.gz", hash = "sha256:f38c908aaa59c14335eeea12abea5f443646216c4e29380d7bf34d2018e2c39e"},
+]
 dataclasses = [
     {file = "dataclasses-0.6-py3-none-any.whl", hash = "sha256:454a69d788c7fda44efd71e259be79577822f5e3f53f029a22d08004e951dc9f"},
     {file = "dataclasses-0.6.tar.gz", hash = "sha256:6988bd2b895eef432d562370bb707d540f32f7360ab13da45340101bc2307d84"},
 ]
 graia-broadcast = [
-    {file = "graia-broadcast-0.0.2.tar.gz", hash = "sha256:c9814a052a2469261f309dcd7830880a7e7884cbabca338f73230f33ea2af83e"},
-    {file = "graia_broadcast-0.0.2-py3-none-any.whl", hash = "sha256:25a86f1f3741ccb91472812fac0563f6cee18a8f8f0d2f2e6864ee4b4e2272ba"},
+    {file = "graia-broadcast-0.0.3.tar.gz", hash = "sha256:398b70c1e4300020bc76f943e133aaf5cb8c6bcecfe4fcec6e67231a47389220"},
+    {file = "graia_broadcast-0.0.3-py3-none-any.whl", hash = "sha256:291611c103280ca730acaaea1c4f16c347fb65dc28327e0a963679e353180a9b"},
 ]
 idna = [
     {file = "idna-2.10-py2.py3-none-any.whl", hash = "sha256:b97d804b1e9b523befed77c48dacec60e6dcb0b5391d57af6a65a312a90648c0"},
@@ -195,6 +219,20 @@ idna = [
 ]
 idna-ssl = [
     {file = "idna-ssl-1.1.0.tar.gz", hash = "sha256:a933e3bb13da54383f9e8f35dc4f9cb9eb9b3b78c6b36f311254d6d0d92c6c7c"},
+]
+immutables = [
+    {file = "immutables-0.14-cp35-cp35m-macosx_10_14_x86_64.whl", hash = "sha256:860666fab142401a5535bf65cbd607b46bc5ed25b9d1eb053ca8ed9a1a1a80d6"},
+    {file = "immutables-0.14-cp35-cp35m-manylinux1_x86_64.whl", hash = "sha256:ce01788878827c3f0331c254a4ad8d9721489a5e65cc43e19c80040b46e0d297"},
+    {file = "immutables-0.14-cp36-cp36m-macosx_10_14_x86_64.whl", hash = "sha256:8797eed4042f4626b0bc04d9cf134208918eb0c937a8193a2c66df5041e62d2e"},
+    {file = "immutables-0.14-cp36-cp36m-manylinux1_x86_64.whl", hash = "sha256:33ce2f977da7b5e0dddd93744862404bdb316ffe5853ec853e53141508fa2e6a"},
+    {file = "immutables-0.14-cp36-cp36m-win_amd64.whl", hash = "sha256:6c8eace4d98988c72bcb37c05e79aae756832738305ae9497670482a82db08bc"},
+    {file = "immutables-0.14-cp37-cp37m-macosx_10_14_x86_64.whl", hash = "sha256:ab6c18b7b2b2abc83e0edc57b0a38bf0915b271582a1eb8c7bed1c20398f8040"},
+    {file = "immutables-0.14-cp37-cp37m-manylinux1_x86_64.whl", hash = "sha256:c099212fd6504513a50e7369fe281007c820cf9d7bb22a336486c63d77d6f0b2"},
+    {file = "immutables-0.14-cp37-cp37m-win_amd64.whl", hash = "sha256:714aedbdeba4439d91cb5e5735cb10631fc47a7a69ea9cc8ecbac90322d50a4a"},
+    {file = "immutables-0.14-cp38-cp38-macosx_10_14_x86_64.whl", hash = "sha256:1c11050c49e193a1ec9dda1747285333f6ba6a30bbeb2929000b9b1192097ec0"},
+    {file = "immutables-0.14-cp38-cp38-manylinux1_x86_64.whl", hash = "sha256:c453e12b95e1d6bb4909e8743f88b7f5c0c97b86a8bc0d73507091cb644e3c1e"},
+    {file = "immutables-0.14-cp38-cp38-win_amd64.whl", hash = "sha256:ef9da20ec0f1c5853b5c8f8e3d9e1e15b8d98c259de4b7515d789a606af8745e"},
+    {file = "immutables-0.14.tar.gz", hash = "sha256:a0a1cc238b678455145bae291d8426f732f5255537ed6a5b7645949704c70a78"},
 ]
 iterwrapper = [
     {file = "iterwrapper-0.1.4-py3-none-any.whl", hash = "sha256:a3296d81fa2e558734f572617487fb6be3e2af12af2776899dd29d2154ffdba5"},
