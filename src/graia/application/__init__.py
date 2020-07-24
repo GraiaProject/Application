@@ -1,6 +1,7 @@
 import asyncio
 from typing import List, NoReturn, Optional, Tuple, Union
 
+import graia.application.protocol.entities.event.mirai  # for init events
 from aiohttp import ClientSession, FormData
 from graia.application.context import enter_message_send_context
 from graia.application.protocol.entities.event.messages import (FriendMessage,
