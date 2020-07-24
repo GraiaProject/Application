@@ -8,7 +8,7 @@ license = "MIT"
 [tool.poetry.dependencies]
 python = "^3.6"
 pydantic = "^1.6.1"
-graia-broadcast = ">0.0.2"
+graia-broadcast = ">0.0.3"
 aiohttp = "^3.6.2"
 yarl = "^1.4.2"
 contextvars = {version = "^2.4", python = "<3.7"}
