@@ -11,7 +11,8 @@ def requireAuthenticated(func):
     def wrapper(self, *args, **kwargs):
         if not self.connect_info.sessionKey:
             raise InvaildSession("you must authenticate before this.")
-        return func(*args, **kwargs)
+        return func(self, *args, **kwargs)
+    wrapper.__annotations__ = func.__annotations__
     return wrapper
 
 def SinceVersion(*version: int):
@@ -62,9 +63,13 @@ code_exceptions_mapping = {
 def raise_for_return_code(code: Union[dict, int]):
     if isinstance(code, dict):
         code = code.get("code")
-    exception_code = code_exceptions_mapping.get(code)
-    if exception_code:
-        raise exception_code
+        exception_code = code_exceptions_mapping.get(code)
+        if exception_code:
+            raise exception_code
+    elif isinstance(code, int):
+        exception_code = code_exceptions_mapping.get(code)
+        if exception_code:
+            raise exception_code
 
 class AppMiddlewareAsDispatcher(BaseDispatcher):
     def __init__(self, app) -> None:

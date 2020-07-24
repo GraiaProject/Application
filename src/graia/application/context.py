@@ -13,9 +13,9 @@ broadcast = ContextVar("broadcast")
 image_method = ContextVar("image_method")
 
 @contextmanager
-def enter_context(app, event):
+def enter_context(app, event_i):
     t1 = application.set(app)
-    t2 = event.set(event)
+    t2 = event.set(event_i)
     t3 = event_loop.set(app.broadcast.loop)
     t4 = broadcast.set(app.broadcast)
     yield

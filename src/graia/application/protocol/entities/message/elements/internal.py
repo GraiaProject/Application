@@ -5,24 +5,25 @@ from pathlib import Path
 from typing import NoReturn, Optional, Union
 
 from pydantic.errors import PathNotExistsError
+from pydantic.fields import Field
 from graia.application.protocol import UploadMethods
 
 from graia.application.protocol.exceptions import MissingNecessaryOne
 from pydantic import validator
 
-from ......context import application, event_loop, image_method
-from ....targets.friend import Friend
-from ....targets.group import Group, Member
+from .....context import application, event_loop, image_method
+from ...targets.friend import Friend
+from ...targets.group import Group, Member
 from .. import ExternalElement, InternalElement
-from ..chain import MessageChain
 from . import external as External
 
 
 class Plain(InternalElement, ExternalElement):
+    type: str = "Plain"
     text: str
 
-    def __init__(self, text) -> NoReturn:
-        self.text = text
+    def __init__(self, text, *_, **__) -> NoReturn:
+        super().__init__(text=text)
 
     def toExternal(self) -> "Plain":
         return self
@@ -50,32 +51,24 @@ class Source(InternalElement, ExternalElement):
             datetime: lambda v: int(v.timestamp()),
         }
 
-class Quote(InternalElement):
-    id: str
-    group: Optional[Group] = None
-    sender: Union[Member, Friend]
-    target: Union[Group, Friend]
-    originMessage: MessageChain
-    
+class Quote(InternalElement, ExternalElement):
+    id: int
+    groupId: int
+    senderId: int
+    targetId: int
+    origin: "MessageChain"
+
+    @validator("origin")
+    def _(cls, v):
+        from graia.application.protocol.entities.message.chain import MessageChain
+        return MessageChain.parse_obj(v)
+
     @classmethod
-    async def fromExternal(cls, external_element: External.Quote) -> "Quote":
-        app = application.get()
-        return cls(
-            group=await app.getGroup(external_element.groupId)
-             if external_element.groupId != 0 else None,
-            sender=await app.getMember(
-                external_element.groupId,
-                external_element.senderId
-            ) if external_element.groupId != 0 else \
-                await app.getFriend(external_element.senderId),
-            target=await app.getGroup(
-                external_element.groupId
-            ) if external_element.groupId != 0 else \
-                await app.getFriend(external_element.senderId),
-            originMessage=external_element.origin
-        )
+    def fromExternal(_, external_element) -> "Quote":
+        return external_element
 
 class At(InternalElement, ExternalElement):
+    type: str = "At"
     target: int
     display: str
 
@@ -90,6 +83,8 @@ class At(InternalElement, ExternalElement):
         return external_element
 
 class AtAll(InternalElement, ExternalElement):
+    type: str = "AtAll"
+
     def asDisplay(self) -> str:
         return "@全体成员"
 
@@ -101,6 +96,7 @@ class AtAll(InternalElement, ExternalElement):
         return external_element
 
 class Face(InternalElement, ExternalElement):
+    type: str = "Face"
     faceId: int
     name: str
 
@@ -120,13 +116,15 @@ class Image(InternalElement):
     imageId: Optional[str] = None
     url: Optional[str] = None
     path: Optional[str] = None
-    type: ImageType
+    type: Optional[ImageType]
     
     @validator("type", always=True)
     def _(cls, v, values) -> ImageType:
         if v:
             return v
         if "imageId" not in values:
+            return ImageType.Unknown
+        if not values['imageId']:
             return ImageType.Unknown
         if values['imageId'].startswith("/"):
             return ImageType.Friend
@@ -136,12 +134,7 @@ class Image(InternalElement):
         else:
             return ImageType.Unknown
 
-    @validator("imageId", "url", "path")
-    def _(cls, v):
-        if not any(v):
-            raise MissingNecessaryOne("One of the following fields must be provided: imageId, url or path")
-
-    def toExternal(self) -> External.Image:
+    def toExternal(self):
         return External.Image(
             imageId=self.imageId,
             url=self.url,
@@ -149,7 +142,7 @@ class Image(InternalElement):
         )
 
     @classmethod
-    def fromExternal(cls, external_element: External.Image) -> "Image":
+    def fromExternal(cls, external_element) -> "Image":
         return cls(
             imageId=external_element.imageId,
             url=external_element.url,
@@ -157,18 +150,20 @@ class Image(InternalElement):
         )
     
     @classmethod
-    async def fromLocalFile(cls, filepath: Path, method: Optional[UploadMethods] = None) -> "Image":
+    async def fromLocalFile(cls, filepath: Union[Path, str], method: Optional[UploadMethods] = None) -> "Image":
+        if isinstance(filepath, str):
+            filepath = Path(filepath)
         if not filepath.exists():
             raise FileNotFoundError("you should give us a existed file's path")
         app = application.get()
         method = method or image_method.get()
         if not method:
             raise ValueError("you should give the 'method' for upload when you are out of the event receiver.")
-        return await app.uploadImage(filepath.read_bytes(), method.value)
+        return await app.uploadImage(filepath.read_bytes(), method)
         
     @classmethod
-    async def fromUnsafePath(cls, path: Path) -> "Image":
-        return cls(path=str(path))
+    def fromUnsafePath(cls, path: Path) -> "External.Image":
+        return External.Image(path=str(path))
 
     @classmethod
     async def fromUnsafeBytes(cls, image_bytes: bytes, method: Optional[UploadMethods] = None) -> "Image":
@@ -179,17 +174,36 @@ class Image(InternalElement):
         return await app.uploadImage(image_bytes, method.value)
 
     @classmethod
-    async def fromUnsafeAddress(cls, url: str) -> "Image":
-        return cls(url=url)
+    def fromUnsafeAddress(cls, url: str) -> "External.Image":
+        return External.Image(url=url)
 
 class FlashImage(Image):
-    pass
+    def toExternal(self):
+        return External.FlashImage(
+            imageId=self.imageId,
+            url=self.url,
+            path=self.path
+        )
+
+    @classmethod
+    def fromExternal(cls, external_element) -> "FlashImage":
+        return cls(
+            imageId=external_element.imageId,
+            url=external_element.url,
+            path=external_element.path
+        )
 
 class Xml(InternalElement, ExternalElement):
     xml: str
 
 class Json(InternalElement, ExternalElement):
-    json: str
+    Json: str = Field(..., alias="json")
+
+    def dict(self, *args, **kwargs):
+        return super().dict(*args, **({
+            **kwargs,
+            "by_alias": True
+        }))
 
 class App(InternalElement, ExternalElement):
     content: str
@@ -204,3 +218,7 @@ class PokeMethods(Enum):
 
 class Poke(InternalElement, ExternalElement):
     name: PokeMethods
+
+from ..chain import MessageChain
+
+Quote.update_forward_refs(MessageChain=MessageChain)
