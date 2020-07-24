@@ -1,7 +1,6 @@
 from pydantic import BaseModel, validator
 from graia.broadcast import BaseEvent
-from graia.broadcast.entities.dispatcher import BaseDispatcher
-from graia.application.protocol.entities.targets.group import Member, Group
+from graia.application.context import application
 from graia.application.protocol.exceptions import (
     InvalidEventTypeDefinition)
 class MiraiEvent(BaseEvent, BaseModel):
@@ -19,3 +18,9 @@ class MiraiEvent(BaseEvent, BaseModel):
 
     class Dispatcher:
         pass
+
+class ApplicationDispatcher:
+    @staticmethod
+    def catch(interface):
+        if interface.annotation.__class__.__name__ == "GraiaMiraiApplication":
+            return application.get()
