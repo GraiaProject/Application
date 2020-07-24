@@ -1,7 +1,10 @@
-from typing import Optional
+from typing import NoReturn, Optional
 
 from pydantic import Field
+from graia import application
 from graia.application.protocol.entities.targets.group import Group, Member, MemberPerm
+from graia.application.protocol.exceptions import InvaildSession
+from graia.application.protocol.utilles import raise_for_return_code
 from . import MiraiEvent
 from graia.broadcast.entities.dispatcher import BaseDispatcher
 from graia.broadcast.interfaces.dispatcher import DispatcherInterface
@@ -301,6 +304,54 @@ class NewFriendRequestEvent(MiraiEvent):
     nickname: str = Field(..., alias="nick")
     message: str
 
+    async def accept(self, message: str = "") -> NoReturn:
+        app = application.get()
+        if not app.connect_info.sessionKey:
+            raise InvaildSession("you must authenticate before this.")
+        async with app.session.post(app.url_gen("resp/newFriendRequestEvent"), json={
+            "sessionKey": app.connect_info.sessionKey,
+            "eventId": self.requestId,
+            "fromId": self.supplicant,
+            "groupId": self.sourceGroup,
+            "operate": 0,
+            "message": message
+        }) as response:
+            response.raise_for_status()
+            data = await response.json()
+            raise_for_return_code(data)
+
+    async def reject(self, message: str = "") -> NoReturn:
+        app = application.get()
+        if not app.connect_info.sessionKey:
+            raise InvaildSession("you must authenticate before this.")
+        async with app.session.post(app.url_gen("resp/newFriendRequestEvent"), json={
+            "sessionKey": app.connect_info.sessionKey,
+            "eventId": self.requestId,
+            "fromId": self.supplicant,
+            "groupId": self.sourceGroup,
+            "operate": 1,
+            "message": message
+        }) as response:
+            response.raise_for_status()
+            data = await response.json()
+            raise_for_return_code(data)
+
+    async def rejectAndBlock(self, message: str = "") -> NoReturn:
+        app = application.get()
+        if not app.connect_info.sessionKey:
+            raise InvaildSession("you must authenticate before this.")
+        async with app.session.post(app.url_gen("resp/newFriendRequestEvent"), json={
+            "sessionKey": app.connect_info.sessionKey,
+            "eventId": self.requestId,
+            "fromId": self.supplicant,
+            "groupId": self.sourceGroup,
+            "operate": 2,
+            "message": message
+        }) as response:
+            response.raise_for_status()
+            data = await response.json()
+            raise_for_return_code(data)
+
 class MemberJoinRequestEvent(MiraiEvent):
     type = "MemberJoinRequestEvent"
     requestId: int = Field(..., alias="eventId")
@@ -310,6 +361,86 @@ class MemberJoinRequestEvent(MiraiEvent):
     nickname: str = Field(..., alias="nick")
     message: str
 
+    async def accept(self, message: str = "") -> NoReturn:
+        app = application.get()
+        if not app.connect_info.sessionKey:
+            raise InvaildSession("you must authenticate before this.")
+        async with app.session.post(app.url_gen("resp/memberJoinRequestEvent"), json={
+            "sessionKey": app.connect_info.sessionKey,
+            "eventId": self.requestId,
+            "fromId": self.supplicant,
+            "groupId": self.sourceGroup,
+            "operate": 0,
+            "message": message
+        }) as response:
+            response.raise_for_status()
+            data = await response.json()
+            raise_for_return_code(data)
+
+    async def reject(self, message: str = "") -> NoReturn:
+        app = application.get()
+        if not app.connect_info.sessionKey:
+            raise InvaildSession("you must authenticate before this.")
+        async with app.session.post(app.url_gen("resp/memberJoinRequestEvent"), json={
+            "sessionKey": app.connect_info.sessionKey,
+            "eventId": self.requestId,
+            "fromId": self.supplicant,
+            "groupId": self.sourceGroup,
+            "operate": 1,
+            "message": message
+        }) as response:
+            response.raise_for_status()
+            data = await response.json()
+            raise_for_return_code(data)
+
+    async def ignore(self, message: str = "") -> NoReturn:
+        app = application.get()
+        if not app.connect_info.sessionKey:
+            raise InvaildSession("you must authenticate before this.")
+        async with app.session.post(app.url_gen("resp/memberJoinRequestEvent"), json={
+            "sessionKey": app.connect_info.sessionKey,
+            "eventId": self.requestId,
+            "fromId": self.supplicant,
+            "groupId": self.sourceGroup,
+            "operate": 2,
+            "message": message
+        }) as response:
+            response.raise_for_status()
+            data = await response.json()
+            raise_for_return_code(data)
+
+    async def rejectAndBlock(self, message: str = "") -> NoReturn:
+        app = application.get()
+        if not app.connect_info.sessionKey:
+            raise InvaildSession("you must authenticate before this.")
+        async with app.session.post(app.url_gen("resp/memberJoinRequestEvent"), json={
+            "sessionKey": app.connect_info.sessionKey,
+            "eventId": self.requestId,
+            "fromId": self.supplicant,
+            "groupId": self.sourceGroup,
+            "operate": 3,
+            "message": message
+        }) as response:
+            response.raise_for_status()
+            data = await response.json()
+            raise_for_return_code(data)
+
+    async def ignoreAndBlock(self, message: str = "") -> NoReturn:
+        app = application.get()
+        if not app.connect_info.sessionKey:
+            raise InvaildSession("you must authenticate before this.")
+        async with app.session.post(app.url_gen("resp/memberJoinRequestEvent"), json={
+            "sessionKey": app.connect_info.sessionKey,
+            "eventId": self.requestId,
+            "fromId": self.supplicant,
+            "groupId": self.sourceGroup,
+            "operate": 4,
+            "message": message
+        }) as response:
+            response.raise_for_status()
+            data = await response.json()
+            raise_for_return_code(data)
+
 class BotInvitedJoinGroupRequestEvent(MiraiEvent):
     type = "BotInvitedJoinGroupRequestEvent"
     requestId: int = Field(..., alias="eventId")
@@ -318,3 +449,35 @@ class BotInvitedJoinGroupRequestEvent(MiraiEvent):
     groupName: str = Field(..., alias="groupName")
     nickname: str = Field(..., alias="nick")
     message: str
+
+    async def accept(self, message: str = "") -> NoReturn:
+        app = application.get()
+        if not app.connect_info.sessionKey:
+            raise InvaildSession("you must authenticate before this.")
+        async with app.session.post(app.url_gen("resp/botInvitedJoinGroupRequestEvent"), json={
+            "sessionKey": app.connect_info.sessionKey,
+            "eventId": self.requestId,
+            "fromId": self.supplicant,
+            "groupId": self.sourceGroup,
+            "operate": 0,
+            "message": message
+        }) as response:
+            response.raise_for_status()
+            data = await response.json()
+            raise_for_return_code(data)
+
+    async def reject(self, message: str = "") -> NoReturn:
+        app = application.get()
+        if not app.connect_info.sessionKey:
+            raise InvaildSession("you must authenticate before this.")
+        async with app.session.post(app.url_gen("resp/botInvitedJoinGroupRequestEvent"), json={
+            "sessionKey": app.connect_info.sessionKey,
+            "eventId": self.requestId,
+            "fromId": self.supplicant,
+            "groupId": self.sourceGroup,
+            "operate": 1,
+            "message": message
+        }) as response:
+            response.raise_for_status()
+            data = await response.json()
+            raise_for_return_code(data)
