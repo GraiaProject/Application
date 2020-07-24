@@ -92,7 +92,7 @@ description = "a highly customizable, elegantly designed event system based on a
 name = "graia-broadcast"
 optional = false
 python-versions = ">=3.6,<4.0"
-version = "0.0.3"
+version = "0.0.4"
 
 [package.dependencies]
 iterwrapper = ">=0.1.2,<0.2.0"
@@ -145,14 +145,6 @@ version = "4.7.6"
 
 [[package]]
 category = "main"
-description = "Patch asyncio to allow nested event loops"
-name = "nest-asyncio"
-optional = false
-python-versions = ">=3.5"
-version = "1.4.0"
-
-[[package]]
-category = "main"
 description = "Data validation and settings management using python 3.6 type hinting"
 name = "pydantic"
 optional = false
@@ -191,7 +183,7 @@ idna = ">=2.0"
 multidict = ">=4.0"
 
 [metadata]
-content-hash = "58ff8f155abaa1da421b4e3a2b91bdea8c161515d62aaf638d28030f13d8325f"
+content-hash = "89617d22380e50bde1813401e89e506e37d55c0caee871dfd03fc1bab0014499"
 python-versions = "^3.6"
 
 [metadata.files]
@@ -233,8 +225,8 @@ devtools = [
     {file = "devtools-0.5.1.tar.gz", hash = "sha256:51ca8d2e15b8a862875a4837db2bafbc6cda409c069e960aec3f4bbd91fe9c08"},
 ]
 graia-broadcast = [
-    {file = "graia-broadcast-0.0.3.tar.gz", hash = "sha256:398b70c1e4300020bc76f943e133aaf5cb8c6bcecfe4fcec6e67231a47389220"},
-    {file = "graia_broadcast-0.0.3-py3-none-any.whl", hash = "sha256:291611c103280ca730acaaea1c4f16c347fb65dc28327e0a963679e353180a9b"},
+    {file = "graia-broadcast-0.0.4.tar.gz", hash = "sha256:cd155dbb08799c87aa5396c3d7798cbad69879f53481bc12ec826f71cdb3c835"},
+    {file = "graia_broadcast-0.0.4-py3-none-any.whl", hash = "sha256:b1b064f57eb598615bcc9af90370bde762cc0b55a808ff39ee49c8f418e407d6"},
 ]
 idna = [
     {file = "idna-2.10-py2.py3-none-any.whl", hash = "sha256:b97d804b1e9b523befed77c48dacec60e6dcb0b5391d57af6a65a312a90648c0"},
@@ -279,10 +271,6 @@ multidict = [
     {file = "multidict-4.7.6-cp38-cp38-win32.whl", hash = "sha256:5cf311a0f5ef80fe73e4f4c0f0998ec08f954a6ec72b746f3c179e37de1d210d"},
     {file = "multidict-4.7.6-cp38-cp38-win_amd64.whl", hash = "sha256:7388d2ef3c55a8ba80da62ecfafa06a1c097c18032a501ffd4cabbc52d7f2b19"},
     {file = "multidict-4.7.6.tar.gz", hash = "sha256:fbb77a75e529021e7c4a8d4e823d88ef4d23674a202be4f5addffc72cbb91430"},
-]
-nest-asyncio = [
-    {file = "nest_asyncio-1.4.0-py3-none-any.whl", hash = "sha256:ea51120725212ef02e5870dd77fc67ba7343fc945e3b9a7ff93384436e043b6a"},
-    {file = "nest_asyncio-1.4.0.tar.gz", hash = "sha256:5773054bbc14579b000236f85bc01ecced7ffd045ec8ca4a9809371ec65a59c8"},
 ]
 pydantic = [
     {file = "pydantic-1.6.1-cp36-cp36m-macosx_10_9_x86_64.whl", hash = "sha256:418b84654b60e44c0cdd5384294b0e4bc1ebf42d6e873819424f3b78b8690614"},
