@@ -1,9 +1,9 @@
-from pydantic import BaseModel, HttpUrl
+from pydantic import BaseModel, AnyHttpUrl
 from typing import Tuple
 import yarl
 
 class Session(BaseModel):
-    host: HttpUrl
+    host: AnyHttpUrl
     authKey: str
     account: int
     sessionKey: str = None
