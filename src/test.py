@@ -4,6 +4,7 @@ from graia.application import GraiaMiraiApplication, Session
 from graia.broadcast import Broadcast
 from graia.application.protocol.entities.message.chain import MessageChain
 import asyncio
+from graia.application.context import event, application
 
 from graia.application.protocol.entities.message.elements.internal import Image, Plain
 

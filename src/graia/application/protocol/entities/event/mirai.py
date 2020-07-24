@@ -5,12 +5,14 @@ from graia import application
 from graia.application.protocol.entities.targets.group import Group, Member, MemberPerm
 from graia.application.protocol.exceptions import InvaildSession
 from graia.application.protocol.utilles import raise_for_return_code
-from . import MiraiEvent
+from . import ApplicationDispatcher, MiraiEvent
 from graia.broadcast.entities.dispatcher import BaseDispatcher
 from graia.broadcast.interfaces.dispatcher import DispatcherInterface
 from datetime import datetime
 
 class EmptyDispatcher(BaseDispatcher):
+    mixin = [ApplicationDispatcher]
+    
     @staticmethod
     def catch(interface):
         pass
@@ -59,6 +61,8 @@ class BotMuteEvent(MiraiEvent):
     operator: Optional[Member]
 
     class Dispatcher(BaseDispatcher):
+        mixin = [ApplicationDispatcher]
+
         @staticmethod
         def catch(interface: DispatcherInterface):
             if interface.annotation is Member:
@@ -69,6 +73,8 @@ class BotUnmuteEvent(MiraiEvent):
     operator: Optional[Member]
 
     class Dispatcher(BaseDispatcher):
+        mixin = [ApplicationDispatcher]
+
         @staticmethod
         def catch(interface: DispatcherInterface):
             if interface.annotation is Member:
@@ -79,6 +85,8 @@ class BotJoinGroupEvent(MiraiEvent):
     group: Group
 
     class Dispatcher(BaseDispatcher):
+        mixin = [ApplicationDispatcher]
+
         @staticmethod
         def catch(interface: DispatcherInterface):
             if interface.annotation is Group:
@@ -93,6 +101,8 @@ class GroupRecallEvent(MiraiEvent):
     operator: Optional[Member]
 
     class Dispatcher(BaseDispatcher):
+        mixin = [ApplicationDispatcher]
+
         @staticmethod
         def catch(interface: DispatcherInterface):
             if interface.annotation is Group:
@@ -105,6 +115,8 @@ class FriendRecallEvent(MiraiEvent):
     time: int
     operator: int
 
+    Dispatcher = EmptyDispatcher
+
 class GroupNameChangeEvent(MiraiEvent):
     type = "GroupNameChangeEvent"
     origin: str
@@ -113,6 +125,8 @@ class GroupNameChangeEvent(MiraiEvent):
     isByBot: bool
 
     class Dispatcher(BaseDispatcher):
+        mixin = [ApplicationDispatcher]
+
         @staticmethod
         def catch(interface: DispatcherInterface):
             if interface.annotation is Group:
@@ -126,6 +140,8 @@ class GroupEntranceAnnouncementChangeEvent(MiraiEvent):
     operator: Optional[Member]
 
     class Dispatcher(BaseDispatcher):
+        mixin = [ApplicationDispatcher]
+
         @staticmethod
         def catch(interface: DispatcherInterface):
             if interface.annotation is Group:
@@ -141,6 +157,8 @@ class GroupMuteAllEvent(MiraiEvent):
     operator: Optional[Member]
 
     class Dispatcher(BaseDispatcher):
+        mixin = [ApplicationDispatcher]
+
         @staticmethod
         def catch(interface: DispatcherInterface):
             if interface.annotation is Group:
@@ -156,6 +174,8 @@ class GroupAllowAnonymousChatEvent(MiraiEvent):
     operator: Optional[Member]
 
     class Dispatcher(BaseDispatcher):
+        mixin = [ApplicationDispatcher]
+
         @staticmethod
         def catch(interface: DispatcherInterface):
             if interface.annotation is Group:
@@ -171,6 +191,8 @@ class GroupAllowConfessTalkEvent(MiraiEvent):
     isByBot: bool
 
     class Dispatcher(BaseDispatcher):
+        mixin = [ApplicationDispatcher]
+
         @staticmethod
         def catch(interface: DispatcherInterface):
             if interface.annotation is Group:
@@ -186,6 +208,8 @@ class GroupAllowMemberInviteEvent(MiraiEvent):
     operator: Optional[Member]
 
     class Dispatcher(BaseDispatcher):
+        mixin = [ApplicationDispatcher]
+
         @staticmethod
         def catch(interface: DispatcherInterface):
             if interface.annotation is Group:
@@ -198,6 +222,8 @@ class MemberJoinEvent(MiraiEvent):
     member: Member
 
     class Dispatcher(BaseDispatcher):
+        mixin = [ApplicationDispatcher]
+
         @staticmethod
         def catch(interface: DispatcherInterface):
             if interface.annotation is Member:
@@ -209,6 +235,8 @@ class MemberLeaveEventKick(MiraiEvent):
     operator: Optional[Member]
 
     class Dispatcher(BaseDispatcher):
+        mixin = [ApplicationDispatcher]
+
         @staticmethod
         def catch(interface: DispatcherInterface):
             if interface.annotation is Member:
@@ -222,6 +250,8 @@ class MemberLeaveEventQuit(MiraiEvent):
     member: Member
 
     class Dispatcher(BaseDispatcher):
+        mixin = [ApplicationDispatcher]
+
         @staticmethod
         def catch(interface: DispatcherInterface):
             if interface.annotation is Member:
@@ -235,6 +265,8 @@ class MemberCardChangeEvent(MiraiEvent):
     operator: Optional[Member]
 
     class Dispatcher(BaseDispatcher):
+        mixin = [ApplicationDispatcher]
+
         @staticmethod
         def catch(interface: DispatcherInterface):
             if interface.annotation is Member:
@@ -250,6 +282,8 @@ class MemberSpecialTitleChangeEvent(MiraiEvent):
     member: Member
 
     class Dispatcher(BaseDispatcher):
+        mixin = [ApplicationDispatcher]
+
         @staticmethod
         def catch(interface: DispatcherInterface):
             if interface.annotation is Member:
@@ -262,6 +296,8 @@ class MemberPermissionChangeEvent(MiraiEvent):
     member: Member
 
     class Dispatcher(BaseDispatcher):
+        mixin = [ApplicationDispatcher]
+
         @staticmethod
         def catch(interface: DispatcherInterface):
             if interface.annotation is Member:
@@ -274,6 +310,8 @@ class MemberMuteEvent(MiraiEvent):
     operator: Optional[Member]
 
     class Dispatcher(BaseDispatcher):
+        mixin = [ApplicationDispatcher]
+
         @staticmethod
         def catch(interface: DispatcherInterface):
             if interface.annotation is Member:
@@ -288,6 +326,8 @@ class MemberUnmuteEvent(MiraiEvent):
     operator: Optional[Member]
 
     class Dispatcher(BaseDispatcher):
+        mixin = [ApplicationDispatcher]
+
         @staticmethod
         def catch(interface: DispatcherInterface):
             if interface.annotation is Member:
@@ -303,6 +343,8 @@ class NewFriendRequestEvent(MiraiEvent):
     sourceGroup: Optional[int] = Field(..., alias="groupId")
     nickname: str = Field(..., alias="nick")
     message: str
+
+    Dispatcher = EmptyDispatcher
 
     async def accept(self, message: str = "") -> NoReturn:
         app = application.get()
@@ -360,6 +402,8 @@ class MemberJoinRequestEvent(MiraiEvent):
     groupName: str = Field(..., alias="groupName")
     nickname: str = Field(..., alias="nick")
     message: str
+
+    Dispatcher = EmptyDispatcher
 
     async def accept(self, message: str = "") -> NoReturn:
         app = application.get()
@@ -449,6 +493,8 @@ class BotInvitedJoinGroupRequestEvent(MiraiEvent):
     groupName: str = Field(..., alias="groupName")
     nickname: str = Field(..., alias="nick")
     message: str
+
+    Dispatcher = EmptyDispatcher
 
     async def accept(self, message: str = "") -> NoReturn:
         app = application.get()
