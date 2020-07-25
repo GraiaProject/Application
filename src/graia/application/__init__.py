@@ -1,6 +1,7 @@
 import asyncio
 from typing import List, NoReturn, Optional, Tuple, Union
-from graia.application.protocol.entities import MiraiConfig
+from .logger import AbstractLogger, LoggingLogger
+from .protocol.entities import MiraiConfig
 
 import graia.application.protocol.entities.event.mirai  # for init events
 from aiohttp import ClientSession, FormData
@@ -30,15 +31,18 @@ class GraiaMiraiApplication:
     broadcast: Broadcast
     session: ClientSession
     connect_info: Session
+    logger: AbstractLogger
 
     def __init__(self, *,
         broadcast: Broadcast,
         connect_info: Session,
-        session: Optional[ClientSession] = None
+        session: Optional[ClientSession] = None,
+        logger: Optional[AbstractLogger] = None
     ):
         self.broadcast = broadcast
         self.connect_info = connect_info
         self.session = session or ClientSession(loop=broadcast.loop)
+        self.logger = logger or LoggingLogger()
         self.broadcast.getDefaultNamespace().injected_dispatchers.append(
             AppMiddlewareAsDispatcher(self)
         )
@@ -516,10 +520,8 @@ class GraiaMiraiApplication:
                 if received_data:
                     try:
                         event = await self.auto_parse_by_type(received_data)
-                    except ValueError:
-                        # TODO: logger
-                        raise
-                        print("received a unknown event:", received_data.get("type"), received_data)
+                    except ValueError as e:
+                        self.logger.error("".join(["received a unknown event: ", received_data.get("type"), str(received_data)]))
                         continue
                     self.broadcast.postEvent(event)
     
@@ -535,8 +537,8 @@ class GraiaMiraiApplication:
                     break
 
     async def launch(self):
-        from .protocol.entities.event.lifecycle import (
-            ApplicationLaunched, ApplicationShutdowned)
+        from .protocol.entities.event.lifecycle import ApplicationLaunched
+        self.logger.info("launching app...")
         await self.authenticate()
         await self.activeSession()
         await self.broadcast.layered_scheduler(
@@ -548,20 +550,34 @@ class GraiaMiraiApplication:
         fetch_method = None
         config: MiraiConfig = await self.getConfig()
         if not self.connect_info.websocket: # 不启用 websocket
+            self.logger.info("using websocket to receive event")
             if config.enableWebsocket:
                 fetch_method = self.http_fetchmessage_poster
                 await self.modifyConfig(enableWebsocket=False)
         else:
+            self.logger.info("using pure websocket to receive event")
             if not config.enableWebsocket:
                 fetch_method = self.ws_all_poster
                 await self.modifyConfig(enableWebsocket=True)
 
+        self.logger.info("event reveiver running...")
+        return fetch_method()
+
+    async def shutdown(self):
+        from .protocol.entities.event.lifecycle import ApplicationShutdowned
+        self.logger.info("application shutdowning...")
+        await self.broadcast.layered_scheduler(
+            listener_generator=self.broadcast.default_listener_generator(ApplicationShutdowned),
+            event=ApplicationShutdowned(self)
+        )
+        await self.signout()
+        await self.session.close()
+        self.logger.info("goodbye :)")
+
+    def launch_blocking(self):
+        loop = asyncio.get_event_loop()
         try:
-            await fetch_method()
+            fetch_method = loop.run_until_complete(self.launch())
+            loop.run_until_complete(fetch_method)
         finally:
-            await self.broadcast.layered_scheduler(
-                listener_generator=self.broadcast.default_listener_generator(ApplicationLaunched),
-                event=ApplicationShutdowned(self)
-            )
-            await self.signout()
-            await self.session.close()
+            loop.run_until_complete(self.shutdown())
