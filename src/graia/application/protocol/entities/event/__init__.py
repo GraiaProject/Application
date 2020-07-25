@@ -1,3 +1,4 @@
+from graia.broadcast.entities.dispatcher import BaseDispatcher
 from pydantic import BaseModel, validator
 from graia.broadcast import BaseEvent
 from graia.application.context import application
@@ -19,8 +20,9 @@ class MiraiEvent(BaseEvent, BaseModel):
     class Dispatcher:
         pass
 
-class ApplicationDispatcher:
+class ApplicationDispatcher(BaseDispatcher):
     @staticmethod
     def catch(interface):
-        if interface.annotation.__class__.__name__ == "GraiaMiraiApplication":
+        print(interface.annotation.__name__)
+        if getattr(interface.annotation, "__name__", None) == "GraiaMiraiApplication":
             return application.get()

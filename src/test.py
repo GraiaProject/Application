@@ -5,6 +5,7 @@ import asyncio
 
 from graia.application.protocol.entities.message.elements.internal import Plain
 from graia.application.protocol.entities.targets.friend import Friend
+from graia.application.protocol.entities.targets.group import Member
 
 loop = asyncio.get_event_loop()
 
@@ -13,16 +14,14 @@ app = GraiaMiraiApplication(
     broadcast=bcc,
     connect_info=Session(
         host="http://localhost:8080",
-        authKey="graia-mirai-api-http-authkey",
-        account=5234120587,
-        websocket=True
+        authKey="2343142424",
+        account=208924405,
+        websocket=False
     )
 )
 
-@bcc.receiver("FriendMessage")
-async def friend_message_listener(app: GraiaMiraiApplication, friend: Friend):
-    await app.sendFriendMessage(friend, MessageChain(__root__=[
-        Plain("Hello, World!")
-    ]))
+@bcc.receiver("GroupMessage")
+async def m(app: GraiaMiraiApplication, member: Member):
+    print("?")
 
-app.launch()
+loop.run_until_complete(app.launch())
