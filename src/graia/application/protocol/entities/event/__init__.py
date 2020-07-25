@@ -14,7 +14,7 @@ class MiraiEvent(BaseEvent, BaseModel):
         return v
 
     class Config:
-        extra = "forbid"
+        extra = "ignore"
 
     class Dispatcher:
         pass

@@ -4,6 +4,9 @@ version = "0.0.1"
 description = ""
 authors = ["GreyElaina <GreyElaina@outlook.com>"]
 license = "MIT"
+packages = [
+    { include = "graia", from = "src" }
+]
 
 [tool.poetry.dependencies]
 python = "^3.6"
