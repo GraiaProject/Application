@@ -84,10 +84,15 @@ async def friend_message_listener(app: GraiaMiraiApplication, friend: Friend):
 app.launch_blocking()
 ```
 
-运行这段代码, 终端输出:
+?> **Tip** 如果你对 v3 中的 url 表示整个连接信息的方式念念不忘...我们也提供了相应的解决方案, 尽管这种方式不再推荐:
+``` python
+Session.fromUrl("mirai://localhost:8080/ws?authKey=graia-mirai-api-http-authkey&qq=5234120587")
+```
+
+运行代码, 终端输出:
 
 ``` bash
-[root@localhost] $ python src/test.py
+[root@localhost] $ python bot.py
 [2020-07-25 21:42:11,929][INFO]: launching app...
 [2020-07-25 21:42:11,960][INFO]: using websocket to receive event
 [2020-07-25 21:42:11,964][INFO]: event reveiver running...
@@ -117,3 +122,7 @@ app.launch_blocking()
 </div>
 
 Excellent(非常好), 你的机器人迈出了至关重要的一步!
+
+?> **提示** 如果你在这里因为遇到了奇怪的错误绊倒了,
+请将你遇到的问题报告到我们的 [问题跟踪器](https://github.com/GraiaProject/Application/issues),
+你的绊倒是你和其他人迈出第一步的关键.
