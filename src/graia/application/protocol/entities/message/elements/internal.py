@@ -16,6 +16,7 @@ from ...targets.friend import Friend
 from ...targets.group import Group, Member
 from .. import ExternalElement, InternalElement
 from . import external as External
+from functools import partial
 
 
 class Plain(InternalElement, ExternalElement):
@@ -38,9 +39,6 @@ class Plain(InternalElement, ExternalElement):
 class Source(InternalElement, ExternalElement):
     id: int
     time: datetime
-
-    def toExternal(self) -> "Source":
-        return self
     
     @classmethod
     def fromExternal(_, external_element) -> "Source":
@@ -107,6 +105,9 @@ class Face(InternalElement, ExternalElement):
     def fromExternal(cls, external_element) -> "Face":
         return external_element
 
+    def asDisplay(self) -> str:
+        return "[表情]"
+
 class ImageType(Enum):
     Friend = "Friend"
     Group = "Group"
@@ -134,7 +135,7 @@ class Image(InternalElement):
         else:
             return ImageType.Unknown
 
-    def toExternal(self):
+    async def toExternal(self):
         return External.Image(
             imageId=self.imageId,
             url=self.url,
@@ -150,32 +151,54 @@ class Image(InternalElement):
         )
     
     @classmethod
-    async def fromLocalFile(cls, filepath: Union[Path, str], method: Optional[UploadMethods] = None) -> "Image":
+    def fromLocalFile(cls, filepath: Union[Path, str], method: Optional[UploadMethods] = None) -> "Image":
         if isinstance(filepath, str):
             filepath = Path(filepath)
         if not filepath.exists():
             raise FileNotFoundError("you should give us a existed file's path")
-        app = application.get()
-        method = method or image_method.get()
-        if not method:
-            raise ValueError("you should give the 'method' for upload when you are out of the event receiver.")
-        return await app.uploadImage(filepath.read_bytes(), method)
-        
+        # 定义魔法闭包类
+        class _Image_Internal(InternalElement, ExternalElement):
+            @property
+            def toExternal(self):
+                app = application.get()
+                try:
+                    methodd = method or image_method.get()
+                except LookupError:
+                    raise ValueError("you should give the 'method' for upload when you are out of the event receiver.")
+                return partial(app.uploadImage, filepath.read_bytes(), methodd, return_external=True)
+
+            def fromExternal(cls, external_element) -> "InternalElement":
+                return external_element
+        return _Image_Internal()
+
     @classmethod
     def fromUnsafePath(cls, path: Path) -> "External.Image":
         return External.Image(path=str(path))
 
     @classmethod
     async def fromUnsafeBytes(cls, image_bytes: bytes, method: Optional[UploadMethods] = None) -> "Image":
-        app = application.get()
-        method = method or image_method.get()
         if not method:
             raise ValueError("you should give the 'method' for upload when you are out of the event receiver.")
-        return await app.uploadImage(image_bytes, method.value)
+        class _Image_Internal(InternalElement, ExternalElement):
+            @property
+            def toExternal(self):
+                app = application.get()
+                try:
+                    methodd = method or image_method.get()
+                except LookupError:
+                    raise ValueError("you should give the 'method' for upload when you are out of the event receiver.")
+                return partial(app.uploadImage, image_bytes, methodd, return_external=True)
+
+            def fromExternal(cls, external_element) -> "InternalElement":
+                return external_element
+        return _Image_Internal()
 
     @classmethod
     def fromUnsafeAddress(cls, url: str) -> "External.Image":
         return External.Image(url=url)
+    
+    def asDisplay(self) -> str:
+        return "[图片]"
 
 class FlashImage(Image):
     def toExternal(self):
@@ -193,8 +216,14 @@ class FlashImage(Image):
             path=external_element.path
         )
 
+    def asDisplay(self) -> str:
+        return "[闪照]"
+
 class Xml(InternalElement, ExternalElement):
     xml: str
+
+    def asDisplay(self) -> str:
+        return "[XML消息]"
 
 class Json(InternalElement, ExternalElement):
     Json: str = Field(..., alias="json")
@@ -205,8 +234,14 @@ class Json(InternalElement, ExternalElement):
             "by_alias": True
         }))
 
+    def asDisplay(self) -> str:
+        return "[JSON消息]"
+
 class App(InternalElement, ExternalElement):
     content: str
+
+    def asDisplay(self) -> str:
+        return "[APP消息]"
 
 class PokeMethods(Enum):
     Poke = "Poke"
@@ -218,6 +253,9 @@ class PokeMethods(Enum):
 
 class Poke(InternalElement, ExternalElement):
     name: PokeMethods
+
+    def asDisplay(self) -> str:
+        return "[戳一戳:{0}]".format(self.name)
 
 from ..chain import MessageChain
 

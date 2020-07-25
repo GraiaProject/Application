@@ -36,7 +36,6 @@ class GroupMessage(MiraiEvent):
 
     @classmethod
     def parse_obj(cls, obj):
-        print("?", obj)
         return super().parse_obj(obj)
 
     class Dispatcher(BaseDispatcher):

@@ -1,6 +1,7 @@
 from __future__ import annotations
-from typing import (Any, Dict, Generic, List, Sequence, Tuple, Type, TypeVar,
-                    Union)
+from typing import (Any, Callable, Dict, Generic, List, Optional, Sequence, Tuple, Type, TypeVar,
+                    Union, cast)
+import warnings
 
 from devtools import debug
 
@@ -14,9 +15,12 @@ from . import ExternalElement, InternalElement
 
 T = Union[InternalElement, ExternalElement]
 
+def raiser(error):
+    raise error
+
 class MessageChain(BaseModel):
     __root__: Union[List[T], Tuple[T]]
-    
+
     @classmethod
     def parse_obj(cls: Type['MessageChain'], obj: List[T]) -> 'MessageChain':
         "将其构建为内部态."
@@ -48,14 +52,33 @@ class MessageChain(BaseModel):
 
     @property
     def isSendable(self) -> bool:
-        return all(isinstance(i, InternalElement) and hasattr(i, "toExternal") for i in self.__root__)
+        return all(all([
+            isinstance(i, (InternalElement, ExternalElement)),
+            hasattr(i, "toExternal"),
+            getattr(i.__class__, "toExternal") != InternalElement.toExternal
+        ]) for i in self.__root__)
+
+    def asSendable(self) -> "MessageChain":
+        return MessageChain(__root__=tuple([i for i in self.__root__ if all([
+            isinstance(i, InternalElement),
+            hasattr(i, "toExternal"),
+            getattr(i.__class__, "toExternal") != InternalElement.toExternal
+        ])]))
 
     async def build(self, **extra: Dict[InternalElement, Tuple[list, dict]]) -> "MessageChain":
+        result = []
         debug(self.__root__)
-        return MessageChain(tuple([await run_always_await(i.toExternal(
-            *(extra[i.__class__][0] if i.__class__ in extra else []),
-            **(extra[i.__class__][1] if i.__class__ in extra else {})
-        )) if isinstance(i, InternalElement) else i for i in self.__root__]))
+        for i in self.__root__:
+            if isinstance(i, InternalElement):
+                if getattr(i.__class__, "toExternal") == InternalElement.toExternal:
+                    raise EntangledSuperposition("You define an object that cannot be sent: {0}".format(i.__class__.__name__))
+                result.append(await run_always_await(i.toExternal(
+                    *(extra[i.__class__][0] if i.__class__ in extra else []),
+                    **(extra[i.__class__][1] if i.__class__ in extra else {})
+                )))
+            else:
+                result.append(i)
+        return MessageChain(__root__=tuple(result))
 
     def has(self, element_class: T) -> bool:
         return element_class in [type(i) for i in self.__root__]

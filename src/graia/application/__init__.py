@@ -21,7 +21,7 @@ from graia.application.protocol.utilles import (AppMiddlewareAsDispatcher,
                                                 requireAuthenticated)
 from graia.broadcast import Broadcast
 from graia.broadcast.entities.event import BaseEvent
-from graia.broadcast.utilles import run_always_await
+from graia.broadcast.utilles import printer, run_always_await
 from yarl import URL
 
 from .protocol import UploadMethods
@@ -152,7 +152,7 @@ class GraiaMiraiApplication:
                 return i
 
     @requireAuthenticated
-    async def uploadImage(self, image_bytes: bytes, method: UploadMethods) -> Image:
+    async def uploadImage(self, image_bytes: bytes, method: UploadMethods, return_external: bool = False) -> Image:
         data = FormData()
         data.add_field("sessionKey", self.connect_info.sessionKey)
         data.add_field("type", method.value)
@@ -161,7 +161,12 @@ class GraiaMiraiApplication:
             response.raise_for_status()
             resp_json = await response.json()
             raise_for_return_code(resp_json)
-            return Image.fromExternal(external.Image.parse_obj(resp_json))
+            external_component = external.Image.parse_obj(resp_json)
+            if return_external:
+                return external_component
+            else:
+                return Image.fromExternal(external_component)
+            
 
     @requireAuthenticated
     async def sendFriendMessage(self, target: Union[Friend, int],
@@ -172,7 +177,7 @@ class GraiaMiraiApplication:
             async with self.session.post(self.url_gen("sendFriendMessage"), json={
                 "sessionKey": self.connect_info.sessionKey,
                 "target": target.id if isinstance(target, Friend) else target,
-                "messageChain": await message.build(),
+                "messageChain": (await message.build()).dict()['__root__'],
                 **({
                     "quote": quote.id if isinstance(quote, Source) else quote
                 } if quote else {})
@@ -188,14 +193,14 @@ class GraiaMiraiApplication:
         quote: Optional[Union[Source, int]] = None
     ) -> BotMessage:
         with enter_message_send_context(UploadMethods.Group):
-            async with self.session.post(self.url_gen("sendGroupMessage"), json={
+            async with self.session.post(self.url_gen("sendGroupMessage"), json=printer({
                 "sessionKey": self.connect_info.sessionKey,
                 "target": group.id if isinstance(group, Group) else group,
                 "messageChain": (await message.build()).dict()['__root__'],
                 **({
                     "quote": quote.id if isinstance(quote, Source) else quote
                 } if quote else {})
-            }) as response:
+            })) as response:
                 response.raise_for_status()
                 data = await response.json()
                 raise_for_return_code(data)
@@ -213,7 +218,7 @@ class GraiaMiraiApplication:
                 "sessionKey": self.connect_info.sessionKey,
                 "group": group.id if isinstance(group, Group) else group,
                 "qq": target.id if isinstance(target, Friend) else target,
-                "messageChain": await message.build(),
+                "messageChain": (await message.build()).dict()['__root__'],
                 **({
                     "quote": quote.id if isinstance(quote, Source) else quote
                 } if quote else {})
@@ -499,7 +504,7 @@ class GraiaMiraiApplication:
                         continue
                     self.broadcast.postEvent(event)
     
-    def launch_with(self, event_poster=ws_all_poster):
+    def launch(self, event_poster=ws_all_poster):
         from graia.application.protocol.entities.event.lifecycle import (
             ApplicationLaunched, ApplicationShutdowned)
         loop = self.broadcast.loop
