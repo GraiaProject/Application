@@ -24,4 +24,4 @@ app = GraiaMiraiApplication(
 async def m(app: GraiaMiraiApplication, member: Member):
     print("?")
 
-loop.run_until_complete(app.launch())
+app.launch_blocking()

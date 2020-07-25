@@ -23,6 +23,5 @@ class MiraiEvent(BaseEvent, BaseModel):
 class ApplicationDispatcher(BaseDispatcher):
     @staticmethod
     def catch(interface):
-        print(interface.annotation.__name__)
         if getattr(interface.annotation, "__name__", None) == "GraiaMiraiApplication":
             return application.get()

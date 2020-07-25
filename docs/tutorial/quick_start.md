@@ -23,7 +23,7 @@ poetry add graia-application-mirai
 ```
 
 ?> **提示** 为了使框架特性与协议实现分开, 我们将 `Graia Framework` 中使用的事件系统独立为了一个库
-(我们会为其写文档的, 但现在我们专注于更新 `graia-application-mirai` ), 
+(我们会为其写文档的, 但现在我们专注于更新 `graia-application-mirai`), 
 以方便开发者获取到新版本中我们提供的, 针对框架本身的特性支持.  
 你可以通过以下指令获取到最新的事件系统更新
 
@@ -33,11 +33,9 @@ pip install graia-broadcast --upgrade
 poetry update graia-broadcast
 ```
 
-## 使用
+## 你与机器人历史性的第一次对话
 
-因为 `0.0.1` 版本仍处于 `alpha` 阶段, 与 `mirai-api-http` 的交互方式并不完善, 
-目前仍只支持使用 `websocket` 方式从 `mirai-api-http` 处获取事件, 
-不过我们现在也需要协定好 `mirai-api-http` 的配置.
+现在我们需要协定好 `mirai-api-http` 的配置, 以便于接下来的说明.
 
 根据 `mirai-api-http` 的相关文档, 我们可以得出这么一个配置文件的方案:
 
@@ -73,7 +71,7 @@ app = GraiaMiraiApplication(
         host="http://localhost:8080", # 填入 httpapi 服务运行的地址
         authKey="graia-mirai-api-http-authkey", # 填入 authKey
         account=5234120587, # 你的机器人的 qq 号
-        websocket=True
+        websocket=True # Graia 已经可以根据所配置的消息接收的方式来保证消息接收部分的正常运作.
     )
 )
 
@@ -83,10 +81,19 @@ async def friend_message_listener(app: GraiaMiraiApplication, friend: Friend):
         Plain("Hello, World!")
     ]))
 
-loop.run_until_complete(app.launch())
+app.launch_blocking()
 ```
 
-当最后一行开始执行时, 你可以向你的机器人发送一条好友消息:
+运行这段代码, 终端输出:
+
+``` bash
+[root@localhost] $ python src/test.py
+[2020-07-25 21:42:11,929][INFO]: launching app...
+[2020-07-25 21:42:11,960][INFO]: using websocket to receive event
+[2020-07-25 21:42:11,964][INFO]: event reveiver running...
+```
+
+此时, 你可以向你的机器人发送一条好友消息:
 
 <div class="panel-view">
   <div class="controls">
@@ -109,4 +116,4 @@ loop.run_until_complete(app.launch())
   </div>
 </div>
 
-!> 目前, `graia-application-mirai` 没有日志系统, 这个问题将会在之后的版本修复
+Excellent(非常好), 你的机器人迈出了至关重要的一步!
