@@ -48,7 +48,7 @@ authKey: graia-mirai-api-http-authkey # 你可以自己设定, 这里作为示�
 # 可选，缓存大小，默认4096.缓存过小会导致引用回复与撤回消息失败
 cacheSize: 4096
 
-enableWebsocket: true # 启用 websocket 方式, 若不设置或其值为 false, 则 Graia Application 无法获取事件.
+enableWebsocket: true # 启用 websocket 方式, 若使用 websocket 方式交互会得到更好的性能
 host: '0.0.0.0' # httpapi 服务监听的地址, 错误的设置会造成 Graia Application 无法与其交互
 port: 8080 # httpapi 服务监听的端口, 错误的设置会造成 Graia Application 无法与其交互
 ```
@@ -73,7 +73,7 @@ app = GraiaMiraiApplication(
         host="http://localhost:8080", # 填入 httpapi 服务运行的地址
         authKey="graia-mirai-api-http-authkey", # 填入 authKey
         account=5234120587, # 你的机器人的 qq 号
-        websocket=True # 目前你也只能选 True.
+        websocket=True
     )
 )
 
@@ -83,7 +83,7 @@ async def friend_message_listener(app: GraiaMiraiApplication, friend: Friend):
         Plain("Hello, World!")
     ]))
 
-app.launch()
+loop.run_until_complete(app.launch())
 ```
 
 当最后一行开始执行时, 你可以向你的机器人发送一条好友消息:
@@ -110,4 +110,3 @@ app.launch()
 </div>
 
 !> 目前, `graia-application-mirai` 没有日志系统, 这个问题将会在之后的版本修复
-

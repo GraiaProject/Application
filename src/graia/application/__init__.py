@@ -1,5 +1,6 @@
 import asyncio
 from typing import List, NoReturn, Optional, Tuple, Union
+from graia.application.protocol.entities import MiraiConfig
 
 import graia.application.protocol.entities.event.mirai  # for init events
 from aiohttp import ClientSession, FormData
@@ -467,6 +468,29 @@ class GraiaMiraiApplication:
             data = await response.json()
             raise_for_return_code(data)
 
+    @requireAuthenticated
+    async def getConfig(self) -> MiraiConfig:
+        async with self.session.get(str(URL(self.url_gen("config")).with_query({
+            "sessionKey": self.connect_info.sessionKey
+        }))) as response:
+            response.raise_for_status()
+            data = await response.json()
+            raise_for_return_code(data)
+
+            return MiraiConfig.parse_obj(data)
+
+    @requireAuthenticated
+    async def modifyConfig(self, *, cacheSize=None, enableWebsocket=None) -> NoReturn:
+        if any([cacheSize is not None, enableWebsocket is not None]):
+            async with self.session.post(self.url_gen("config"), json={
+                "sessionKey": self.connect_info.sessionKey,
+                **({"cacheSize": cacheSize} if cacheSize is not None else {}),
+                **({"enableWebsocket": enableWebsocket} if enableWebsocket is not None else {}),
+            }) as response:
+                response.raise_for_status()
+                data = await response.json()
+                raise_for_return_code(data)
+
     @staticmethod
     async def auto_parse_by_type(original_dict: dict) -> BaseEvent:
         if not original_dict.get("type") and not isinstance(original_dict.get("type"), str):
@@ -498,23 +522,46 @@ class GraiaMiraiApplication:
                         print("received a unknown event:", received_data.get("type"), received_data)
                         continue
                     self.broadcast.postEvent(event)
+    
+    @requireAuthenticated
+    async def http_fetchmessage_poster(self, delay=0.5, fetch_num=10):
+        while True:
+            await asyncio.sleep(delay)
+            while True:
+                data = await self.fetchMessage(fetch_num)
+                for i in data:
+                    self.broadcast.postEvent(i)
+                if len(data) != fetch_num:
+                    break
 
-    def launch(self, event_poster=ws_all_poster):
+    async def launch(self):
         from .protocol.entities.event.lifecycle import (
             ApplicationLaunched, ApplicationShutdowned)
-        loop = self.broadcast.loop
-        loop.run_until_complete(self.authenticate())
-        loop.run_until_complete(self.activeSession())
-        loop.run_until_complete(self.broadcast.layered_scheduler(
+        await self.authenticate()
+        await self.activeSession()
+        await self.broadcast.layered_scheduler(
             listener_generator=self.broadcast.default_listener_generator(ApplicationLaunched),
             event=ApplicationLaunched(self)
-        ))
+        )
+
+        # 自动变化fetch方式
+        fetch_method = None
+        config: MiraiConfig = await self.getConfig()
+        if not self.connect_info.websocket: # 不启用 websocket
+            if config.enableWebsocket:
+                fetch_method = self.http_fetchmessage_poster
+                await self.modifyConfig(enableWebsocket=False)
+        else:
+            if not config.enableWebsocket:
+                fetch_method = self.ws_all_poster
+                await self.modifyConfig(enableWebsocket=True)
+
         try:
-            loop.run_until_complete(event_poster(self))
+            await fetch_method()
         finally:
-            loop.run_until_complete(self.broadcast.layered_scheduler(
+            await self.broadcast.layered_scheduler(
                 listener_generator=self.broadcast.default_listener_generator(ApplicationLaunched),
                 event=ApplicationShutdowned(self)
-            ))
-            loop.run_until_complete(self.signout())
-            loop.run_until_complete(self.session.close())
+            )
+            await self.signout()
+            await self.session.close()
