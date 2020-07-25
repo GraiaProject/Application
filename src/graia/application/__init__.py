@@ -3,31 +3,26 @@ from typing import List, NoReturn, Optional, Tuple, Union
 
 import graia.application.protocol.entities.event.mirai  # for init events
 from aiohttp import ClientSession, FormData
-from graia.application.context import enter_message_send_context
-from graia.application.protocol.entities.event.messages import (FriendMessage,
-                                                                GroupMessage,
-                                                                TempMessage)
-from graia.application.protocol.entities.message import BotMessage
-from graia.application.protocol.entities.message.chain import MessageChain
-from graia.application.protocol.entities.message.elements import external
-from graia.application.protocol.entities.message.elements.internal import (
-    Image, Source)
-from graia.application.protocol.entities.session import Session
-from graia.application.protocol.exceptions import (InvaildArgument,
-                                                   InvaildSession)
-from graia.application.protocol.utilles import (AppMiddlewareAsDispatcher,
-                                                SinceVersion,
-                                                raise_for_return_code,
-                                                requireAuthenticated)
 from graia.broadcast import Broadcast
 from graia.broadcast.entities.event import BaseEvent
 from graia.broadcast.utilles import printer, run_always_await
 from yarl import URL
 
+from .context import enter_message_send_context
 from .protocol import UploadMethods
+from .protocol.entities.event.messages import (FriendMessage, GroupMessage,
+                                               TempMessage)
+from .protocol.entities.message import BotMessage
+from .protocol.entities.message.chain import MessageChain
+from .protocol.entities.message.elements import external
+from .protocol.entities.message.elements.internal import Image, Source
+from .protocol.entities.session import Session
 from .protocol.entities.targets.friend import Friend
 from .protocol.entities.targets.group import (Group, GroupConfig, Member,
                                               MemberInfo)
+from .protocol.exceptions import InvaildArgument, InvaildSession
+from .protocol.utilles import (AppMiddlewareAsDispatcher, SinceVersion,
+                               raise_for_return_code, requireAuthenticated)
 
 
 class GraiaMiraiApplication:
@@ -503,9 +498,9 @@ class GraiaMiraiApplication:
                         print("received a unknown event:", received_data.get("type"), received_data)
                         continue
                     self.broadcast.postEvent(event)
-    
+
     def launch(self, event_poster=ws_all_poster):
-        from graia.application.protocol.entities.event.lifecycle import (
+        from .protocol.entities.event.lifecycle import (
             ApplicationLaunched, ApplicationShutdowned)
         loop = self.broadcast.loop
         loop.run_until_complete(self.authenticate())

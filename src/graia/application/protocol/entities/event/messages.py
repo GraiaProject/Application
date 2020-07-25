@@ -1,5 +1,7 @@
 from inspect import iscoroutine
 
+from pydantic import validator
+
 from graia.application.protocol.entities.event.dispatcher import MessageChainCatcher
 from graia.application.protocol.entities.message.chain import MessageChain
 from graia.application.protocol.entities.targets import friend
@@ -20,6 +22,10 @@ class FriendMessage(MiraiEvent):
         if iscoroutine(mec):
             obj['messageChain'] = await mec
         return super().parse_obj(obj)
+    
+    @validator("messageChain")
+    def _(cls, v):
+        return 
 
     class Dispatcher(BaseDispatcher):
         mixin = [MessageChainCatcher, ApplicationDispatcher]
