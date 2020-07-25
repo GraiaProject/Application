@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="Description">
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple-dark.css">
+  <style>
+    .chat-message {
+      position: relative;
+      margin: 1rem 0;
+      opacity: 0;
+      transform: translateX(-20%);
+      transition: transform .3s ease-out, opacity .3s ease
+    }
+
+    .chat-message.shown {
+      opacity: 1;
+      transform: translateX(0)
+    }
+
+    .avatar {
+      width: 3rem;
+      height: 3rem;
+      position: absolute;
+      border-radius: 100%;
+      transform: translateY(-1px);
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      pointer-events: none;
+      text-align: center;
+      line-height: 3rem;
+      font-size: 1.6rem;
+      color: #fff;
+      font-family: Comic Sans MS
+    }
+
+    .nickname {
+      position: relative;
+      margin: 0 0 .5rem 4.4rem;
+      font-weight: 700
+    }
+
+    .message-box {
+      position: relative;
+      margin-left: 4.4rem;
+      width: -webkit-fit-content;
+      width: -moz-fit-content;
+      width: fit-content;
+      line-height: 1.6;
+      border-radius: .5rem;
+      background-color: #34434b;
+      word-break: break-all
+    }
+
+    .chat-message:not(.no-padding) .message-box {
+      padding: .6rem .8rem
+    }
+
+    .message-box>img {
+      border-radius: .5rem
+    }
+
+    .message-box img {
+      vertical-align: middle
+    }
+
+    .message-box p>img {
+      margin: .2rem 0
+    }
+
+    .message-box:before {
+      content: "";
+      position: absolute;
+      right: 100%;
+      top: 0;
+      width: 12px;
+      height: 12px;
+      border: 0 solid transparent;
+      border-bottom: 8px solid;
+      border-radius: 0 0 0 32px;
+      color: #34434b
+    }
+
+    .message-box p {
+      margin: 0;
+      line-height: 1.6
+    }
+
+    .panel-view {
+      position: relative;
+      border-radius: 6px;
+      margin: 1rem 0;
+      overflow-x: auto;
+      background-color: #1f282d
+    }
+
+    .panel-view .controls {
+      display: initial;
+      position: absolute;
+      top: .8rem;
+      width: 100%
+    }
+
+    .panel-view .controls .circle {
+      position: absolute;
+      top: 1px;
+      width: 14px;
+      height: 14px;
+      border-radius: 7px
+    }
+
+    .panel-view .controls .circle.red {
+      left: 17px;
+      background-color: #ff5f56
+    }
+
+    .panel-view .controls .circle.yellow {
+      left: 39px;
+      background-color: #ffbd2e
+    }
+
+    .panel-view .controls .circle.green {
+      left: 61px;
+      background-color: #27c93f
+    }
+
+    .panel-view .controls .title {
+      text-align: center;
+      width: 100%;
+      font-size: .9rem;
+      line-height: 1rem
+    }
+
+    .panel-view .content {
+      padding: .2rem 1.2rem;
+      width: -webkit-fit-content;
+      width: -moz-fit-content;
+      width: fit-content
+    }
+
+    .panel-view.mini .controls {
+      display: none
+    }
+
+    .panel-view:not(.mini) .content {
+      padding-top: 2rem
+    }
+
+    .badge[data-v-6eb0829b] {
+      display: inline-block;
+      font-size: 14px;
+      height: 18px;
+      line-height: 18px;
+      border-radius: 3px;
+      padding: 0 6px;
+      color: #fff
+    }
+
+    .badge.green[data-v-6eb0829b],
+    .badge.tip[data-v-6eb0829b],
+    .badge[data-v-6eb0829b] {
+      background-color: #42b983
+    }
+
+    .badge.error[data-v-6eb0829b] {
+      background-color: #da5961
+    }
+
+    .badge.warn[data-v-6eb0829b],
+    .badge.warning[data-v-6eb0829b],
+    .badge.yellow[data-v-6eb0829b] {
+      background-color: #e7c000
+    }
+
+    .badge+.badge[data-v-6eb0829b] {
+      margin-left: 5px
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app"></div>
+  <script>
+    window.$docsify = {
+      name: 'Graia Framework',
+      repo: 'https://github.com/GraiaProject/',
+      loadNavbar: true,
+      loadSidebar: true,
+      search: {
+        maxAge: 86400000, // 过期时间，单位毫秒，默认一天
+        paths: "auto",
+        placeholder: 'Type to search',
+
+        // 搜索标题的最大层级, 1 - 6
+        depth: 2,
+      },
+      copyCode: {
+        buttonText: 'Copy to clipboard',
+        errorText: 'Error',
+        successText: 'Copied'
+      },
+      footer: {
+        copy: '<span>NatriumLab &copy; 2020</span>',
+        auth: 'by GreyElaina',
+        pre: '<hr/>',
+        style: 'text-align: right;',
+      },
+      pagination: {
+        previousText: '上一章节',
+        nextText: '下一章节',
+        crossChapter: true,
+        crossChapterText: true,
+      },
+      alias: {
+        '/.*/_sidebar.md': '/_sidebar.md'
+      },
+      themeable: {
+        readyTransition: true, // default
+        responsiveTables: true // default
+      }
+    }
+  </script>
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify-copy-code"></script>
+  <script src="//unpkg.com/docsify-footer-enh/dist/docsify-footer-enh.min.js"></script>
+  <script src="//unpkg.com/docsify-pagination/dist/docsify-pagination.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-python.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify-themeable@0"></script>
+</body>
+
+</html>
