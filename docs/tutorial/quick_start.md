@@ -3,16 +3,16 @@
 ## 前言
 
 这里我们假设你已经参照 [ `mirai` ](https://github.com/mamoe/mirai) 和 [ `mirai-api-http` ](https://github.com/mamoe/mirai-api-http)
-的 README, 通过类似 `mirai-console-wrapper` 或者 `miraiOK` 的方式启动了你的 `mirai-console` , 同时也安装了最新版本的 `mirai-api-http` 插件.  
+的 README，通过类似 `mirai-console-wrapper` 或者 `miraiOK` 的方式启动了你的 `mirai-console` ，同时也安装了最新版本的 `mirai-api-http` 插件。
 
-!> **重要** 如果你使用时开发库出现了错误, 应先检查是否是 `Graia Framework` 的错误, 
-确认之后, 请在我们的 [Github Issues](https://github.com/GraiaProject/Application/issues) 处汇报你的错误, 
+!> **重要** 如果你使用时开发库出现了错误，应先检查是否是 `Graia Framework` 的错误，
+确认之后，请在我们的 [Github Issues](https://github.com/GraiaProject/Application/issues) 处汇报你的错误，
 我们会尽快处理问题
 
-?> **说明** 如果你曾经使用过 [ `python-mirai` ](https://github.com/NatriumLab/python-mirai), 
-你应该尽快迁移到 `Graia Framework` , 之前我们允若的 `python-mirai v4` 正是 `Graia Framework` , 
+?> **说明** 如果你曾经使用过 [ `python-mirai` ](https://github.com/NatriumLab/python-mirai)，
+你应该尽快迁移到 `Graia Framework` ，之前我们允若的 `python-mirai v4` 正是 `Graia Framework` ，
 即后者是前者的继承.  
-若你仍然执意使用 `python-mirai` , 你将 **不会** 受到我们的技术支持, 请铭记.
+若你仍然执意使用 `python-mirai` ，你将 **不会** 受到我们的技术支持，请铭记。
 
 ## 安装
 
@@ -22,10 +22,11 @@ pip install graia-application-mirai
 poetry add graia-application-mirai
 ```
 
-?> **提示** 为了使框架特性与协议实现分开, 我们将 `Graia Framework` 中使用的事件系统独立为了一个库
-(我们会为其写文档的, 但现在我们专注于更新 `graia-application-mirai`), 
-以方便开发者获取到新版本中我们提供的, 针对框架本身的特性支持.  
-你可以通过以下指令获取到最新的事件系统更新
+?> **提示** 为了使框架特性与协议实现分开，我们将 `Graia Framework` 中使用的事件系统独立为了一个库
+(我们会为其写文档的，但现在我们专注于更新 `graia-application-mirai`)，
+以方便开发者获取到新版本中我们提供的，针对框架本身的特性支持。
+
+你可以通过以下指令获取到最新的事件系统更新：
 
 ``` bash
 pip install graia-broadcast --upgrade
@@ -35,9 +36,9 @@ poetry update graia-broadcast
 
 ## 你与机器人历史性的第一次对话
 
-现在我们需要协定好 `mirai-api-http` 的配置, 以便于接下来的说明.
+现在我们需要协定好 `mirai-api-http` 的配置，以便于接下来的说明。
 
-根据 `mirai-api-http` 的相关文档, 我们可以得出这么一个配置文件的方案:
+根据 `mirai-api-http` 的相关文档，我们可以得出这么一个配置文件的方案：
 
 ``` yaml
 # file: mirai-client/plugins/MiraiAPIHTTP/setting.yml
@@ -51,7 +52,7 @@ host: '0.0.0.0' # httpapi 服务监听的地址, 错误的设置会造成 Graia 
 port: 8080 # httpapi 服务监听的端口, 错误的设置会造成 Graia Application 无法与其交互
 ```
 
-将以下代码保存到文件 `bot.py` 内, 确保该文件位于你的工作区内:
+将以下代码保存到文件 `bot.py` 内，确保该文件位于你的工作区内:
 
 ``` python
 from graia.broadcast import Broadcast
@@ -84,7 +85,7 @@ async def friend_message_listener(app: GraiaMiraiApplication, friend: Friend):
 app.launch_blocking()
 ```
 
-?> **Tip** 如果你对 v3 中的 url 表示整个连接信息的方式念念不忘...我们也提供了相应的解决方案, 尽管这种方式不再推荐:
+?> **Tip** 如果你对 v3 中的 url 表示整个连接信息的方式念念不忘……我们也提供了相应的解决方案，尽管这种方式不再推荐：
 ``` python
 Session.fromUrl("mirai://localhost:8080/ws?authKey=graia-mirai-api-http-authkey&qq=5234120587")
 ```
@@ -98,7 +99,7 @@ Session.fromUrl("mirai://localhost:8080/ws?authKey=graia-mirai-api-http-authkey&
 [2020-07-25 21:42:11,964][INFO]: event reveiver running...
 ```
 
-此时, 你可以向你的机器人发送一条好友消息:
+此时，你可以向你的机器人发送一条好友消息：
 
 <div class="panel-view">
   <div class="controls">
@@ -121,8 +122,8 @@ Session.fromUrl("mirai://localhost:8080/ws?authKey=graia-mirai-api-http-authkey&
   </div>
 </div>
 
-Excellent(非常好), 你的机器人迈出了至关重要的一步!
+Excellent(非常好)，你的机器人迈出了至关重要的一步！
 
-?> **提示** 如果你在这里因为遇到了奇怪的错误绊倒了,
+?> **提示** 如果你在这里因为遇到了奇怪的错误绊倒了，
 请将你遇到的问题报告到我们的 [问题跟踪器](https://github.com/GraiaProject/Application/issues),
-你的绊倒是你和其他人迈出第一步的关键.
+你的绊倒是你和其他人迈出第一步的关键。
