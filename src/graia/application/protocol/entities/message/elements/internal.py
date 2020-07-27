@@ -157,7 +157,6 @@ class Image(InternalElement):
             return ImageType.Unknown
 
     async def toExternal(self):
-        # TODO: 自动图片类型转换
         try:
             want_type = image_upload_method_type_map.get(image_method.get())
             if self.type != want_type and self.url:

@@ -25,36 +25,8 @@ app = GraiaMiraiApplication(
 )
 
 @bcc.receiver("GroupMessage")
-async def m(app: GraiaMiraiApplication, member: Member, message: MessageChain, group: Group):
-    if member.id == 1846913566 and message.asDisplay().startswith("并发图片上传测试"):
-        """
-        images = await asyncio.gather(
-            app.uploadImage(
-                open("G:\\绅士图册\\5301c8a785c2545661cbebe04d619d97_big.jpg", "rb").read(),
-                UploadMethods.Group, 
-                return_external=True
-            ),
-            app.uploadImage(
-                open("G:\\绅士图册\\IMG_289.jpg", "rb").read(),
-                UploadMethods.Group,
-                return_external=True
-            ),
-            app.uploadImage(
-                open("G:\\绅士图册\\IMG_290.png", "rb").read(),
-                UploadMethods.Group,
-                return_external=True
-            ),
-        )"""
-        images_chain = MessageChain.create([
-            Plain("测试 mirai-api-http #126."),
-            Image.fromLocalFile("G:\\绅士图册\\IMG_289.jpg"),
-            Image.fromLocalFile("G:\\绅士图册\\5301c8a785c2545661cbebe04d619d97_big.jpg"),
-            Image.fromLocalFile("G:\\绅士图册\\IMG_290.png")
-        ])
-        await app.sendGroupMessage(group, images_chain)
-
-@bcc.receiver("TempMessage")
-async def m(message: MessageChain):
-    debug(message)
+async def group_message_handler(app: GraiaMiraiApplication, message: MessageChain, group: Group):
+    if message.asDisplay().startswith("复读"):
+        await app.sendGroupMessage(group, message.asSendable())
 
 app.launch_blocking()
