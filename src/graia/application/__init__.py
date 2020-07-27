@@ -549,17 +549,15 @@ class GraiaMiraiApplication:
         )
 
         # 自动变化fetch方式
-        fetch_method = None
+        fetch_method = self.http_fetchmessage_poster if not self.connect_info.websocket else self.ws_all_poster
         config: MiraiConfig = await self.getConfig()
         if not self.connect_info.websocket: # 不启用 websocket
             self.logger.info("using websocket to receive event")
-            if config.enableWebsocket:
-                fetch_method = self.http_fetchmessage_poster
+            if config.enableWebsocket: # 配置中已经启用
                 await self.modifyConfig(enableWebsocket=False)
-        else:
+        else: # 启用ws
             self.logger.info("using pure websocket to receive event")
-            if not config.enableWebsocket:
-                fetch_method = self.ws_all_poster
+            if not config.enableWebsocket: # 配置中没启用
                 await self.modifyConfig(enableWebsocket=True)
 
         self.logger.info("event reveiver running...")
