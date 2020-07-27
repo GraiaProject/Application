@@ -2,21 +2,22 @@ import asyncio
 from datetime import datetime
 from enum import Enum
 from pathlib import Path
-from typing import NoReturn, Optional, Union
+from typing import NoReturn, Optional, Text, Union
 
 from pydantic.errors import PathNotExistsError
 from pydantic.fields import Field
 from graia.application.protocol import UploadMethods
 
-from graia.application.protocol.exceptions import MissingNecessaryOne
+from ....exceptions import InvaildArgument
 from pydantic import validator
 
-from .....context import application, event_loop, image_method
+from .....context import application, image_method
 from ...targets.friend import Friend
 from ...targets.group import Group, Member
 from .. import ExternalElement, InternalElement
 from . import external as External
 from functools import partial
+from aiohttp import ClientSession
 
 
 class Plain(InternalElement, ExternalElement):
@@ -74,6 +75,11 @@ class At(InternalElement, ExternalElement):
         return self.display
 
     def toExternal(self) -> "At":
+        try:
+            if image_method.get() != UploadMethods.Group:
+                raise InvaildArgument("you cannot use this element in this method: {0}".format(image_method.get().value))
+        except LookupError:
+            pass
         return self
 
     @classmethod
@@ -87,6 +93,11 @@ class AtAll(InternalElement, ExternalElement):
         return "@全体成员"
 
     def toExternal(self) -> "AtAll":
+        try:
+            if image_method.get() != UploadMethods.Group:
+                raise InvaildArgument("you cannot use this element in this method: {0}".format(image_method.get().value))
+        except LookupError:
+            pass
         return self
 
     @classmethod
@@ -111,7 +122,14 @@ class Face(InternalElement, ExternalElement):
 class ImageType(Enum):
     Friend = "Friend"
     Group = "Group"
+    Temp = "Temp"
     Unknown = "Unknown"
+
+image_upload_method_type_map = {
+    UploadMethods.Friend: ImageType.Friend,
+    UploadMethods.Group: ImageType.Group,
+    UploadMethods.Temp: ImageType.Temp
+}
 
 class Image(InternalElement):
     imageId: Optional[str] = None
@@ -128,7 +146,10 @@ class Image(InternalElement):
         if not values['imageId']:
             return ImageType.Unknown
         if values['imageId'].startswith("/"):
-            return ImageType.Friend
+            if len(values['imageId']) == 37:
+                return ImageType.Friend
+            else:
+                return ImageType.Temp
         elif values['imageId'].startswith("{") and\
              values['imageId'].endswith("}.mirai"):
             return ImageType.Group
@@ -136,6 +157,15 @@ class Image(InternalElement):
             return ImageType.Unknown
 
     async def toExternal(self):
+        # TODO: 自动图片类型转换
+        try:
+            want_type = image_upload_method_type_map.get(image_method.get())
+            if self.type != want_type and self.url:
+                app = application.get()
+                image_byte = await self.http_to_bytes()
+                return await app.uploadImage(image_byte, image_method.get(), return_external=True)
+        except LookupError:
+            pass
         return External.Image(
             imageId=self.imageId,
             url=self.url,
@@ -199,6 +229,14 @@ class Image(InternalElement):
     
     def asDisplay(self) -> str:
         return "[图片]"
+    
+    async def http_to_bytes(self, url=None) -> bytes:
+        if not (self.url or url):
+            raise ValueError("you should offer a url.")
+        async with ClientSession() as session:
+            async with session.get(self.url or url) as response:
+                response.raise_for_status()
+                return await response.read()
 
 class FlashImage(Image):
     def toExternal(self):

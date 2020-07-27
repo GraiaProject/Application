@@ -67,7 +67,6 @@ class MessageChain(BaseModel):
 
     async def build(self, **extra: Dict[InternalElement, Tuple[list, dict]]) -> "MessageChain":
         result = []
-        debug(self.__root__)
         for i in self.__root__:
             if isinstance(i, InternalElement):
                 if getattr(i.__class__, "toExternal") == InternalElement.toExternal:

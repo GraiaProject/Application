@@ -217,7 +217,7 @@ class GraiaMiraiApplication:
             async with self.session.post(self.url_gen("sendTempMessage"), json={
                 "sessionKey": self.connect_info.sessionKey,
                 "group": group.id if isinstance(group, Group) else group,
-                "qq": target.id if isinstance(target, Friend) else target,
+                "qq": target.id if isinstance(target, Member) else target,
                 "messageChain": (await message.build()).dict()['__root__'],
                 **({
                     "quote": quote.id if isinstance(quote, Source) else quote
