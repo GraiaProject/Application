@@ -1,16 +1,10 @@
 from __future__ import annotations
-from typing import (Any, Callable, Dict, Generic, List, Optional, Sequence, Tuple, Type, TypeVar,
-                    Union, cast)
-import warnings
-
-from devtools import debug
+from typing import (Dict, List, Sequence, Tuple, Type, Union)
 
 from graia.application.protocol.exceptions import EntangledSuperposition
-from graia.broadcast.utilles import printer, run_always_await
-from pydantic import BaseModel, validator
-from graia.application.context import event_loop
+from graia.broadcast.utilles import run_always_await
+from pydantic import BaseModel
 
-from .elements import external as External
 from . import ExternalElement, InternalElement
 
 T = Union[InternalElement, ExternalElement]

@@ -2,9 +2,8 @@ import asyncio
 from datetime import datetime
 from enum import Enum
 from pathlib import Path
-from typing import NoReturn, Optional, Text, Union
+from typing import NoReturn, Optional, Union
 
-from pydantic.errors import PathNotExistsError
 from pydantic.fields import Field
 from graia.application.protocol import UploadMethods
 
@@ -12,8 +11,6 @@ from ....exceptions import InvaildArgument
 from pydantic import validator
 
 from .....context import application, image_method
-from ...targets.friend import Friend
-from ...targets.group import Group, Member
 from .. import ExternalElement, InternalElement
 from . import external as External
 from functools import partial

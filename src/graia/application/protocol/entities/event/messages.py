@@ -1,10 +1,7 @@
-from inspect import iscoroutine
-
 from pydantic import validator
 
 from graia.application.protocol.entities.event.dispatcher import MessageChainCatcher
 from graia.application.protocol.entities.message.chain import MessageChain
-from graia.application.protocol.entities.targets import friend
 from graia.broadcast.entities.dispatcher import BaseDispatcher
 from graia.broadcast.interfaces.dispatcher import DispatcherInterface
 from graia.application.protocol.entities.targets.group import Member, Group

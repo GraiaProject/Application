@@ -1,4 +1,4 @@
-from contextvars import Context, ContextVar
+from contextvars import ContextVar
 from contextlib import contextmanager
 
 from graia.application.protocol import UploadMethods
