@@ -17,10 +17,7 @@ class FriendMessage(MiraiEvent):
     sender: Friend
 
     @classmethod
-    async def parse_obj(cls, obj):
-        mec = obj.get("messageChain")
-        if iscoroutine(mec):
-            obj['messageChain'] = await mec
+    def parse_obj(cls, obj):
         return super().parse_obj(obj)
     
     @validator("messageChain")
@@ -60,10 +57,7 @@ class TempMessage(MiraiEvent):
     sender: Member
 
     @classmethod
-    async def parse_obj(cls, obj):
-        mec = obj.get("messageChain")
-        if iscoroutine(mec):
-            obj['messageChain'] = await mec
+    def parse_obj(cls, obj):
         return super().parse_obj(obj)
 
     class Dispatcher(BaseDispatcher):
