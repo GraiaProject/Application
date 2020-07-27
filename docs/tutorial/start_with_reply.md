@@ -98,12 +98,11 @@ async def friend_message_listener(
 想想如果不用这项特性, 那么生活将变得多么无趣啊!
 
 ?> **注意** 这并不代表使用这项特性就能完全脱离使用类型注解获取事件实例本身, 事实上,
-这些也**只不过**是类似于撒在一杯咖啡上的一小块方糖, 无论如何, 这仍然只是个非常方便的语法糖,
+这些也**只不过**是类似于加在一杯咖啡里的几小块方糖, 无论如何, 这仍然*只是*个非常方便的语法糖,
 而对于特殊的, 像 `NewFriendRequestEvent`, `MemberJoinRequestEvent` 这样的事件,
 你还是需要通过获取事件实例来进行进一步的操作.
 
-?> **提示** 如果你对能使用的注解感到迷惑, 可以通过 IDE 的代码跳转(通常使用 `Alt + 鼠标左键单击`)查看事件类的定义,
-我们对事件类都标注上了完整的类型注释, 其中的大部分都可以通过这项特性获取到.
+<p class="warn"><strong>提示</strong> 如果你对能使用的注解感到迷惑, 可以通过 IDE 的 <a id="footnote_origin1" href="/#/tutorial/start_with_reply?id=footnote1" target="_self">代码跳转</a> 查看事件类的定义, 我们对事件类都标注上了完整的类型注释, 其中的大部分都可以通过这项特性获取到. </p>
 
 于是, 为了尽量写出简单的代码, 你查阅了我们的代码:
 
@@ -241,3 +240,9 @@ async def group_message_handler(app: GraiaMiraiApplication, message: MessageChai
 以下是复读机完整, 可正常运行的代码:
 
 [reply_wrong1](/examples/reply_right.py ':include :type=code python')
+
+<p id="footnote1">
+
+[↑](#footnote_origin1) [1] VSCode 内通常使用 `Alt + 鼠标左键单击`, 而 Pycharm 默认为 `Ctrl + 鼠标左键单击`
+
+</p>
