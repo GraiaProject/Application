@@ -1,4 +1,5 @@
 import asyncio
+import atexit
 from typing import List, NoReturn, Optional, Tuple, Union
 from .logger import AbstractLogger, LoggingLogger
 from .protocol.entities import MiraiConfig
@@ -9,6 +10,7 @@ from graia.broadcast import Broadcast
 from graia.broadcast.entities.event import BaseEvent
 from graia.broadcast.utilles import printer, run_always_await
 from yarl import URL
+from functools import partial
 
 from .context import enter_message_send_context
 from .protocol import UploadMethods
@@ -581,3 +583,11 @@ class GraiaMiraiApplication:
             loop.run_until_complete(fetch_method)
         finally:
             loop.run_until_complete(self.shutdown())
+
+    def subscribe_atexit(self, loop=None):
+        loop = loop or self.broadcast.loop
+        atexit.register(partial(loop.run_until_complete, self.shutdown()))
+
+    def create_background_task(self, loop=None):
+        loop = loop or self.broadcast.loop
+        return loop.create_task(loop.run_until_complete(self.launch()))

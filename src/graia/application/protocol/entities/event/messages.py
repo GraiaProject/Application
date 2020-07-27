@@ -15,10 +15,6 @@ class FriendMessage(MiraiEvent):
     type: str = "FriendMessage"
     messageChain: MessageChain
     sender: Friend
-
-    @classmethod
-    def parse_obj(cls, obj):
-        return super().parse_obj(obj)
     
     @validator("messageChain")
     def _(cls, v):
@@ -36,10 +32,6 @@ class GroupMessage(MiraiEvent):
     type: str = "GroupMessage"
     messageChain: MessageChain
     sender: Member
-
-    @classmethod
-    def parse_obj(cls, obj):
-        return super().parse_obj(obj)
 
     class Dispatcher(BaseDispatcher):
         mixin = [MessageChainCatcher, ApplicationDispatcher]

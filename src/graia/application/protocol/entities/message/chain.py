@@ -22,6 +22,10 @@ class MessageChain(BaseModel):
     __root__: Union[List[T], Tuple[T]]
 
     @classmethod
+    def create(cls, elements: Sequence[T]):
+        return cls(__root__=elements)
+
+    @classmethod
     def parse_obj(cls: Type['MessageChain'], obj: List[T]) -> 'MessageChain':
         "将其构建为内部态."
         handled_elements = []
@@ -38,7 +42,7 @@ class MessageChain(BaseModel):
                         for iii in InternalElement.__subclasses__():
                             if iii.__name__ == i['type']:
                                 handled_elements.append(iii.fromExternal(ii.parse_obj(i)))
-        return cls(__root__=handled_elements)
+        return cls(__root__=tuple(handled_elements)) # 默认是不可变型
 
     @property
     def isImmutable(self):
