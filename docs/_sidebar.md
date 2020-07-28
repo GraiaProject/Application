@@ -6,3 +6,4 @@
   - [从一个复读机器人开始](tutorial/start_with_reply "Graia Framework - 小小复读机")
 - **特性**
   - [Import Entry](feature/use_entry_module "Graia Framework - 快速导入入口")
+  - [使用 Template](feature/template "Graia Framework - 消息模板")
