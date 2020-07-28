@@ -259,6 +259,13 @@ class FlashImage(Image):
 class Xml(InternalElement, ExternalElement):
     xml: str
 
+    def toExternal(self):
+        return self
+
+    @classmethod
+    def fromExternal(cls, external_element) -> "Xml":
+        return external_element
+
     def asDisplay(self) -> str:
         return "[XML消息]"
 
