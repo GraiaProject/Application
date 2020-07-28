@@ -195,14 +195,14 @@ class GraiaMiraiApplication:
         quote: Optional[Union[Source, int]] = None
     ) -> BotMessage:
         with enter_message_send_context(UploadMethods.Group):
-            async with self.session.post(self.url_gen("sendGroupMessage"), json=printer({
+            async with self.session.post(self.url_gen("sendGroupMessage"), json={
                 "sessionKey": self.connect_info.sessionKey,
                 "target": group.id if isinstance(group, Group) else group,
                 "messageChain": (await message.build()).dict()['__root__'],
                 **({
                     "quote": quote.id if isinstance(quote, Source) else quote
                 } if quote else {})
-            })) as response:
+            }) as response:
                 response.raise_for_status()
                 data = await response.json()
                 raise_for_return_code(data)

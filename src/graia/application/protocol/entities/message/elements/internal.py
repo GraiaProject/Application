@@ -66,10 +66,13 @@ class Quote(InternalElement, ExternalElement):
 class At(InternalElement, ExternalElement):
     type: str = "At"
     target: int
-    display: str
+    display: Optional[str] = None
+
+    def __init__(self, target, **kwargs) -> None:
+        super().__init__(target=target, **kwargs)
 
     def asDisplay(self) -> str:
-        return self.display
+        return str(self.display)
 
     def toExternal(self) -> "At":
         try:
