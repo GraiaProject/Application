@@ -12,10 +12,6 @@ class FriendMessage(MiraiEvent):
     type: str = "FriendMessage"
     messageChain: MessageChain
     sender: Friend
-    
-    @validator("messageChain")
-    def _(cls, v):
-        return 
 
     class Dispatcher(BaseDispatcher):
         mixin = [MessageChainCatcher, ApplicationDispatcher]

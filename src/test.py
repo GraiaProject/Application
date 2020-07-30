@@ -26,9 +26,10 @@ app = GraiaMiraiApplication(
 
 @bcc.receiver("GroupMessage")
 async def group_message_handler(app: GraiaMiraiApplication, message: MessageChain, group: Group, member: Member):
-    if message.asDisplay().startswith("At"):
-        await app.sendGroupMessage(group, MessageChain.create([
-            At(member.id)
-        ]))
+    raise EnvironmentError("?")
+
+@bcc.receiver("ExceptionThrowed")
+async def error(error: EnvironmentError, event):
+    print(event, error)
 
 app.launch_blocking()
