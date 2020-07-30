@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import (Dict, List, Sequence, Tuple, Type, Union)
+from typing import (Dict, List, NoReturn, Sequence, Tuple, Type, Union)
 
 from graia.application.protocol.exceptions import EntangledSuperposition
 from graia.broadcast.utilles import run_always_await
@@ -87,9 +87,15 @@ class MessageChain(BaseModel):
         return "".join(i.asDisplay() for i in self.__root__)
 
     @classmethod
-    def join(cls, *chains: List["MessageChain"]) -> "MessageChain":
-        return cls(sum(chains, []))
+    def join(cls, *chains: "MessageChain") -> "MessageChain":
+        return cls.create(sum(chains, []))
+
+    def plusWith(self, *chains: "MessageChain") -> "MessageChain":
+        return self.create(sum(chains, self.__root__))
+
+    def plus(self, *chains: "MessageChain") -> NoReturn:
+        for i in chains:
+            self.__root__.extend(i.__root__)
 
     __contains__ = has
     __getitem__ = get
-

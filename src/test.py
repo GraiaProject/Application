@@ -5,7 +5,7 @@ from graia.application.protocol.entities import message
 from graia.application.protocol.entities.message.chain import MessageChain
 import asyncio
 
-from graia.application.protocol.entities.message.elements.internal import Image, Plain
+from graia.application.protocol.entities.message.elements.internal import Image, Plain, At
 from graia.application.protocol.entities.targets.friend import Friend
 from graia.application.protocol.entities.targets.group import Group, Member
 
@@ -25,8 +25,10 @@ app = GraiaMiraiApplication(
 )
 
 @bcc.receiver("GroupMessage")
-async def group_message_handler(app: GraiaMiraiApplication, message: MessageChain, group: Group):
-    if message.asDisplay().startswith("复读"):
-        await app.sendGroupMessage(group, message.asSendable())
+async def group_message_handler(app: GraiaMiraiApplication, message: MessageChain, group: Group, member: Member):
+    if message.asDisplay().startswith("At"):
+        await app.sendGroupMessage(group, MessageChain.create([
+            At(member.id)
+        ]))
 
 app.launch_blocking()

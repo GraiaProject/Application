@@ -7,3 +7,4 @@
 - **特性**
   - [Import Entry](feature/use_entry_module "Graia Framework - 快速导入入口")
   - [使用 Template](feature/template "Graia Framework - 消息模板")
+  - [消息元素选择器](feature/use_component_selector "Graia Framework - 消息元素选择器")
