@@ -6,9 +6,9 @@
 
 #### 从 Pypi 安装
 ``` bash
-pip install graia-application
+graia-application-mirai
 # 或使用 poetry
-poetry add graia-application
+poetry add graia-application-mirai
 ```
 
 ### 作出贡献
