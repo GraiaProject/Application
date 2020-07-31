@@ -30,6 +30,6 @@ async def group_message_handler(app: GraiaMiraiApplication, message: MessageChai
 
 @bcc.receiver("ExceptionThrowed")
 async def error(error: EnvironmentError, event):
-    print(event, error)
+    print("BUG修复了.", event, error)
 
 app.launch_blocking()
