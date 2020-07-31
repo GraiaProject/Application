@@ -44,4 +44,41 @@ def im_listener():
 它的名字是 `Priority`, 如果有手动设置优先级的需要, 请尽量使用本枚举类声明.
 
 当监听器内部发生错误时(不限于函数体, 包括 `Dispatcher`, `Decorater` 等),
-如果是一般错误, 则广播控制系统会
+如果是一般错误, 则广播控制系统会广播 `ExceptionThrowed` 事件;
+但如果是 `PropagationCancelled`(传播终止), 则广播控制系统会在执行完本优先级层上的所有监听器后不再去执行下一层.
+
+!> **警告** 如果你将所有的监听器的优先级都设做同一个值(如默认值 `16`),
+则你的 `PropagationCancelled` 是无效的.
+
+## 参数解析(Dispatch)和参数装饰(Decorate)
+
+上一节中, `Broadcast.postEvent` 启动了 `Broadcast.layered_scheduler`,
+同时, 我们了解了 `Broadcast.layered_scheduler` 是如何控制事件的传播的.
+那么这节中, 我们将了解当执行器被执行时, 广播控制是如何解析函数体中的参数的.
+
+
+### 参数解析器(Dispatcher) 和 解析器接口(Dispatcher Interface)
+`Broadcast.layered_scheduler` 对监听器进行分层, 并对每一层都进行并发(`asyncio.wait`).
+在并发前, 它会先用 `ExecutorProtocol` 包装监听器等环境变量, 再传入 `Broadcast.Executor`,
+由它来执行对参数的解析和装饰, 并将解析后得到的参数传入函数体执行我们的业务代码.
+
+在 `Broadcast.Executor` 中, `Dispatcher` 是参数解析中的重要成员,
+它们通过分析当前上下文, 向外抛出值(`return` 或者是 `yield`),
+从而使 `Broadcast.Executor` 得到向函数体传入的值.
+`DispatcherInterface` 是调控 `Dispatcher` 的重要单位,
+它通过 python 中提供的 上下文管理器(`Context manager`) 特性,
+全自动的将当前上下文准确无误的传递给 `Dispatcher`, 并通过他们的输出判断是否继续向下查询(lookup).
+
+如果 `DispatcherInterface` 在提供给它的所有 `Dispatcher` 中都无法查询到可以作为返回值的结果,
+会向上抛出 `RequirementCrashed` 错误.
+
+### 参数修饰器(Decorater) 和 修饰器接口(Decorater Interface)
+
+?> 关于 `Decorater` 应为 `Decorator`: 这里是一个笔误, 但无伤大雅.
+
+`Decorater` 被用于对 `Dispatcher` 返回的 "抛出值" 加以修饰.  
+`DecoraterInterface` 实为一个内置的 `Dispatcher`, 但 `Broadcast.Executor` 将保证它会被第一个运行.
+
+`DecoraterInterface` 在定位上类似 `Dispatcher` 之于 `DispatcherInterface`,
+由它来对 `Decorater` 进行执行并捕获抛出值;
+但不同的是, `DecoraterInterface` 允许拥有状态(`DecoraterInterface.local_storage`).
