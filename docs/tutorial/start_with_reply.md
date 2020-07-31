@@ -239,7 +239,7 @@ async def group_message_handler(app: GraiaMiraiApplication, message: MessageChai
 
 以下是复读机完整, 可正常运行的代码:
 
-[reply_wrong1](/examples/reply_right.py ':include :type=code python')
+[reply_right](/examples/reply_right.py ':include :type=code python')
 
 
 [1] VSCode 内通常使用 `Alt + 鼠标左键单击`, 而 Pycharm 默认为 `Ctrl + 鼠标左键单击`
