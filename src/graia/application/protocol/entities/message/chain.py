@@ -94,6 +94,8 @@ class MessageChain(BaseModel):
         return self.create(sum(chains, self.__root__))
 
     def plus(self, *chains: "MessageChain") -> NoReturn:
+        if self.isImmutable:
+            raise ValueError("this chain is not mutable")
         for i in chains:
             self.__root__.extend(i.__root__)
 

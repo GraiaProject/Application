@@ -8,6 +8,7 @@
 - **内部机制探索**
   - [内部运作流程](tutorial/event_listening_controling "Graia Framework - 内部运作流程")
   - [深入消息链](tutorial/intro_message_chain "Graia Framework - 消息链与消息元素")
+  - [自定义 Logger](tutorial/custom_logger.md "Graia Framework - 自定义 Logger")
 
 - **特性**
   - [Import Entry](feature/use_entry_module "Graia Framework - 快速导入入口")
