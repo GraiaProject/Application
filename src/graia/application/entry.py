@@ -3,17 +3,17 @@ from .logger import (
     AbstractLogger,
     LoggingLogger
 )
-from .protocol.entities.event.dispatcher import MessageChainCatcher
-from .protocol.entities.event.lifecycle import (
+from .event.dispatcher import MessageChainCatcher
+from .event.lifecycle import (
     ApplicationLaunched,
     ApplicationShutdowned
 )
-from .protocol.entities.event.messages import (
+from .event.messages import (
     FriendMessage,
     GroupMessage,
     TempMessage
 )
-from .protocol.entities.event.mirai import (
+from .event.mirai import (
     BotOnlineEvent,
     BotOfflineEventActive,
     BotOfflineEventForce,
@@ -48,17 +48,17 @@ from .protocol.entities.event.mirai import (
     MemberJoinRequestEvent,
     BotInvitedJoinGroupRequestEvent
 )
-from .protocol.entities.message.elements.internal import (
+from .message.elements.internal import (
     Plain, Source, Quote, At, AtAll, Face, Image, FlashImage,
     Xml, Json, App, Poke, PokeMethods
 )
-from .protocol.entities.message.chain import MessageChain
-from .protocol.entities.targets.friend import Friend
-from .protocol.entities.targets.group import (
+from .message.chain import MessageChain
+from .friend import Friend
+from .group import (
     MemberPerm, Group, Member, MemberInfo, GroupConfig    
 )
-from .protocol.entities.session import Session
-from .protocol.exceptions import (
+from .session import Session
+from .exceptions import (
     InvalidEventTypeDefinition,
     InvaildAuthkey,
     AccountNotFound,

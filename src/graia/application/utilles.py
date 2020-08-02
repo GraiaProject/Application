@@ -4,7 +4,7 @@ from graia.broadcast.interfaces.dispatcher import DispatcherInterface
 from .exceptions import (AccountMuted, AccountNotFound, InvaildArgument,
                          InvaildAuthkey, InvaildSession, NotSupportedVersion,
                          TooLongMessage, UnauthorizedSession, UnknownTarget)
-from ..context import enter_context
+from .context import enter_context
 
 
 def requireAuthenticated(func):

@@ -19,6 +19,3 @@ class InternalElement(Element, abc.ABC):
 
 class ExternalElement(Element):
     pass
-
-class BotMessage(BaseModel):
-    messageId: int

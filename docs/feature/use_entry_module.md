@@ -4,12 +4,14 @@
 我们添加了 `graia.application.entry` 模块, 用于为开发者提供快速 import,
 以及照顾使用没有 Auto-Import 功能的 IDE 的开发者:
 
+!> 在 `0.1.0` 版本中, 我们对包结构做了很大的改进, 你不必使用该模块了.
+
 Before:
 
 ``` python
 from graia.application import GraiaMiraiApplication, Session
-from graia.application.protocol.entities.message.chain import MessageChain
-from graia.application.protocol.entities.targets.group import Group
+from graia.application.message.chain import MessageChain
+from graia.application.group import Group
 ```
 
 Now:

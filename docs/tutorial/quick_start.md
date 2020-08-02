@@ -56,11 +56,11 @@ port: 8080 # httpapi 服务监听的端口, 错误的设置会造成 Graia Appli
 ``` python
 from graia.broadcast import Broadcast
 from graia.application import GraiaMiraiApplication, Session
-from graia.application.protocol.entities.message.chain import MessageChain
+from graia.application.message.chain import MessageChain
 import asyncio
 
-from graia.application.protocol.entities.message.elements.internal import Plain
-from graia.application.protocol.entities.targets.friend import Friend
+from graia.application.message.elements.internal import Plain
+from graia.application.friend import Friend
 
 loop = asyncio.get_event_loop()
 

@@ -1,11 +1,11 @@
 from pydantic import validator
 
-from graia.application.protocol.entities.event.dispatcher import MessageChainCatcher
-from graia.application.protocol.entities.message.chain import MessageChain
+from graia.application.event.dispatcher import MessageChainCatcher
+from graia.application.message.chain import MessageChain
 from graia.broadcast.entities.dispatcher import BaseDispatcher
 from graia.broadcast.interfaces.dispatcher import DispatcherInterface
-from graia.application.protocol.entities.targets.group import Member, Group
-from graia.application.protocol.entities.targets.friend import Friend
+from graia.application.group import Member, Group
+from graia.application.friend import Friend
 from . import ApplicationDispatcher, MiraiEvent
 
 class FriendMessage(MiraiEvent):

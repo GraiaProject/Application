@@ -1,13 +1,9 @@
-from graia.broadcast import Broadcast
-from graia.application import GraiaMiraiApplication, Session
-from graia.application.protocol import UploadMethods
-from graia.application.protocol.entities import message
-from graia.application.protocol.entities.message.chain import MessageChain
 import asyncio
-
-from graia.application.protocol.entities.message.elements.internal import Image, Plain, At
-from graia.application.protocol.entities.targets.friend import Friend
-from graia.application.protocol.entities.targets.group import Group, Member
+from graia.broadcast import Broadcast
+from graia.application import GraiaMiraiApplication
+from graia.application.session import Session
+from graia.application.message.chain import MessageChain
+from graia.application.group import Group, Member
 
 from devtools import debug
 
@@ -26,10 +22,6 @@ app = GraiaMiraiApplication(
 
 @bcc.receiver("GroupMessage")
 async def group_message_handler(app: GraiaMiraiApplication, message: MessageChain, group: Group, member: Member):
-    raise EnvironmentError("?")
-
-@bcc.receiver("ExceptionThrowed")
-async def error(error: EnvironmentError, event):
-    print("BUG修复了.", event, error)
+    print(group.id, member.id)
 
 app.launch_blocking()

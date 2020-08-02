@@ -2,9 +2,9 @@ import asyncio
 import atexit
 from typing import List, NoReturn, Optional, Tuple, Union
 from .logger import AbstractLogger, LoggingLogger
-from .protocol.entities import MiraiConfig
+from .entities import MiraiConfig
 
-import graia.application.protocol.entities.event.mirai  # for init events
+import graia.application.event.mirai  # for init events
 from aiohttp import ClientSession, FormData
 from graia.broadcast import Broadcast
 from graia.broadcast.entities.event import BaseEvent
@@ -13,19 +13,18 @@ from yarl import URL
 from functools import partial
 
 from .context import enter_message_send_context
-from .protocol import UploadMethods
-from .protocol.entities.event.messages import (FriendMessage, GroupMessage,
+from .entities import UploadMethods
+from .event.messages import (FriendMessage, GroupMessage,
                                                TempMessage)
-from .protocol.entities.message import BotMessage
-from .protocol.entities.message.chain import MessageChain
-from .protocol.entities.message.elements import external
-from .protocol.entities.message.elements.internal import Image, Source
-from .protocol.entities.session import Session
-from .protocol.entities.targets.friend import Friend
-from .protocol.entities.targets.group import (Group, GroupConfig, Member,
-                                              MemberInfo)
-from .protocol.exceptions import InvaildArgument, InvaildSession
-from .protocol.utilles import (AppMiddlewareAsDispatcher, SinceVersion,
+from .message import BotMessage
+from .message.chain import MessageChain
+from .message.elements import external
+from .message.elements.internal import Image, Source
+from .session import Session
+from .friend import Friend
+from .group import (Group, GroupConfig, Member, MemberInfo)
+from .exceptions import InvaildArgument, InvaildSession
+from .utilles import (AppMiddlewareAsDispatcher, SinceVersion,
                                raise_for_return_code, requireAuthenticated)
 
 
@@ -539,7 +538,7 @@ class GraiaMiraiApplication:
                     break
 
     async def launch(self):
-        from .protocol.entities.event.lifecycle import ApplicationLaunched
+        from .event.lifecycle import ApplicationLaunched
         self.logger.info("launching app...")
         await self.authenticate()
         await self.activeSession()
@@ -564,7 +563,7 @@ class GraiaMiraiApplication:
         return fetch_method()
 
     async def shutdown(self):
-        from .protocol.entities.event.lifecycle import ApplicationShutdowned
+        from .event.lifecycle import ApplicationShutdowned
         self.logger.info("application shutdowning...")
         await self.broadcast.layered_scheduler(
             listener_generator=self.broadcast.default_listener_generator(ApplicationShutdowned),

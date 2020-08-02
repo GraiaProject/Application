@@ -1,10 +1,10 @@
 from typing import NoReturn, Optional
 
 from pydantic import Field
-from graia import application
-from graia.application.protocol.entities.targets.group import Group, Member, MemberPerm
-from graia.application.protocol.exceptions import InvaildSession
-from graia.application.protocol.utilles import raise_for_return_code
+from graia.application.context import application
+from graia.application.group import Group, Member, MemberPerm
+from graia.application.exceptions import InvaildSession
+from graia.application.utilles import raise_for_return_code
 from . import ApplicationDispatcher, MiraiEvent
 from graia.broadcast.entities.dispatcher import BaseDispatcher
 from graia.broadcast.interfaces.dispatcher import DispatcherInterface
