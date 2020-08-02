@@ -1,8 +1,8 @@
 import asyncio
 
 from graia.application import GraiaMiraiApplication, Session
-from graia.application.protocol.entities.message.chain import MessageChain
-from graia.application.protocol.entities.targets.group import Group
+from graia.application.message.chain import MessageChain
+from graia.application.group import Group
 from graia.broadcast import Broadcast
 
 loop = asyncio.get_event_loop()

@@ -16,7 +16,7 @@
 而这个名称在程序内部被指向一个同样叫做 `FriendMessage` 的类; 当数据被序列化时,
 从 `mirai-api-http` 处传达到的事件就被这个 `FriendMessage` 的类解析, 结果便是一个 `FriendMessage` 实例.
 
-?> **提示** 你可以从模块 `graia.application.protocol.entities.event.messages` 处找到 `FriendMessage` 的定义.
+?> **提示** 你可以从模块 `graia.application.event.messages` 处找到 `FriendMessage` 的定义.
 
 ### 获取这个实例
 Graia Framework 使用和 `fastapi` 类似的方式, 通过对函数中定义的形式参数进行解析和处理, 得到最后的传参结果;
@@ -27,7 +27,7 @@ Graia Framework 使用和 `fastapi` 类似的方式, 通过对函数中定义的
 回到问题本身, 我们可以使用这个特性来获取到事件中的 `FriendMessage` 实例:
 
 ``` python
-from graia.application.protocol.entities.event.messages import FriendMessage
+from graia.application.event.messages import FriendMessage
 
 @bcc.receiver("FriendMessage")
 async def friend_message_listener(event: FriendMessage):
@@ -37,7 +37,7 @@ async def friend_message_listener(event: FriendMessage):
 通过 IDE 内置的自动补全功能, 我们可以通过如下的代码得到我们亲爱的消息链:
 
 ``` python
-from graia.application.protocol.entities.event.messages import FriendMessage
+from graia.application.event.messages import FriendMessage
 
 @bcc.receiver("FriendMessage")
 async def friend_message_listener(event: FriendMessage):
@@ -47,7 +47,7 @@ async def friend_message_listener(event: FriendMessage):
 但是, 如果就这样下去, 总会有一天写出这样的代码:
 
 ``` python
-from graia.application.protocol.entities.event.messages import FriendMessage
+from graia.application.event.messages import FriendMessage
 
 @bcc.receiver("FriendMessage")
 async def friend_message_listener(event: FriendMessage):
@@ -61,8 +61,8 @@ async def friend_message_listener(event: FriendMessage):
 是的, 我们可以用这种方式大幅降低代码中 `event.xxxxxxx` 的出现次数:
 
 ``` python
-from graia.application.protocol.entities.event.messages import FriendMessage
-from graia.application.protocol.entities.message.chain import MessageChain
+from graia.application.event.messages import FriendMessage
+from graia.application.message.chain import MessageChain
 
 @bcc.receiver("FriendMessage")
 async def friend_message_listener(message: MessageChain):
@@ -78,9 +78,9 @@ async def friend_message_listener(message: MessageChain):
 比如 `pycharm`, `VSCode`(加装 `Pylance` 插件), 这也让我们方便了不止一点半点.
 
 ``` python
-from graia.application.protocol.entities.event.messages import FriendMessage
-from graia.application.protocol.entities.message.chain import MessageChain
-from graia.application.protocol.entities.targets.friend import Friend
+from graia.application.event.messages import FriendMessage
+from graia.application.message.chain import MessageChain
+from graia.application.friend import Friend
 
 @bcc.receiver("FriendMessage")
 async def friend_message_listener(
@@ -107,7 +107,7 @@ async def friend_message_listener(
 于是, 为了尽量写出简单的代码, 你查阅了我们的代码:
 
 ``` python
-# module: graia.application.protocol.entities.event.messages
+# module: graia.application.event.messages
 ...
 class GroupMessage(MiraiEvent):
     type: str = "GroupMessage"

@@ -5,13 +5,13 @@ from pathlib import Path
 from typing import NoReturn, Optional, Union
 
 from pydantic.fields import Field
-from graia.application.protocol import UploadMethods
+from graia.application.entities import UploadMethods
 
-from ....exceptions import InvaildArgument
+from ...exceptions import InvaildArgument
 from pydantic import validator
 
-from .....context import application, image_method
-from .. import ExternalElement, InternalElement
+from ...context import application, image_method
+from . import ExternalElement, InternalElement
 from . import external as External
 from functools import partial
 from aiohttp import ClientSession
@@ -56,7 +56,7 @@ class Quote(InternalElement, ExternalElement):
 
     @validator("origin")
     def _(cls, v):
-        from graia.application.protocol.entities.message.chain import MessageChain
+        from ..chain import MessageChain
         return MessageChain.parse_obj(v)
 
     @classmethod
@@ -280,12 +280,26 @@ class Json(InternalElement, ExternalElement):
 
     def asDisplay(self) -> str:
         return "[JSON消息]"
+    
+    def toExternal(self) -> "Json":
+        return self
+    
+    @classmethod
+    def fromExternal(_, external_element) -> "Json":
+        return external_element
 
 class App(InternalElement, ExternalElement):
     content: str
 
     def asDisplay(self) -> str:
         return "[APP消息]"
+    
+    def toExternal(self) -> "App":
+        return self
+    
+    @classmethod
+    def fromExternal(_, external_element) -> "App":
+        return external_element
 
 class PokeMethods(Enum):
     Poke = "Poke"
@@ -300,6 +314,13 @@ class Poke(InternalElement, ExternalElement):
 
     def asDisplay(self) -> str:
         return "[戳一戳:{0}]".format(self.name)
+    
+    def toExternal(self) -> "Poke":
+        return self
+    
+    @classmethod
+    def fromExternal(_, external_element) -> "Poke":
+        return external_element
 
 from ..chain import MessageChain
 

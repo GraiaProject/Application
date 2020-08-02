@@ -2,7 +2,7 @@ from graia.broadcast.entities.dispatcher import BaseDispatcher
 from pydantic import BaseModel, validator
 from graia.broadcast import BaseEvent
 from graia.application.context import application
-from graia.application.protocol.exceptions import (
+from graia.application.exceptions import (
     InvalidEventTypeDefinition)
 class MiraiEvent(BaseEvent, BaseModel):
     __base_event__ = True

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "graia-application-mirai"
-version = "0.0.6"
+version = "0.1.0"
 description = ""
 authors = ["GreyElaina <GreyElaina@outlook.com>"]
 license = "MIT"
@@ -11,7 +11,7 @@ packages = [
 [tool.poetry.dependencies]
 python = "^3.6"
 pydantic = "^1.6.1"
-graia-broadcast = ">0.0.3"
+graia-broadcast = "^0.0.5"
 aiohttp = "^3.6.2"
 yarl = "^1.4.2"
 contextvars = {version = "^2.4", python = "<3.7"}

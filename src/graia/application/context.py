@@ -1,7 +1,7 @@
 from contextvars import ContextVar
 from contextlib import contextmanager
 
-from graia.application.protocol import UploadMethods
+from graia.application.entities import UploadMethods
 
 application = ContextVar("application")
 event = ContextVar("event")
