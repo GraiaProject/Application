@@ -2,7 +2,7 @@
 
 ### 开始使用
 
-文档地址: https://graiaproject.github.io/Application/
+文档地址: https://graia.originpages.com/
 
 #### 从 Pypi 安装
 ``` bash
