@@ -1,5 +1,9 @@
 # Graia Framework
 
+!> **严重警告** 由于依赖项目 [`mirai`](https://github.com/mamoe/mirai)
+及其附属插件 [`mirai-api-http`](https://github.com/mamoe/mirai-api-http) 因为特殊原因暂时**停止更新**并将其项目作为备档,
+因此, 我们暂时不会受理**任何**关于扩充目前协议功能的问题反馈.
+
 `Graia Framework` 由 `NatriumLab` 提供技术支持, 致力于为开发者提供良好的聊天软件自动化编程体验,
 并以此为出发点, 提供了设计简洁完善的各式接口, 使对于不同机器人平台的开发体验尽量趋于一致.
 
