@@ -1,7 +1,7 @@
 # Application for Graia Framework
 
-当前最新版本: ![PyPI](https://img.shields.io/pypi/v/graia-application-mirai)
-所需求的最低 CPython 版本: ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/graia-application-mirai)
+当前最新版本: ![PyPI](https://img.shields.io/pypi/v/graia-application-mirai)  
+所需求的最低 CPython 版本: ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/graia-application-mirai)  
 已确认可以在其上运行的 Python 实现: ![PyPI - Implementation](https://img.shields.io/pypi/implementation/graia-application-mirai)
 
 ### 开始使用
