@@ -579,7 +579,10 @@ class GraiaMiraiApplication:
             fetch_method = loop.run_until_complete(self.launch())
             loop.run_until_complete(fetch_method)
         finally:
-            loop.run_until_complete(self.shutdown())
+            try:
+                loop.run_until_complete(self.shutdown())
+            except:
+                self.logger.error("it seems our shutdown operator has been failed...check your headless client alive.")
 
     def subscribe_atexit(self, loop=None):
         loop = loop or self.broadcast.loop
