@@ -237,7 +237,7 @@ class Image(InternalElement):
                 response.raise_for_status()
                 return await response.read()
 
-class FlashImage(Image):
+class FlashImage(Image, InternalElement):
     def toExternal(self):
         return External.FlashImage(
             imageId=self.imageId,
@@ -251,6 +251,14 @@ class FlashImage(Image):
             imageId=external_element.imageId,
             url=external_element.url,
             path=external_element.path
+        )
+
+    @classmethod
+    def fromOriginalImage(cls, image_element: Image) -> "FlashImage":
+        return cls(
+            imageId=image_element.imageId,
+            url=image_element.url,
+            path=image_element.path
         )
 
     def asDisplay(self) -> str:
