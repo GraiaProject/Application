@@ -54,7 +54,7 @@ class Quote(InternalElement, ExternalElement):
     targetId: int
     origin: "MessageChain"
 
-    @validator("origin")
+    @validator("origin", pre=True)
     def _(cls, v):
         from ..chain import MessageChain
         return MessageChain.parse_obj(v)
