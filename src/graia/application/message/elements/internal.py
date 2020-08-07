@@ -265,7 +265,7 @@ class FlashImage(Image, InternalElement):
         return "[闪照]"
 
 class Xml(InternalElement, ExternalElement):
-    type: "Xml"
+    type = "Xml"
     xml: str
 
     def toExternal(self):
