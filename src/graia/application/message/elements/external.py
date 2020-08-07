@@ -9,4 +9,5 @@ class Image(ExternalElement):
     path: Optional[str] = None
 
 class FlashImage(Image):
+    type = "FlashImage"
     pass
