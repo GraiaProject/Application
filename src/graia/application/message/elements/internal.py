@@ -265,6 +265,7 @@ class FlashImage(Image, InternalElement):
         return "[闪照]"
 
 class Xml(InternalElement, ExternalElement):
+    type: "Xml"
     xml: str
 
     def toExternal(self):
@@ -278,6 +279,7 @@ class Xml(InternalElement, ExternalElement):
         return "[XML消息]"
 
 class Json(InternalElement, ExternalElement):
+    type = "Json"
     Json: str = Field(..., alias="json")
 
     def dict(self, *args, **kwargs):
@@ -297,6 +299,7 @@ class Json(InternalElement, ExternalElement):
         return external_element
 
 class App(InternalElement, ExternalElement):
+    type = "App"
     content: str
 
     def asDisplay(self) -> str:
@@ -318,6 +321,7 @@ class PokeMethods(Enum):
     FangDaZhao = "FangDaZhao"
 
 class Poke(InternalElement, ExternalElement):
+    type = "Poke"
     name: PokeMethods
 
     def asDisplay(self) -> str:
