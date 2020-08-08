@@ -1,6 +1,10 @@
 import asyncio
 import atexit
 from typing import List, NoReturn, Optional, Tuple, Union
+
+from graia.broadcast.entities.inject_rule import SpecialEventType
+
+from graia.application.event import MiraiEvent
 from .logger import AbstractLogger, LoggingLogger
 from .entities import MiraiConfig
 
@@ -44,8 +48,9 @@ class GraiaMiraiApplication:
         self.connect_info = connect_info
         self.session = session or ClientSession(loop=broadcast.loop)
         self.logger = logger or LoggingLogger()
-        self.broadcast.getDefaultNamespace().injected_dispatchers.append(
-            AppMiddlewareAsDispatcher(self)
+
+        self.broadcast.addInjectionRule(
+            SpecialEventType(MiraiEvent, AppMiddlewareAsDispatcher(self))
         )
 
     def url_gen(self, path) -> str:
