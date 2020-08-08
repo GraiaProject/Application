@@ -4,6 +4,7 @@
   - [快速上手](tutorial/quick_start "Graia Framework - 快速上手")
   - [发生了什么](tutorial/what_happened "Graia Framework - 发生了什么Σ(っ °Д °;)っ")
   - [从一个复读机器人开始](tutorial/start_with_reply "Graia Framework - 小小复读机")
+  - [关于图片(Image)](tutorial/image "Graia Framework - 图片(Image)")
 
 - **内部机制探索**
   - [内部运作流程](tutorial/event_listening_controling "Graia Framework - 内部运作流程")
