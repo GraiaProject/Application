@@ -5,7 +5,7 @@ from .exceptions import (AccountMuted, AccountNotFound, InvaildArgument,
                          InvaildAuthkey, InvaildSession, NotSupportedVersion,
                          TooLongMessage, UnauthorizedSession, UnknownTarget)
 from .context import enter_context
-
+import inspect
 
 def requireAuthenticated(func):
     def wrapper(self, *args, **kwargs):
@@ -71,13 +71,26 @@ def raise_for_return_code(code: Union[dict, int]):
         if exception_code:
             raise exception_code
 
+def print_traceback_javay():
+    stacks = inspect.stack()[1:]
+    for i in stacks:
+        print(f"    at [{i.filename}:{i.lineno}]")
+    print("\n")
+
 class AppMiddlewareAsDispatcher(BaseDispatcher):
+    always = True
+    actived: bool = False
+
     def __init__(self, app) -> None:
         self.app = app
 
     def catch(self, interface: "DispatcherInterface"):
+        if self.actived:
+            return
         with enter_context(self.app, interface.event):
+            self.actived = True
             yield
+            self.actived = False
 
 def context_enter_auto(context):
     def wrapper1(func):
