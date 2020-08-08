@@ -8,6 +8,8 @@
 
 文档地址: https://graia.originpages.com/
 
+Tencent QQ 交流群: [邀请链接](https://jq.qq.com/?_wv=1027&k=VXp6plBD)
+
 #### 从 Pypi 安装
 ``` bash
 pip install graia-application-mirai
