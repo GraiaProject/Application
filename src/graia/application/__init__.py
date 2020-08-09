@@ -37,12 +37,14 @@ class GraiaMiraiApplication:
     session: ClientSession
     connect_info: Session
     logger: AbstractLogger
+    debug: bool
 
     def __init__(self, *,
         broadcast: Broadcast,
         connect_info: Session,
         session: Optional[ClientSession] = None,
-        logger: Optional[AbstractLogger] = None
+        logger: Optional[AbstractLogger] = None,
+        debug: bool = False
     ):
         self.broadcast = broadcast
         self.connect_info = connect_info
@@ -52,6 +54,7 @@ class GraiaMiraiApplication:
         self.broadcast.addInjectionRule(
             SpecialEventType(MiraiEvent, AppMiddlewareAsDispatcher(self))
         )
+        self.debug = debug
 
     def url_gen(self, path) -> str:
         return str(URL(str(self.connect_info.host)).parent / path)
@@ -258,6 +261,8 @@ class GraiaMiraiApplication:
             
             result = []
             for event in data:
+                if self.debug:
+                    self.logger.debug("http polling received: " + str(event))
                 try:
                     result.append(await self.auto_parse_by_type(event))
                 except ValueError:
@@ -518,12 +523,12 @@ class GraiaMiraiApplication:
         }))) as connection:
             while True:
                 try:
-                    from pprint import pprint
                     received_data = await connection.receive_json()
-                    pprint(received_data)
                 except TypeError:
                     continue
                 if received_data:
+                    if self.debug:
+                        self.logger.debug("websocket received: " + str(received_data))
                     try:
                         event = await self.auto_parse_by_type(received_data)
                     except ValueError as e:
