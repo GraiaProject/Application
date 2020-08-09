@@ -21,7 +21,12 @@ class Plain(InternalElement, ExternalElement):
     type: str = "Plain"
     text: str
 
-    def __init__(self, text, *_, **__) -> NoReturn:
+    def __init__(self, text: str, *_, **__) -> NoReturn:
+        """实例化一个 Plain 消息元素, 用于承载消息中的文字.
+
+        Args:
+            text (str): 元素所包含的文字
+        """
         super().__init__(text=text)
 
     def toExternal(self) -> "Plain":
@@ -35,6 +40,7 @@ class Plain(InternalElement, ExternalElement):
         return self.text
 
 class Source(InternalElement, ExternalElement):
+    "表示消息在一个特定聊天区域内的唯一标识"
     id: int
     time: datetime
     
@@ -48,6 +54,7 @@ class Source(InternalElement, ExternalElement):
         }
 
 class Quote(InternalElement, ExternalElement):
+    "表示消息中回复其他消息/用户的部分, 通常包含一个完整的消息链(`origin` 属性)"
     id: int
     groupId: int
     senderId: int
@@ -64,11 +71,17 @@ class Quote(InternalElement, ExternalElement):
         return external_element
 
 class At(InternalElement, ExternalElement):
+    """该消息元素用于承载消息中用于提醒/呼唤特定用户的部分."""
     type: str = "At"
     target: int
     display: Optional[str] = None
 
-    def __init__(self, target, **kwargs) -> None:
+    def __init__(self, target: int, **kwargs) -> None:
+        """实例化一个 At 消息元素, 用于承载消息中用于提醒/呼唤特定用户的部分.
+
+        Args:
+            target (int): 需要提醒/呼唤的特定用户的 QQ 号(或者说 id.)
+        """
         super().__init__(target=target, **kwargs)
 
     def asDisplay(self) -> str:
@@ -87,6 +100,7 @@ class At(InternalElement, ExternalElement):
         return external_element
 
 class AtAll(InternalElement, ExternalElement):
+    "该消息元素用于群组中的管理员提醒群组中的所有成员"
     type: str = "AtAll"
 
     def asDisplay(self) -> str:
@@ -105,6 +119,7 @@ class AtAll(InternalElement, ExternalElement):
         return external_element
 
 class Face(InternalElement, ExternalElement):
+    "表示消息中所附带的表情, 这些表情大多都是聊天工具内置的."
     type: str = "Face"
     faceId: int
     name: str
@@ -132,6 +147,7 @@ image_upload_method_type_map = {
 }
 
 class Image(InternalElement):
+    "该消息元素用于承载消息中所附带的图片. 你可以自由使用该元素."
     imageId: Optional[str] = None
     url: Optional[str] = None
     path: Optional[str] = None
@@ -181,6 +197,18 @@ class Image(InternalElement):
     
     @classmethod
     def fromLocalFile(cls, filepath: Union[Path, str], method: Optional[UploadMethods] = None) -> "Image":
+        """从本地文件中创建一个 Shadow Element, 以此在发送时自动上传图片至服务器, 并借此使包含的图片成功发送.
+
+        Args:
+            filepath (Union[Path, str]): 需要上传的图片路径, 可以是字符串也可以是 pathlib.Path 实例
+            method (Optional[UploadMethods], default = None): 图片上传时使用的方法, 通常可以使程序自行判定.
+
+        Raises:
+            FileNotFoundError: 所描述的图片文件在文件系统中不存在.
+
+        Returns:
+            [Shadow Element]: 返回值为一合法, 但不包括任何 Image 特征属性的叠加态消息元素; 你无需了解这到底有什么魔法.
+        """
         if isinstance(filepath, str):
             filepath = Path(filepath)
         if not filepath.exists():
@@ -201,13 +229,28 @@ class Image(InternalElement):
         return _Image_Internal()
 
     @classmethod
-    def fromUnsafePath(cls, path: Path) -> "External.Image":
+    def fromUnsafePath(cls, path: Union[Path, str]) -> "External.Image":
+        """不检查路径安全性, 直接实例化元素, 让 mirai-api-http 自行读取图片文件.
+
+        Args:
+            path (Union[Path, str]): 图片文件路径
+
+        Returns:
+            Image: 作为外部态存在的 Image 消息元素
+        """
         return External.Image(path=str(path))
 
     @classmethod
     async def fromUnsafeBytes(cls, image_bytes: bytes, method: Optional[UploadMethods] = None) -> "Image":
-        if not method:
-            raise ValueError("you should give the 'method' for upload when you are out of the event receiver.")
+        """从不保证有效性的 bytes 中创建一个 Shadow Element, 以此在发送时自动作为图片上传至服务器, 并借此使其可能包含的图片成功发送.
+
+        Args:
+            image_bytes: (bytes): 任意 bytes, 不保证内部可能的图片的有效性
+            method (Optional[UploadMethods], default = None): 图片上传时使用的方法, 通常可以使程序自行判定.
+
+        Returns:
+            [Shadow Element]: 返回值为一合法, 但不包括任何 Image 特征属性的叠加态消息元素; 你无需了解这到底有什么魔法.
+        """
         class _Image_Internal(InternalElement, ExternalElement):
             @property
             def toExternal(self):
@@ -229,7 +272,18 @@ class Image(InternalElement):
     def asDisplay(self) -> str:
         return "[图片]"
     
-    async def http_to_bytes(self, url=None) -> bytes:
+    async def http_to_bytes(self, url: str = None) -> bytes:
+        """从远端服务器获取图片的 bytes, 注意, 你无法获取并不包含 url 属性的本元素的 bytes.
+
+        Args:
+            url (str, optional): 如果提供, 则从本参数获取 bytes. 默认为 None.
+
+        Raises:
+            ValueError: 你尝试获取并不包含 url 属性的本元素的 bytes.
+
+        Returns:
+            bytes: 图片原始数据
+        """
         if not (self.url or url):
             raise ValueError("you should offer a url.")
         async with ClientSession() as session:
