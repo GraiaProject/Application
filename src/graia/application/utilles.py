@@ -79,18 +79,13 @@ def print_traceback_javay():
 
 class AppMiddlewareAsDispatcher(BaseDispatcher):
     always = True
-    actived: bool = False
 
     def __init__(self, app) -> None:
         self.app = app
 
     def catch(self, interface: "DispatcherInterface"):
-        if self.actived:
-            return
         with enter_context(self.app, interface.event):
-            self.actived = True
             yield
-            self.actived = False
 
 def context_enter_auto(context):
     def wrapper1(func):
