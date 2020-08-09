@@ -257,13 +257,12 @@ class GraiaMiraiApplication:
             raise_for_return_code(data)
             
             result = []
-            for i in data['data']:
-                if i['type'] == "GroupMessage":
-                    result.append(GroupMessage.parse_obj(i))
-                elif i['type'] == "FriendMessage":
-                    result.append(FriendMessage.parse_obj(i))
-                elif i['type'] == "TempMessage":
-                    result.append(TempMessage.parse_obj(i))
+            for event in data:
+                try:
+                    result.append(await self.auto_parse_by_type(event))
+                except ValueError:
+                    self.logger.error("".join(["received a unknown event: ", event.get("type"), str(event)]))
+                    continue
             return result
     
     @requireAuthenticated
@@ -519,8 +518,9 @@ class GraiaMiraiApplication:
         }))) as connection:
             while True:
                 try:
+                    from pprint import pprint
                     received_data = await connection.receive_json()
-                    #print("d", received_data)
+                    pprint(received_data)
                 except TypeError:
                     continue
                 if received_data:
@@ -556,7 +556,7 @@ class GraiaMiraiApplication:
         fetch_method = self.http_fetchmessage_poster if not self.connect_info.websocket else self.ws_all_poster
         config: MiraiConfig = await self.getConfig()
         if not self.connect_info.websocket: # 不启用 websocket
-            self.logger.info("using websocket to receive event")
+            self.logger.info("using http to receive event")
             if config.enableWebsocket: # 配置中已经启用
                 await self.modifyConfig(enableWebsocket=False)
         else: # 启用ws
