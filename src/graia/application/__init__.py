@@ -241,9 +241,14 @@ class GraiaMiraiApplication:
     async def revokeMessage(self,
         target: Union[Source, BotMessage, int]
     ) -> NoReturn:
+        if isinstance(target, BotMessage):
+            target = target.messageId
+        elif isinstance(target, Source):
+            target = target.id
+
         async with self.session.post(self.url_gen("recall"), json={
             "sessionKey": self.connect_info.sessionKey,
-            "target": target.id if isinstance(target, (Source, BotMessage)) else id
+            "target": target
         }) as response:
             response.raise_for_status()
             data = await response.json()
