@@ -23,8 +23,9 @@ class AbstractLogger(ABC):
         pass
 
 class LoggingLogger(AbstractLogger):
-    def __init__(self) -> None:
-        logging.basicConfig(format='[%(asctime)s][%(levelname)s]: %(message)s', level=logging.INFO)
+    def __init__(self, **kwargs) -> None:
+        logging.basicConfig(format='[%(asctime)s][%(levelname)s]: %(message)s', level=\
+            logging.INFO if not kwargs.get("debug") else logging.DEBUG)
 
     def info(self, msg):
         return logging.info(msg)
