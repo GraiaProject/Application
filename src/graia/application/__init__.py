@@ -5,6 +5,7 @@ from typing import List, NoReturn, Optional, Tuple, Union
 from graia.broadcast.entities.inject_rule import SpecialEventType
 
 from graia.application.event import MiraiEvent
+import graia.application.event.lifecycle
 from .logger import AbstractLogger, LoggingLogger
 from .entities import MiraiConfig
 
@@ -553,13 +554,15 @@ class GraiaMiraiApplication:
                     break
 
     async def launch(self):
-        from .event.lifecycle import ApplicationLaunched
+        from .event.lifecycle import ApplicationLaunched, ApplicationLaunchedBlocking
         self.logger.info("launching app...")
         await self.authenticate()
         await self.activeSession()
+
+        self.broadcast.postEvent(ApplicationLaunched(self))
         await self.broadcast.layered_scheduler(
-            listener_generator=self.broadcast.default_listener_generator(ApplicationLaunched),
-            event=ApplicationLaunched(self)
+            listener_generator=self.broadcast.default_listener_generator(ApplicationLaunchedBlocking),
+            event=ApplicationLaunchedBlocking(self)
         )
 
         # 自动变化fetch方式
