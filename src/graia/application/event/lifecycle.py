@@ -1,9 +1,8 @@
 from graia.broadcast.entities.event import BaseEvent, BaseDispatcher
 from graia.broadcast.interfaces.dispatcher import DispatcherInterface
-from graia.application import GraiaMiraiApplication
 
 class ApplicationLaunched(BaseEvent):
-    app: GraiaMiraiApplication
+    app: "GraiaMiraiApplication"
 
     def __init__(self, app) -> None:
         self.app = app
@@ -11,11 +10,25 @@ class ApplicationLaunched(BaseEvent):
     class Dispatcher(BaseDispatcher):
         @staticmethod
         def catch(interface: "DispatcherInterface"):
+            from .. import GraiaMiraiApplication
+            if interface.annotation is GraiaMiraiApplication:
+                return interface.event.app
+
+class ApplicationLaunchedBlocking(BaseEvent):
+    app: "GraiaMiraiApplication"
+
+    def __init__(self, app) -> None:
+        self.app = app
+
+    class Dispatcher(BaseDispatcher):
+        @staticmethod
+        def catch(interface: "DispatcherInterface"):
+            from .. import GraiaMiraiApplication
             if interface.annotation is GraiaMiraiApplication:
                 return interface.event.app
 
 class ApplicationShutdowned(BaseEvent):
-    app: GraiaMiraiApplication
+    app: "GraiaMiraiApplication"
 
     def __init__(self, app) -> None:
         self.app = app
@@ -23,5 +36,6 @@ class ApplicationShutdowned(BaseEvent):
     class Dispatcher(BaseDispatcher):
         @staticmethod
         def catch(interface: "DispatcherInterface"):
+            from .. import GraiaMiraiApplication
             if interface.annotation is GraiaMiraiApplication:
                 return interface.event.app
