@@ -3,6 +3,8 @@ from typing import Tuple
 import yarl
 
 class Session(BaseModel):
+    """用于描述与上游接口会话, 并存储会话状态的实体类."""
+
     host: AnyHttpUrl
     authKey: str
     account: int
