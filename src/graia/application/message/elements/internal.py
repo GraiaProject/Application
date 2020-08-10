@@ -210,6 +210,15 @@ class Image(InternalElement):
         Returns:
             [Shadow Element]: 返回值为一合法, 但不包括任何 Image 特征属性的叠加态消息元素; 其包含有一 asFlash 方法,
                 可以将当前图片转为闪照形式发送.
+        
+        Examples:
+        ``` python
+        await app.sendGroupMessage(group, MessageChain.create([
+            Image.fromLocalFile("./image.png")
+            # 发闪照则是 Image.fromLocalFile("./flashimage.png").asFlash()
+            # 注意: 闪照是也只能是单独一个消息.
+        ]))
+        ```
         """
         if isinstance(filepath, str):
             filepath = Path(filepath)
