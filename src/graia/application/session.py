@@ -10,7 +10,7 @@ class Session(BaseModel):
         authKey (str): 在 `mirai-api-http` 配置流程中定义, 需为相同的值以通过安全验证.
         account (int): 应用所使用账号的整数 ID.
         websocket (bool): 是否使用 Websocket 方式获取事件, 若为 `False` 则使用 HTTP 短轮询方式获取事件, 性能较低.
-        sessionKey (str, optional): 会话中用于进行操作的唯一认证凭证, 需要经过 `activeSession` 后才可用.
+        sessionKey (str, optional): 会话标识, 即会话中用于进行操作的唯一认证凭证, 需要经过 `activeSession` 后才可用.
         current_version (Tuple[int, int, int], optional): 上游服务的版本, 暂时没有自动获取.
     """
 
