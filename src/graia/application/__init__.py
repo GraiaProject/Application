@@ -13,7 +13,7 @@ from graia.broadcast.entities.inject_rule import SpecialEventType
 from graia.broadcast.utilles import printer, run_always_await
 from yarl import URL
 
-from .context import application, enter_message_send_context
+from .context import enter_message_send_context
 from .entities import MiraiConfig, UploadMethods
 from .event.messages import FriendMessage, GroupMessage, TempMessage
 from .exceptions import InvaildArgument, InvaildSession
@@ -326,14 +326,14 @@ class GraiaMiraiApplication:
             BotMessage: 即当前会话账号所发出消息的元数据, 内包含有一 `messageId` 属性, 可用于回复.
         """
         with enter_message_send_context(UploadMethods.Group):
-            async with self.session.post(self.url_gen("sendGroupMessage"), json={
+            async with self.session.post(self.url_gen("sendGroupMessage"), json=printer({
                 "sessionKey": self.connect_info.sessionKey,
                 "target": group.id if isinstance(group, Group) else group,
                 "messageChain": (await message.build()).dict()['__root__'],
                 **({
                     "quote": quote.id if isinstance(quote, Source) else quote
                 } if quote else {})
-            }) as response:
+            })) as response:
                 response.raise_for_status()
                 data = await response.json()
                 raise_for_return_code(data)

@@ -10,4 +10,3 @@ class Image(ExternalElement):
 
 class FlashImage(Image):
     type = "FlashImage"
-    pass
