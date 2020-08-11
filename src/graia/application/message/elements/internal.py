@@ -4,6 +4,7 @@ from enum import Enum
 from pathlib import Path
 from typing import NoReturn, Optional, Union
 import aiohttp
+from graia.broadcast.utilles import printer
 
 from pydantic.fields import Field
 from graia.application.entities import UploadMethods
@@ -241,7 +242,7 @@ class Image(InternalElement):
                     async def _flash_image_transfer():
                         return FlashImage.fromExternal(await app.uploadImage(
                             filepath.read_bytes(), methodd, return_external=True
-                        ))
+                        )).toExternal()
                     return _flash_image_transfer()
 
             def fromExternal(cls, external_element) -> "InternalElement":
@@ -307,7 +308,7 @@ class Image(InternalElement):
                     async def _flash_image_transfer():
                         return FlashImage.fromExternal(await app.uploadImage(
                             image_bytes, methodd, return_external=True
-                        ))
+                        )).toExternal()
                     return _flash_image_transfer
 
             def fromExternal(cls, external_element) -> "InternalElement":
@@ -351,26 +352,25 @@ class Image(InternalElement):
         """
         class _Image_Internal(InternalElement, ExternalElement):
             is_flash = False
-            _url = url
 
             @property
             def toExternal(self):
-                app = application.get()
+                from graia.application import GraiaMiraiApplication
+                app: GraiaMiraiApplication = application.get()
                 try:
                     methodd = method or image_method.get()
                 except LookupError:
                     raise ValueError("you should give the 'method' for upload when you are out of the event receiver.")
-                async with aiohttp.ClientSession() as session:
-                    async with session.get(url) as response:
+                async def wrapper():
+                    async with app.session.get(url) as response:
                         response.raise_for_status()
                         if not self.is_flash:
-                            return partial(app.uploadImage, response.read(), methodd, return_external=True)
+                            return await app.uploadImage(await response.read(), methodd, return_external=True)
                         else:
-                            async def _flash_image_transfer():
-                                return FlashImage.fromExternal(await app.uploadImage(
-                                    response.read(), methodd, return_external=True
-                                ))
-                            return _flash_image_transfer
+                            return FlashImage.fromExternal(await app.uploadImage(
+                                await response.read(), methodd, return_external=True
+                            )).toExternal()
+                return wrapper
 
             def fromExternal(cls, external_element) -> "InternalElement":
                 return external_element
@@ -391,7 +391,7 @@ class Image(InternalElement):
                 async with aiohttp.ClientSession() as session:
                     async with session.get(url) as response:
                         response.raise_for_status()
-                        return await app.uploadImage(response.read(), method)
+                        return await app.uploadImage(await response.read(), method)
             
             def asFlash(self):
                 self.is_flash = True
@@ -432,6 +432,7 @@ class FlashImage(Image, InternalElement):
 
     通常, 你需要先使用 Image 中提供的各种工厂方法创建一"普通"的 Image 对象, 然后再使用 asFlash 方法将其转换为闪照.
     """
+
     def toExternal(self):
         return External.FlashImage(
             imageId=self.imageId,
