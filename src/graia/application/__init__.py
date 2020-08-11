@@ -13,7 +13,7 @@ from graia.broadcast.entities.inject_rule import SpecialEventType
 from graia.broadcast.utilles import printer, run_always_await
 from yarl import URL
 
-from .context import enter_message_send_context
+from .context import application, enter_message_send_context
 from .entities import MiraiConfig, UploadMethods
 from .event.messages import FriendMessage, GroupMessage, TempMessage
 from .exceptions import InvaildArgument, InvaildSession

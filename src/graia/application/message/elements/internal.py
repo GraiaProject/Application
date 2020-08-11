@@ -229,7 +229,7 @@ class Image(InternalElement):
             is_flash = False
 
             @property
-            async def toExternal(self):
+            def toExternal(self):
                 app = application.get()
                 try:
                     methodd = method or image_method.get()
@@ -242,7 +242,7 @@ class Image(InternalElement):
                         return FlashImage.fromExternal(await app.uploadImage(
                             filepath.read_bytes(), methodd, return_external=True
                         ))
-                    return _flash_image_transfer
+                    return _flash_image_transfer()
 
             def fromExternal(cls, external_element) -> "InternalElement":
                 return external_element
@@ -295,7 +295,7 @@ class Image(InternalElement):
             is_flash = False
 
             @property
-            async def toExternal(self):
+            def toExternal(self):
                 app = application.get()
                 try:
                     methodd = method or image_method.get()
@@ -326,7 +326,7 @@ class Image(InternalElement):
                     Image: 所生成的, 真正的 Image 对象.
                 """
                 app = application.get()
-                return await app.uploadImage(image_bytes, method, return_external=True)
+                return await app.uploadImage(image_bytes, method)
 
             def asFlash(self):
                 self.is_flash = True
@@ -351,10 +351,10 @@ class Image(InternalElement):
         """
         class _Image_Internal(InternalElement, ExternalElement):
             is_flash = False
-            url = url
+            _url = url
 
             @property
-            async def toExternal(self):
+            def toExternal(self):
                 app = application.get()
                 try:
                     methodd = method or image_method.get()
@@ -391,7 +391,7 @@ class Image(InternalElement):
                 async with aiohttp.ClientSession() as session:
                     async with session.get(url) as response:
                         response.raise_for_status()
-                        return await app.uploadImage(response.read(), method, return_external=True)
+                        return await app.uploadImage(response.read(), method)
             
             def asFlash(self):
                 self.is_flash = True
