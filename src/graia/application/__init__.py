@@ -1,36 +1,32 @@
 import asyncio
 import atexit
+from functools import partial
 from typing import List, NoReturn, Optional, Tuple, Union
 
-from graia.broadcast.entities.inject_rule import SpecialEventType
-
-from graia.application.event import MiraiEvent
 import graia.application.event.lifecycle
-from .logger import AbstractLogger, LoggingLogger
-from .entities import MiraiConfig
-
 import graia.application.event.mirai  # for init events
 from aiohttp import ClientSession, FormData
+from graia.application.event import MiraiEvent
 from graia.broadcast import Broadcast
 from graia.broadcast.entities.event import BaseEvent
+from graia.broadcast.entities.inject_rule import SpecialEventType
 from graia.broadcast.utilles import printer, run_always_await
 from yarl import URL
-from functools import partial
 
 from .context import enter_message_send_context
-from .entities import UploadMethods
-from .event.messages import (FriendMessage, GroupMessage,
-                                               TempMessage)
+from .entities import MiraiConfig, UploadMethods
+from .event.messages import FriendMessage, GroupMessage, TempMessage
+from .exceptions import InvaildArgument, InvaildSession
+from .friend import Friend
+from .group import Group, GroupConfig, Member, MemberInfo
+from .logger import AbstractLogger, LoggingLogger
 from .message import BotMessage
 from .message.chain import MessageChain
 from .message.elements import external
 from .message.elements.internal import Image, Source
 from .session import Session
-from .friend import Friend
-from .group import (Group, GroupConfig, Member, MemberInfo)
-from .exceptions import InvaildArgument, InvaildSession
 from .utilles import (AppMiddlewareAsDispatcher, SinceVersion,
-                               raise_for_return_code, requireAuthenticated)
+                      raise_for_return_code, requireAuthenticated)
 
 
 class GraiaMiraiApplication:
@@ -82,7 +78,7 @@ class GraiaMiraiApplication:
     
     @SinceVersion(1,6,2)
     async def getVersion(self, auto_set=True) -> Tuple:
-        """从 `/about` 路由下获取当前使用的 `mirai-api-http` 版本, 注意, 该 API 并不是一开始就有的.
+        """从 `/about` 路由下获取当前使用的 `mirai-api-http` 版本, 注意, 该 API 并不是一开始就有的(1.6.2 版本才支持本接口).
 
         Args:
             auto_set (bool, optional): 是否自动将版本存入 connect_info 以判断接口是否有效. Defaults to True.
@@ -322,8 +318,8 @@ class GraiaMiraiApplication:
         """发送消息到群组内, 可以指定回复的消息.
 
         Args:
-            group (Union[Group, int]): 指定的群组, 可以是群组的 ID 也可以是 Group 实例.
-            message (MessageChain): 有效的, 可发送的(Sendable)消息链.
+            group (Union[Group, int]): 指定的群组, 可以是群组的 ID 也可以是 Group 实例.  
+            message (MessageChain): 有效的, 可发送的(Sendable)消息链.  
             quote (Optional[Union[Source, int]], optional): 需要回复的消息, 不要忽视我啊喂?!!, 默认为 None.
 
         Returns:
@@ -441,13 +437,14 @@ class GraiaMiraiApplication:
             raise_for_return_code(data)
             
             result = []
-            for i in data['data']:
-                if i['type'] == "GroupMessage":
-                    result.append(GroupMessage.parse_obj(i))
-                elif i['type'] == "FriendMessage":
-                    result.append(FriendMessage.parse_obj(i))
-                elif i['type'] == "TempMessage":
-                    result.append(TempMessage.parse_obj(i))
+            for event in data:
+                if self.debug:
+                    self.logger.debug("http polling received: " + str(event))
+                try:
+                    result.append(await self.auto_parse_by_type(event))
+                except ValueError:
+                    self.logger.error("".join(["received a unknown event: ", event.get("type"), str(event)]))
+                    continue
             return result
 
     @requireAuthenticated
@@ -461,13 +458,14 @@ class GraiaMiraiApplication:
             raise_for_return_code(data)
             
             result = []
-            for i in data['data']:
-                if i['type'] == "GroupMessage":
-                    result.append(GroupMessage.parse_obj(i))
-                elif i['type'] == "FriendMessage":
-                    result.append(FriendMessage.parse_obj(i))
-                elif i['type'] == "TempMessage":
-                    result.append(TempMessage.parse_obj(i))
+            for event in data:
+                if self.debug:
+                    self.logger.debug("http polling received: " + str(event))
+                try:
+                    result.append(await self.auto_parse_by_type(event))
+                except ValueError:
+                    self.logger.error("".join(["received a unknown event: ", event.get("type"), str(event)]))
+                    continue
             return result
     
     @requireAuthenticated
@@ -481,13 +479,14 @@ class GraiaMiraiApplication:
             raise_for_return_code(data)
             
             result = []
-            for i in data['data']:
-                if i['type'] == "GroupMessage":
-                    result.append(GroupMessage.parse_obj(i))
-                elif i['type'] == "FriendMessage":
-                    result.append(FriendMessage.parse_obj(i))
-                elif i['type'] == "TempMessage":
-                    result.append(TempMessage.parse_obj(i))
+            for event in data:
+                if self.debug:
+                    self.logger.debug("http polling received: " + str(event))
+                try:
+                    result.append(await self.auto_parse_by_type(event))
+                except ValueError:
+                    self.logger.error("".join(["received a unknown event: ", event.get("type"), str(event)]))
+                    continue
             return result
 
     @requireAuthenticated
@@ -507,17 +506,15 @@ class GraiaMiraiApplication:
             response.raise_for_status()
             data = await response.json()
             raise_for_return_code(data)
-            
-            if data['data']['type'] == "GroupMessage":
-                return GroupMessage.parse_obj(data['data'])
-            elif data['data']['type'] == "FriendMessage":
-                return FriendMessage.parse_obj(data['data'])
-            elif data['data']['type'] == "TempMessage":
-                return TempMessage.parse_obj(data['data'])
+
+            try:
+                return await self.auto_parse_by_type(event)
+            except ValueError:
+                self.logger.error("".join(["received a unknown event: ", event.get("type"), str(event)]))
 
     @requireAuthenticated
     async def countMessage(self) -> int:
-        """获取缓存中的消息的数量
+        """获取 `mirai-api-http` 内部缓存中的消息的数量
 
         Returns:
             int: 缓存中的消息的数量
@@ -798,6 +795,18 @@ class GraiaMiraiApplication:
 
     @staticmethod
     async def auto_parse_by_type(original_dict: dict) -> BaseEvent:
+        """从尚未明确指定事件类型的对象中获取事件的定义, 并进行解析
+
+        Args:
+            original_dict (dict): 用 dict 表示的序列化态事件, 应包含有字段 `type` 以供分析事件定义.
+
+        Raises:
+            InvaildArgument: 目标对象中不包含字段 `type`
+            ValueError: 没有找到对应的字段, 通常的, 这意味着应用获取到了一个尚未被定义的事件, 请报告问题.
+
+        Returns:
+            BaseEvent: 已经被序列化的事件
+        """
         if not original_dict.get("type") and not isinstance(original_dict.get("type"), str):
             raise InvaildArgument("you need to provide a 'type' field for automatic parsing")
         event_type = Broadcast.findEvent(original_dict.get("type"))
