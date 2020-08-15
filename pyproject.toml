@@ -1,9 +1,9 @@
 [tool.poetry]
 name = "graia-application-mirai"
-version = "0.1.10"
+version = "0.1.11"
 description = ""
 authors = ["GreyElaina <GreyElaina@outlook.com>"]
-license = "MIT"
+license = "AGPL-3.0"
 packages = [
     { include = "graia", from = "src" }
 ]
