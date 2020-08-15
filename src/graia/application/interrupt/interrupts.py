@@ -21,12 +21,14 @@ class GroupMessageInterrupt(Interrupt):
         special_group: Optional[Union[Group, int]] = None,
         special_member: Optional[Union[Member, int]] = None,
         quote_access: Optional[Union[BotMessage, Source]] = None,
-        custom_judgement: Optional[Callable[[GroupMessage], bool]] = None
+        custom_judgement: Optional[Callable[[GroupMessage], bool]] = None,
+        block_propagation: bool = False
     ) -> None:
         self.special_group = special_group
         self.special_member = special_member
         self.quote_access = quote_access
         self.custom_judgement = custom_judgement
+        self._block_propagation = block_propagation
 
     def set_custom_judgement(self, callable_func):
         self.custom_judgement = callable_func
@@ -65,11 +67,13 @@ class FriendMessageInterrupt(Interrupt):
     def __init__(self,
         special_friend: Optional[Union[Friend, int]] = None,
         quote_access: Optional[Union[BotMessage, Source]] = None,
-        custom_judgement: Optional[Callable[[FriendMessage], bool]] = None
+        custom_judgement: Optional[Callable[[FriendMessage], bool]] = None,
+        block_propagation: bool = False
     ) -> None:
         self.special_friend = special_friend
         self.quote_access = quote_access
         self.custom_judgement = custom_judgement
+        self._block_propagation = block_propagation
 
     def set_custom_judgement(self, callable_func):
         self.custom_judgement = callable_func
@@ -106,12 +110,14 @@ class TempMessageInterrupt(Interrupt):
         special_group: Optional[Union[Group, int]] = None,
         special_member: Optional[Union[Member, int]] = None,
         quote_access: Optional[Union[BotMessage, Source]] = None,
-        custom_judgement: Optional[Callable[[TempMessage], bool]] = None
+        custom_judgement: Optional[Callable[[TempMessage], bool]] = None,
+        block_propagation: bool = False
     ) -> None:
         self.special_group = special_group
         self.special_member = special_member
         self.quote_access = quote_access
         self.custom_judgement = custom_judgement
+        self._block_propagation = block_propagation
 
     def set_custom_judgement(self, callable_func):
         self.custom_judgement = callable_func
@@ -148,10 +154,12 @@ class CustomEventInterrupt(Interrupt):
         event: Type[T],
         checker: Callable[[T], bool],
         transfer: Callable[[T], A],
+        block_propagation: bool = False
     ) -> None:
         self.direct = event
         self.checker = checker
         self.transfer = transfer
+        self._block_propagation = block_propagation
     
     async def trigger(self, event: T) -> Union[None, A]:
         if await run_always_await(self.checker(event)):
