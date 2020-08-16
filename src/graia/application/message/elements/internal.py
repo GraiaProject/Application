@@ -40,6 +40,9 @@ class Plain(InternalElement, ExternalElement):
 
     def asDisplay(self) -> str:
         return self.text
+    
+    def asSerializationString(self) -> str:
+        return self.text
 
 class Source(InternalElement, ExternalElement):
     "表示消息在一个特定聊天区域内的唯一标识"
@@ -49,6 +52,9 @@ class Source(InternalElement, ExternalElement):
     @classmethod
     def fromExternal(_, external_element) -> "Source":
         return external_element
+    
+    def asSerializationString(self) -> str:
+        return f"[mirai:source:{self.id},{int(self.time.timestamp())}]"
 
     class Config:
         json_encoders = {
@@ -71,6 +77,9 @@ class Quote(InternalElement, ExternalElement):
     @classmethod
     def fromExternal(_, external_element) -> "Quote":
         return external_element
+
+    def asSerializationString(self) -> str:
+        return f" [mirai:quote:{self.id}]"
 
 class At(InternalElement, ExternalElement):
     """该消息元素用于承载消息中用于提醒/呼唤特定用户的部分."""
@@ -97,6 +106,9 @@ class At(InternalElement, ExternalElement):
             pass
         return self
 
+    def asSerializationString(self) -> str:
+        return f"[mirai:at:{self.target},{self.display}]"
+
     @classmethod
     def fromExternal(cls, external_element) -> "At":
         return external_element
@@ -119,12 +131,15 @@ class AtAll(InternalElement, ExternalElement):
     @classmethod
     def fromExternal(cls, external_element) -> "AtAll":
         return external_element
+    
+    def asSerializationString(self) -> str:
+        return "[mirai:atall]"
 
 class Face(InternalElement, ExternalElement):
     "表示消息中所附带的表情, 这些表情大多都是聊天工具内置的."
     type: str = "Face"
     faceId: int
-    name: str
+    name: Optional[str] = None
 
     def toExternal(self) -> "Face":
         return self
@@ -135,6 +150,9 @@ class Face(InternalElement, ExternalElement):
 
     def asDisplay(self) -> str:
         return "[表情]"
+    
+    def asSerializationString(self) -> str:
+        return f"[mirai:face:{self.faceId}]"
 
 class ImageType(Enum):
     Friend = "Friend"
@@ -427,6 +445,9 @@ class Image(InternalElement):
     def asFlash(self) -> "FlashImage":
         return FlashImage.fromOriginalImage(self)
 
+    def asSerializationString(self) -> str:
+        return f"[mirai:image:{self.imageId}]"
+
 class FlashImage(Image, InternalElement):
     """用于承载 QQ 中的特殊消息: 闪照的消息组件.
 
@@ -461,6 +482,9 @@ class FlashImage(Image, InternalElement):
     
     def asNormal(self) -> "Image":
         return Image.fromExternal(self)
+
+    def asSerializationString(self) -> str:
+        return f"[mirai:flash:{self.imageId}]"
 
 class Xml(InternalElement, ExternalElement):
     type = "Xml"

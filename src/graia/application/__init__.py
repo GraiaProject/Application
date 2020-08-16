@@ -61,9 +61,44 @@ class GraiaMiraiApplication:
             "debug": True
         } if debug else {}))
         self.debug = debug
+        self.broadcast.receiver("GroupMessage")(self.logger_group_message)
+        self.broadcast.receiver("FriendMessage")(self.logger_friend_message)
+        self.broadcast.receiver("TempMessage")(self.logger_temp_message)
         self.broadcast.addInjectionRule(
             SpecialEventType(MiraiEvent, AppMiddlewareAsDispatcher(self))
         )
+    
+    def logger_group_message(self, event: GroupMessage):
+        self.logger.info("[BOT {bot_id}, GroupMessage] [{group_name}({group_id}, perm: {bot_permission})] {member_name}({member_id}, {member_permission}) -> {message_string}".format_map(dict(
+            group_id=event.sender.group.id,
+            group_name=event.sender.group.name,
+            member_id=event.sender.id,
+            member_name=event.sender.name,
+            member_permission=event.sender.permission.name,
+            bot_id=self.connect_info.account,
+            bot_permission=event.sender.group.accountPerm.name,
+            message_string=event.messageChain.asSerializationString(),
+        )))
+    
+    def logger_friend_message(self, event: FriendMessage):
+        self.logger.info("[BOT {bot_id}, FriendMessage] {friend_name}({friend_id}) -> {message_string}".format_map(dict(
+            bot_id=self.connect_info.account,
+            friend_name=event.sender.nickname,
+            friend_id=event.sender.id,
+            message_string=event.messageChain.asSerializationString()
+        )))
+    
+    def logger_temp_message(self, event: TempMessage):
+        self.logger.info("[BOT {bot_id}, TempMessage] [{group_name}({group_id}, perm: {bot_permission})] {member_name}({member_id}, {member_permission}) -> {message_string}".format_map(dict(
+            group_id=event.sender.group.id,
+            group_name=event.sender.group.name,
+            member_id=event.sender.id,
+            member_name=event.sender.name,
+            member_permission=event.sender.permission.name,
+            bot_id=self.connect_info.account,
+            bot_permission=event.sender.group.accountPerm.name,
+            message_string=event.messageChain.asSerializationString(),
+        )))
 
     def url_gen(self, path) -> str:
         """从 connect_info 和 path 生成接口的地址.
@@ -297,10 +332,11 @@ class GraiaMiraiApplication:
             BotMessage: 即当前会话账号所发出消息的元数据, 内包含有一 `messageId` 属性, 可用于回复.
         """
         with enter_message_send_context(UploadMethods.Friend):
+            message_result = await message.build()
             async with self.session.post(self.url_gen("sendFriendMessage"), json={
                 "sessionKey": self.connect_info.sessionKey,
                 "target": target.id if isinstance(target, Friend) else target,
-                "messageChain": (await message.build()).dict()['__root__'],
+                "messageChain": message_result.dict()['__root__'],
                 **({
                     "quote": quote.id if isinstance(quote, Source) else quote
                 } if quote else {})
@@ -308,6 +344,12 @@ class GraiaMiraiApplication:
                 response.raise_for_status()
                 data = await response.json()
                 raise_for_return_code(data)
+
+                self.logger.info("[BOT {bot_id}] Friend({friend_id}) <- {message}".format_map({
+                    "bot_id": self.connect_info.account,
+                    "friend_id": target.id if isinstance(target, Friend) else target,
+                    "message": message_result.asSerializationString()
+                }))
                 return BotMessage(messageId=data['messageId'])
 
     @requireAuthenticated
@@ -326,17 +368,24 @@ class GraiaMiraiApplication:
             BotMessage: 即当前会话账号所发出消息的元数据, 内包含有一 `messageId` 属性, 可用于回复.
         """
         with enter_message_send_context(UploadMethods.Group):
-            async with self.session.post(self.url_gen("sendGroupMessage"), json=printer({
+            message_result = await message.build()
+            async with self.session.post(self.url_gen("sendGroupMessage"), json={
                 "sessionKey": self.connect_info.sessionKey,
                 "target": group.id if isinstance(group, Group) else group,
-                "messageChain": (await message.build()).dict()['__root__'],
+                "messageChain": message_result.dict()['__root__'],
                 **({
                     "quote": quote.id if isinstance(quote, Source) else quote
                 } if quote else {})
-            })) as response:
+            }) as response:
                 response.raise_for_status()
                 data = await response.json()
                 raise_for_return_code(data)
+
+                self.logger.info("[BOT {bot_id}] Group({group_id}) <- {message}".format_map({
+                    "bot_id": self.connect_info.account,
+                    "group_id": group.id if isinstance(group, Group) else group,
+                    "message": message_result.asSerializationString()
+                }))
                 return BotMessage(messageId=data['messageId'])
     
     @requireAuthenticated
@@ -357,12 +406,13 @@ class GraiaMiraiApplication:
         Returns:
             BotMessage: 即当前会话账号所发出消息的元数据, 内包含有一 `messageId` 属性, 可用于回复.
         """
+        message_result = await message.build()
         with enter_message_send_context(UploadMethods.Temp):
             async with self.session.post(self.url_gen("sendTempMessage"), json={
                 "sessionKey": self.connect_info.sessionKey,
                 "group": group.id if isinstance(group, Group) else group,
                 "qq": target.id if isinstance(target, Member) else target,
-                "messageChain": (await message.build()).dict()['__root__'],
+                "messageChain": message_result.dict()['__root__'],
                 **({
                     "quote": quote.id if isinstance(quote, Source) else quote
                 } if quote else {})
@@ -370,6 +420,13 @@ class GraiaMiraiApplication:
                 response.raise_for_status()
                 data = await response.json()
                 raise_for_return_code(data)
+
+                self.logger.info("[BOT {bot_id}] Member({member_id}, in {group_id}) <- {message}".format_map({
+                    "bot_id": self.connect_info.account,
+                    "member_id": target.id if isinstance(target, Member) else target,
+                    "group_id": group.id if isinstance(group, Group) else group,
+                    "message": message_result.asSerializationString()
+                }))
                 return BotMessage(messageId=data['messageId'])
 
     @requireAuthenticated

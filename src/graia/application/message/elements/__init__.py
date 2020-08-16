@@ -17,5 +17,8 @@ class InternalElement(Element, abc.ABC):
     def asDisplay(self) -> str:
         return ""
 
+    def asSerializationString(self) -> str:
+        return ""
+
 class ExternalElement(Element):
     pass
