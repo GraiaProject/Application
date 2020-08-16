@@ -6,6 +6,7 @@ from graia.broadcast.utilles import run_always_await
 from pydantic import BaseModel
 
 from .elements import ExternalElement, InternalElement
+import regex
 
 T = Union[InternalElement, ExternalElement]
 
@@ -223,3 +224,38 @@ class MessageChain(BaseModel):
 
     __contains__ = has
     __getitem__ = get
+
+    def asSerializationString(self) -> str:
+        return "".join([i.asSerializationString() for i in self.__root__])
+    
+    @classmethod
+    def fromSerializationString(cls, string: str) -> "MessageChain":
+        from .elements.internal import Source, Plain, AtAll, At, Face, Image, FlashImage
+        code_without_argument = {
+            "atall": AtAll
+        }
+        origin_list = list(regex.finditer(
+            r"((?:\[mirai:(?P<name>[^:]+)\])|(?:\[mirai:(?P<name>[^\]]*)?:(?P<argument>.*?)?\]))|(?P<plaintext>.{1,})", string))
+
+        result = [] # 默认为不可变型, 但这里要插入元素
+        for i in origin_list:
+            origin_pattern = i.groupdict()
+            if origin_pattern['name'] and not origin_pattern['argument']: # 无参数型
+                target_element = code_without_argument.get(origin_pattern['name'])
+                if target_element:
+                    result.append(target_element())
+            elif origin_pattern['name'] and origin_pattern['argument']: # 有参数
+                arguments = origin_pattern['argument'].split(",")
+                if origin_pattern['name'] == "source":
+                    result.append(Source(id=int(arguments[0]), time=arguments[1]))
+                elif origin_pattern['name'] == "at":
+                    result.append(At(target=int(arguments[0]), display=arguments[1]))
+                elif origin_pattern['name'] == "face":
+                    result.append(Face(faceId=int(arguments[0])))
+                elif origin_pattern['name'] == "image":
+                    result.append(Image(imageId=origin_pattern['argument']))
+                elif origin_pattern['name'] == "flash":
+                    result.append(FlashImage(imageId=origin_pattern['argument']))
+            elif origin_pattern['plaintext']:
+                result.append(Plain(origin_pattern['plaintext']))
+        return cls.create(tuple(result))
