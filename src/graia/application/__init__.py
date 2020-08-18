@@ -473,7 +473,7 @@ class GraiaMiraiApplication:
             raise_for_return_code(data)
             
             result = []
-            for event in data:
+            for event in data['data']:
                 if self.debug:
                     self.logger.debug("http polling received: " + str(event))
                 try:
@@ -749,7 +749,7 @@ class GraiaMiraiApplication:
         async with self.session.post(self.url_gen("groupConfig"), json={
             "sessionKey": self.connect_info.sessionKey,
             "target": group.id if isinstance(group, Group) else group,
-            "config": config.json(exclude_none=True, exclude_unset=True, by_alias=True)
+            "config": config.dict(exclude_none=True, exclude_unset=True, by_alias=True)
         }) as response:
             response.raise_for_status()
             data = await response.json()
@@ -807,7 +807,7 @@ class GraiaMiraiApplication:
             "sessionKey": self.connect_info.sessionKey,
             "target": group.id if isinstance(group, Group) else group,
             "memberId": member.id if isinstance(member, Member) else member,
-            "info": info.json(exclude_none=True, exclude_unset=True, by_alias=True)
+            "info": info.dict(exclude_none=True, exclude_unset=True, by_alias=True)
         }) as response:
             response.raise_for_status()
             data = await response.json()
