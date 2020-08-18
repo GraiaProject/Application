@@ -494,7 +494,7 @@ class GraiaMiraiApplication:
             raise_for_return_code(data)
             
             result = []
-            for event in data:
+            for event in data['data']:
                 if self.debug:
                     self.logger.debug("http polling received: " + str(event))
                 try:
@@ -515,7 +515,7 @@ class GraiaMiraiApplication:
             raise_for_return_code(data)
             
             result = []
-            for event in data:
+            for event in data['data']:
                 if self.debug:
                     self.logger.debug("http polling received: " + str(event))
                 try:
@@ -536,7 +536,7 @@ class GraiaMiraiApplication:
             raise_for_return_code(data)
             
             result = []
-            for event in data:
+            for event in data['data']:
                 if self.debug:
                     self.logger.debug("http polling received: " + str(event))
                 try:
