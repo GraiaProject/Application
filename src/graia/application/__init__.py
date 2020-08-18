@@ -41,6 +41,14 @@ class GraiaMiraiApplication:
         logger (AbstractLogger): 日志系统实现类的实例, 默认以 `logging` 为日志驱动.
     """
 
+    __slots__ = (
+        "broadcast",
+        "session",
+        "connect_info",
+        "logger",
+        "debug"
+    )
+
     broadcast: Broadcast
     session: ClientSession
     connect_info: Session
@@ -165,6 +173,7 @@ class GraiaMiraiApplication:
             data = await response.json()
             raise_for_return_code(data)
 
+    @requireAuthenticated
     async def signout(self) -> NoReturn:
         """释放当前激活/未激活的会话标识
 
@@ -180,6 +189,8 @@ class GraiaMiraiApplication:
             "sessionKey": self.connect_info.sessionKey,
             "qq": self.connect_info.account
         }) as response:
+            self.connect_info.sessionKey = None
+
             response.raise_for_status()
             data = await response.json()
             raise_for_return_code(data)
