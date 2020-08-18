@@ -94,3 +94,8 @@ def context_enter_auto(context):
                 return func(*args, **kwargs)
         return wrapper2
     return wrapper1
+
+def call_atonce(*args, **kwargs):
+    def wrapper(callable_target):
+        return callable_target(*args, **kwargs)
+    return wrapper
