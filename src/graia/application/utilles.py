@@ -7,6 +7,13 @@ from .exceptions import (AccountMuted, AccountNotFound, InvaildArgument,
 from .context import enter_context
 import inspect
 
+def applicationContextManager(func):
+    def wrapper(self, *args, **kwargs):
+        with enter_context(self):
+            return func(self, *args, **kwargs)
+    wrapper.__annotations__ = func.__annotations__
+    return wrapper
+
 def requireAuthenticated(func):
     def wrapper(self, *args, **kwargs):
         if not self.connect_info.sessionKey:

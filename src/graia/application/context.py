@@ -13,19 +13,30 @@ broadcast = ContextVar("broadcast")
 image_method = ContextVar("image_method")
 
 @contextmanager
-def enter_context(app, event_i):
-    t1 = application.set(app)
-    t2 = event.set(event_i)
-    t3 = event_loop.set(app.broadcast.loop)
-    t4 = broadcast.set(app.broadcast)
-    yield
-    application.reset(t1)
-    event.reset(t2)
-    event_loop.reset(t3)
-    broadcast.reset(t4)
-
-@contextmanager
 def enter_message_send_context(method: UploadMethods):
     t = image_method.set(method)
     yield
     image_method.reset(t)
+
+@contextmanager
+def enter_context(app=None, event_i=None):
+    t1 = None
+    t2 = None
+    t3 = None
+    t4 = None
+
+    if app:
+        t1 = application.set(app)
+        t3 = event_loop.set(app.broadcast.loop)
+        t4 = broadcast.set(app.broadcast)
+    if event_i:
+        t2 = event.set(event_i)
+
+    yield
+
+    if t1:
+        application.reset(t1)
+    if all([t2, t3, t4]):
+        event.reset(t2)
+        event_loop.reset(t3)
+        broadcast.reset(t4)

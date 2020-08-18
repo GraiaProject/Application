@@ -26,8 +26,8 @@ from .message.elements import external
 from .message.elements.internal import Image, Source
 from .session import Session
 from .utilles import (AppMiddlewareAsDispatcher, SinceVersion,
-                      raise_for_return_code, requireAuthenticated)
-
+                      raise_for_return_code, requireAuthenticated,
+                      applicationContextManager)
 
 class GraiaMiraiApplication:
     """本类的实例即 应用实例(Application), 是面向 `mirai-api-http` 接口的实际功能实现.
@@ -120,6 +120,7 @@ class GraiaMiraiApplication:
         return str(URL(str(self.connect_info.host)).parent / path)
     
     @SinceVersion(1,6,2)
+    @applicationContextManager
     async def getVersion(self, auto_set=True) -> Tuple:
         """从 `/about` 路由下获取当前使用的 `mirai-api-http` 版本, 注意, 该 API 并不是一开始就有的(1.6.2 版本才支持本接口).
 
@@ -138,6 +139,7 @@ class GraiaMiraiApplication:
                 self.connect_info.current_version = version
             return version
 
+    @applicationContextManager
     async def authenticate(self) -> str:
         """从路由 `/auth` 下获取尚未被激活的会话标识并返回; 通常的, 你还需要使用 `activeSession` 方法激活它.
 
@@ -153,6 +155,7 @@ class GraiaMiraiApplication:
             self.connect_info.sessionKey = data['session']
             return data['session']
 
+    @applicationContextManager
     async def activeSession(self) -> NoReturn:
         """激活当前已经存入 connect_info 的会话标识,
         如果没有事先调用 `authenticate` 方法获取未激活的会话标识, 则会触发 `InvaildSession` 错误.
@@ -174,6 +177,7 @@ class GraiaMiraiApplication:
             raise_for_return_code(data)
 
     @requireAuthenticated
+    @applicationContextManager
     async def signout(self) -> NoReturn:
         """释放当前激活/未激活的会话标识
 
@@ -196,6 +200,7 @@ class GraiaMiraiApplication:
             raise_for_return_code(data)
 
     @requireAuthenticated
+    @applicationContextManager
     async def getGroup(self, group_id: int) -> Optional[Group]:
         """尝试从已知的群组唯一ID, 获取对应群组的信息; 可能返回 None.
 
@@ -212,6 +217,7 @@ class GraiaMiraiApplication:
                 return i
 
     @requireAuthenticated
+    @applicationContextManager
     async def groupList(self) -> List[Group]:
         """获取当前会话账号所加入的所有群组的信息.
 
@@ -229,6 +235,7 @@ class GraiaMiraiApplication:
             return [Group.parse_obj(i) for i in data]
 
     @requireAuthenticated
+    @applicationContextManager
     async def getMember(self, group: Union[Group, int], member_id: int) -> Optional[Member]:
         """尝试从已知的群组唯一 ID 和已知的群组成员的 ID, 获取对应成员的信息; 可能返回 None.
 
@@ -246,6 +253,7 @@ class GraiaMiraiApplication:
                 return i
 
     @requireAuthenticated
+    @applicationContextManager
     async def memberList(self, group: Union[Group, int]) -> List[Member]:
         """获取群组中所有群组成员的信息
 
@@ -267,6 +275,7 @@ class GraiaMiraiApplication:
             return [Member.parse_obj(i) for i in data]
 
     @requireAuthenticated
+    @applicationContextManager
     async def friendList(self) -> List[Friend]:
         """获取当前会话账号所拥有的所有好友的信息
 
@@ -284,6 +293,7 @@ class GraiaMiraiApplication:
             return [Friend.parse_obj(i) for i in data]
 
     @requireAuthenticated
+    @applicationContextManager
     async def getFriend(self, friend_id: int) -> Optional[Friend]:
         """从已知的可能的好友 ID, 获取 Friend 实例.
 
@@ -300,6 +310,7 @@ class GraiaMiraiApplication:
                 return i
 
     @requireAuthenticated
+    @applicationContextManager
     async def uploadImage(self, image_bytes: bytes, method: UploadMethods, return_external: bool = False) -> Union[Image, external.Image]:
         """上传一张图片到远端服务器, 需要提供: 图片的原始数据(bytes), 图片的上传类型; 你可以控制是否返回外部态的 Image 消息元素.
 
@@ -328,6 +339,7 @@ class GraiaMiraiApplication:
             
 
     @requireAuthenticated
+    @applicationContextManager
     async def sendFriendMessage(self, target: Union[Friend, int],
         message: MessageChain, *,
         quote: Optional[Union[Source, int]] = None
@@ -364,6 +376,7 @@ class GraiaMiraiApplication:
                 return BotMessage(messageId=data['messageId'])
 
     @requireAuthenticated
+    @applicationContextManager
     async def sendGroupMessage(self, group: Union[Group, int],
         message: MessageChain, *,
         quote: Optional[Union[Source, int]] = None
@@ -400,6 +413,7 @@ class GraiaMiraiApplication:
                 return BotMessage(messageId=data['messageId'])
     
     @requireAuthenticated
+    @applicationContextManager
     async def sendTempMessage(self,
         group: Union[Group, int],
         target: Union[Member, int],
@@ -441,6 +455,7 @@ class GraiaMiraiApplication:
                 return BotMessage(messageId=data['messageId'])
 
     @requireAuthenticated
+    @applicationContextManager
     async def revokeMessage(self,
         target: Union[Source, BotMessage, int]
     ) -> NoReturn:
@@ -466,6 +481,7 @@ class GraiaMiraiApplication:
             raise_for_return_code(data)
     
     @requireAuthenticated
+    @applicationContextManager
     async def fetchMessage(self, count: int = 10) -> List[Union[GroupMessage, TempMessage, FriendMessage]]:
         """从路由 `/fetchMessage` 处获取指定数量的消息; 当关闭 Websocket 时, 该方法被用于获取事件.
 
@@ -495,6 +511,7 @@ class GraiaMiraiApplication:
             return result
     
     @requireAuthenticated
+    @applicationContextManager
     async def fetchLatestMessage(self, count: int = 10) -> List[Union[GroupMessage, TempMessage, FriendMessage]]:
         async with self.session.get(str(URL(self.url_gen("fetchLatestMessage")).with_query({
             "sessionKey": self.connect_info.sessionKey,
@@ -516,6 +533,7 @@ class GraiaMiraiApplication:
             return result
 
     @requireAuthenticated
+    @applicationContextManager
     async def peekMessage(self, count: int = 10) -> List[Union[GroupMessage, TempMessage, FriendMessage]]:
         async with self.session.get(str(URL(self.url_gen("peekMessage")).with_query({
             "sessionKey": self.connect_info.sessionKey,
@@ -537,6 +555,7 @@ class GraiaMiraiApplication:
             return result
     
     @requireAuthenticated
+    @applicationContextManager
     async def peekLatestMessage(self, count: int = 10) -> List[Union[GroupMessage, TempMessage, FriendMessage]]:
         async with self.session.get(str(URL(self.url_gen("peekLatestMessage")).with_query({
             "sessionKey": self.connect_info.sessionKey,
@@ -558,6 +577,7 @@ class GraiaMiraiApplication:
             return result
 
     @requireAuthenticated
+    @applicationContextManager
     async def messageFromId(self, source: Union[Source, int]) -> Union[GroupMessage, TempMessage, FriendMessage]:
         """尝试从已知的 `messageId` 获取缓存中的消息
 
@@ -581,6 +601,7 @@ class GraiaMiraiApplication:
                 self.logger.error("".join(["received a unknown event: ", event.get("type"), str(event)]))
 
     @requireAuthenticated
+    @applicationContextManager
     async def countMessage(self) -> int:
         """获取 `mirai-api-http` 内部缓存中的消息的数量
 
@@ -597,6 +618,7 @@ class GraiaMiraiApplication:
             return data['data']
 
     @requireAuthenticated
+    @applicationContextManager
     async def muteAll(self, group: Union[Group, int]) -> NoReturn:
         """在指定群组开启全体禁言, 需要当前会话账号在指定群主有相应权限(管理员或者群主权限)
 
@@ -615,6 +637,7 @@ class GraiaMiraiApplication:
             raise_for_return_code(data)
 
     @requireAuthenticated
+    @applicationContextManager
     async def unmuteAll(self, group: Union[Group, int]) -> NoReturn:
         """在指定群组关闭全体禁言, 需要当前会话账号在指定群主有相应权限(管理员或者群主权限)
 
@@ -633,6 +656,7 @@ class GraiaMiraiApplication:
             raise_for_return_code(data)
 
     @requireAuthenticated
+    @applicationContextManager
     async def mute(self, group: Union[Group, int], member: Union[Member, int], time: int) -> NoReturn:
         """在指定群组禁言指定群成员; 需要具有相应权限(管理员/群主); `time` 不得大于 `30*24*60*60=2592000` 或小于 `0`, 否则会自动修正;
         当 `time` 小于等于 `0` 时, 不会触发禁言操作; 禁言对象极有可能触发 `PermissionError`, 在这之前请对其进行判断!
@@ -662,6 +686,7 @@ class GraiaMiraiApplication:
             raise_for_return_code(data)
     
     @requireAuthenticated
+    @applicationContextManager
     async def unmute(self, group: Union[Group, int], member: Union[Member, int]) -> NoReturn:
         """在指定群组解除对指定群成员的禁言; 需要具有相应权限(管理员/群主); 对象极有可能触发 `PermissionError`, 在这之前请对其进行判断!
 
@@ -685,6 +710,7 @@ class GraiaMiraiApplication:
             raise_for_return_code(data)
     
     @requireAuthenticated
+    @applicationContextManager
     async def kick(self, group: Union[Group, int], member: Union[Member, int], message: Optional[str] = None) -> NoReturn:
         """将目标群组成员从指定群组删除; 需要具有相应权限(管理员/群主)
 
@@ -709,6 +735,7 @@ class GraiaMiraiApplication:
             raise_for_return_code(data)
 
     @requireAuthenticated
+    @applicationContextManager
     async def quit(self, group: Union[Group, int]) -> NoReturn:
         """主动从指定群组退出
 
@@ -727,6 +754,7 @@ class GraiaMiraiApplication:
             raise_for_return_code(data)
 
     @requireAuthenticated
+    @applicationContextManager
     async def getGroupConfig(self, group: Union[Group, int]) -> GroupConfig:
         """获取指定群组的群设置
 
@@ -747,6 +775,7 @@ class GraiaMiraiApplication:
             return GroupConfig.parse_obj(data)
 
     @requireAuthenticated
+    @applicationContextManager
     async def modifyGroupConfig(self, group: Union[Group, int], config: GroupConfig) -> NoReturn:
         """修改指定群组的群设置; 需要具有相应权限(管理员/群主).
 
@@ -767,6 +796,7 @@ class GraiaMiraiApplication:
             raise_for_return_code(data)
 
     @requireAuthenticated
+    @applicationContextManager
     async def getMemberInfo(self, member: Union[Member, int], group: Optional[Union[Group, int]] = None) -> MemberInfo:
         """获取指定群组成员的可修改状态.
 
@@ -796,6 +826,7 @@ class GraiaMiraiApplication:
             return MemberInfo.parse_obj(data)
 
     @requireAuthenticated
+    @applicationContextManager
     async def modifyMemberInfo(self, member: Union[Member, int], info: MemberInfo, group: Optional[Union[Group, int]] = None) -> NoReturn:
         """修改指定群组成员的可修改状态; 需要具有相应权限(管理员/群主).
 
@@ -825,6 +856,7 @@ class GraiaMiraiApplication:
             raise_for_return_code(data)
 
     @requireAuthenticated
+    @applicationContextManager
     async def getConfig(self) -> MiraiConfig:
         """获取 mirai-api-http 中维护的当前会话的配置.
 
@@ -841,6 +873,7 @@ class GraiaMiraiApplication:
             return MiraiConfig.parse_obj(data)
 
     @requireAuthenticated
+    @applicationContextManager
     async def modifyConfig(self, *, cacheSize: Optional[int] = None, enableWebsocket: Optional[bool] = None) -> NoReturn:
         """修改当前会话的配置
 
