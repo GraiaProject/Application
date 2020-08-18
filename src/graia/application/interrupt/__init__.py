@@ -39,6 +39,13 @@ class Interrupt(metaclass=ABCMeta):
         pass
 
 class InterruptControl:
+    """即中断控制, 主要是用于监听器/其他地方进行对符合特定要求的事件的捕获, 并返回事件.
+
+    Methods:
+        coroutine wait(interrupt: Interrupt) -> Any: 该方法主要用于在当前执行处堵塞当前协程,
+            同时将一个一次性使用的监听器挂载, 只要获取到符合条件的事件, 该方法会通过你传入的 `Interrupt` 实例的方法 `trigger`,
+            获取处理得到的值并返回; 无论如何, 用于一次性监听使用的监听器总会被销毁.
+    """
     broadcast: Broadcast
     app: GraiaMiraiApplication
 
@@ -46,6 +53,15 @@ class InterruptControl:
         self.broadcast = broadcast
     
     async def wait(self, interrupt: Interrupt):
+        """生成一一次性使用的监听器并将其挂载, 该监听器用于获取特定类型的事件, 并根据设定对事件进行过滤;
+        当获取到符合条件的对象时, 堵塞将被解除, 同时该方法返回从监听器得到的值.
+
+        Args:
+            interrupt (Interrupt): 中断, 通常在 `graia.application.interrupt.interrupts` 下被定义.
+
+        Returns:
+            Any: 通常这个值由中断本身定义并返回.
+        """
         local_event = asyncio.Event()
         listener_callable = self.leader_listener_generator(local_event, interrupt)
         self.broadcast.receiver(interrupt.direct)(listener_callable)
