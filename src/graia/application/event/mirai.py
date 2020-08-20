@@ -110,7 +110,7 @@ class BotMuteEvent(MiraiEvent):
 
     Allowed Extra Parameters(提供的额外注解支持):
         GraiaMiraiApplication (annotation): 发布事件的应用实例
-        Member (annotation, optional = None): 执行禁言操作的管理员/群主
+        Member (annotation, optional = None): 执行禁言操作的管理员/群主, 若为 None 则为应用实例所辖账号操作
         Group (annotation, optional = None): 发生该事件的群组
     """
 
@@ -136,7 +136,7 @@ class BotUnmuteEvent(MiraiEvent):
 
     Allowed Extra Parameters(提供的额外注解支持):
         GraiaMiraiApplication (annotation): 发布事件的应用实例
-        Member (annotation, optional = None): 执行解除禁言操作的管理员/群主
+        Member (annotation, optional = None): 执行解除禁言操作的管理员/群主, 若为 None 则为应用实例所辖账号操作
         Group (annotation, optional = None): 发生该事件的群组
     """
     type = "BotUnmuteEvent"
@@ -174,6 +174,46 @@ class BotJoinGroupEvent(MiraiEvent):
             if interface.annotation is Group:
                 return interface.event.group
 
+class BotLeaveEventActive(MiraiEvent):
+    """当该事件发生时, 应用实例所辖账号主动退出了某群组.
+
+    ** 注意: 当监听该事件或该类事件时, 请优先考虑使用原始事件类作为类型注解, 以此获得事件类实例, 便于获取更多的信息! **
+
+    Allowed Extra Parameters(提供的额外注解支持):
+        GraiaMiraiApplication (annotation): 发布事件的应用实例
+        Group (annotation, optional = None): 发生该事件的群组
+    """
+    type: str = "BotLeaveEventActive"
+    group: Group
+
+    class Dispatcher(BaseDispatcher):
+        mixin = [ApplicationDispatcher]
+
+        @staticmethod
+        def catch(interface: DispatcherInterface):
+            if interface.annotation is Group:
+                return interface.event.group
+
+class BotLeaveEventKick(MiraiEvent):
+    """当该事件发生时, 应用实例所辖账号被某群组的管理员/群主从该群组中删除.
+
+    ** 注意: 当监听该事件或该类事件时, 请优先考虑使用原始事件类作为类型注解, 以此获得事件类实例, 便于获取更多的信息! **
+
+    Allowed Extra Parameters(提供的额外注解支持):
+        GraiaMiraiApplication (annotation): 发布事件的应用实例
+        Group (annotation, optional = None): 发生该事件的群组
+    """
+    type: str = "BotLeaveEventKick"
+    group: Group
+
+    class Dispatcher(BaseDispatcher):
+        mixin = [ApplicationDispatcher]
+
+        @staticmethod
+        def catch(interface: DispatcherInterface):
+            if interface.annotation is Group:
+                return interface.event.group
+
 class GroupRecallEvent(MiraiEvent):
     """当该事件发生时, 有群成员在指定群组撤回了一条消息, 注意, 这里的群成员若具有管理员/群主权限, 则他们可以撤回其他普通群员的消息, 且不受发出时间限制.
 
@@ -181,7 +221,7 @@ class GroupRecallEvent(MiraiEvent):
 
     Allowed Extra Parameters(提供的额外注解支持):
         GraiaMiraiApplication (annotation): 发布事件的应用实例
-        Member (annotation, return:optional): 执行本操作的群成员
+        Member (annotation, return:optional): 执行本操作的群成员, 若为 None 则为应用实例所辖账号操作
         Group (annotation): 发生该事件的群组
     """
 
@@ -254,7 +294,7 @@ class GroupEntranceAnnouncementChangeEvent(MiraiEvent):
     Allowed Extra Parameters(提供的额外注解支持):
         GraiaMiraiApplication (annotation): 发布事件的应用实例
         Group (annotation): 被修改了入群公告的群组
-        Member (annotation, return:optional): 作出此操作的管理员/群主
+        Member (annotation, return:optional): 作出此操作的管理员/群主, 若为 None 则为应用实例所辖账号操作
     """
 
     type = "GroupEntranceAnnouncementChangeEvent"
@@ -281,7 +321,7 @@ class GroupMuteAllEvent(MiraiEvent):
     Allowed Extra Parameters(提供的额外注解支持):
         GraiaMiraiApplication (annotation): 发布事件的应用实例
         Group (annotation): 开启了全体禁言的群组
-        Member (annotation, return:optional): 作出此操作的管理员/群主
+        Member (annotation, return:optional): 作出此操作的管理员/群主, 若为 None 则为应用实例所辖账号操作
     """
 
     type = "GroupMuteAllEvent"
@@ -308,7 +348,7 @@ class GroupAllowAnonymousChatEvent(MiraiEvent):
     Allowed Extra Parameters(提供的额外注解支持):
         GraiaMiraiApplication (annotation): 发布事件的应用实例
         Group (annotation): 修改了相关设定的群组
-        Member (annotation, return:optional): 作出此操作的管理员/群主
+        Member (annotation, return:optional): 作出此操作的管理员/群主, 若为 None 则为应用实例所辖账号操作
     """
 
     type = "GroupAllowAnonymousChatEvent"
@@ -359,7 +399,7 @@ class GroupAllowMemberInviteEvent(MiraiEvent):
     Allowed Extra Parameters(提供的额外注解支持):
         GraiaMiraiApplication (annotation): 发布事件的应用实例
         Group (annotation): 修改了相关设定的群组
-        Member (annotation, return:optional): 作出此操作的管理员/群主
+        Member (annotation, return:optional): 作出此操作的管理员/群主, 若为 None 则为应用实例所辖账号操作
     """
 
     type = "GroupAllowMemberInviteEvent"
