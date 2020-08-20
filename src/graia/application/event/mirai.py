@@ -227,13 +227,14 @@ class GroupNameChangeEvent(MiraiEvent):
     Allowed Extra Parameters(提供的额外注解支持):
         GraiaMiraiApplication (annotation): 发布事件的应用实例
         Group (annotation): 被修改了群名称的群组
+        Member (annotation): 更改群名称的成员, 权限必定为管理员或是群主
     """
 
     type = "GroupNameChangeEvent"
     origin: str
     current: str
     group: Group
-    isByBot: bool
+    operator: Optional[Member] = None
 
     class Dispatcher(BaseDispatcher):
         mixin = [ApplicationDispatcher]
@@ -242,6 +243,8 @@ class GroupNameChangeEvent(MiraiEvent):
         def catch(interface: DispatcherInterface):
             if interface.annotation is Group:
                 return interface.event.group
+            elif interface.annotation is Member:
+                return interface.event.operator
 
 class GroupEntranceAnnouncementChangeEvent(MiraiEvent):
     """该事件发生时, 有一群组被修改了入群公告
