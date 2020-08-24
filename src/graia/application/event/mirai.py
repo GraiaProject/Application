@@ -808,7 +808,7 @@ class MemberJoinRequestEvent(MiraiEvent):
             "sessionKey": app.connect_info.sessionKey,
             "eventId": self.requestId,
             "fromId": self.supplicant,
-            "groupId": self.sourceGroup,
+            "groupId": self.groupId,
             "operate": 0,
             "message": message
         }) as response:
@@ -836,7 +836,7 @@ class MemberJoinRequestEvent(MiraiEvent):
             "sessionKey": app.connect_info.sessionKey,
             "eventId": self.requestId,
             "fromId": self.supplicant,
-            "groupId": self.sourceGroup,
+            "groupId": self.groupId,
             "operate": 1,
             "message": message
         }) as response:
@@ -864,7 +864,7 @@ class MemberJoinRequestEvent(MiraiEvent):
             "sessionKey": app.connect_info.sessionKey,
             "eventId": self.requestId,
             "fromId": self.supplicant,
-            "groupId": self.sourceGroup,
+            "groupId": self.groupId,
             "operate": 2,
             "message": message
         }) as response:
@@ -892,7 +892,7 @@ class MemberJoinRequestEvent(MiraiEvent):
             "sessionKey": app.connect_info.sessionKey,
             "eventId": self.requestId,
             "fromId": self.supplicant,
-            "groupId": self.sourceGroup,
+            "groupId": self.groupId,
             "operate": 3,
             "message": message
         }) as response:
@@ -920,7 +920,7 @@ class MemberJoinRequestEvent(MiraiEvent):
             "sessionKey": app.connect_info.sessionKey,
             "eventId": self.requestId,
             "fromId": self.supplicant,
-            "groupId": self.sourceGroup,
+            "groupId": self.groupId,
             "operate": 4,
             "message": message
         }) as response:
@@ -981,7 +981,7 @@ class BotInvitedJoinGroupRequestEvent(MiraiEvent):
             "sessionKey": app.connect_info.sessionKey,
             "eventId": self.requestId,
             "fromId": self.supplicant,
-            "groupId": self.sourceGroup,
+            "groupId": self.groupId,
             "operate": 0,
             "message": message
         }) as response:
@@ -1009,7 +1009,7 @@ class BotInvitedJoinGroupRequestEvent(MiraiEvent):
             "sessionKey": app.connect_info.sessionKey,
             "eventId": self.requestId,
             "fromId": self.supplicant,
-            "groupId": self.sourceGroup,
+            "groupId": self.groupId,
             "operate": 1,
             "message": message
         }) as response:

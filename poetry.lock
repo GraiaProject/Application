@@ -38,13 +38,12 @@ description = "Classes Without Boilerplate"
 name = "attrs"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
-version = "19.3.0"
+version = "20.1.0"
 
 [package.extras]
-azure-pipelines = ["coverage", "hypothesis", "pympler", "pytest (>=4.3.0)", "six", "zope.interface", "pytest-azurepipelines"]
-dev = ["coverage", "hypothesis", "pympler", "pytest (>=4.3.0)", "six", "zope.interface", "sphinx", "pre-commit"]
-docs = ["sphinx", "zope.interface"]
-tests = ["coverage", "hypothesis", "pympler", "pytest (>=4.3.0)", "six", "zope.interface"]
+dev = ["coverage (>=5.0.2)", "hypothesis", "pympler", "pytest (>=4.3.0)", "six", "zope.interface", "sphinx", "sphinx-rtd-theme", "pre-commit"]
+docs = ["sphinx", "sphinx-rtd-theme", "zope.interface"]
+tests = ["coverage (>=5.0.2)", "hypothesis", "pympler", "pytest (>=4.3.0)", "six", "zope.interface"]
 
 [[package]]
 category = "main"
@@ -92,7 +91,7 @@ description = "a highly customizable, elegantly designed event system based on a
 name = "graia-broadcast"
 optional = false
 python-versions = ">=3.6,<4.0"
-version = "0.0.14"
+version = "0.1.2"
 
 [package.dependencies]
 iterwrapper = ">=0.1.2,<0.2.0"
@@ -195,7 +194,7 @@ python = "<3.8"
 version = ">=3.7.4"
 
 [metadata]
-content-hash = "6de438602ee13371aa3c1786afdfb30fe624de8ba7b63bffb200eea51f7ec683"
+content-hash = "99cd0d98734b124dfd713cba558f35a9ab32e2aefc5be2b49209e6e509f2b1ab"
 python-versions = "^3.6"
 
 [metadata.files]
@@ -218,8 +217,8 @@ async-timeout = [
     {file = "async_timeout-3.0.1-py3-none-any.whl", hash = "sha256:4291ca197d287d274d0b6cb5d6f8f8f82d434ed288f962539ff18cc9012f9ea3"},
 ]
 attrs = [
-    {file = "attrs-19.3.0-py2.py3-none-any.whl", hash = "sha256:08a96c641c3a74e44eb59afb61a24f2cb9f4d7188748e76ba4bb5edfa3cb7d1c"},
-    {file = "attrs-19.3.0.tar.gz", hash = "sha256:f7b7ce16570fe9965acd6d30101a28f62fb4a7f9e926b3bbc9b61f8b04247e72"},
+    {file = "attrs-20.1.0-py2.py3-none-any.whl", hash = "sha256:2867b7b9f8326499ab5b0e2d12801fa5c98842d2cbd22b35112ae04bf85b4dff"},
+    {file = "attrs-20.1.0.tar.gz", hash = "sha256:0ef97238856430dcf9228e07f316aefc17e8939fc8507e18c6501b761ef1a42a"},
 ]
 chardet = [
     {file = "chardet-3.0.4-py2.py3-none-any.whl", hash = "sha256:fc323ffcaeaed0e0a02bf4d117757b98aed530d9ed4531e3e15460124c106691"},
@@ -237,8 +236,8 @@ devtools = [
     {file = "devtools-0.5.1.tar.gz", hash = "sha256:51ca8d2e15b8a862875a4837db2bafbc6cda409c069e960aec3f4bbd91fe9c08"},
 ]
 graia-broadcast = [
-    {file = "graia-broadcast-0.0.14.tar.gz", hash = "sha256:fbe1c0f9427057d60bb06f33172e8410e4f8694e40845930bc2ca8fa3c974105"},
-    {file = "graia_broadcast-0.0.14-py3-none-any.whl", hash = "sha256:61e67608ee83ad2713f52a04a0ba9f63fb57ab81c63d62a0df4ef1b3acba660e"},
+    {file = "graia-broadcast-0.1.2.tar.gz", hash = "sha256:c0118b5cf5eebb0ba6edcd7c79258149ff7d133aee9fb4cb81fc51c9ab922c35"},
+    {file = "graia_broadcast-0.1.2-py3-none-any.whl", hash = "sha256:fec444e466ca453e5cfb8c69093d8e22ed27321ff388e745f01320c5034d5f13"},
 ]
 idna = [
     {file = "idna-2.10-py2.py3-none-any.whl", hash = "sha256:b97d804b1e9b523befed77c48dacec60e6dcb0b5391d57af6a65a312a90648c0"},
