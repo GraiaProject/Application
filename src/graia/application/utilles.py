@@ -1,4 +1,4 @@
-from typing import Union
+from typing import Any, Iterable, List, Union
 from graia.broadcast.entities.dispatcher import BaseDispatcher
 from graia.broadcast.interfaces.dispatcher import DispatcherInterface
 from .exceptions import (AccountMuted, AccountNotFound, InvaildArgument,
@@ -106,3 +106,32 @@ def call_atonce(*args, **kwargs):
     def wrapper(callable_target):
         return callable_target(*args, **kwargs)
     return wrapper
+
+class InsertGenerator:
+    base: Iterable[Any]
+    insert_items: List[Any]
+
+    def __init__(self, base_iterable: Iterable, pre_items: List[Any] = None) -> None:
+        self.base = base_iterable
+        self.insert_items = pre_items or []
+    
+    def __iter__(self):
+        for i in self.base:
+            if self.insert_items:
+                yield from self.insert_items.pop()
+            yield i
+        else:
+            if self.insert_items:
+                for i in self.insert_items[::-1]:
+                    yield from i
+
+class AutoUnpackTuple:
+    def __init__(self, base_iterable: Iterable, pre_items: List[Any] = None) -> None:
+        self.base = base_iterable
+    
+    def __iter__(self):
+        for i in self.base:
+            if isinstance(i, tuple):
+                yield from i
+                continue
+            yield i

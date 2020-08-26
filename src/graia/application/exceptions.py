@@ -51,3 +51,6 @@ class EntangledSuperposition(Exception):
 
 class MissingNecessaryOne(Exception):
     pass
+
+class ConflictItem(Exception):
+    pass

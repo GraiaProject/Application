@@ -91,7 +91,7 @@ description = "a highly customizable, elegantly designed event system based on a
 name = "graia-broadcast"
 optional = false
 python-versions = ">=3.6,<4.0"
-version = "0.1.2"
+version = "0.1.4"
 
 [package.dependencies]
 iterwrapper = ">=0.1.2,<0.2.0"
@@ -170,12 +170,20 @@ version = "2020.7.14"
 
 [[package]]
 category = "main"
+description = "String case converter."
+name = "stringcase"
+optional = false
+python-versions = "*"
+version = "1.2.0"
+
+[[package]]
+category = "main"
 description = "Backported and Experimental Type Hints for Python 3.5+"
 marker = "python_version < \"3.8\""
 name = "typing-extensions"
 optional = false
 python-versions = "*"
-version = "3.7.4.2"
+version = "3.7.4.3"
 
 [[package]]
 category = "main"
@@ -194,7 +202,7 @@ python = "<3.8"
 version = ">=3.7.4"
 
 [metadata]
-content-hash = "99cd0d98734b124dfd713cba558f35a9ab32e2aefc5be2b49209e6e509f2b1ab"
+content-hash = "094b632ffb7e2190226651729a7dae36a60343b009e8a8b1d409c4a1bd14a97a"
 python-versions = "^3.6"
 
 [metadata.files]
@@ -236,8 +244,8 @@ devtools = [
     {file = "devtools-0.5.1.tar.gz", hash = "sha256:51ca8d2e15b8a862875a4837db2bafbc6cda409c069e960aec3f4bbd91fe9c08"},
 ]
 graia-broadcast = [
-    {file = "graia-broadcast-0.1.2.tar.gz", hash = "sha256:c0118b5cf5eebb0ba6edcd7c79258149ff7d133aee9fb4cb81fc51c9ab922c35"},
-    {file = "graia_broadcast-0.1.2-py3-none-any.whl", hash = "sha256:fec444e466ca453e5cfb8c69093d8e22ed27321ff388e745f01320c5034d5f13"},
+    {file = "graia-broadcast-0.1.4.tar.gz", hash = "sha256:7b18d7b8e3c63248b5d959869028919ddea154452423617a3f775418427733a9"},
+    {file = "graia_broadcast-0.1.4-py3-none-any.whl", hash = "sha256:583bb55c234734d7517cf59c69c0f8fd29b9be2ebd65b4f3efb4a6cccdf9aa64"},
 ]
 idna = [
     {file = "idna-2.10-py2.py3-none-any.whl", hash = "sha256:b97d804b1e9b523befed77c48dacec60e6dcb0b5391d57af6a65a312a90648c0"},
@@ -325,10 +333,13 @@ regex = [
     {file = "regex-2020.7.14-cp38-cp38-win_amd64.whl", hash = "sha256:7a2dd66d2d4df34fa82c9dc85657c5e019b87932019947faece7983f2089a840"},
     {file = "regex-2020.7.14.tar.gz", hash = "sha256:3a3af27a8d23143c49a3420efe5b3f8cf1a48c6fc8bc6856b03f638abc1833bb"},
 ]
+stringcase = [
+    {file = "stringcase-1.2.0.tar.gz", hash = "sha256:48a06980661908efe8d9d34eab2b6c13aefa2163b3ced26972902e3bdfd87008"},
+]
 typing-extensions = [
-    {file = "typing_extensions-3.7.4.2-py2-none-any.whl", hash = "sha256:f8d2bd89d25bc39dabe7d23df520442fa1d8969b82544370e03d88b5a591c392"},
-    {file = "typing_extensions-3.7.4.2-py3-none-any.whl", hash = "sha256:6e95524d8a547a91e08f404ae485bbb71962de46967e1b71a0cb89af24e761c5"},
-    {file = "typing_extensions-3.7.4.2.tar.gz", hash = "sha256:79ee589a3caca649a9bfd2a8de4709837400dfa00b6cc81962a1e6a1815969ae"},
+    {file = "typing_extensions-3.7.4.3-py2-none-any.whl", hash = "sha256:dafc7639cde7f1b6e1acc0f457842a83e722ccca8eef5270af2d74792619a89f"},
+    {file = "typing_extensions-3.7.4.3-py3-none-any.whl", hash = "sha256:7cb407020f00f7bfc3cb3e7881628838e69d8f3fcab2f64742a5e76b2f841918"},
+    {file = "typing_extensions-3.7.4.3.tar.gz", hash = "sha256:99d4073b617d30288f569d3f13d2bd7548c3a7e4c8de87db09a9d29bb3a4a60c"},
 ]
 yarl = [
     {file = "yarl-1.5.1-cp35-cp35m-macosx_10_14_x86_64.whl", hash = "sha256:db6db0f45d2c63ddb1a9d18d1b9b22f308e52c83638c26b422d520a815c4b3fb"},

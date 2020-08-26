@@ -60,7 +60,8 @@ class GraiaMiraiApplication:
         connect_info: Session,
         session: Optional[ClientSession] = None,
         logger: Optional[AbstractLogger] = None,
-        debug: bool = False
+        debug: bool = False,
+        enable_chat_log: bool = True
     ):
         self.broadcast = broadcast
         self.connect_info = connect_info
@@ -69,9 +70,12 @@ class GraiaMiraiApplication:
             "debug": True
         } if debug else {}))
         self.debug = debug
-        self.broadcast.receiver("GroupMessage")(self.logger_group_message)
-        self.broadcast.receiver("FriendMessage")(self.logger_friend_message)
-        self.broadcast.receiver("TempMessage")(self.logger_temp_message)
+
+        if enable_chat_log:
+            self.broadcast.receiver("GroupMessage")(self.logger_group_message)
+            self.broadcast.receiver("FriendMessage")(self.logger_friend_message)
+            self.broadcast.receiver("TempMessage")(self.logger_temp_message)
+
         self.broadcast.addInjectionRule(
             SpecialEventType(MiraiEvent, AppMiddlewareAsDispatcher(self))
         )
