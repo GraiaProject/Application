@@ -9,11 +9,6 @@ from .elements import ExternalElement, InternalElement, Element
 import regex
 import copy
 
-try:
-    from functools import singledispatchmethod
-except:
-    from singledispatchmethod import singledispatchmethod
-
 T = Element
 MessageIndex = Tuple[int, Optional[int]]
 
