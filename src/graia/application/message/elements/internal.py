@@ -254,14 +254,17 @@ class Image(InternalElement):
                     methodd = method or image_method.get()
                 except LookupError:
                     raise ValueError("you should give the 'method' for upload when you are out of the event receiver.")
-                if not self.is_flash:
-                    return partial(app.uploadImage, filepath.read_bytes(), methodd, return_external=True)
-                else:
-                    async def _flash_image_transfer():
+                async def wrapper():
+                    if self.is_flash:
+                        return await app.uploadImage(
+                            filepath.read_bytes(),
+                            methodd, return_external=True
+                        )
+                    else:
                         return FlashImage.fromExternal(await app.uploadImage(
                             filepath.read_bytes(), methodd, return_external=True
                         )).toExternal()
-                    return _flash_image_transfer()
+                return wrapper
 
             def fromExternal(cls, external_element) -> "InternalElement":
                 return external_element
@@ -320,14 +323,14 @@ class Image(InternalElement):
                     methodd = method or image_method.get()
                 except LookupError:
                     raise ValueError("you should give the 'method' for upload when you are out of the event receiver.")
-                if not self.is_flash:
-                    return partial(app.uploadImage, image_bytes, methodd, return_external=True)
-                else:
-                    async def _flash_image_transfer():
+                async def wrapper():
+                    if self.is_flash:
+                        return await app.uploadImage(image_bytes, methodd, return_external=True)
+                    else:
                         return FlashImage.fromExternal(await app.uploadImage(
                             image_bytes, methodd, return_external=True
                         )).toExternal()
-                    return _flash_image_transfer
+                return wrapper
 
             def fromExternal(cls, external_element) -> "InternalElement":
                 return external_element
