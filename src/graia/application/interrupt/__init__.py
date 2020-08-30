@@ -6,7 +6,7 @@ from graia.application import GraiaMiraiApplication
 from graia.broadcast.entities.event import BaseEvent
 from abc import ABCMeta, abstractmethod
 from graia.broadcast.utilles import run_always_await
-from graia.broadcast.entities.signatures import RemoveMe
+from graia.broadcast.entities.signatures import Force, RemoveMe
 from graia.broadcast.exceptions import PropagationCancelled
 import asyncio
 
@@ -53,20 +53,21 @@ class InterruptControl:
     def __init__(self, broadcast: Broadcast) -> None:
         self.broadcast = broadcast
     
-    async def wait(self, interrupt: Interrupt, priority: Union[int, Priority, None] = None):
+    async def wait(self, interrupt: Interrupt, priority: Union[int, Priority, None] = None, **kwargs):
         """生成一一次性使用的监听器并将其挂载, 该监听器用于获取特定类型的事件, 并根据设定对事件进行过滤;
         当获取到符合条件的对象时, 堵塞将被解除, 同时该方法返回从监听器得到的值.
 
         Args:
             interrupt (Interrupt): 中断, 通常在 `graia.application.interrupt.interrupts` 下被定义.
             priority (Union[int, Priority, None]): 中断 inline 监听器的优先级, Defaults to None.
+            **kwargs: 都会直接传入 Broadcast.receiver.
 
         Returns:
             Any: 通常这个值由中断本身定义并返回.
         """
         local_event = asyncio.Event()
         listener_callable = self.leader_listener_generator(local_event, interrupt)
-        self.broadcast.receiver(interrupt.direct, priority=priority)(listener_callable)
+        self.broadcast.receiver(interrupt.direct, priority=priority, **kwargs)(listener_callable)
         try:
             await local_event.wait()
         finally: # 删除 Listener
@@ -84,6 +85,8 @@ class InterruptControl:
                 if result is not None:
                     active_stat.set()
                     event_lock.set()
+                    if isinstance(result, Force):
+                        result = result.target
                     interrupt.set_return_value(result)
                     if not interrupt._block_propagation:
                         return RemoveMe()
