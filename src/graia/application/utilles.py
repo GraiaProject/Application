@@ -1,4 +1,4 @@
-from typing import Any, Iterable, List, Union
+from typing import Any, Callable, Iterable, List, Union, TypeVar
 from graia.broadcast.entities.dispatcher import BaseDispatcher
 from graia.broadcast.interfaces.dispatcher import DispatcherInterface
 from .exceptions import (AccountMuted, AccountNotFound, InvaildArgument,
@@ -7,14 +7,15 @@ from .exceptions import (AccountMuted, AccountNotFound, InvaildArgument,
 from .context import enter_context
 import inspect
 
-def applicationContextManager(func):
-    def wrapper(self, *args, **kwargs):
-        with enter_context(self):
-            return func(self, *args, **kwargs)
-    wrapper.__annotations__ = func.__annotations__
+_T = TypeVar("_T")
+
+def applicationContextManager(func: Callable[..., _T]) -> Callable[..., _T]:
+    async def wrapper(self, *args, **kwargs):
+        with enter_context(app=self):
+            return await func(self, *args, **kwargs)
     return wrapper
 
-def requireAuthenticated(func):
+def requireAuthenticated(func: Callable[..., _T]) -> Callable[..., _T]:
     def wrapper(self, *args, **kwargs):
         if not self.connect_info.sessionKey:
             raise InvaildSession("you must authenticate before this.")
