@@ -1,4 +1,3 @@
-from __future__ import annotations
 from typing import Optional
 from . import ExternalElement
 
@@ -16,3 +15,12 @@ class FlashImage(Image):
 
     def asSerializationString(self) -> str:
         return f"[mirai:flash:{self.imageId}]"
+
+class Voice(ExternalElement):
+    type = "Voice"
+    voiceId: Optional[str] = None
+    url: Optional[str] = None
+    path: Optional[str] = None
+
+    def asSerializationString(self) -> str:
+        return f"[mirai:voice:{self.voiceId}]"
