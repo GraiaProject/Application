@@ -23,7 +23,7 @@ from .logger import AbstractLogger, LoggingLogger
 from .message import BotMessage
 from .message.chain import MessageChain
 from .message.elements import external
-from .message.elements.internal import Image, Source
+from .message.elements.internal import Image, Source, Voice
 from .session import Session
 from .utilles import (AppMiddlewareAsDispatcher, SinceVersion,
                       raise_for_return_code, requireAuthenticated,
@@ -317,12 +317,10 @@ class GraiaMiraiApplication:
     @applicationContextManager
     async def uploadImage(self, image_bytes: bytes, method: UploadMethods, return_external: bool = False) -> Union[Image, external.Image]:
         """上传一张图片到远端服务器, 需要提供: 图片的原始数据(bytes), 图片的上传类型; 你可以控制是否返回外部态的 Image 消息元素.
-
         Args:
             image_bytes (bytes): 图片的原始数据
             method (UploadMethods): 图片的上传类型
             return_external (bool, optional): 是否返回外部态的 Image 消息元素. 默认为 False.
-
         Returns:
             Image(internal): 内部态的 Image 消息元素
             Image(external): 外部态的 Image 消息元素
@@ -340,7 +338,34 @@ class GraiaMiraiApplication:
                 return external_component
             else:
                 return Image.fromExternal(external_component)
-            
+    
+    @requireAuthenticated
+    @applicationContextManager
+    async def uploadVoice(self, voice_bytes: bytes, method: UploadMethods = UploadMethods.Group, return_external: bool = False) -> Union[Voice, external.Voice]:
+        """上传一份语音数据(类型为原始 bytes)到远端服务器, 需要提供: 语音的原始数据(bytes), 语音的上传类型(默认为 Group); 你可以控制是否返回外部态的 Voice 消息元素.
+
+        Args:
+            voice_bytes (bytes): 语音的原始数据
+            method (UploadMethods): 语音的上传类型, 默认为 `UploadMethods.Group`.
+            return_external (bool, optional): 是否返回外部态的 Voice 消息元素. 默认为 False.
+
+        Returns:
+            Voice(internal): 内部态的 Voice 消息元素
+            Voice(external): 外部态的 Voice 消息元素
+        """
+        data = FormData()
+        data.add_field("sessionKey", self.connect_info.sessionKey)
+        data.add_field("type", method.value)
+        data.add_field("voice", voice_bytes)
+        async with self.session.post(self.url_gen("uploadVoice"), data=data) as response:
+            response.raise_for_status()
+            resp_json = await response.json()
+            raise_for_return_code(resp_json)
+            external_component = external.Voice.parse_obj(resp_json)
+            if return_external:
+                return external_component
+            else:
+                return Voice.fromExternal(external_component)
 
     @requireAuthenticated
     @applicationContextManager

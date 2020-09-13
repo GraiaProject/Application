@@ -2,7 +2,7 @@ from enum import Enum
 from pydantic import BaseModel
 
 class UploadMethods(Enum):
-    """用于向 `uploadImage` 方法描述图片的上传类型"""
+    """用于向 `uploadImage` 或 `uploadVoice` 方法描述图片的上传类型"""
     Friend = "friend"
     Group = "group"
     Temp = "temp"

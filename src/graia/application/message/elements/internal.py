@@ -489,6 +489,50 @@ class FlashImage(Image, InternalElement):
     def asSerializationString(self) -> str:
         return f"[mirai:flash:{self.imageId}]"
 
+class VoiceUploadType(Enum):
+    Group = "group"
+    Unknown = "unknown"
+
+class Voice(InternalElement):
+    voiceId: Optional[str] = None
+    url: Optional[str] = None
+    path: Optional[str] = None
+    type: Optional[VoiceUploadType]
+
+    def toExternal(self):
+        return External.Voice(
+            voiceId=self.voiceId,
+            url=self.url,
+            path=self.path
+        )
+
+    @classmethod
+    def fromExternal(cls, external_element) -> "Voice":
+        return cls(
+            voiceId=external_element.voiceId,
+            url=external_element.url,
+            path=external_element.path
+        )
+
+    def asSerializationString(self) -> str:
+        return f"[mirai:voice:{self.voiceId}]"
+    
+    def asDisplay(self) -> str:
+        return "[语音]"
+    
+    @validator("type", always=True)
+    def _(cls, v, values) -> VoiceUploadType:
+        if v:
+            return v
+        if "voiceId" not in values:
+            return VoiceUploadType.Unknown
+        if not values['voiceId']:
+            return VoiceUploadType.Unknown
+        if values['voiceId']:
+            return VoiceUploadType.Group # mirai 当前版本只支持群语音.
+
+    
+
 class Xml(InternalElement, ExternalElement):
     type = "Xml"
     xml: str
