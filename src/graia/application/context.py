@@ -33,10 +33,13 @@ def enter_context(app=None, event_i=None):
         t2 = event.set(event_i)
 
     yield
+    try:
+        if t1:
+            application.reset(t1)
 
-    if t1:
-        application.reset(t1)
-    if all([t2, t3, t4]):
-        event.reset(t2)
-        event_loop.reset(t3)
-        broadcast.reset(t4)
+        if all([t2, t3, t4]):
+            event.reset(t2)
+            event_loop.reset(t3)
+            broadcast.reset(t4)
+    except ValueError: # 在测试 Scheduler 时发现的问题...辣鸡 Python!
+            pass

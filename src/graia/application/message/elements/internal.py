@@ -247,24 +247,21 @@ class Image(InternalElement):
         class _Image_Internal(InternalElement, ExternalElement):
             is_flash = False
 
-            @property
-            def toExternal(self):
+            async def toExternal(self):
                 app = application.get()
                 try:
                     methodd = method or image_method.get()
                 except LookupError:
                     raise ValueError("you should give the 'method' for upload when you are out of the event receiver.")
-                async def wrapper():
-                    if self.is_flash:
-                        return await app.uploadImage(
-                            filepath.read_bytes(),
-                            methodd, return_external=True
-                        )
-                    else:
-                        return FlashImage.fromExternal(await app.uploadImage(
-                            filepath.read_bytes(), methodd, return_external=True
-                        )).toExternal()
-                return wrapper
+                if not self.is_flash:
+                    return await app.uploadImage(
+                        filepath.read_bytes(),
+                        methodd, return_external=True
+                    )
+                else:
+                    return FlashImage.fromExternal(await app.uploadImage(
+                        filepath.read_bytes(), methodd, return_external=True
+                    )).toExternal()
 
             def fromExternal(cls, external_element) -> "InternalElement":
                 return external_element
@@ -316,21 +313,18 @@ class Image(InternalElement):
         class _Image_Internal(InternalElement, ExternalElement):
             is_flash = False
 
-            @property
-            def toExternal(self):
+            async def toExternal(self):
                 app = application.get()
                 try:
                     methodd = method or image_method.get()
                 except LookupError:
                     raise ValueError("you should give the 'method' for upload when you are out of the event receiver.")
-                async def wrapper():
-                    if self.is_flash:
-                        return await app.uploadImage(image_bytes, methodd, return_external=True)
-                    else:
-                        return FlashImage.fromExternal(await app.uploadImage(
-                            image_bytes, methodd, return_external=True
-                        )).toExternal()
-                return wrapper
+                if not self.is_flash:
+                    return await app.uploadImage(image_bytes, methodd, return_external=True)
+                else:
+                    return FlashImage.fromExternal(await app.uploadImage(
+                        image_bytes, methodd, return_external=True
+                    )).toExternal()
 
             def fromExternal(cls, external_element) -> "InternalElement":
                 return external_element
@@ -373,25 +367,22 @@ class Image(InternalElement):
         """
         class _Image_Internal(InternalElement, ExternalElement):
             is_flash = False
-
-            @property
-            def toExternal(self):
-                from graia.application import GraiaMiraiApplication
-                app: GraiaMiraiApplication = application.get()
+            
+            async def toExternal(self):
+                app = application.get()
                 try:
                     methodd = method or image_method.get()
                 except LookupError:
                     raise ValueError("you should give the 'method' for upload when you are out of the event receiver.")
-                async def wrapper():
-                    async with app.session.get(url) as response:
-                        response.raise_for_status()
-                        if not self.is_flash:
-                            return await app.uploadImage(await response.read(), methodd, return_external=True)
-                        else:
-                            return FlashImage.fromExternal(await app.uploadImage(
-                                await response.read(), methodd, return_external=True
-                            )).toExternal()
-                return wrapper
+                
+                async with app.session.get(url) as response:
+                    response.raise_for_status()
+                    if not self.is_flash:
+                        return await app.uploadImage(await response.read(), methodd, return_external=True)
+                    else:
+                        return FlashImage.fromExternal(await app.uploadImage(
+                            await response.read(), methodd, return_external=True
+                        )).toExternal()
 
             def fromExternal(cls, external_element) -> "InternalElement":
                 return external_element
@@ -531,7 +522,7 @@ class Voice(InternalElement):
         if values['voiceId']:
             return VoiceUploadType.Group # mirai 当前版本只支持群语音.
 
-    
+
 
 class Xml(InternalElement, ExternalElement):
     type = "Xml"
