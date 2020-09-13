@@ -1,6 +1,7 @@
 """该模块提供一些便捷的 Timer"""
 
 from datetime import datetime, timedelta
+from croniter import croniter
 
 def every(**kwargs):
     while True:
@@ -41,3 +42,14 @@ def every_custom_hours(hours: int):
         hours (int): 距离下一次执行的时间间隔, 单位为小时
     """
     yield from every(hours=hours)
+
+def crontabify(pattern: str):
+    """使用类似 crontab 的方式生成计时器
+
+    Args:
+        pattern (str): crontab 的设置, 具体请合理使用搜索引擎
+    """
+    base_datetime = datetime.now()
+    crontab_iter = croniter(pattern, base_datetime)
+    while True:
+        yield crontab_iter.get_next(datetime)
