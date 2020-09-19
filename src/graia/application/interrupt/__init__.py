@@ -53,13 +53,13 @@ class InterruptControl:
     def __init__(self, broadcast: Broadcast) -> None:
         self.broadcast = broadcast
     
-    async def wait(self, interrupt: Interrupt, priority: Union[int, Priority, None] = None, **kwargs):
+    async def wait(self, interrupt: Interrupt, priority: Union[int, Priority] = 16, **kwargs):
         """生成一一次性使用的监听器并将其挂载, 该监听器用于获取特定类型的事件, 并根据设定对事件进行过滤;
         当获取到符合条件的对象时, 堵塞将被解除, 同时该方法返回从监听器得到的值.
 
         Args:
             interrupt (Interrupt): 中断, 通常在 `graia.application.interrupt.interrupts` 下被定义.
-            priority (Union[int, Priority, None]): 中断 inline 监听器的优先级, Defaults to None.
+            priority (Union[int, Priority]): 中断 inline 监听器的优先级, Defaults to 16.
             **kwargs: 都会直接传入 Broadcast.receiver.
 
         Returns:
