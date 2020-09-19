@@ -32,7 +32,7 @@ def every_custom_minutes(minutes: int):
     yield from every(minutes=minutes)
 
 def every_hours():
-    """每分钟执行一次."""
+    """每小时执行一次."""
     yield from every(hours=1)
 
 def every_custom_hours(hours: int):

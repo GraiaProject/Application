@@ -1,10 +1,11 @@
-from typing import Any, Callable, Optional, Type, TypeVar, Union
+from typing import Any, Callable, List, Optional, Type, TypeVar, Union
 
 from graia.broadcast.entities.event import BaseEvent
 from graia.broadcast.utilles import run_always_await
 
 from graia.application.group import Group, Member
 from graia.application.friend import Friend
+from graia.application.interrupt.actions import Action
 from . import Interrupt
 from graia.application.event.messages import FriendMessage, GroupMessage, TempMessage
 from graia.application.message import BotMessage
@@ -164,3 +165,15 @@ class CustomEventInterrupt(Interrupt):
     async def trigger(self, event: T) -> Union[None, A]:
         if await run_always_await(self.checker(event)):
             return await run_always_await(self.transfer(event))
+
+class ActionInterrupt(CustomEventInterrupt):
+    actions: List[Action]
+
+    def __init__(self, event: Type[T], actions: List[Action], block_propagation: bool = False) -> None:
+        self.direct = event
+        self.actions = actions
+        self._block_propagation = block_propagation
+    
+    async def trigger(self, event: T) -> Union[None, A]:
+        if all([await run_always_await(i.executer(event)) for i in self.actions]):
+            return True

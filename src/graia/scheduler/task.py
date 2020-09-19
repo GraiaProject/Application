@@ -1,9 +1,11 @@
+import traceback
 from typing import Any, Callable, Coroutine, Generator, List, Optional, Tuple, Type, Union
 import asyncio
 from graia.broadcast.entities.decorater import Decorater
 from graia.broadcast.entities.dispatcher import BaseDispatcher
 from graia.broadcast.entities.listener import Listener
 from graia.broadcast.protocols.executor import ExecutorProtocol
+from graia.application.logger import AbstractLogger, LoggingLogger
 from graia.scheduler.exception import AlreadyStarted
 
 from graia.scheduler.utilles import EnteredRecord, print_track_async
@@ -33,6 +35,7 @@ class SchedulerTask:
     started_record: EnteredRecord
 
     loop: asyncio.AbstractEventLoop
+    _logger: AbstractLogger
 
     @property
     def is_sleeping(self) -> bool:
@@ -54,7 +57,8 @@ class SchedulerTask:
             BaseDispatcher
         ]]] = None,
         decorators: Optional[List[Decorater]] = None,
-        enableInternalAccess: bool = False
+        enableInternalAccess: bool = False,
+        logger: Optional[AbstractLogger] = None
     ) -> None:
         self.target = target
         self.timer = timer
@@ -66,7 +70,8 @@ class SchedulerTask:
         self.enableInternalAccess = enableInternalAccess
         self.sleep_record = EnteredRecord()
         self.started_record = EnteredRecord()
-    
+        self._logger = logger or LoggingLogger()
+
     def setup_task(self) -> None:
         if not self.started_record.entered: # 还未启动
             self.task = self.loop.create_task(self.run())
@@ -101,18 +106,36 @@ class SchedulerTask:
     async def run(self) -> None:
         for coro, waiting, sleep_interval in self.coroutine_generator():
             if waiting: # 是否为 asyncio.sleep 的 coro
-                print("开始等待...", sleep_interval)
                 with self.sleep_record:
                     try:
                         await coro
                     except asyncio.CancelledError:
                         return
             else: # 执行
-                print("开始执行...")
                 if self.cancelable:
-                    await coro
+                    try:
+                        await coro
+                    except asyncio.CancelledError:
+                        if self.cancelable:
+                            return
+                        raise
+                    except Exception as e:
+                        self._logger.error(
+                            "an unexcepted exception ({0}) raised by a scheduler task, it's {1}".format(
+                                e.__class__.__name__, self.target
+                        ))
+                        traceback.print_exc()
                 else:
-                    await asyncio.shield(coro)
+                    try:
+                        await asyncio.shield(coro)
+                    except asyncio.CancelledError:
+                        self._logger.debug("a scheduler task has been cancelled: {}".format(self.target))
+                    except Exception as e:
+                        self._logger.error(
+                            "an unexcepted exception ({0}) raised by a scheduler task, it's {1}".format(
+                                e.__class__.__name__, self.target
+                        ))
+                        traceback.print_exc()
 
     def stop_interval_gen(self) -> None:
         if not self.stoped:
