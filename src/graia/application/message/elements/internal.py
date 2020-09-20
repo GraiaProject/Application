@@ -4,7 +4,6 @@ from enum import Enum
 from pathlib import Path
 from typing import NoReturn, Optional, Union
 import aiohttp
-from graia.broadcast.utilles import printer
 
 from pydantic.fields import Field
 from graia.application.entities import UploadMethods
@@ -13,9 +12,8 @@ from ...exceptions import InvaildArgument
 from pydantic import validator
 
 from ...context import application, image_method
-from . import ExternalElement, InternalElement
+from . import ExternalElement, InternalElement, ShadowElement
 from . import external as External
-from functools import partial
 from aiohttp import ClientSession
 import json as MJson
 
@@ -166,8 +164,124 @@ image_upload_method_type_map = {
     UploadMethods.Temp: ImageType.Temp
 }
 
+class ShadowImage(InternalElement, ExternalElement, ShadowElement):
+    method: Optional[UploadMethods]
+    is_flash: bool = False
+
+    def asFlash(self):
+        self.is_flash = True
+        return self
+    
+    def fromExternal(cls, external_element) -> "InternalElement":
+        return external_element
+
+class Image_LocalFile(ShadowImage):
+    filepath: Path
+
+    def __init__(self, filepath: Path, method: Optional[UploadMethods] = None) -> None:
+        self.filepath = filepath
+        self.method = method
+
+    async def toExternal(self):
+        app = application.get()
+        try:
+            methodd = self.method or image_method.get()
+        except LookupError:
+            raise ValueError("you should give the 'method' for upload when you are out of the event receiver.")
+        if not self.is_flash:
+            return await app.uploadImage(
+                self.filepath.read_bytes(),
+                methodd, return_external=True
+            )
+        else:
+            return FlashImage.fromExternal(await app.uploadImage(
+                self.filepath.read_bytes(), methodd, return_external=True
+            )).toExternal()
+    
+    async def getReal(self, method: UploadMethods) -> "Image":
+        """从本 Shadow Element 中生成一真正的 Image 对象.
+        Args:
+            method (UploadMethods): 所需求的图片的上传类型, 具体请阅读 UploadMethods 的相关文档.
+        Raises:
+            ClientResponseError: HTTP 网络请求错误
+        Returns:
+            Image: 所生成的, 真正的 Image 对象.
+        """
+        app = application.get()
+        return await app.uploadImage(self.filepath.read_bytes(), method, return_external=True)
+
+class Image_UnsafeBytes(ShadowImage):
+    image_bytes: bytes
+
+    def __init__(self, image_bytes: bytes, method: Optional[UploadMethods] = None) -> None:
+        self.image_bytes = image_bytes
+        self.method = method
+
+    async def toExternal(self):
+        app = application.get()
+        try:
+            methodd = self.method or image_method.get()
+        except LookupError:
+            raise ValueError("you should give the 'method' for upload when you are out of the event receiver.")
+        if not self.is_flash:
+            return await app.uploadImage(self.image_bytes, methodd, return_external=True)
+        else:
+            return FlashImage.fromExternal(await app.uploadImage(
+                self.image_bytes, methodd, return_external=True
+            )).toExternal()
+
+    async def getReal(self, method: UploadMethods) -> "Image":
+        """从本 Shadow Element 中生成一真正的 Image 对象.
+        Args:
+            method (UploadMethods): 所需求的图片的上传类型, 具体请阅读 UploadMethods 的相关文档.
+        Raises:
+            ClientResponseError: HTTP 网络请求错误
+        Returns:
+            Image: 所生成的, 真正的 Image 对象.
+        """
+        app = application.get()
+        return await app.uploadImage(self.image_bytes, method)
+
+class Image_NetworkAddress(ShadowImage):
+    url: str
+
+    def __init__(self, url: str, method: Optional[UploadMethods] = None) -> None:
+        self.url = url
+        self.method = method
+    
+    async def toExternal(self):
+        app = application.get()
+        try:
+            methodd = self.method or image_method.get()
+        except LookupError:
+            raise ValueError("you should give the 'method' for upload when you are out of the event receiver.")
+        
+        async with app.session.get(self.url) as response:
+            response.raise_for_status()
+            if not self.is_flash:
+                return await app.uploadImage(await response.read(), methodd, return_external=True)
+            else:
+                return FlashImage.fromExternal(await app.uploadImage(
+                    await response.read(), methodd, return_external=True
+                )).toExternal()
+    
+    async def getReal(self, method: UploadMethods) -> "Image":
+        """从本 Shadow Element 中生成一真正的 Image 对象.
+        Args:
+            method (UploadMethods): 所需求的图片的上传类型, 具体请阅读 UploadMethods 的相关文档.
+        Raises:
+            ClientResponseError: HTTP 网络请求错误
+        Returns:
+            Image: 所生成的, 真正的 Image 对象.
+        """
+        app = application.get()
+        async with aiohttp.ClientSession() as session:
+            async with session.get(self.url) as response:
+                response.raise_for_status()
+                return await app.uploadImage(await response.read(), method)
+
 class Image(InternalElement):
-    "该消息元素用于承载消息中所附带的图片. 你可以自由使用该元素."
+    "该消息元素用于承载消息中所附带的图片."
     imageId: Optional[str] = None
     url: Optional[str] = None
     path: Optional[str] = None
@@ -243,48 +357,7 @@ class Image(InternalElement):
             filepath = Path(filepath)
         if not filepath.exists():
             raise FileNotFoundError("you should give us a existed file's path")
-        # 定义魔法闭包类
-        class _Image_Internal(InternalElement, ExternalElement):
-            is_flash = False
-
-            async def toExternal(self):
-                app = application.get()
-                try:
-                    methodd = method or image_method.get()
-                except LookupError:
-                    raise ValueError("you should give the 'method' for upload when you are out of the event receiver.")
-                if not self.is_flash:
-                    return await app.uploadImage(
-                        filepath.read_bytes(),
-                        methodd, return_external=True
-                    )
-                else:
-                    return FlashImage.fromExternal(await app.uploadImage(
-                        filepath.read_bytes(), methodd, return_external=True
-                    )).toExternal()
-
-            def fromExternal(cls, external_element) -> "InternalElement":
-                return external_element
-            
-            async def getReal(self, method: UploadMethods) -> Image:
-                """从本 Shadow Element 中生成一真正的 Image 对象.
-
-                Args:
-                    method (UploadMethods): 所需求的图片的上传类型, 具体请阅读 UploadMethods 的相关文档.
-
-                Raises:
-                    ClientResponseError: HTTP 网络请求错误
-
-                Returns:
-                    Image: 所生成的, 真正的 Image 对象.
-                """
-                app = application.get()
-                return await app.uploadImage(filepath.read_bytes(), method, return_external=True)
-
-            def asFlash(self):
-                self.is_flash = True
-                return self
-        return _Image_Internal()
+        return Image_LocalFile(filepath, method)
 
     @classmethod
     def fromUnsafePath(cls, path: Union[Path, str]) -> "External.Image":
@@ -310,44 +383,7 @@ class Image(InternalElement):
             [Shadow Element]: 返回值为一合法, 但不包括任何 Image 特征属性的叠加态消息元素; 其包含有一 asFlash 方法,
                 可以将当前图片转为闪照形式发送.
         """
-        class _Image_Internal(InternalElement, ExternalElement):
-            is_flash = False
-
-            async def toExternal(self):
-                app = application.get()
-                try:
-                    methodd = method or image_method.get()
-                except LookupError:
-                    raise ValueError("you should give the 'method' for upload when you are out of the event receiver.")
-                if not self.is_flash:
-                    return await app.uploadImage(image_bytes, methodd, return_external=True)
-                else:
-                    return FlashImage.fromExternal(await app.uploadImage(
-                        image_bytes, methodd, return_external=True
-                    )).toExternal()
-
-            def fromExternal(cls, external_element) -> "InternalElement":
-                return external_element
-            
-            async def getReal(self, method: UploadMethods) -> Image:
-                """从本 Shadow Element 中生成一真正的 Image 对象.
-
-                Args:
-                    method (UploadMethods): 所需求的图片的上传类型, 具体请阅读 UploadMethods 的相关文档.
-
-                Raises:
-                    ClientResponseError: HTTP 网络请求错误
-
-                Returns:
-                    Image: 所生成的, 真正的 Image 对象.
-                """
-                app = application.get()
-                return await app.uploadImage(image_bytes, method)
-
-            def asFlash(self):
-                self.is_flash = True
-                return self
-        return _Image_Internal()
+        return Image_UnsafeBytes(image_bytes, method)
     
     @classmethod
     def fromNetworkAddress(cls, url: str, method: Optional[UploadMethods] = None) -> "Image":
@@ -365,50 +401,7 @@ class Image(InternalElement):
             [Shadow Element]: 返回值为一合法, 但不包括任何 Image 特征属性的叠加态消息元素; 其包含有一 asFlash 方法,
                 可以将当前图片转为闪照形式发送.
         """
-        class _Image_Internal(InternalElement, ExternalElement):
-            is_flash = False
-            
-            async def toExternal(self):
-                app = application.get()
-                try:
-                    methodd = method or image_method.get()
-                except LookupError:
-                    raise ValueError("you should give the 'method' for upload when you are out of the event receiver.")
-                
-                async with app.session.get(url) as response:
-                    response.raise_for_status()
-                    if not self.is_flash:
-                        return await app.uploadImage(await response.read(), methodd, return_external=True)
-                    else:
-                        return FlashImage.fromExternal(await app.uploadImage(
-                            await response.read(), methodd, return_external=True
-                        )).toExternal()
-
-            def fromExternal(cls, external_element) -> "InternalElement":
-                return external_element
-            
-            async def getReal(self, method: UploadMethods) -> Image:
-                """从本 Shadow Element 中生成一真正的 Image 对象.
-
-                Args:
-                    method (UploadMethods): 所需求的图片的上传类型, 具体请阅读 UploadMethods 的相关文档.
-
-                Raises:
-                    ClientResponseError: HTTP 网络请求错误
-
-                Returns:
-                    Image: 所生成的, 真正的 Image 对象.
-                """
-                app = application.get()
-                async with aiohttp.ClientSession() as session:
-                    async with session.get(url) as response:
-                        response.raise_for_status()
-                        return await app.uploadImage(await response.read(), method)
-            
-            def asFlash(self):
-                self.is_flash = True
-                return self
-        return _Image_Internal()
+        return Image_NetworkAddress(url, method)
 
     @classmethod
     def fromUnsafeAddress(cls, url: str) -> "External.Image":

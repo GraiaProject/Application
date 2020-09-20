@@ -1,4 +1,5 @@
 import abc
+from typing import Any
 from pydantic import BaseModel
 
 class Element(BaseModel):
@@ -22,3 +23,17 @@ class InternalElement(Element, abc.ABC):
 
 class ExternalElement(Element):
     pass
+
+class ShadowElement(Element):
+    pass
+
+def isShadowElement(any_instance: Any) -> bool:
+    """检查实例是否为 Shadow Element
+
+    Args:
+        any_instance (Any): 欲检查的实例
+    
+    Returns:
+        bool: 是否为 Shadow Element
+    """
+    return isinstance(any_instance, ShadowElement)
