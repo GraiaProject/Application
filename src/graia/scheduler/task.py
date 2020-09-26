@@ -4,7 +4,6 @@ import asyncio
 from graia.broadcast.entities.decorater import Decorater
 from graia.broadcast.entities.dispatcher import BaseDispatcher
 from graia.broadcast.entities.listener import Listener
-from graia.broadcast.protocols.executor import ExecutorProtocol
 from graia.application.logger import AbstractLogger, LoggingLogger
 from graia.scheduler.exception import AlreadyStarted
 
@@ -89,7 +88,7 @@ class SchedulerTask:
     def coroutine_generator(self) -> Generator[Tuple[Coroutine, bool, Optional[float]], None, None]:
         for sleep_interval in self.sleep_interval_generator():
             yield (asyncio.sleep(sleep_interval), True, sleep_interval)
-            yield (self.broadcast.Executor(ExecutorProtocol(
+            yield (self.broadcast.Executor(
                 target=Listener(
                     callable=self.target,
                     namespace=self.broadcast.getDefaultNamespace(),
@@ -100,7 +99,7 @@ class SchedulerTask:
                     enableInternalAccess=self.enableInternalAccess
                 ),
                 event=SchedulerTaskExecute()
-            )), False, None)
+            ), False, None)
     
     @print_track_async
     async def run(self) -> None:

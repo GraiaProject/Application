@@ -13,7 +13,7 @@ from pydantic import validator
 
 from ...context import application, image_method
 from . import ExternalElement, InternalElement, ShadowElement
-from . import external as External
+from graia.application.message.elements import external as External
 from aiohttp import ClientSession
 import json as MJson
 
@@ -175,12 +175,14 @@ class ShadowImage(InternalElement, ExternalElement, ShadowElement):
     def fromExternal(cls, external_element) -> "InternalElement":
         return external_element
 
+    class Config:
+        allow_mutation = True
+
 class Image_LocalFile(ShadowImage):
     filepath: Path
 
     def __init__(self, filepath: Path, method: Optional[UploadMethods] = None) -> None:
-        self.filepath = filepath
-        self.method = method
+        super().__init__(filepath=filepath, method=method)
 
     async def toExternal(self):
         app = application.get()
@@ -214,8 +216,7 @@ class Image_UnsafeBytes(ShadowImage):
     image_bytes: bytes
 
     def __init__(self, image_bytes: bytes, method: Optional[UploadMethods] = None) -> None:
-        self.image_bytes = image_bytes
-        self.method = method
+        super().__init__(image_bytes=image_bytes, method=method)
 
     async def toExternal(self):
         app = application.get()
@@ -246,8 +247,7 @@ class Image_NetworkAddress(ShadowImage):
     url: str
 
     def __init__(self, url: str, method: Optional[UploadMethods] = None) -> None:
-        self.url = url
-        self.method = method
+        super().__init__(url=url, method=method)
     
     async def toExternal(self):
         app = application.get()
@@ -514,8 +514,6 @@ class Voice(InternalElement):
             return VoiceUploadType.Unknown
         if values['voiceId']:
             return VoiceUploadType.Group # mirai 当前版本只支持群语音.
-
-
 
 class Xml(InternalElement, ExternalElement):
     type = "Xml"
