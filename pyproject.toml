@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "graia-application-mirai"
-version = "0.8.3"
+version = "0.8.4"
 description = ""
 authors = ["GreyElaina <GreyElaina@outlook.com>"]
 license = "AGPL-3.0"
@@ -25,6 +25,7 @@ croniter = "^0.3.34"
 
 [tool.poetry.dev-dependencies]
 devtools = "^0.5.1"
+objgraph = "^3.4.1"
 
 [build-system]
 requires = ["poetry>=0.12"]
