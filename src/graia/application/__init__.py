@@ -89,7 +89,7 @@ class GraiaMiraiApplication:
             member_permission=event.sender.permission.name,
             bot_id=self.connect_info.account,
             bot_permission=event.sender.group.accountPerm.name,
-            message_string=event.messageChain.asSerializationString(),
+            message_string=event.messageChain.asSerializationString().__repr__()
         )))
     
     def logger_friend_message(self, event: FriendMessage):
@@ -97,7 +97,7 @@ class GraiaMiraiApplication:
             bot_id=self.connect_info.account,
             friend_name=event.sender.nickname,
             friend_id=event.sender.id,
-            message_string=event.messageChain.asSerializationString()
+            message_string=event.messageChain.asSerializationString().__repr__()
         )))
     
     def logger_temp_message(self, event: TempMessage):
@@ -109,7 +109,7 @@ class GraiaMiraiApplication:
             member_permission=event.sender.permission.name,
             bot_id=self.connect_info.account,
             bot_permission=event.sender.group.accountPerm.name,
-            message_string=event.messageChain.asSerializationString(),
+            message_string=event.messageChain.asSerializationString().__repr__()
         )))
 
     def url_gen(self, path) -> str:
@@ -400,7 +400,7 @@ class GraiaMiraiApplication:
                 self.logger.info("[BOT {bot_id}] Friend({friend_id}) <- {message}".format_map({
                     "bot_id": self.connect_info.account,
                     "friend_id": target.id if isinstance(target, Friend) else target,
-                    "message": message_result.asSerializationString()
+                    "message": message_result.asSerializationString().__repr__()
                 }))
                 return BotMessage(messageId=data['messageId'])
 
@@ -437,7 +437,7 @@ class GraiaMiraiApplication:
                 self.logger.info("[BOT {bot_id}] Group({group_id}) <- {message}".format_map({
                     "bot_id": self.connect_info.account,
                     "group_id": group.id if isinstance(group, Group) else group,
-                    "message": message_result.asSerializationString()
+                    "message": message_result.asSerializationString().__repr__()
                 }))
                 return BotMessage(messageId=data['messageId'])
     
@@ -479,7 +479,7 @@ class GraiaMiraiApplication:
                     "bot_id": self.connect_info.account,
                     "member_id": target.id if isinstance(target, Member) else target,
                     "group_id": group.id if isinstance(group, Group) else group,
-                    "message": message_result.asSerializationString()
+                    "message": message_result.asSerializationString().__repr__()
                 }))
                 return BotMessage(messageId=data['messageId'])
 
