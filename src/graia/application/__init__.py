@@ -13,7 +13,7 @@ from graia.broadcast.entities.inject_rule import SpecialEventType
 from graia.broadcast.utilles import printer, run_always_await
 from yarl import URL
 
-from .context import enter_message_send_context
+from .context import enter_context, enter_message_send_context
 from .entities import MiraiConfig, UploadMethods
 from .event.messages import FriendMessage, GroupMessage, TempMessage
 from .exceptions import InvaildArgument, InvaildSession
@@ -964,7 +964,8 @@ class GraiaMiraiApplication:
                     except ValueError as e:
                         self.logger.error("".join(["received a unknown event: ", received_data.get("type"), str(received_data)]))
                         continue
-                    self.broadcast.postEvent(event)
+                    with enter_context(app=self, event_i=event):
+                        self.broadcast.postEvent(event)
     
     @requireAuthenticated
     async def http_fetchmessage_poster(self, delay=0.5, fetch_num=10):
@@ -973,7 +974,8 @@ class GraiaMiraiApplication:
             while True:
                 data = await self.fetchMessage(fetch_num)
                 for i in data:
-                    self.broadcast.postEvent(i)
+                    with enter_context(app=self, event_i=i):
+                        self.broadcast.postEvent(i)
                 if len(data) != fetch_num:
                     break
 

@@ -1,3 +1,4 @@
+from contextvars import ContextVar
 from functools import lru_cache
 from typing import Dict, List, Optional, Tuple, TypeVar, Union
 from graia.broadcast.entities.dispatcher import BaseDispatcher
@@ -14,6 +15,7 @@ from .pack import Arguments, merge_signature_chain
 from graia.application.utilles import InsertGenerator
 from .signature import RequireParam, OptionalParam
 import re
+import random
 import copy
 
 T = Union[NormalMatch, PatternReceiver]
@@ -33,7 +35,7 @@ class Kanata(BaseDispatcher):
     signature_list: List[Union[NormalMatch, PatternReceiver]]
     stop_exec_if_fail: bool = True
 
-    parsed_items: Optional[Dict[str, MessageChain]] = None
+    parsed_items: ContextVar[Dict[str, MessageChain]]
 
     def __init__(self,
         signature_list: List[Union[NormalMatch, PatternReceiver]],
@@ -47,6 +49,7 @@ class Kanata(BaseDispatcher):
         """
         self.signature_list = signature_list
         self.stop_exec_if_fail = stop_exec_if_fail
+        self.parsed_items = ContextVar("kanata_parsed_items")
 
     @staticmethod
     def detect_index(
@@ -176,8 +179,12 @@ class Kanata(BaseDispatcher):
         match_result = Kanata.detect_index(signature_chain, message_chain)
         if match_result is not None:
             return {k: message_chain[v[0]:(
-                v[1][0], 
-                (v[1][1] - origin_or_zero(v[0][1])) if v[1][1] is not None else None
+                v[1][0],
+                (v[1][1] - (origin_or_zero(v[0][1]) if any([
+                    v[0][0] + 1 == v[1][0],
+                    v[0][0] == v[1][0],
+                    v[0][0] - 1 == v[1][0]
+                ]) else 0)) if v[1][1] is not None else None
             )] for k, v in match_result.items()}
     
     @staticmethod
@@ -208,7 +215,8 @@ class Kanata(BaseDispatcher):
 
     async def catch(self, interface: DispatcherInterface):
         # 因为 Dispatcher 的特性, 要用 yield (自动清理 self.parsed_items)
-        if self.parsed_items is None:
+        token = None
+        if self.parsed_items.get(None) is None:
             message_chain = (await interface.execute_with(
                 "__kanata_messagechain_origin__",
                 MessageChain, None
@@ -217,19 +225,16 @@ class Kanata(BaseDispatcher):
                 self.signature_list, message_chain
             )
             if mapping_result is not None:
-                self.parsed_items = self.allocation(mapping_result)
+                token = self.parsed_items.set(self.allocation(mapping_result))
             else:
                 if self.stop_exec_if_fail:
                     raise ExecutionStop()
 
-        result = self.parsed_items.get(interface.name)
-        if result is None:
-            if interface.default: # 不是 None, 生成 None.
-                yield Force(None)
-            else: # 无默认值 None, 也无结果, 应转交控制权予下级(实际上这里必定触发 RequirementCrashed, 只不过我不想写 raise 了.)
-                return
+        _i = random.random()
+        result = self.parsed_items.get({}).get(interface.name, _i)
+        if result is _i:
+            yield # 跳过.(另: Executor 应加入对 default 的不可预测行为反制措施.)
         else:
             yield Force(result)
-    
-    def after_execute(self):
-        self.parsed_items = None
+        if token is not None:
+            self.parsed_items.reset(token)
