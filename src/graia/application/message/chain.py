@@ -391,8 +391,8 @@ class MessageChain(BaseModel):
         for element in self.__root__:
             if isinstance(element, Plain):
                 split_result = element.text.split(pattern)
-                for split_str in split_result:
-                    if tmp:
+                for index, split_str in enumerate(split_result):
+                    if tmp and index > 0:
                         result.append(MessageChain.create(tmp))
                         tmp = []
                     if split_str:
