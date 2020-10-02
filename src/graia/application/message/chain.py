@@ -378,3 +378,46 @@ class MessageChain(BaseModel):
         return self.create(type(self.__root__)([
             i for i in self.__root__ if type(i) in types
         ]))
+    
+    def split(self, pattern: str) -> List["MessageChain"]:
+        """和 `str.split` 差不多, 提供一个字符串, 然后返回分割结果.
+
+        Returns:
+            List["MessageChain"]: 分割结果, 行为和 `str.split` 差不多.
+        """
+        from .elements.internal import Plain
+        result: List["MessageChain"] = []
+        tmp = []
+        for element in self.__root__:
+            if isinstance(element, Plain):
+                for sub_string in element.text.split(pattern):
+                    if tmp:
+                        result.append(MessageChain.create([
+                            *tmp, Plain(sub_string)
+                        ]))
+                        tmp = []
+                    else:
+                        tmp.append(Plain(sub_string))
+            else:
+                tmp.append(element)
+        else:
+            if tmp:
+                result.append(MessageChain.create(tmp))
+                tmp = []
+        return result
+    
+    def asHypertext(self) -> "MessageChain":
+        from graia.application.message.elements.internal import Source, Quote, Xml, Json, App, Poke
+        """将消息链转换为**不包含以下消息元素**的消息链:
+
+         - `Source`
+         - `Quote`
+         - `Xml`
+         - `Json`
+         - `App`
+         - `Poke`
+
+        Returns:
+            MessageChain: 不包含以上元素的消息链.
+        """
+        return self.exclude(Source, Quote, Xml, Json, App, Poke)

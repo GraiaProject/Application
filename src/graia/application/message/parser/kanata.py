@@ -1,3 +1,4 @@
+from functools import lru_cache
 from typing import Dict, List, Optional, Tuple, TypeVar, Union
 from graia.broadcast.entities.dispatcher import BaseDispatcher
 from graia.broadcast.entities.signatures import Force
@@ -173,7 +174,7 @@ class Kanata(BaseDispatcher):
         message_chain: MessageChain
     ) -> Optional[Dict[Arguments, MessageChain]]:
         match_result = Kanata.detect_index(signature_chain, message_chain)
-        if match_result:
+        if match_result is not None:
             return {k: message_chain[v[0]:(
                 v[1][0], 
                 (v[1][1] - origin_or_zero(v[0][1])) if v[1][1] is not None else None
@@ -181,7 +182,7 @@ class Kanata(BaseDispatcher):
     
     @staticmethod
     def allocation(mapping: Dict[Arguments, MessageChain]) -> Optional[Dict[str, MessageChain]]:
-        if not mapping:
+        if mapping is None:
             return None
         result = {}
         for arguemnt_set, message_chain in mapping.items():
@@ -200,8 +201,11 @@ class Kanata(BaseDispatcher):
                         result[receiver.name] = message_chain
                 break # 还没来得及做长度匹配...
         return result
-
     
+    @lru_cache(None)
+    def catch_argument_names(self) -> List[str]:
+        return [i.name for i in self.signature_list if isinstance(i, PatternReceiver)]
+
     async def catch(self, interface: DispatcherInterface):
         # 因为 Dispatcher 的特性, 要用 yield (自动清理 self.parsed_items)
         if self.parsed_items is None:
@@ -209,22 +213,23 @@ class Kanata(BaseDispatcher):
                 "__kanata_messagechain_origin__",
                 MessageChain, None
             )).exclude(Source, Quote, Xml, Json, App, Poke)
-            self.parsed_items = self.allocation(self.detect_and_mapping(
+            mapping_result = self.detect_and_mapping(
                 self.signature_list, message_chain
-            ) or {})
-            
-        if self.stop_exec_if_fail and self.parsed_items is None:
-            self.parsed_items = None
-            self.will_clean = False
-            raise ExecutionStop()
-
-        if self.parsed_items:
-            result = self.parsed_items.get(interface.name)
-            if result is None:
-                if interface.default: # 不是 None, 生成 None.
-                    yield Force(None)
-                else: # 无默认值 None, 也无结果, 应转交控制权予下级(实际上这里必定触发 RequirementCrashed, 只不过我不想写 raise 了.)
-                    return
+            )
+            if mapping_result is not None:
+                self.parsed_items = self.allocation(mapping_result)
             else:
-                yield Force(result)
-            self.parsed_items = None
+                if self.stop_exec_if_fail:
+                    raise ExecutionStop()
+
+        result = self.parsed_items.get(interface.name)
+        if result is None:
+            if interface.default: # 不是 None, 生成 None.
+                yield Force(None)
+            else: # 无默认值 None, 也无结果, 应转交控制权予下级(实际上这里必定触发 RequirementCrashed, 只不过我不想写 raise 了.)
+                return
+        else:
+            yield Force(result)
+    
+    def after_execute(self):
+        self.parsed_items = None
