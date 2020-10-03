@@ -3,7 +3,7 @@ import atexit
 from functools import partial
 from typing import List, NoReturn, Optional, Tuple, Union
 
-import graia.application.event.lifecycle
+import graia.application.event.lifecycle # for init lifecycle events
 import graia.application.event.mirai  # for init events
 from aiohttp import ClientSession, FormData
 from graia.application.event import MiraiEvent
@@ -625,9 +625,9 @@ class GraiaMiraiApplication:
             raise_for_return_code(data)
 
             try:
-                return await self.auto_parse_by_type(event)
+                return await self.auto_parse_by_type(data)
             except ValueError:
-                self.logger.error("".join(["received a unknown event: ", event.get("type"), str(event)]))
+                self.logger.error("".join(["received a unknown event: ", data.get("type"), str(data)]))
 
     @requireAuthenticated
     @applicationContextManager
