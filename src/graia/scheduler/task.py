@@ -25,7 +25,7 @@ class SchedulerTask:
         BaseDispatcher
     ]]
     decorators: List[Decorater]
-    enableInternalAccess: bool = False
+    enable_internal_access: bool = False
 
     cancelable: bool = False
     stoped: bool = False
@@ -56,7 +56,7 @@ class SchedulerTask:
             BaseDispatcher
         ]]] = None,
         decorators: Optional[List[Decorater]] = None,
-        enableInternalAccess: bool = False,
+        enable_internal_access: bool = False,
         logger: Optional[AbstractLogger] = None
     ) -> None:
         self.target = target
@@ -66,7 +66,7 @@ class SchedulerTask:
         self.cancelable = cancelable
         self.dispatchers = dispatchers or []
         self.decorators = decorators or []
-        self.enableInternalAccess = enableInternalAccess
+        self.enable_internal_access = enable_internal_access
         self.sleep_record = EnteredRecord()
         self.started_record = EnteredRecord()
         self._logger = logger or LoggingLogger()
@@ -96,7 +96,7 @@ class SchedulerTask:
                     priority=16,
                     listening_events=[SchedulerTaskExecute],
                     headless_decoraters=self.decorators,
-                    enableInternalAccess=self.enableInternalAccess
+                    enable_internal_access=self.enable_internal_access
                 ),
                 event=SchedulerTaskExecute()
             ), False, None)
