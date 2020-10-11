@@ -31,7 +31,7 @@ def SinceVersion(*version: int):
                 raise NotSupportedVersion(
                     "the current version does not support this feature: {0}".format(self.connect_info.current_version)
                 )
-            return func(*args, **kwargs)
+            return func(self, *args, **kwargs)
         return inside_wrapper
     return wrapper
 
@@ -136,3 +136,6 @@ class AutoUnpackTuple:
                 yield from i
                 continue
             yield i
+
+def yes_or_no(value: bool) -> str:
+    return "yes" if value else "no"

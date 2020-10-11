@@ -1,7 +1,10 @@
 import asyncio
 import atexit
+from contextlib import asynccontextmanager
 from functools import partial
+import traceback
 from typing import List, NoReturn, Optional, Tuple, Union
+import time
 
 import graia.application.event.lifecycle # for init lifecycle events
 import graia.application.event.mirai  # for init events
@@ -27,7 +30,7 @@ from .message.elements.internal import Image, Source, Voice
 from .session import Session
 from .utilles import (AppMiddlewareAsDispatcher, SinceVersion,
                       raise_for_return_code, requireAuthenticated,
-                      applicationContextManager)
+                      applicationContextManager, yes_or_no)
 
 class GraiaMiraiApplication:
     """本类的实例即 应用实例(Application), 是面向 `mirai-api-http` 接口的实际功能实现.
@@ -46,7 +49,8 @@ class GraiaMiraiApplication:
         "session",
         "connect_info",
         "logger",
-        "debug"
+        "debug",
+        "chat_log_enabled"
     )
 
     broadcast: Broadcast
@@ -54,9 +58,10 @@ class GraiaMiraiApplication:
     connect_info: Session
     logger: AbstractLogger
     debug: bool
+    chat_log_enabled: bool
 
     def __init__(self, *,
-        broadcast: Broadcast,
+        broadcast: Optional[Broadcast],
         connect_info: Session,
         session: Optional[ClientSession] = None,
         logger: Optional[AbstractLogger] = None,
@@ -71,7 +76,8 @@ class GraiaMiraiApplication:
         } if debug else {}))
         self.debug = debug
 
-        if enable_chat_log:
+        self.chat_log_enabled = enable_chat_log
+        if enable_chat_log and broadcast is not None:
             self.broadcast.receiver("GroupMessage")(self.logger_group_message)
             self.broadcast.receiver("FriendMessage")(self.logger_friend_message)
             self.broadcast.receiver("TempMessage")(self.logger_temp_message)
@@ -138,7 +144,8 @@ class GraiaMiraiApplication:
             response.raise_for_status()
             data = await response.json()
             raise_for_return_code(data)
-            version = (int(i) for i in data['data']['version'][1:].split("."))
+            
+            version = tuple(int(i) for i in data['data']['version'].split("."))
             if auto_set:
                 self.connect_info.current_version = version
             return version
@@ -625,9 +632,9 @@ class GraiaMiraiApplication:
             raise_for_return_code(data)
 
             try:
-                return await self.auto_parse_by_type(data)
+                return await self.auto_parse_by_type(data['data'])
             except ValueError:
-                self.logger.error("".join(["received a unknown event: ", data.get("type"), str(data)]))
+                self.logger.error("".join(["received a unknown event: ", data['data'].get("type"), str(data)]))
 
     @requireAuthenticated
     @applicationContextManager
@@ -980,7 +987,100 @@ class GraiaMiraiApplication:
                     break
 
     async def launch(self):
-        """火箭升空叫 "launch", 只表示那一个阶段哦."""
+        from .event.lifecycle import ApplicationLaunched, ApplicationLaunchedBlocking, ApplicationShutdowned
+
+        start_time = time.time()
+        self.logger.info("launching app...")
+        await self.authenticate()
+        await self.activeSession()
+
+        if self.broadcast is not None:
+            self.broadcast.postEvent(ApplicationLaunched(self))
+            await self.broadcast.layered_scheduler(
+                listener_generator=self.broadcast.default_listener_generator(ApplicationLaunchedBlocking),
+                event=ApplicationLaunchedBlocking(self)
+            )
+
+        self.logger.info("detecting remote's version...")
+        try:
+            await self.getVersion()
+        except:
+            self.logger.error("| failed to detect remote's version. |")
+            self.logger.error("| it seems that your version is less than 1.6.2, |")
+            self.logger.error("| this version of Graia Application may cause many issues, |")
+            self.logger.error("| so you had better to update your remote environment, |")
+            self.logger.error("| or you won't get our support! |")
+            traceback.print_exc()
+        else:
+            self.logger.info("detected remote's version: {0}".format(".".join(
+                map(str, self.connect_info.current_version)
+            )))
+
+        # 自动变化fetch方式
+        config = await self.getConfig()
+        if not self.connect_info.websocket: # 不启用 websocket
+            self.logger.info("using http to receive event")
+            if config.enableWebsocket: # 配置中已经启用
+                await self.modifyConfig(enableWebsocket=False)
+                self.logger.info("found websocket enabled, so it has been disabled.")
+        else: # 启用ws
+            self.logger.info("using pure websocket to receive event")
+            if not config.enableWebsocket: # 配置中没启用
+                self.logger.info("found websocket disabled, so it has been enabled.")
+                await self.modifyConfig(enableWebsocket=True)
+
+        self.logger.info("event receive method checked.")
+        self.logger.info("this application's initialization has been completed.")
+
+        self.logger.info("--- setting start ---")
+        self.logger.info("broadcast using: {0}".format(self.broadcast.__repr__()))
+        self.logger.info("enable log of chat: {0}".format(yes_or_no(self.chat_log_enabled)))
+        self.logger.info("debug: {0}".format(yes_or_no(self.debug)))    
+        self.logger.info("version(remote): {0}".format(".".join(
+            map(str, self.connect_info.current_version)
+        )) if self.connect_info.current_version is not None else "No Detect")
+        self.logger.info("--- setting end ---")
+
+        if not self.broadcast:
+            self.logger.warn("it seems you doesn't offer a Broadcast,")
+            self.logger.warn("so the event receiver and the shutdown function won't launch!")
+
+        self.logger.info("application has been initialized, used {0:.3}s".format(
+            (time.time() - start_time)
+        ))
+    
+    def getFetching(self):
+        return self.http_fetchmessage_poster if not self.connect_info.websocket else self.ws_all_poster
+    
+    async def shutdown(self):
+        from .event.lifecycle import ApplicationShutdowned
+        if self.broadcast is not None:
+            try:
+                await self.broadcast.layered_scheduler(
+                    listener_generator=self.broadcast.default_listener_generator(ApplicationShutdowned),
+                    event=ApplicationShutdowned(self)
+                )
+            except:
+                self.logger.error("it seems our shutdown operator has been failed...check the remote alive.")
+                traceback.print_exc()
+
+        await self.signout()
+        await self.session.close()
+        self.logger.info("application shutdowned.")
+    
+    def launch_blocking(self):
+        loop = asyncio.get_event_loop()
+        loop.run_until_complete(self.launch())
+        try:
+            if self.broadcast:
+                loop.run_until_complete(self.getFetching()())
+        finally:
+            if self.broadcast:
+                loop.run_until_complete(self.shutdown())
+
+"""
+    async def launch(self):
+        ""火箭升空叫 "launch", 只表示那一个阶段哦.""
         from .event.lifecycle import ApplicationLaunched, ApplicationLaunchedBlocking
         self.logger.info("launching app...")
         await self.authenticate()
@@ -1030,19 +1130,20 @@ class GraiaMiraiApplication:
                 self.logger.error("it seems our shutdown operator has been failed...check your headless client alive.")
 
     def subscribe_atexit(self, loop=None):
-        """如果你需要使用 `create_background_task` 方法, 记得调用这个方法.
+        "如果你需要使用 `create_background_task` 方法, 记得调用这个方法.
 
         Args:
             loop (asyncio.AbstractEventLoop, optional): 事件循环. Defaults to None.
-        """
+        ""
         loop = loop or self.broadcast.loop
         atexit.register(partial(loop.run_until_complete, self.shutdown()))
 
     def create_background_task(self, loop=None):
-        """将获取事件并广播的协程创建为一个 Task, 放在事件循环里自己运行.
+        ""将获取事件并广播的协程创建为一个 Task, 放在事件循环里自己运行.
 
         Args:
             loop (asyncio.AbstractEventLoop, optional): 事件循环. Defaults to None.
-        """
+        ""
         loop = loop or self.broadcast.loop
         return loop.create_task(loop.run_until_complete(self.launch()))
+"""
