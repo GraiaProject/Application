@@ -96,7 +96,7 @@ class SchedulerTask:
                     priority=16,
                     listening_events=[SchedulerTaskExecute],
                     headless_decoraters=self.decorators,
-                    enableInternalAccess=self.enableInternalAccess
+                    enable_internal_access=self.enableInternalAccess
                 ),
                 event=SchedulerTaskExecute()
             ), False, None)
