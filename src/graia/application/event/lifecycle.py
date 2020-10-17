@@ -1,6 +1,8 @@
 from graia.broadcast.entities.event import BaseEvent, BaseDispatcher
 from graia.broadcast.interfaces.dispatcher import DispatcherInterface
 
+from graia.application import GraiaMiraiApplication
+
 class ApplicationLaunched(BaseEvent):
     app: "GraiaMiraiApplication"
 

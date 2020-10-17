@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "graia-application-mirai"
-version = "0.10.7"
+version = "0.10.8"
 description = ""
 authors = ["GreyElaina <GreyElaina@outlook.com>"]
 license = "AGPL-3.0"
