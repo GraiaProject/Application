@@ -59,12 +59,36 @@ reference = "tuna-tsinghua"
 url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple"
 
 [[package]]
+category = "dev"
+description = "Python package for providing Mozilla's CA Bundle."
+name = "certifi"
+optional = false
+python-versions = "*"
+version = "2020.6.20"
+
+[package.source]
+reference = "tuna-tsinghua"
+url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple"
+
+[[package]]
 category = "main"
 description = "Universal encoding detector for Python 2 and 3"
 name = "chardet"
 optional = false
 python-versions = "*"
 version = "3.0.4"
+
+[package.source]
+reference = "tuna-tsinghua"
+url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple"
+
+[[package]]
+category = "dev"
+description = "Composable command line interface toolkit"
+name = "click"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
+version = "7.1.2"
 
 [package.source]
 reference = "tuna-tsinghua"
@@ -125,6 +149,38 @@ version = "0.5.1"
 
 [package.extras]
 pygments = ["Pygments (>=2.2.0)"]
+
+[package.source]
+reference = "tuna-tsinghua"
+url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple"
+
+[[package]]
+category = "dev"
+description = "Docspec is a JSON object specification for representing API documentation of programming languages."
+name = "docspec"
+optional = false
+python-versions = "*"
+version = "0.2.0"
+
+[package.dependencies]
+"nr.databind.core" = ">=0.0.19,<0.1.0"
+"nr.databind.json" = ">=0.0.9,<0.1.0"
+
+[package.source]
+reference = "tuna-tsinghua"
+url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple"
+
+[[package]]
+category = "dev"
+description = "A parser based on lib2to3 producing docspec data from Python source code."
+name = "docspec-python"
+optional = false
+python-versions = "*"
+version = "0.0.7"
+
+[package.dependencies]
+docspec = ">=0.2.0,<0.3.0"
+"nr.sumtype" = ">=0.0.3,<0.1.0"
 
 [package.source]
 reference = "tuna-tsinghua"
@@ -246,6 +302,192 @@ url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple"
 
 [[package]]
 category = "dev"
+description = "Useful container datatypes for Python 2 and 3."
+name = "nr.collections"
+optional = false
+python-versions = "*"
+version = "0.0.1"
+
+[package.dependencies]
+"nr.metaclass" = ">=0.0.1,<0.1.0"
+six = ">=1.11.0,<2.0.0"
+
+[package.extras]
+test = ["nr.fs (>=1.5.0,<2.0.0)"]
+
+[package.source]
+reference = "tuna-tsinghua"
+url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple"
+
+[[package]]
+category = "dev"
+description = "Bind structured data directly to typed objects."
+name = "nr.databind.core"
+optional = false
+python-versions = "*"
+version = "0.0.21"
+
+[package.dependencies]
+"nr.collections" = ">=0.0.1,<1.0.0"
+"nr.interface" = ">=0.0.1,<0.1.0"
+"nr.pylang.utils" = ">=0.0.3,<0.1.0"
+"nr.stream" = ">=0.0.1,<0.1.0"
+
+[package.extras]
+test = ["pytest", "pyyaml"]
+
+[package.source]
+reference = "tuna-tsinghua"
+url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple"
+
+[[package]]
+category = "dev"
+description = "Deserialize JSON into Python objects and reverse."
+name = "nr.databind.json"
+optional = false
+python-versions = "*"
+version = "0.0.13"
+
+[package.dependencies]
+"nr.collections" = ">=0.0.1,<1.0.0"
+"nr.databind.core" = ">=0.0.16,<0.1.0"
+"nr.interface" = ">=0.0.1,<0.1.0"
+"nr.parsing.date" = ">=0.1.0,<1.0.0"
+"nr.pylang.utils" = ">=0.0.1,<0.1.0"
+
+[package.extras]
+test = ["pytest", "pyyaml", "flask"]
+
+[package.source]
+reference = "tuna-tsinghua"
+url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple"
+
+[[package]]
+category = "dev"
+description = "Filesystem and path manipulation tools."
+name = "nr.fs"
+optional = false
+python-versions = "*"
+version = "1.6.2"
+
+[package.dependencies]
+six = ">=1.11.0,<2.0.0"
+
+[package.source]
+reference = "tuna-tsinghua"
+url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple"
+
+[[package]]
+category = "dev"
+description = "Interface definitions for Python."
+name = "nr.interface"
+optional = false
+python-versions = "*"
+version = "0.0.3"
+
+[package.dependencies]
+"nr.collections" = ">=0.0.1,<1.0.0"
+"nr.metaclass" = ">=0.0.1,<0.1.0"
+"nr.pylang.utils" = ">=0.0.1,<0.1.0"
+six = ">=1.11.0,<2.0.0"
+
+[package.source]
+reference = "tuna-tsinghua"
+url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple"
+
+[[package]]
+category = "dev"
+description = "Metaclass utilities."
+name = "nr.metaclass"
+optional = false
+python-versions = "*"
+version = "0.0.5"
+
+[package.source]
+reference = "tuna-tsinghua"
+url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple"
+
+[[package]]
+category = "dev"
+description = "A simple and fast date parsing library. Uses dateutil for timezone offset support."
+name = "nr.parsing.date"
+optional = false
+python-versions = "*"
+version = "0.4.2"
+
+[package.dependencies]
+"nr.utils.re" = ">=0.1.0,<0.2.0"
+six = "*"
+
+[package.source]
+reference = "tuna-tsinghua"
+url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple"
+
+[[package]]
+category = "dev"
+description = "Package description here."
+name = "nr.pylang.utils"
+optional = false
+python-versions = "*"
+version = "0.0.3"
+
+[package.dependencies]
+"nr.collections" = ">=0.0.1,<1.0.0"
+
+[package.source]
+reference = "tuna-tsinghua"
+url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple"
+
+[[package]]
+category = "dev"
+description = "Use iterators like Java streams."
+name = "nr.stream"
+optional = false
+python-versions = "*"
+version = "0.0.4"
+
+[package.dependencies]
+"nr.collections" = ">=0.0.1,<1.0.0"
+"nr.pylang.utils" = ">=0.0.1,<1.0.0"
+six = ">=1.11.0,<2.0.0"
+
+[package.source]
+reference = "tuna-tsinghua"
+url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple"
+
+[[package]]
+category = "dev"
+description = "Sumtypes in Python."
+name = "nr.sumtype"
+optional = false
+python-versions = "*"
+version = "0.0.3"
+
+[package.dependencies]
+"nr.metaclass" = ">=0.0.4,<1.0.0"
+"nr.stream" = ">=0.0.2,<1.0.0"
+
+[package.source]
+reference = "tuna-tsinghua"
+url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple"
+
+[[package]]
+category = "dev"
+description = "This module provides some utility functions for applying regular expressions."
+name = "nr.utils.re"
+optional = false
+python-versions = "*"
+version = "0.1.0"
+
+[package.extras]
+test = ["pytest"]
+
+[package.source]
+reference = "tuna-tsinghua"
+url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple"
+
+[[package]]
+category = "dev"
 description = "Draws Python object reference graphs with graphviz"
 name = "objgraph"
 optional = false
@@ -254,6 +496,18 @@ version = "3.4.1"
 
 [package.dependencies]
 graphviz = "*"
+
+[package.source]
+reference = "tuna-tsinghua"
+url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple"
+
+[[package]]
+category = "dev"
+description = "File system general utilities"
+name = "pathtools"
+optional = false
+python-versions = "*"
+version = "0.1.2"
 
 [package.source]
 reference = "tuna-tsinghua"
@@ -282,6 +536,33 @@ reference = "tuna-tsinghua"
 url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple"
 
 [[package]]
+category = "dev"
+description = "Create Python API documentation in Markdown format."
+name = "pydoc-markdown"
+optional = false
+python-versions = ">=3.5.0,<4.0.0"
+version = "3.5.0"
+
+[package.dependencies]
+PyYAML = ">=5.3.0,<6.0.0"
+click = ">=7.0.0,<8.0.0"
+docspec = ">=0.2.0,<0.3.0"
+docspec-python = ">=0.0.7,<0.1.0"
+"nr.collections" = ">=0.0.1,<0.1.0"
+"nr.databind.core" = ">=0.0.18,<0.1.0"
+"nr.databind.json" = ">=0.0.9,<0.1.0"
+"nr.fs" = ">=1.6.0,<2.0.0"
+"nr.interface" = ">=0.0.3,<0.1.0"
+requests = ">=2.23.0,<3.0.0"
+six = ">=1.11.0,<2.0.0"
+toml = ">=0.10.1,<1.0.0"
+watchdog = ">=0.10.2,<1.0.0"
+
+[package.source]
+reference = "tuna-tsinghua"
+url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple"
+
+[[package]]
 category = "main"
 description = "Extensions to the standard Python datetime module"
 name = "python-dateutil"
@@ -291,6 +572,18 @@ version = "2.8.1"
 
 [package.dependencies]
 six = ">=1.5"
+
+[package.source]
+reference = "tuna-tsinghua"
+url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple"
+
+[[package]]
+category = "dev"
+description = "YAML parser and emitter for Python"
+name = "pyyaml"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
+version = "5.3.1"
 
 [package.source]
 reference = "tuna-tsinghua"
@@ -309,12 +602,46 @@ reference = "tuna-tsinghua"
 url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple"
 
 [[package]]
+category = "dev"
+description = "Python HTTP for Humans."
+name = "requests"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
+version = "2.24.0"
+
+[package.dependencies]
+certifi = ">=2017.4.17"
+chardet = ">=3.0.2,<4"
+idna = ">=2.5,<3"
+urllib3 = ">=1.21.1,<1.25.0 || >1.25.0,<1.25.1 || >1.25.1,<1.26"
+
+[package.extras]
+security = ["pyOpenSSL (>=0.14)", "cryptography (>=1.3.4)"]
+socks = ["PySocks (>=1.5.6,<1.5.7 || >1.5.7)", "win-inet-pton"]
+
+[package.source]
+reference = "tuna-tsinghua"
+url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple"
+
+[[package]]
 category = "main"
 description = "Python 2 and 3 compatibility utilities"
 name = "six"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*"
 version = "1.15.0"
+
+[package.source]
+reference = "tuna-tsinghua"
+url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple"
+
+[[package]]
+category = "dev"
+description = "Python Library for Tom's Obvious, Minimal Language"
+name = "toml"
+optional = false
+python-versions = "*"
+version = "0.10.1"
 
 [package.source]
 reference = "tuna-tsinghua"
@@ -328,6 +655,41 @@ name = "typing-extensions"
 optional = false
 python-versions = "*"
 version = "3.7.4.3"
+
+[package.source]
+reference = "tuna-tsinghua"
+url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple"
+
+[[package]]
+category = "dev"
+description = "HTTP library with thread-safe connection pooling, file post, and more."
+name = "urllib3"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, <4"
+version = "1.25.10"
+
+[package.extras]
+brotli = ["brotlipy (>=0.6.0)"]
+secure = ["certifi", "cryptography (>=1.3.4)", "idna (>=2.0.0)", "pyOpenSSL (>=0.14)", "ipaddress"]
+socks = ["PySocks (>=1.5.6,<1.5.7 || >1.5.7,<2.0)"]
+
+[package.source]
+reference = "tuna-tsinghua"
+url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple"
+
+[[package]]
+category = "dev"
+description = "Filesystem events monitoring"
+name = "watchdog"
+optional = false
+python-versions = "*"
+version = "0.10.3"
+
+[package.dependencies]
+pathtools = ">=0.1.1"
+
+[package.extras]
+watchmedo = ["PyYAML (>=3.10)", "argh (>=0.24.1)"]
 
 [package.source]
 reference = "tuna-tsinghua"
@@ -354,7 +716,7 @@ reference = "tuna-tsinghua"
 url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple"
 
 [metadata]
-content-hash = "dca3c293ffdd68971988da4dc8ee9e831f04f8c01f50b8e99badbb93fb3f928e"
+content-hash = "1f81c221cffaa28fc4504651e18fc714a50c35f0d638f031206b0d006f37f9b2"
 python-versions = "^3.6"
 
 [metadata.files]
@@ -380,9 +742,17 @@ attrs = [
     {file = "attrs-20.2.0-py2.py3-none-any.whl", hash = "sha256:fce7fc47dfc976152e82d53ff92fa0407700c21acd20886a13777a0d20e655dc"},
     {file = "attrs-20.2.0.tar.gz", hash = "sha256:26b54ddbbb9ee1d34d5d3668dd37d6cf74990ab23c828c2888dccdceee395594"},
 ]
+certifi = [
+    {file = "certifi-2020.6.20-py2.py3-none-any.whl", hash = "sha256:8fc0819f1f30ba15bdb34cceffb9ef04d99f420f68eb75d901e9560b8749fc41"},
+    {file = "certifi-2020.6.20.tar.gz", hash = "sha256:5930595817496dd21bb8dc35dad090f1c2cd0adfaf21204bf6732ca5d8ee34d3"},
+]
 chardet = [
     {file = "chardet-3.0.4-py2.py3-none-any.whl", hash = "sha256:fc323ffcaeaed0e0a02bf4d117757b98aed530d9ed4531e3e15460124c106691"},
     {file = "chardet-3.0.4.tar.gz", hash = "sha256:84ab92ed1c4d4f16916e05906b6b75a6c0fb5db821cc65e70cbd64a3e2a5eaae"},
+]
+click = [
+    {file = "click-7.1.2-py2.py3-none-any.whl", hash = "sha256:dacca89f4bfadd5de3d7489b7c8a566eee0d3676333fbb50030263894c38c0dc"},
+    {file = "click-7.1.2.tar.gz", hash = "sha256:d2b5255c7c6349bc1bd1e59e08cd12acbbd63ce649f2588755783aa94dfb6b1a"},
 ]
 contextvars = [
     {file = "contextvars-2.4.tar.gz", hash = "sha256:f38c908aaa59c14335eeea12abea5f443646216c4e29380d7bf34d2018e2c39e"},
@@ -398,6 +768,14 @@ dataclasses = [
 devtools = [
     {file = "devtools-0.5.1-py35.py36-none-any.whl", hash = "sha256:7a1f7db6ade0a71840ca4014d75dd72390aed2ef04e39e2b2445af7b3a3f4679"},
     {file = "devtools-0.5.1.tar.gz", hash = "sha256:51ca8d2e15b8a862875a4837db2bafbc6cda409c069e960aec3f4bbd91fe9c08"},
+]
+docspec = [
+    {file = "docspec-0.2.0-py3-none-any.whl", hash = "sha256:a5bf4bfe5e940de080b282045db4f2a6aea3e745f639d34262f59791fb18107c"},
+    {file = "docspec-0.2.0.tar.gz", hash = "sha256:058894861bff860f7053188c94cbd55d1777d5d0f39f3f8487960965ab098191"},
+]
+docspec-python = [
+    {file = "docspec-python-0.0.7.tar.gz", hash = "sha256:13af366a2dc0efdc7488f7560ad169ee80992f7f792a6b8d7ad0097bba7a27ab"},
+    {file = "docspec_python-0.0.7-py3-none-any.whl", hash = "sha256:9949eda3f964aacdf39d5c84e24a72464e7e190d982cbb2714e661124fa03524"},
 ]
 graia-broadcast = [
     {file = "graia-broadcast-0.3.0.tar.gz", hash = "sha256:02a8d5204af1863f000b5902b7c63e93a8e9ebf833d9cf8ce0d1e6b3ff6d2889"},
@@ -455,9 +833,52 @@ natsort = [
     {file = "natsort-7.0.1-py3-none-any.whl", hash = "sha256:d3fd728a3ceb7c78a59aa8539692a75e37cbfd9b261d4d702e8016639820f90a"},
     {file = "natsort-7.0.1.tar.gz", hash = "sha256:a633464dc3a22b305df0f27abcb3e83515898aa1fd0ed2f9726c3571a27258cf"},
 ]
+"nr.collections" = [
+    {file = "nr.collections-0.0.1.tar.gz", hash = "sha256:ddf38cd6379cac546ce7abdadf024fc01cca75540e11b1d5f1aa701a33817f1c"},
+]
+"nr.databind.core" = [
+    {file = "nr.databind.core-0.0.21-py2.py3-none-any.whl", hash = "sha256:fcee082fbf24be6db90e4c5a852a8c4d305f3ab226e09d9938dbee777d8e803c"},
+    {file = "nr.databind.core-0.0.21.tar.gz", hash = "sha256:5f61f63294dea0fca8b71be6aec6df4b960bac25a7a74fbec666fadfd2b79968"},
+]
+"nr.databind.json" = [
+    {file = "nr.databind.json-0.0.13-py2.py3-none-any.whl", hash = "sha256:82af968a0eeb2c2ba2bc6f840c34b64eb4278035b9e3dfb9904e4e4ba519821d"},
+    {file = "nr.databind.json-0.0.13.tar.gz", hash = "sha256:264c489a1c99228b47f290cd9523e44b348c63ef78515e2b9ca90b3deff5658b"},
+]
+"nr.fs" = [
+    {file = "nr.fs-1.6.2.tar.gz", hash = "sha256:9a9ae664d5ac1bd2b740d458a39378dd312d8054cfb8ec5c3aed09ea036fbaa8"},
+]
+"nr.interface" = [
+    {file = "nr.interface-0.0.3-py2.py3-none-any.whl", hash = "sha256:c2b806b82cfc23e871e3364e262da015c6bd99755a649d0da01ce31f9836b4a9"},
+    {file = "nr.interface-0.0.3.tar.gz", hash = "sha256:58a99b5ec4d29edd32569a674c1a5cf929ebc34faec1bbb47edfc021821763e3"},
+]
+"nr.metaclass" = [
+    {file = "nr.metaclass-0.0.5.tar.gz", hash = "sha256:2a172e552fd1e799cdb0ecb8fd26eac8f6c22164d8dd4386f9315bfcefeb988b"},
+]
+"nr.parsing.date" = [
+    {file = "nr.parsing.date-0.4.2-py2.py3-none-any.whl", hash = "sha256:1c9615ed8c29fa890a930724159a0dbc13e6c1a08e4dafffa3a14401ebad35eb"},
+    {file = "nr.parsing.date-0.4.2.tar.gz", hash = "sha256:47a3a5bf6ab0eee52067312f2b50d6b966000d3c4d4e730e696a0a982319c615"},
+]
+"nr.pylang.utils" = [
+    {file = "nr.pylang.utils-0.0.3-py3-none-any.whl", hash = "sha256:5346086992162981349ca73911d90bc17540f66e71584bdab25f926f3fb843a8"},
+    {file = "nr.pylang.utils-0.0.3.tar.gz", hash = "sha256:b20b731b28dab81c8d498d7955a45afa3aa02e18c7b7398408985d53b5bb2a28"},
+]
+"nr.stream" = [
+    {file = "nr.stream-0.0.4-py2.py3-none-any.whl", hash = "sha256:3692a373e28890884657d21b4527318d98c47ba77de5bd248a7c227ef16e5045"},
+    {file = "nr.stream-0.0.4.tar.gz", hash = "sha256:6a90c6bcb3a96ee1d11c0ababfe2fbacb0b5587a5b6c54dffb8c2c29ab5d7582"},
+]
+"nr.sumtype" = [
+    {file = "nr.sumtype-0.0.3.tar.gz", hash = "sha256:9c9e943e4ca10d158bd34a6a86d27799c01464651161f9e905de2f93f588eb64"},
+]
+"nr.utils.re" = [
+    {file = "nr.utils.re-0.1.0-py2.py3-none-any.whl", hash = "sha256:f9345351462e973a0991f17470f73e911cb226fd659d01d5178b166767a495fd"},
+    {file = "nr.utils.re-0.1.0.tar.gz", hash = "sha256:7aad941dd92609a227c774ae21518fc804d613e1e6a787225a56b70075753388"},
+]
 objgraph = [
     {file = "objgraph-3.4.1-py2.py3-none-any.whl", hash = "sha256:10d50116d1a66934d143a07308a5b3b3edcc021e1457f66ff792584166cae7cd"},
     {file = "objgraph-3.4.1.tar.gz", hash = "sha256:bf29512d7f8b457b53fa0722ea59f516abb8abc59b78f97f0ef81394a0c615a7"},
+]
+pathtools = [
+    {file = "pathtools-0.1.2.tar.gz", hash = "sha256:7c35c5421a39bb82e58018febd90e3b6e5db34c5443aaaf742b3f33d4655f1c0"},
 ]
 pydantic = [
     {file = "pydantic-1.6.1-cp36-cp36m-macosx_10_9_x86_64.whl", hash = "sha256:418b84654b60e44c0cdd5384294b0e4bc1ebf42d6e873819424f3b78b8690614"},
@@ -478,9 +899,26 @@ pydantic = [
     {file = "pydantic-1.6.1-py36.py37.py38-none-any.whl", hash = "sha256:b5b3489cb303d0f41ad4a7390cf606a5f2c7a94dcba20c051cd1c653694cb14d"},
     {file = "pydantic-1.6.1.tar.gz", hash = "sha256:54122a8ed6b75fe1dd80797f8251ad2063ea348a03b77218d73ea9fe19bd4e73"},
 ]
+pydoc-markdown = [
+    {file = "pydoc-markdown-3.5.0.tar.gz", hash = "sha256:00b90b27bb43e015471a23c710056768794226ca20a34d35963986c51d3dc879"},
+    {file = "pydoc_markdown-3.5.0-py3-none-any.whl", hash = "sha256:df095ed6a4791f72b88dfd0e57357af10b02b0bdafff4e105cb8c6299828a6ab"},
+]
 python-dateutil = [
     {file = "python-dateutil-2.8.1.tar.gz", hash = "sha256:73ebfe9dbf22e832286dafa60473e4cd239f8592f699aa5adaf10050e6e1823c"},
     {file = "python_dateutil-2.8.1-py2.py3-none-any.whl", hash = "sha256:75bb3f31ea686f1197762692a9ee6a7550b59fc6ca3a1f4b5d7e32fb98e2da2a"},
+]
+pyyaml = [
+    {file = "PyYAML-5.3.1-cp27-cp27m-win32.whl", hash = "sha256:74809a57b329d6cc0fdccee6318f44b9b8649961fa73144a98735b0aaf029f1f"},
+    {file = "PyYAML-5.3.1-cp27-cp27m-win_amd64.whl", hash = "sha256:240097ff019d7c70a4922b6869d8a86407758333f02203e0fc6ff79c5dcede76"},
+    {file = "PyYAML-5.3.1-cp35-cp35m-win32.whl", hash = "sha256:4f4b913ca1a7319b33cfb1369e91e50354d6f07a135f3b901aca02aa95940bd2"},
+    {file = "PyYAML-5.3.1-cp35-cp35m-win_amd64.whl", hash = "sha256:cc8955cfbfc7a115fa81d85284ee61147059a753344bc51098f3ccd69b0d7e0c"},
+    {file = "PyYAML-5.3.1-cp36-cp36m-win32.whl", hash = "sha256:7739fc0fa8205b3ee8808aea45e968bc90082c10aef6ea95e855e10abf4a37b2"},
+    {file = "PyYAML-5.3.1-cp36-cp36m-win_amd64.whl", hash = "sha256:69f00dca373f240f842b2931fb2c7e14ddbacd1397d57157a9b005a6a9942648"},
+    {file = "PyYAML-5.3.1-cp37-cp37m-win32.whl", hash = "sha256:d13155f591e6fcc1ec3b30685d50bf0711574e2c0dfffd7644babf8b5102ca1a"},
+    {file = "PyYAML-5.3.1-cp37-cp37m-win_amd64.whl", hash = "sha256:73f099454b799e05e5ab51423c7bcf361c58d3206fa7b0d555426b1f4d9a3eaf"},
+    {file = "PyYAML-5.3.1-cp38-cp38-win32.whl", hash = "sha256:06a0d7ba600ce0b2d2fe2e78453a470b5a6e000a985dd4a4e54e436cc36b0e97"},
+    {file = "PyYAML-5.3.1-cp38-cp38-win_amd64.whl", hash = "sha256:95f71d2af0ff4227885f7a6605c37fd53d3a106fcab511b8860ecca9fcf400ee"},
+    {file = "PyYAML-5.3.1.tar.gz", hash = "sha256:b8eac752c5e14d3eca0e6dd9199cd627518cb5ec06add0de9d32baeee6fe645d"},
 ]
 regex = [
     {file = "regex-2020.9.27-cp27-cp27m-win32.whl", hash = "sha256:d23a18037313714fb3bb5a94434d3151ee4300bae631894b1ac08111abeaa4a3"},
@@ -505,14 +943,29 @@ regex = [
     {file = "regex-2020.9.27-cp38-cp38-win_amd64.whl", hash = "sha256:4318d56bccfe7d43e5addb272406ade7a2274da4b70eb15922a071c58ab0108c"},
     {file = "regex-2020.9.27.tar.gz", hash = "sha256:a6f32aea4260dfe0e55dc9733ea162ea38f0ea86aa7d0f77b15beac5bf7b369d"},
 ]
+requests = [
+    {file = "requests-2.24.0-py2.py3-none-any.whl", hash = "sha256:fe75cc94a9443b9246fc7049224f75604b113c36acb93f87b80ed42c44cbb898"},
+    {file = "requests-2.24.0.tar.gz", hash = "sha256:b3559a131db72c33ee969480840fff4bb6dd111de7dd27c8ee1f820f4f00231b"},
+]
 six = [
     {file = "six-1.15.0-py2.py3-none-any.whl", hash = "sha256:8b74bedcbbbaca38ff6d7491d76f2b06b3592611af620f8426e82dddb04a5ced"},
     {file = "six-1.15.0.tar.gz", hash = "sha256:30639c035cdb23534cd4aa2dd52c3bf48f06e5f4a941509c8bafd8ce11080259"},
+]
+toml = [
+    {file = "toml-0.10.1-py2.py3-none-any.whl", hash = "sha256:bda89d5935c2eac546d648028b9901107a595863cb36bae0c73ac804a9b4ce88"},
+    {file = "toml-0.10.1.tar.gz", hash = "sha256:926b612be1e5ce0634a2ca03470f95169cf16f939018233a670519cb4ac58b0f"},
 ]
 typing-extensions = [
     {file = "typing_extensions-3.7.4.3-py2-none-any.whl", hash = "sha256:dafc7639cde7f1b6e1acc0f457842a83e722ccca8eef5270af2d74792619a89f"},
     {file = "typing_extensions-3.7.4.3-py3-none-any.whl", hash = "sha256:7cb407020f00f7bfc3cb3e7881628838e69d8f3fcab2f64742a5e76b2f841918"},
     {file = "typing_extensions-3.7.4.3.tar.gz", hash = "sha256:99d4073b617d30288f569d3f13d2bd7548c3a7e4c8de87db09a9d29bb3a4a60c"},
+]
+urllib3 = [
+    {file = "urllib3-1.25.10-py2.py3-none-any.whl", hash = "sha256:e7983572181f5e1522d9c98453462384ee92a0be7fac5f1413a1e35c56cc0461"},
+    {file = "urllib3-1.25.10.tar.gz", hash = "sha256:91056c15fa70756691db97756772bb1eb9678fa585d9184f24534b100dc60f4a"},
+]
+watchdog = [
+    {file = "watchdog-0.10.3.tar.gz", hash = "sha256:4214e1379d128b0588021880ccaf40317ee156d4603ac388b9adcf29165e0c04"},
 ]
 yarl = [
     {file = "yarl-1.6.0-cp35-cp35m-macosx_10_14_x86_64.whl", hash = "sha256:db9eb8307219d7e09b33bcb43287222ef35cbcf1586ba9472b0a4b833666ada1"},
