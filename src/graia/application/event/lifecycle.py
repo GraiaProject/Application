@@ -1,7 +1,6 @@
+from typing import Any
 from graia.broadcast.entities.event import BaseEvent, BaseDispatcher
 from graia.broadcast.interfaces.dispatcher import DispatcherInterface
-
-from graia.application import GraiaMiraiApplication
 
 class ApplicationLaunched(BaseEvent):
     app: "GraiaMiraiApplication"
@@ -17,7 +16,7 @@ class ApplicationLaunched(BaseEvent):
                 return interface.event.app
 
 class ApplicationLaunchedBlocking(BaseEvent):
-    app: "GraiaMiraiApplication"
+    app: Any
 
     def __init__(self, app) -> None:
         self.app = app
@@ -30,7 +29,7 @@ class ApplicationLaunchedBlocking(BaseEvent):
                 return interface.event.app
 
 class ApplicationShutdowned(BaseEvent):
-    app: "GraiaMiraiApplication"
+    app: Any
 
     def __init__(self, app) -> None:
         self.app = app

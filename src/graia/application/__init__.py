@@ -6,7 +6,8 @@ import traceback
 from typing import List, NoReturn, Optional, Tuple, Union
 import time
 
-import graia.application.event.lifecycle # for init lifecycle events
+from graia.application.event.lifecycle import (
+    ApplicationLaunched, ApplicationLaunchedBlocking, ApplicationShutdowned) # for init lifecycle events
 import graia.application.event.mirai  # for init events
 from aiohttp import ClientSession, FormData
 from graia.application.event import MiraiEvent
@@ -987,8 +988,6 @@ class GraiaMiraiApplication:
                     break
 
     async def initialize(self):
-        from .event.lifecycle import ApplicationLaunched, ApplicationLaunchedBlocking, ApplicationShutdowned
-
         start_time = time.time()
         self.logger.info("initializing app...")
         await self.authenticate()
@@ -1053,7 +1052,6 @@ class GraiaMiraiApplication:
         return self.http_fetchmessage_poster if not self.connect_info.websocket else self.ws_all_poster
     
     async def shutdown(self):
-        from .event.lifecycle import ApplicationShutdowned
         if self.broadcast is not None:
             try:
                 await self.broadcast.layered_scheduler(
