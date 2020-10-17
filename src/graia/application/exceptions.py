@@ -47,10 +47,13 @@ class DeprecatedImpl(Exception):
     pass
 
 class EntangledSuperposition(Exception):
+    "你传入的一个 List[InternalElement] 中包含了一个没有重写 toExternal 的消息元素"
     pass
 
 class MissingNecessaryOne(Exception):
+    "应在所提到的参数之中至少传入/使用一个"
     pass
 
 class ConflictItem(Exception):
+    "项冲突/其中一项被重复定义"
     pass

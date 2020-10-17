@@ -986,11 +986,11 @@ class GraiaMiraiApplication:
                 if len(data) != fetch_num:
                     break
 
-    async def launch(self):
+    async def initialize(self):
         from .event.lifecycle import ApplicationLaunched, ApplicationLaunchedBlocking, ApplicationShutdowned
 
         start_time = time.time()
-        self.logger.info("launching app...")
+        self.logger.info("initializing app...")
         await self.authenticate()
         await self.activeSession()
 
@@ -1068,12 +1068,24 @@ class GraiaMiraiApplication:
         await self.session.close()
         self.logger.info("application shutdowned.")
     
-    def launch_blocking(self):
-        loop = asyncio.get_event_loop()
-        loop.run_until_complete(self.launch())
+    def launch_blocking(self, loop: Optional[asyncio.AbstractEventLoop] = None):
+        if self.broadcast:
+            loop = self.broadcast.loop
+        else:
+            loop = loop or asyncio.get_event_loop()
+
+        if not self.connect_info.sessionKey:
+            loop.run_until_complete(self.initialize())
+
         try:
             if self.broadcast:
                 loop.run_until_complete(self.getFetching()())
         finally:
             if self.broadcast:
                 loop.run_until_complete(self.shutdown())
+    
+    def initializeFetchingTask(self) -> asyncio.Task:
+        if not self.broadcast:
+            raise TypeError("if you want to use fetching, you must setup a Broadcast.")
+        loop = self.broadcast.loop
+        return loop.create_task(self.getFetching()())
