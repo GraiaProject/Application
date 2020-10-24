@@ -32,6 +32,8 @@ def origin_or_zero(origin: Optional[_T]) -> Union[_T, int]:
 class Kanata(BaseDispatcher):
     "彼方."
 
+    always = True # 兼容重构版的 bcc.
+
     signature_list: List[Union[NormalMatch, PatternReceiver]]
     stop_exec_if_fail: bool = True
 
