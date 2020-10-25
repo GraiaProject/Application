@@ -9,7 +9,8 @@ from .elements import ExternalElement, InternalElement, Element
 import regex
 import copy
 
-from .serializeChain import serializeChain, deserializeChain
+
+import re
 
 T = Element
 MessageIndex = Tuple[int, Optional[int]]
@@ -307,12 +308,21 @@ class MessageChain(BaseModel):
         return MessageChain.create(result)
 
     def asSerializationString(self) -> str:
-        """将消息链对象转为以 "Mirai 码" 表示特殊对象的字符串
+        """将消息链对象转为以 "Mirai 码" 表示特殊对象的字符串. 为了保证可逆，纯文本中的'['用'[['替代
 
         Returns:
             str: 以 "Mirai 码" 表示特殊对象的字符串
         """
-        return serializeChain(self)
+        from .elements.internal import Plain
+        result = []
+        for e in self.__root__:
+            if isinstance(e, Plain):
+                result.append(e.asSerializationString().replace('[', '[['))
+            else:
+                result.append(e.asSerializationString())
+        return ''.join(result)
+    
+    
     
     @classmethod
     def fromSerializationString(cls, string: str) -> "MessageChain":
@@ -321,7 +331,35 @@ class MessageChain(BaseModel):
         Returns:
             MessageChain: 转换后得到的消息链, 所包含的信息可能不完整.
         """
-        return deserializeChain(string)
+        from .elements.internal import Plain, At, AtAll, Source, FlashImage, Image, Face
+        PARSE_FUNCTIONS = {
+            'atall': lambda args: AtAll(),
+            'source': lambda args: Source(id=args[0], time=args[1]),
+            'at': lambda args: At(target=args[0], display=args[1]),
+            'face': lambda args: Face(faceId=args[0]),
+            'image': lambda args: Image(imageId=args[0]),
+            'flash': lambda args: FlashImage(imageId=args[0]),
+        }
+        result = []
+        false_match = False
+        for match in re.split(r'(\[mirai:.+?\])', string):
+            if false_match:
+                false_match = False
+                result.append(Plain(match[1:].replace('[[', '[')))
+                continue
+
+            mirai = re.fullmatch(r'\[mirai:(.+?)(:(.+?))\]', match)
+            if mirai:
+                # 容错：参数数量太少不行，太多可以
+                args = mirai.group(3).split(',')
+                result.append(PARSE_FUNCTIONS[mirai.group(1)](args))
+            elif match:
+                trailing = re.search(r'\[*$', match).group(0)
+                # 下一串匹配原文就是"[mirai:...]"
+                false_match = len(trailing) % 2 != 0
+                result.append(Plain(match.replace('[[', '[')))
+        return MessageChain.create(result)
+
 
     def asMerged(self) -> "MessageChain":
         """合并相邻的 Plain 项, 并返回一个新的消息链实例
