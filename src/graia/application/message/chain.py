@@ -9,6 +9,8 @@ from .elements import ExternalElement, InternalElement, Element
 import regex
 import copy
 
+from .serializeChain import serializeChain, deserializeChain
+
 T = Element
 MessageIndex = Tuple[int, Optional[int]]
 
@@ -310,7 +312,7 @@ class MessageChain(BaseModel):
         Returns:
             str: 以 "Mirai 码" 表示特殊对象的字符串
         """
-        return "".join([i.asSerializationString() for i in self.__root__])
+        return serializeChain(self)
     
     @classmethod
     def fromSerializationString(cls, string: str) -> "MessageChain":
@@ -319,35 +321,7 @@ class MessageChain(BaseModel):
         Returns:
             MessageChain: 转换后得到的消息链, 所包含的信息可能不完整.
         """
-        from .elements.internal import Source, Plain, AtAll, At, Face, Image, FlashImage
-        code_without_argument = {
-            "atall": AtAll
-        }
-        origin_list = list(regex.finditer(
-            r"((?:\[mirai:(?P<name>[^:]+)\])|(?:\[mirai:(?P<name>[^\]]*)?:(?P<argument>.*?)?\]))|(?P<plaintext>.{1,})", string))
-
-        result = [] # 默认为不可变型, 但这里要插入元素
-        for i in origin_list:
-            origin_pattern = i.groupdict()
-            if origin_pattern['name'] and not origin_pattern['argument']: # 无参数型
-                target_element = code_without_argument.get(origin_pattern['name'])
-                if target_element:
-                    result.append(target_element())
-            elif origin_pattern['name'] and origin_pattern['argument']: # 有参数
-                arguments = origin_pattern['argument'].split(",")
-                if origin_pattern['name'] == "source":
-                    result.append(Source(id=int(arguments[0]), time=arguments[1]))
-                elif origin_pattern['name'] == "at":
-                    result.append(At(target=int(arguments[0]), display=arguments[1]))
-                elif origin_pattern['name'] == "face":
-                    result.append(Face(faceId=int(arguments[0])))
-                elif origin_pattern['name'] == "image":
-                    result.append(Image(imageId=origin_pattern['argument']))
-                elif origin_pattern['name'] == "flash":
-                    result.append(FlashImage(imageId=origin_pattern['argument']))
-            elif origin_pattern['plaintext']:
-                result.append(Plain(origin_pattern['plaintext']))
-        return cls.create(tuple(result))
+        return deserializeChain(string)
 
     def asMerged(self) -> "MessageChain":
         """合并相邻的 Plain 项, 并返回一个新的消息链实例
