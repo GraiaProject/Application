@@ -308,7 +308,7 @@ class MessageChain(BaseModel):
         return MessageChain.create(result)
 
     def asSerializationString(self) -> str:
-        """将消息链对象转为以 "Mirai 码" 表示特殊对象的字符串. 为了保证可逆，纯文本中的'['用'[['替代
+        """将消息链对象转为以 "Mirai 码" 表示特殊对象的字符串. 为了保证可逆，纯文本中的'['用'[_'替代
 
         Returns:
             str: 以 "Mirai 码" 表示特殊对象的字符串
@@ -317,7 +317,7 @@ class MessageChain(BaseModel):
         result = []
         for e in self.__root__:
             if isinstance(e, Plain):
-                result.append(e.asSerializationString().replace('[', '[['))
+                result.append(e.asSerializationString().replace('[', '[_'))
             else:
                 result.append(e.asSerializationString())
         return ''.join(result)
@@ -341,23 +341,14 @@ class MessageChain(BaseModel):
             'flash': lambda args: FlashImage(imageId=args[0]),
         }
         result = []
-        false_match = False
         for match in re.split(r'(\[mirai:.+?\])', string):
-            if false_match:
-                false_match = False
-                result.append(Plain(match[1:].replace('[[', '[')))
-                continue
-
             mirai = re.fullmatch(r'\[mirai:(.+?)(:(.+?))\]', match)
             if mirai:
                 # 容错：参数数量太少不行，太多可以
                 args = mirai.group(3).split(',')
                 result.append(PARSE_FUNCTIONS[mirai.group(1)](args))
             elif match:
-                trailing = re.search(r'\[*$', match).group(0)
-                # 下一串匹配原文就是"[mirai:...]"
-                false_match = len(trailing) % 2 != 0
-                result.append(Plain(match.replace('[[', '[')))
+                result.append(Plain(match.replace('[_', '[')))
         return MessageChain.create(result)
 
 
