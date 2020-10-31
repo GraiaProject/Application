@@ -146,7 +146,7 @@ class GraiaMiraiApplication:
             data = await response.json()
             raise_for_return_code(data)
             
-            version = tuple(int(i) for i in data['data']['version'].split("."))
+            version = tuple(int(i[1:] if i.startswith("v") else i) for i in data['data']['version'].split("."))
             if auto_set:
                 self.connect_info.current_version = version
             return version

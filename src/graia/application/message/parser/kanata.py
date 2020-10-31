@@ -219,7 +219,7 @@ class Kanata(BaseDispatcher):
         # 因为 Dispatcher 的特性, 要用 yield (自动清理 self.parsed_items)
         token = None
         if self.parsed_items.get(None) is None:
-            message_chain = (await interface.execute_with(
+            message_chain = (await interface.lookup_param(
                 "__kanata_messagechain_origin__",
                 MessageChain, None
             )).exclude(Source, Quote, Xml, Json, App, Poke)
