@@ -3,7 +3,7 @@ from typing import Any, Callable, Coroutine, Generator, List, Optional, Tuple, T
 import asyncio
 from graia.broadcast.entities.decorater import Decorater
 from graia.broadcast.entities.dispatcher import BaseDispatcher
-from graia.broadcast.entities.listener import Listener
+from graia.broadcast.entities.exectarget import ExecTarget
 from graia.application.logger import AbstractLogger, LoggingLogger
 from graia.scheduler.exception import AlreadyStarted
 
@@ -89,12 +89,9 @@ class SchedulerTask:
         for sleep_interval in self.sleep_interval_generator():
             yield (asyncio.sleep(sleep_interval), True, sleep_interval)
             yield (self.broadcast.Executor(
-                target=Listener(
+                target=ExecTarget(
                     callable=self.target,
-                    namespace=self.broadcast.getDefaultNamespace(),
                     inline_dispatchers=self.dispatchers,
-                    priority=16,
-                    listening_events=[SchedulerTaskExecute],
                     headless_decoraters=self.decorators,
                     enable_internal_access=self.enableInternalAccess
                 ),
