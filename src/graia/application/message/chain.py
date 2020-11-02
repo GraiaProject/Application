@@ -10,8 +10,6 @@ import regex
 import copy
 
 
-import re
-
 T = Element
 MessageIndex = Tuple[int, Optional[int]]
 
@@ -341,8 +339,8 @@ class MessageChain(BaseModel):
             'flash': lambda args: FlashImage(imageId=args[0]),
         }
         result = []
-        for match in re.split(r'(\[mirai:.+?\])', string):
-            mirai = re.fullmatch(r'\[mirai:(.+?)(:(.+?))\]', match)
+        for match in regex.split(r'(\[mirai:.+?\])', string):
+            mirai = regex.fullmatch(r'\[mirai:(.+?)(:(.+?))\]', match)
             if mirai:
                 # 容错：参数数量太少不行，太多可以
                 args = mirai.group(3).split(',')
