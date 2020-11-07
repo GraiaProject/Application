@@ -13,6 +13,9 @@ class PatternReceiver(BaseModel):
     name: str
     isGreed: bool = False
 
+    def __init__(self, name: str, isGreed: bool = False) -> None:
+        super().__init__(name=name, isGreed=isGreed)
+
     @validator("name")
     def name_checker(cls, v):
         if not regex.match("^[a-zA-Z_][a-zA-Z0-9_]*$", v):
