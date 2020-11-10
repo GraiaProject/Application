@@ -479,6 +479,7 @@ class MemberLeaveEventQuit(MiraiEvent):
 
     Allowed Extra Parameters(提供的额外注解支持):
         GraiaMiraiApplication (annotation): 发布事件的应用实例
+        Group (annotation): 指定的群组
         Member (annotation): 主动退出群组的成员
     """
 
@@ -492,6 +493,8 @@ class MemberLeaveEventQuit(MiraiEvent):
         def catch(interface: DispatcherInterface):
             if interface.annotation is Member:
                 return interface.event.member
+            elif interface.annotation is Group:
+                return interface.event.member.group
 
 class MemberCardChangeEvent(MiraiEvent):
     """该事件发生时, 有一群组成员的群名片被更改, 执行者可能是管理员/群主, 该成员自己, 也可能是应用实例所辖账号(这时, `operator` 为 `None`).
