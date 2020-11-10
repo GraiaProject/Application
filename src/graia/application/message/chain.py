@@ -9,6 +9,7 @@ from .elements import ExternalElement, InternalElement, Element
 import regex
 import copy
 
+
 T = Element
 MessageIndex = Tuple[int, Optional[int]]
 
@@ -18,56 +19,76 @@ def raiser(error):
 class MessageChain(BaseModel):
     """即 "消息链", 被用于承载整个消息内容的数据结构, 包含有一有序列表, 包含有继承了 Element 的各式类实例.
 
-    Examples:
+    Example:
         1. 你可以使用 `MessageChain.create` 方法创建一个消息链:
-        ``` python
-        MessageChain.create([
-            Plain("这是盛放在这个消息链中的一个 Plain 元素")
-        ])
-        ```
+
+            ``` python
+            MessageChain.create([
+                Plain("这是盛放在这个消息链中的一个 Plain 元素")
+            ])
+            ```
+
         2. 你可以使用 `MessageChain.isImmutable` 方法判定消息链的可变型:
-        ``` python
-        print(message.isImmutable()) # 监听器获取到的消息链默认为 False.
-        ```
+
+            ``` python
+            print(message.isImmutable()) # 监听器获取到的消息链默认为 False.
+            ```
+
         3. 你可以使用 `MessageChain.asMutable` 和 `MessageChain.asImmutable` 方法分别获得可变与不可变的消息链.
-        4. 你可以使用 `MessageChain.isSendable` 方法检查消息链是否可以被 完整无误 的发送.
+
+        4. 你可以使用 `MessageChain.isSendable` 方法检查消息链是否可以被 **完整无误** 的发送.
+
         5. 使用 `MessageChain.asSendable` 方法, 将自动过滤原消息链中的无法发送的元素, 并返回一个新的, 可被发送的消息链.
+
         6. `MessageChain.has` 方法可用于判断特定的元素类型是否存在于消息链中:
-        ``` python
-        print(message.has(At))
-        # 使用 in 运算符也可以
-        print(At in message)
-        ```
+
+            ``` python
+            print(message.has(At))
+            # 使用 in 运算符也可以
+            print(At in message)
+            ```
+    
         7. 可以使用 `MessageChain.get` 方法获取消息链中的所有特定类型的元素:
-        ``` python
-        print(message.get(Image)) # -> List[Image]
-        # 使用类似取出列表中元素的形式也可以:
-        print(message[Image]) # -> List[Image]
-        ```
+
+            ``` python
+            print(message.get(Image)) # -> List[Image]
+            # 使用类似取出列表中元素的形式也可以:
+            print(message[Image]) # -> List[Image]
+            ```
+
         8. 使用 `MessageChain.asDisplay` 方法可以获取到字符串形式表示的消息, 至于字面意思, 看示例:
-        ``` python
-        print(MessageChain.create([
-            Plain("text"), At(123, display="某人"), Image(...)
-        ]).asDisplay()) # -> "text@某人 [图片]"
-        ```
+
+            ``` python
+            print(MessageChain.create([
+                Plain("text"), At(123, display="某人"), Image(...)
+            ]).asDisplay()) # -> "text@某人 [图片]"
+            ```
+
         9. 使用 `MessageChain.join` 方法可以拼接多个消息链:
-        ``` python
-        MessageChain.join(
-            message1, message2, message3, ...
-        ) # -> total_message
-        ```
+
+            ``` python
+            MessageChain.join(
+                message1, message2, message3, ...
+            ) # -> MessageChain
+            ```
         10. `MessageChain.plusWith` 方法将在现有的基础上将另一消息链拼接到原来实例的尾部, 并生成, 返回新的实例; 该方法不改变原有和传入的实例.
+        
         11. `MessageChain.plus` 方法将在现有的基础上将另一消息链拼接到原来实例的尾部; 该方法更改了原有的实例, 并要求 `isMutable` 方法返回 `True` 才可以执行.
+        
         12. `MessageChain.asSerializationString` 方法可将消息链对象转为以 "Mirai 码" 表示特殊对象的字符串
+
         13. `MessageChain.fromSerializationString` 方法可以从以 "Mirai 码" 表示特殊对象的字符串解析为消息链, 不过可能不完整.
+
         14. `MessageChain.asMerged` 方法可以将消息链中相邻的 Plain 元素合并为一个 Plain 元素.
+
         15. 你可以通过一个分片实例取项, 这个分片的 `start` 和 `end` 的 Type Annotation 都是 `Optional[MessageIndex]`:
-        ``` python
-        message = MessageChain.create([
-            Plain("123456789"), At(123), Plain("3423")
-        ])
-        message.asMerged()[(0, 12):] # => [At(123), Plain("3423")]
-        ```
+        
+            ``` python
+            message = MessageChain.create([
+                Plain("123456789"), At(123), Plain("3423")
+            ])
+            message.asMerged()[(0, 12):] # => [At(123), Plain("3423")]
+            ```
     """
     __root__: Union[List[T], Tuple[T]]
 
@@ -210,7 +231,7 @@ class MessageChain(BaseModel):
         Returns:
             MessageChain: 拼接结果
         """
-        return cls.create(sum(chains, []))
+        return cls.create(sum([i.__root__ for i in chains], []))
 
     def plusWith(self, *chains: "MessageChain") -> "MessageChain":
         """在现有的基础上将另一消息链拼接到原来实例的尾部, 并生成, 返回新的实例.
@@ -218,7 +239,7 @@ class MessageChain(BaseModel):
         Returns:
             MessageChain: 拼接结果
         """
-        return self.create(sum(chains, self.__root__))
+        return self.create(sum([i.__root__ for i in chains], self.__root__))
 
     def plus(self, *chains: "MessageChain") -> NoReturn:
         """在现有的基础上将另一消息链拼接到原来实例的尾部
@@ -285,12 +306,21 @@ class MessageChain(BaseModel):
         return MessageChain.create(result)
 
     def asSerializationString(self) -> str:
-        """将消息链对象转为以 "Mirai 码" 表示特殊对象的字符串
+        """将消息链对象转为以 "Mirai 码" 表示特殊对象的字符串. 为了保证可逆，纯文本中的'['用'[_'替代
 
         Returns:
             str: 以 "Mirai 码" 表示特殊对象的字符串
         """
-        return "".join([i.asSerializationString() for i in self.__root__])
+        from .elements.internal import Plain
+        result = []
+        for e in self.__root__:
+            if isinstance(e, Plain):
+                result.append(e.asSerializationString().replace('[', '[_'))
+            else:
+                result.append(e.asSerializationString())
+        return ''.join(result)
+    
+    
     
     @classmethod
     def fromSerializationString(cls, string: str) -> "MessageChain":
@@ -299,35 +329,26 @@ class MessageChain(BaseModel):
         Returns:
             MessageChain: 转换后得到的消息链, 所包含的信息可能不完整.
         """
-        from .elements.internal import Source, Plain, AtAll, At, Face, Image, FlashImage
-        code_without_argument = {
-            "atall": AtAll
+        from .elements.internal import Plain, At, AtAll, Source, FlashImage, Image, Face
+        PARSE_FUNCTIONS = {
+            'atall': lambda args: AtAll(),
+            'source': lambda args: Source(id=args[0], time=args[1]),
+            'at': lambda args: At(target=args[0], display=args[1]),
+            'face': lambda args: Face(faceId=args[0]),
+            'image': lambda args: Image(imageId=args[0]),
+            'flash': lambda args: FlashImage(imageId=args[0]),
         }
-        origin_list = list(regex.finditer(
-            r"((?:\[mirai:(?P<name>[^:]+)\])|(?:\[mirai:(?P<name>[^\]]*)?:(?P<argument>.*?)?\]))|(?P<plaintext>.{1,})", string))
+        result = []
+        for match in regex.split(r'(\[mirai:.+?\])', string):
+            mirai = regex.fullmatch(r'\[mirai:(.+?)(:(.+?))\]', match)
+            if mirai:
+                # 容错：参数数量太少不行，太多可以
+                args = mirai.group(3).split(',')
+                result.append(PARSE_FUNCTIONS[mirai.group(1)](args))
+            elif match:
+                result.append(Plain(match.replace('[_', '[')))
+        return MessageChain.create(result)
 
-        result = [] # 默认为不可变型, 但这里要插入元素
-        for i in origin_list:
-            origin_pattern = i.groupdict()
-            if origin_pattern['name'] and not origin_pattern['argument']: # 无参数型
-                target_element = code_without_argument.get(origin_pattern['name'])
-                if target_element:
-                    result.append(target_element())
-            elif origin_pattern['name'] and origin_pattern['argument']: # 有参数
-                arguments = origin_pattern['argument'].split(",")
-                if origin_pattern['name'] == "source":
-                    result.append(Source(id=int(arguments[0]), time=arguments[1]))
-                elif origin_pattern['name'] == "at":
-                    result.append(At(target=int(arguments[0]), display=arguments[1]))
-                elif origin_pattern['name'] == "face":
-                    result.append(Face(faceId=int(arguments[0])))
-                elif origin_pattern['name'] == "image":
-                    result.append(Image(imageId=origin_pattern['argument']))
-                elif origin_pattern['name'] == "flash":
-                    result.append(FlashImage(imageId=origin_pattern['argument']))
-            elif origin_pattern['plaintext']:
-                result.append(Plain(origin_pattern['plaintext']))
-        return cls.create(tuple(result))
 
     def asMerged(self) -> "MessageChain":
         """合并相邻的 Plain 项, 并返回一个新的消息链实例

@@ -1,11 +1,13 @@
+from typing import Any
 from graia.broadcast.entities.event import BaseEvent, BaseDispatcher
 from graia.broadcast.interfaces.dispatcher import DispatcherInterface
+from pydantic.main import BaseModel
 
-class ApplicationLaunched(BaseEvent):
-    app: "GraiaMiraiApplication"
+class ApplicationLaunched(BaseModel, BaseEvent):
+    app: Any
 
     def __init__(self, app) -> None:
-        self.app = app
+        super().__init__(app=app)
 
     class Dispatcher(BaseDispatcher):
         @staticmethod
@@ -14,11 +16,11 @@ class ApplicationLaunched(BaseEvent):
             if interface.annotation is GraiaMiraiApplication:
                 return interface.event.app
 
-class ApplicationLaunchedBlocking(BaseEvent):
-    app: "GraiaMiraiApplication"
+class ApplicationLaunchedBlocking(BaseModel, BaseEvent):
+    app: Any
 
     def __init__(self, app) -> None:
-        self.app = app
+        super().__init__(app=app)
 
     class Dispatcher(BaseDispatcher):
         @staticmethod
@@ -27,11 +29,11 @@ class ApplicationLaunchedBlocking(BaseEvent):
             if interface.annotation is GraiaMiraiApplication:
                 return interface.event.app
 
-class ApplicationShutdowned(BaseEvent):
-    app: "GraiaMiraiApplication"
+class ApplicationShutdowned(BaseModel, BaseEvent):
+    app: Any
 
     def __init__(self, app) -> None:
-        self.app = app
+        super().__init__(app=app)
 
     class Dispatcher(BaseDispatcher):
         @staticmethod
@@ -39,3 +41,4 @@ class ApplicationShutdowned(BaseEvent):
             from .. import GraiaMiraiApplication
             if interface.annotation is GraiaMiraiApplication:
                 return interface.event.app
+

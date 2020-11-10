@@ -32,6 +32,8 @@ def origin_or_zero(origin: Optional[_T]) -> Union[_T, int]:
 class Kanata(BaseDispatcher):
     "彼方."
 
+    always = True # 兼容重构版的 bcc.
+
     signature_list: List[Union[NormalMatch, PatternReceiver]]
     stop_exec_if_fail: bool = True
 
@@ -58,6 +60,11 @@ class Kanata(BaseDispatcher):
     ) -> Optional[Dict[str, Tuple[MessageIndex, MessageIndex]]]:
         merged_chain = merge_signature_chain(signature_chain)
         message_chain = message_chain.asMerged()
+        element_num = len(message_chain.__root__)
+        end_index: MessageIndex = (element_num - 1,
+            len(message_chain.__root__[-1].text) if \
+                element_num != 0 and message_chain.__root__[-1].__class__ is Plain else None
+        )
     
         reached_message_index: MessageIndex = (0, None)
         # [0] => real_index
@@ -169,6 +176,10 @@ class Kanata(BaseDispatcher):
 
                 stop_index = (len(message_chain.__root__), text_index)
                 match_result[matching_recevier] = (start_index, stop_index)
+            else: # 如果不需要继续捕获消息作为参数, 但 Signature 已经无法指示 Message 的样式时, 判定本次匹配非法.
+                if reached_message_index < end_index:
+                    return
+                
         return match_result
 
     @staticmethod
@@ -217,8 +228,8 @@ class Kanata(BaseDispatcher):
         # 因为 Dispatcher 的特性, 要用 yield (自动清理 self.parsed_items)
         token = None
         if self.parsed_items.get(None) is None:
-            message_chain = (await interface.execute_with(
-                "__kanata_messagechain_origin__",
+            message_chain = (await interface.lookup_param(
+                "__kanata_messagechain__",
                 MessageChain, None
             )).exclude(Source, Quote, Xml, Json, App, Poke)
             mapping_result = self.detect_and_mapping(
@@ -230,11 +241,13 @@ class Kanata(BaseDispatcher):
                 if self.stop_exec_if_fail:
                     raise ExecutionStop()
 
-        _i = random.random()
-        result = self.parsed_items.get({}).get(interface.name, _i)
-        if result is _i:
-            yield # 跳过.(另: Executor 应加入对 default 的不可预测行为反制措施.)
+        random_id = random.random()
+        current_item = self.parsed_items.get()
+        if current_item is not None:
+            result = current_item.get(interface.name, random_id)
+            yield Force(result) if result is not random_id else None
         else:
-            yield Force(result)
+            if self.stop_exec_if_fail:
+                raise ExecutionStop()
         if token is not None:
             self.parsed_items.reset(token)

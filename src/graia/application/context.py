@@ -42,4 +42,4 @@ def enter_context(app=None, event_i=None):
             event_loop.reset(t3)
             broadcast.reset(t4)
     except ValueError: # 在测试 Scheduler 时发现的问题...辣鸡 Python!
-            pass
+        pass
