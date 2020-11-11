@@ -479,7 +479,7 @@ class MemberLeaveEventQuit(MiraiEvent):
 
     Allowed Extra Parameters(提供的额外注解支持):
         GraiaMiraiApplication (annotation): 发布事件的应用实例
-        Group (annotation): 指定的群组
+        Group (annotation): 发生本事件的群组, 通常的, 在本事件发生后本群组成员数量少于之前
         Member (annotation): 主动退出群组的成员
     """
 
