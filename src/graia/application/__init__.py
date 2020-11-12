@@ -1053,6 +1053,7 @@ class GraiaMiraiApplication:
     
     async def shutdown(self):
         if self.broadcast is not None:
+            loop = self.broadcast.loop
             try:
                 await self.broadcast.layered_scheduler(
                     listener_generator=self.broadcast.default_listener_generator(ApplicationShutdowned),
@@ -1061,7 +1062,17 @@ class GraiaMiraiApplication:
             except:
                 self.logger.error("it seems our shutdown operator has been failed...check the remote alive.")
                 traceback.print_exc()
-
+        else:
+            loop = asyncio.get_event_loop()
+        
+        for t in asyncio.all_tasks(loop):
+            if t != asyncio.current_task(loop):
+                t.cancel()
+                try:
+                    await t
+                except asyncio.CancelledError:
+                    pass
+        
         await self.signout()
         await self.session.close()
         self.logger.info("application shutdowned.")
