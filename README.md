@@ -42,6 +42,9 @@ poetry install
 `Graia Framework` 欢迎一切形式上的贡献(包括但不限于 `Issues`, `Pull Requests`, `Good Idea` 等)  
 我们希望能有更多优秀的开发者加入到对项目的贡献上来. 你的 `Star` 是对我们最大的支持和鼓励.  
 
+我们在[这里](https://github.com/GraiaProject/Application/blob/master/CONTRIBUTING.md)写了你在贡献本项目及
+`Graia Project` 时所可能需要注意的事项.
+
 若你在使用的过程中遇到了问题, 欢迎[提出聪明的问题](https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way/blob/master/README-zh_CN.md), 也请不要[使用糟糕的方式提问](https://github.com/tangx/Stop-Ask-Questions-The-Stupid-Ways), 我们希望有人能让这个项目变得更好.  
 
 若在使用时发现了本项目的问题, 先检查文档中是否有提及这一情况,
