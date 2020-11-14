@@ -1066,7 +1066,7 @@ class GraiaMiraiApplication:
             loop = asyncio.get_event_loop()
         
         for t in asyncio.all_tasks(loop):
-            if t != asyncio.current_task(loop):
+            if t is not asyncio.current_task(loop):
                 t.cancel()
                 try:
                     await t
