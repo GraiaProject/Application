@@ -2,7 +2,6 @@ from typing import Any, Type, Union
 from pprint import pprint
 from graia.broadcast import Broadcast
 from graia.broadcast.priority import Priority
-from graia.application import GraiaMiraiApplication
 from graia.broadcast.entities.event import BaseEvent
 from abc import ABCMeta, abstractmethod
 from graia.broadcast.utilles import run_always_await
@@ -48,7 +47,6 @@ class InterruptControl:
             获取处理得到的值并返回; 无论如何, 用于一次性监听使用的监听器总会被销毁.
     """
     broadcast: Broadcast
-    app: GraiaMiraiApplication
 
     def __init__(self, broadcast: Broadcast) -> None:
         self.broadcast = broadcast
