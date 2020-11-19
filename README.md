@@ -4,19 +4,6 @@
 所需求的最低 CPython 版本: ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/graia-application-mirai)  
 已确认可以在其上运行的 Python 实现: ![PyPI - Implementation](https://img.shields.io/pypi/implementation/graia-application-mirai)
 
-### 现在有在做什么么?
-
-由于现实原因, 我们无法及时的解决你所提出的问题, 非常抱歉.
-
-<div style="display: none">
-
-但我们已经准备给你们带来一个大惊喜了.
-基于 `mirai-websocket-api` 的 `Graia Application` 正在筹划, 且我们参与到了这个项目的接口设计.
-
-敬请期待(`Coming Soon`).
-
-</div>
-
 ### 开始使用
 
 文档地址: https://graia-document.vercel.app/
@@ -53,13 +40,21 @@ poetry install
 
 **若使用中发现了并非本项目导致的问题, 请先向其他项目汇报问题, 当然, 记得通知我.**
 
-### 鸣谢
+### 鸣谢&相关项目
 > 这些项目也很棒, 去他们的项目页看看, 点个 `Star` 以鼓励他们的开发工作, 毕竟没有他们也没有 `Graia Framework`.
 
 特别感谢 [`mamoe`](https://github.com/mamoe) 给我们带来这些精彩的项目:
  - [`mirai`](https://github.com/mamoe/mirai): 即 `mirai-core`, 一个高性能, 高可扩展性的 QQ 协议库
  - [`mirai-console`](https://github.com/mamoe/mirai-console): 一个基于 `mirai` 开发的插件式可扩展开发平台
  - [`mirai-api-http`](https://github.com/project-mirai/mirai-api-http): 为本项目提供与 `mirai` 交互方式的 `mirai-console` 插件
+
+`Graia Application` 同样还关联了其他 `Graia Project` 下的项目:
+ - [`Broadcast Control`](https://github.com/GraiaProject/BroadcastControl): 扩展性强大, 模块间低耦合, 高灵活性的事件系统支持
+ - [`Components`](https://github.com/GraiaProject/Components): 简单的信息链元素选择器
+ - [`Template`](https://github.com/GraiaProject/Template): 消息模板支持
+ 
+作为学习目的, 我们以个人名义重新以 `AGPL-3.0` 开源了 `python-mirai`, 即 `Graia Application` 的前身, 希望能为社区的发展助力:
+ - [`python-mirai`](https://github.com/GreyElaina/python-mirai): 接口简洁, 支持 `mirai-api-http` 约 `v1.6.x` 版本. 一切的开始.
 
 也感谢所有基于本项目开发的各位开发者, 请积极向上游项目反馈问题.
 
