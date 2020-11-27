@@ -61,13 +61,21 @@ class GraiaMiraiApplication:
     debug: bool
     chat_log_enabled: bool
 
+    group_message_log_format: str = "[BOT {bot_id}, GroupMessage] [{group_name}({group_id}, perm: {bot_permission})] {member_name}({member_id}, {member_permission}) -> {message_string}"
+    friend_message_log_format: str = "[BOT {bot_id}, FriendMessage] {friend_name}({friend_id}) -> {message_string}"
+    temp_message_log_format: str = "[BOT {bot_id}, TempMessage] [{group_name}({group_id}, perm: {bot_permission})] {member_name}({member_id}, {member_permission}) -> {message_string}"
+
     def __init__(self, *,
         broadcast: Optional[Broadcast],
         connect_info: Session,
         session: Optional[ClientSession] = None,
         logger: Optional[AbstractLogger] = None,
         debug: bool = False,
-        enable_chat_log: bool = True
+        enable_chat_log: bool = True,
+        
+        group_message_log_format: str = None,
+        friend_message_log_format: str = None,
+        temp_message_log_format: str = None,
     ):
         self.broadcast = broadcast
         self.connect_info = connect_info
@@ -83,12 +91,16 @@ class GraiaMiraiApplication:
             self.broadcast.receiver("FriendMessage")(self.logger_friend_message)
             self.broadcast.receiver("TempMessage")(self.logger_temp_message)
 
+        self.group_message_log_format = group_message_log_format or GraiaMiraiApplication.group_message_log_format
+        self.friend_message_log_format = friend_message_log_format or GraiaMiraiApplication.friend_message_log_format
+        self.temp_message_log_format = temp_message_log_format or GraiaMiraiApplication.temp_message_log_format
+
         self.broadcast.addInjectionRule(
             SpecialEventType(MiraiEvent, AppMiddlewareAsDispatcher(self))
         )
-    
+  
     def logger_group_message(self, event: GroupMessage):
-        self.logger.info("[BOT {bot_id}, GroupMessage] [{group_name}({group_id}, perm: {bot_permission})] {member_name}({member_id}, {member_permission}) -> {message_string}".format_map(dict(
+        self.logger.info(self.group_message_log_format.format_map(dict(
             group_id=event.sender.group.id,
             group_name=event.sender.group.name,
             member_id=event.sender.id,
@@ -100,7 +112,7 @@ class GraiaMiraiApplication:
         )))
     
     def logger_friend_message(self, event: FriendMessage):
-        self.logger.info("[BOT {bot_id}, FriendMessage] {friend_name}({friend_id}) -> {message_string}".format_map(dict(
+        self.logger.info(self.friend_message_log_format.format_map(dict(
             bot_id=self.connect_info.account,
             friend_name=event.sender.nickname,
             friend_id=event.sender.id,
@@ -108,7 +120,7 @@ class GraiaMiraiApplication:
         )))
     
     def logger_temp_message(self, event: TempMessage):
-        self.logger.info("[BOT {bot_id}, TempMessage] [{group_name}({group_id}, perm: {bot_permission})] {member_name}({member_id}, {member_permission}) -> {message_string}".format_map(dict(
+        self.logger.info(self.temp_message_log_format.format_map(dict(
             group_id=event.sender.group.id,
             group_name=event.sender.group.name,
             member_id=event.sender.id,

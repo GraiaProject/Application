@@ -252,7 +252,6 @@ class Kanata(BaseDispatcher):
                 if self.skip_one_at_in_quote and message_chain.__root__:
                     if message_chain.__root__[0].__class__ is At:
                         message_chain = message_chain[(1, 1):] # 利用 MessageIndex 可以非常快捷的实现特性.
-                print(message_chain)
 
             mapping_result = self.detect_and_mapping(
                 self.signature_list, message_chain
