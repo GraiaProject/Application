@@ -15,7 +15,7 @@ def applicationContextManager(func: Callable[..., _T]) -> Callable[..., _T]:
             return await func(self, *args, **kwargs)
     return wrapper
 
-def requireAuthenticated(func: Callable[..., _T]) -> Callable[..., _T]:
+def requireAuthenticated(func: _T) -> _T:
     def wrapper(self, *args, **kwargs):
         if not self.connect_info.sessionKey:
             raise InvaildSession("you must authenticate before this.")

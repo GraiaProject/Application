@@ -477,6 +477,34 @@ class VoiceUploadType(Enum):
     Group = "group"
     Unknown = "unknown"
 
+class Voice_LocalFile(ShadowElement, InternalElement, ExternalElement):
+    filepath: Path
+    method: Optional[UploadMethods]
+
+    def __init__(self, filepath: Path, method: Optional[UploadMethods] = None) -> None:
+        super().__init__(filepath=filepath, method=method)
+
+    async def toExternal(self):
+        app = application.get()
+        try:
+            methodd = self.method or image_method.get()
+        except LookupError:
+            raise ValueError("you should give the 'method' for upload when you are out of the event receiver.")
+        
+        return await app.uploadVoice(self, self.filepath.read_bytes(), methodd, return_external=True)
+
+    async def getReal(self, method: UploadMethods) -> "Image":
+        """从本 Shadow Element 中生成一真正的 Voice 对象.
+        Args:
+            method (UploadMethods): 所需求的图片的上传类型, 具体请阅读 UploadMethods 的相关文档.
+        Raises:
+            ClientResponseError: HTTP 网络请求错误
+        Returns:
+            Voice: 所生成的, 真正的 Voice 对象.
+        """
+        app = application.get()
+        return await app.uploadVoice(self.filepath.read_bytes(), method, return_external=True)
+
 class Voice(InternalElement):
     voiceId: Optional[str] = None
     url: Optional[str] = None
@@ -514,6 +542,25 @@ class Voice(InternalElement):
             return VoiceUploadType.Unknown
         if values['voiceId']:
             return VoiceUploadType.Group # mirai 当前版本只支持群语音.
+
+    def fromLocalFile(self, filepath: Union[str, Path], method: Optional[UploadMethods] = None) -> "Voice":
+        """从本地文件中创建一个 Shadow Element, 以此在发送时自动上传语音至服务器, 并借此使包含的语音成功发送.
+
+        Args:
+            filepath (Union[Path, str]): 需要上传的图片路径, 可以是字符串也可以是 pathlib.Path 实例
+            method (Optional[UploadMethods], default = None): 语音上传时使用的方法, 通常可以使程序自行判定.
+
+        Raises:
+            FileNotFoundError: 所描述的语音文件在文件系统中不存在.
+
+        Returns:
+            [Shadow Element]: 返回值为一合法, 但不包括任何 Voice 特征属性的叠加态消息元素
+        """
+        if isinstance(filepath, str):
+            filepath = Path(filepath)
+        if not filepath.exists():
+            raise FileNotFoundError("you should give us a existed file's path")
+        return Voice_LocalFile(filepath, method)
 
 class Xml(InternalElement, ExternalElement):
     type = "Xml"

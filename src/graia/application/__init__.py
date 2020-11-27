@@ -1,16 +1,21 @@
 import asyncio
 import atexit
+import json
+import time
+import traceback
 from contextlib import asynccontextmanager
 from functools import partial
-import traceback
-from typing import List, NoReturn, Optional, Tuple, Union
-import time
+from typing import (Any, Callable, List, NoReturn, Optional, Tuple, TypeVar,
+                    Union)
 
-from graia.application.event.lifecycle import (
-    ApplicationLaunched, ApplicationLaunchedBlocking, ApplicationShutdowned) # for init lifecycle events
+import aiohttp.client_exceptions
+import aiohttp.web_exceptions
 import graia.application.event.mirai  # for init events
 from aiohttp import ClientSession, FormData
+from aiohttp.http_websocket import WSMsgType
 from graia.application.event import MiraiEvent
+from graia.application.event.lifecycle import (  # for init lifecycle events
+    ApplicationLaunched, ApplicationLaunchedBlocking, ApplicationShutdowned)
 from graia.broadcast import Broadcast
 from graia.broadcast.entities.event import BaseEvent
 from graia.broadcast.entities.inject_rule import SpecialEventType
@@ -20,7 +25,7 @@ from yarl import URL
 from .context import enter_context, enter_message_send_context
 from .entities import MiraiConfig, UploadMethods
 from .event.messages import FriendMessage, GroupMessage, TempMessage
-from .exceptions import InvaildArgument, InvaildSession
+from .exceptions import InvaildArgument, InvaildSession, NotSupportedVersion
 from .friend import Friend
 from .group import Group, GroupConfig, Member, MemberInfo
 from .logger import AbstractLogger, LoggingLogger
@@ -30,8 +35,58 @@ from .message.elements import external
 from .message.elements.internal import Image, Source, Voice
 from .session import Session
 from .utilles import (AppMiddlewareAsDispatcher, SinceVersion,
-                      raise_for_return_code, requireAuthenticated,
-                      applicationContextManager, yes_or_no)
+                      applicationContextManager, raise_for_return_code,
+                      requireAuthenticated, yes_or_no)
+
+T_network_action = TypeVar("T_network_action")
+
+def error_wrapper(network_action_callable: T_network_action) -> T_network_action:
+    async def wrapped_network_action_callable(self: "GraiaMiraiApplication", *args, **kwargs):
+        running_count = 0
+        
+        while running_count < 5:
+            running_count += 1
+            try:
+                return await network_action_callable(self, *args, **kwargs)
+            except InvaildSession as invaild_session_exc:
+                self.logger.error("Graia detected a invaild session, did you restart your mirai-console?")
+                self.logger.error("refreshing session after 5 seconds, because of an invaild session.")
+                
+                step_count = 0
+                while step_count < 5:
+                    step_count += 1
+                    await asyncio.sleep(5)
+                    self.logger.error("refreshing session...")
+                    try:
+                        await self.authenticate()
+                        await self.activeSession()
+                        await self.switch_event_detect_method()
+                        break
+                    except Exception as e:
+                        self.logger.error("failed to refreshing session, we had retried {0} times, and we will have a try again.".format(running_count))
+                        traceback.print_exc()
+                        continue
+                else:
+                    self.logger.error("failed to refreshing session at last, so raise the error.")
+                    raise invaild_session_exc
+            except aiohttp.web_exceptions.HTTPNotFound:
+                raise NotSupportedVersion("{}: this action does not supported because remote returned 404.".format(network_action_callable.__name__))
+            except aiohttp.web_exceptions.HTTPInternalServerError:
+                self.logger.error("the remote throwed a exception, please check the console!")
+                raise
+            except (
+                aiohttp.web_exceptions.HTTPMethodNotAllowed,
+                aiohttp.web_exceptions.HTTPRequestURITooLong,
+                aiohttp.web_exceptions.HTTPTooManyRequests
+            ):
+                self.logger.error("ouch! it seems that we post in a wrong way for the action '{}', you should open a issue for Graia Application.".format(network_action_callable.__name__))
+                raise
+            except aiohttp.web_exceptions.HTTPRequestTimeout:
+                self.logger.error("timeout on {}, retry after 5 seconds...".format(network_action_callable.__name__))
+                await asyncio.sleep(5)
+                continue
+
+    return wrapped_network_action_callable
 
 class GraiaMiraiApplication:
     """本类的实例即 应用实例(Application), 是面向 `mirai-api-http` 接口的实际功能实现.
@@ -51,19 +106,25 @@ class GraiaMiraiApplication:
         "connect_info",
         "logger",
         "debug",
-        "chat_log_enabled"
+        "chat_log_enabled",
+        "group_message_log_format",
+        "friend_message_log_format",
+        "temp_message_log_format",
+        "json_loader"
     )
 
-    broadcast: Broadcast
+    broadcast: Optional[Broadcast]
     session: ClientSession
     connect_info: Session
     logger: AbstractLogger
     debug: bool
     chat_log_enabled: bool
 
-    group_message_log_format: str = "[BOT {bot_id}, GroupMessage] [{group_name}({group_id}, perm: {bot_permission})] {member_name}({member_id}, {member_permission}) -> {message_string}"
-    friend_message_log_format: str = "[BOT {bot_id}, FriendMessage] {friend_name}({friend_id}) -> {message_string}"
-    temp_message_log_format: str = "[BOT {bot_id}, TempMessage] [{group_name}({group_id}, perm: {bot_permission})] {member_name}({member_id}, {member_permission}) -> {message_string}"
+    group_message_log_format: str
+    friend_message_log_format: str
+    temp_message_log_format: str
+
+    json_loader: Callable[[Any], Any]
 
     def __init__(self, *,
         broadcast: Optional[Broadcast],
@@ -73,9 +134,11 @@ class GraiaMiraiApplication:
         debug: bool = False,
         enable_chat_log: bool = True,
         
-        group_message_log_format: str = None,
-        friend_message_log_format: str = None,
-        temp_message_log_format: str = None,
+        group_message_log_format: str = "{bot_id}: [{group_name}({group_id}] {member_name}({member_id}) -> {message_string}",
+        friend_message_log_format: str = "{bot_id}: [{friend_name}({friend_id})] -> {message_string}",
+        temp_message_log_format: str = "{bot_id}: [{group_name}({group_id}.{member_name}({member_id})] -> {message_string}",
+    
+        json_loader: Callable[[Any], Any] = json.loads
     ):
         self.broadcast = broadcast
         self.connect_info = connect_info
@@ -86,18 +149,21 @@ class GraiaMiraiApplication:
         self.debug = debug
 
         self.chat_log_enabled = enable_chat_log
-        if enable_chat_log and broadcast is not None:
-            self.broadcast.receiver("GroupMessage")(self.logger_group_message)
-            self.broadcast.receiver("FriendMessage")(self.logger_friend_message)
-            self.broadcast.receiver("TempMessage")(self.logger_temp_message)
 
-        self.group_message_log_format = group_message_log_format or GraiaMiraiApplication.group_message_log_format
-        self.friend_message_log_format = friend_message_log_format or GraiaMiraiApplication.friend_message_log_format
-        self.temp_message_log_format = temp_message_log_format or GraiaMiraiApplication.temp_message_log_format
+        if broadcast is not None:
+            self.broadcast.addInjectionRule(
+                SpecialEventType(MiraiEvent, AppMiddlewareAsDispatcher(self))
+            )
+            if self.chat_log_enabled:
+                self.broadcast.receiver("GroupMessage")(self.logger_group_message)
+                self.broadcast.receiver("FriendMessage")(self.logger_friend_message)
+                self.broadcast.receiver("TempMessage")(self.logger_temp_message)
 
-        self.broadcast.addInjectionRule(
-            SpecialEventType(MiraiEvent, AppMiddlewareAsDispatcher(self))
-        )
+        self.group_message_log_format = group_message_log_format
+        self.friend_message_log_format = friend_message_log_format
+        self.temp_message_log_format = temp_message_log_format
+
+        self.json_loader = json_loader
   
     def logger_group_message(self, event: GroupMessage):
         self.logger.info(self.group_message_log_format.format_map(dict(
@@ -141,8 +207,9 @@ class GraiaMiraiApplication:
             str: 作为结果的地址
         """
         return str(URL(str(self.connect_info.host)).parent / path)
-    
+
     @SinceVersion(1,6,2)
+    @error_wrapper
     @applicationContextManager
     async def getVersion(self, auto_set=True) -> Tuple:
         """从 `/about` 路由下获取当前使用的 `mirai-api-http` 版本, 注意, 该 API 并不是一开始就有的(1.6.2 版本才支持本接口).
@@ -223,6 +290,7 @@ class GraiaMiraiApplication:
             data = await response.json()
             raise_for_return_code(data)
 
+    @error_wrapper
     @requireAuthenticated
     @applicationContextManager
     async def getGroup(self, group_id: int) -> Optional[Group]:
@@ -240,6 +308,7 @@ class GraiaMiraiApplication:
             if i.id == group_id:
                 return i
 
+    @error_wrapper
     @requireAuthenticated
     @applicationContextManager
     async def groupList(self) -> List[Group]:
@@ -258,6 +327,7 @@ class GraiaMiraiApplication:
             raise_for_return_code(data)
             return [Group.parse_obj(i) for i in data]
 
+    @error_wrapper
     @requireAuthenticated
     @applicationContextManager
     async def getMember(self, group: Union[Group, int], member_id: int) -> Optional[Member]:
@@ -276,6 +346,7 @@ class GraiaMiraiApplication:
             if i.id == member_id:
                 return i
 
+    @error_wrapper
     @requireAuthenticated
     @applicationContextManager
     async def memberList(self, group: Union[Group, int]) -> List[Member]:
@@ -298,6 +369,7 @@ class GraiaMiraiApplication:
             raise_for_return_code(data)
             return [Member.parse_obj(i) for i in data]
 
+    @error_wrapper
     @requireAuthenticated
     @applicationContextManager
     async def friendList(self) -> List[Friend]:
@@ -316,6 +388,7 @@ class GraiaMiraiApplication:
             raise_for_return_code(data)
             return [Friend.parse_obj(i) for i in data]
 
+    @error_wrapper
     @requireAuthenticated
     @applicationContextManager
     async def getFriend(self, friend_id: int) -> Optional[Friend]:
@@ -333,6 +406,7 @@ class GraiaMiraiApplication:
             if i.id == friend_id:
                 return i
 
+    @error_wrapper
     @requireAuthenticated
     @applicationContextManager
     async def uploadImage(self, image_bytes: bytes, method: UploadMethods, return_external: bool = False) -> Union[Image, external.Image]:
@@ -359,6 +433,7 @@ class GraiaMiraiApplication:
             else:
                 return Image.fromExternal(external_component)
     
+    @error_wrapper
     @requireAuthenticated
     @applicationContextManager
     async def uploadVoice(self, voice_bytes: bytes, method: UploadMethods = UploadMethods.Group, return_external: bool = False) -> Union[Voice, external.Voice]:
@@ -387,6 +462,7 @@ class GraiaMiraiApplication:
             else:
                 return Voice.fromExternal(external_component)
 
+    @error_wrapper
     @requireAuthenticated
     @applicationContextManager
     async def sendFriendMessage(self, target: Union[Friend, int],
@@ -424,6 +500,7 @@ class GraiaMiraiApplication:
                 }))
                 return BotMessage(messageId=data['messageId'])
 
+    @error_wrapper
     @requireAuthenticated
     @applicationContextManager
     async def sendGroupMessage(self, group: Union[Group, int],
@@ -461,6 +538,7 @@ class GraiaMiraiApplication:
                 }))
                 return BotMessage(messageId=data['messageId'])
     
+    @error_wrapper
     @requireAuthenticated
     @applicationContextManager
     async def sendTempMessage(self,
@@ -503,6 +581,7 @@ class GraiaMiraiApplication:
                 }))
                 return BotMessage(messageId=data['messageId'])
 
+    @error_wrapper
     @requireAuthenticated
     @applicationContextManager
     async def revokeMessage(self,
@@ -529,6 +608,7 @@ class GraiaMiraiApplication:
             data = await response.json()
             raise_for_return_code(data)
     
+    @error_wrapper
     @requireAuthenticated
     @applicationContextManager
     async def fetchMessage(self, count: int = 10) -> List[Union[GroupMessage, TempMessage, FriendMessage]]:
@@ -559,6 +639,7 @@ class GraiaMiraiApplication:
                     continue
             return result
     
+    @error_wrapper
     @requireAuthenticated
     @applicationContextManager
     async def fetchLatestMessage(self, count: int = 10) -> List[Union[GroupMessage, TempMessage, FriendMessage]]:
@@ -581,6 +662,7 @@ class GraiaMiraiApplication:
                     continue
             return result
 
+    @error_wrapper
     @requireAuthenticated
     @applicationContextManager
     async def peekMessage(self, count: int = 10) -> List[Union[GroupMessage, TempMessage, FriendMessage]]:
@@ -603,6 +685,7 @@ class GraiaMiraiApplication:
                     continue
             return result
     
+    @error_wrapper
     @requireAuthenticated
     @applicationContextManager
     async def peekLatestMessage(self, count: int = 10) -> List[Union[GroupMessage, TempMessage, FriendMessage]]:
@@ -625,6 +708,7 @@ class GraiaMiraiApplication:
                     continue
             return result
 
+    @error_wrapper
     @requireAuthenticated
     @applicationContextManager
     async def messageFromId(self, source: Union[Source, int]) -> Union[GroupMessage, TempMessage, FriendMessage]:
@@ -649,6 +733,7 @@ class GraiaMiraiApplication:
             except ValueError:
                 self.logger.error("".join(["received a unknown event: ", data['data'].get("type"), str(data)]))
 
+    @error_wrapper
     @requireAuthenticated
     @applicationContextManager
     async def countMessage(self) -> int:
@@ -666,6 +751,7 @@ class GraiaMiraiApplication:
 
             return data['data']
 
+    @error_wrapper
     @requireAuthenticated
     @applicationContextManager
     async def muteAll(self, group: Union[Group, int]) -> NoReturn:
@@ -685,6 +771,7 @@ class GraiaMiraiApplication:
             data = await response.json()
             raise_for_return_code(data)
 
+    @error_wrapper
     @requireAuthenticated
     @applicationContextManager
     async def unmuteAll(self, group: Union[Group, int]) -> NoReturn:
@@ -704,6 +791,7 @@ class GraiaMiraiApplication:
             data = await response.json()
             raise_for_return_code(data)
 
+    @error_wrapper
     @requireAuthenticated
     @applicationContextManager
     async def mute(self, group: Union[Group, int], member: Union[Member, int], time: int) -> NoReturn:
@@ -734,6 +822,7 @@ class GraiaMiraiApplication:
             data = await response.json()
             raise_for_return_code(data)
     
+    @error_wrapper
     @requireAuthenticated
     @applicationContextManager
     async def unmute(self, group: Union[Group, int], member: Union[Member, int]) -> NoReturn:
@@ -758,6 +847,7 @@ class GraiaMiraiApplication:
             data = await response.json()
             raise_for_return_code(data)
     
+    @error_wrapper
     @requireAuthenticated
     @applicationContextManager
     async def kick(self, group: Union[Group, int], member: Union[Member, int], message: Optional[str] = None) -> NoReturn:
@@ -783,6 +873,7 @@ class GraiaMiraiApplication:
             data = await response.json()
             raise_for_return_code(data)
 
+    @error_wrapper
     @requireAuthenticated
     @applicationContextManager
     async def quit(self, group: Union[Group, int]) -> NoReturn:
@@ -802,6 +893,7 @@ class GraiaMiraiApplication:
             data = await response.json()
             raise_for_return_code(data)
 
+    @error_wrapper
     @requireAuthenticated
     @applicationContextManager
     async def getGroupConfig(self, group: Union[Group, int]) -> GroupConfig:
@@ -823,6 +915,7 @@ class GraiaMiraiApplication:
 
             return GroupConfig.parse_obj(data)
 
+    @error_wrapper
     @requireAuthenticated
     @applicationContextManager
     async def modifyGroupConfig(self, group: Union[Group, int], config: GroupConfig) -> NoReturn:
@@ -844,6 +937,7 @@ class GraiaMiraiApplication:
             data = await response.json()
             raise_for_return_code(data)
 
+    @error_wrapper
     @requireAuthenticated
     @applicationContextManager
     async def getMemberInfo(self, member: Union[Member, int], group: Optional[Union[Group, int]] = None) -> MemberInfo:
@@ -874,6 +968,7 @@ class GraiaMiraiApplication:
 
             return MemberInfo.parse_obj(data)
 
+    @error_wrapper
     @requireAuthenticated
     @applicationContextManager
     async def modifyMemberInfo(self, member: Union[Member, int], info: MemberInfo, group: Optional[Union[Group, int]] = None) -> NoReturn:
@@ -904,6 +999,7 @@ class GraiaMiraiApplication:
             data = await response.json()
             raise_for_return_code(data)
 
+    @error_wrapper
     @requireAuthenticated
     @applicationContextManager
     async def getConfig(self) -> MiraiConfig:
@@ -921,6 +1017,7 @@ class GraiaMiraiApplication:
 
             return MiraiConfig.parse_obj(data)
 
+    @error_wrapper
     @requireAuthenticated
     @applicationContextManager
     async def modifyConfig(self, *, cacheSize: Optional[int] = None, enableWebsocket: Optional[bool] = None) -> NoReturn:
@@ -966,26 +1063,45 @@ class GraiaMiraiApplication:
             k: v for k, v in original_dict.items() if k != "type"
         }))
 
+    @error_wrapper
     @requireAuthenticated
     async def ws_all_poster(self):
         async with self.session.ws_connect(str(URL(self.url_gen("all")).with_query({
             "sessionKey": self.connect_info.sessionKey
         }))) as connection:
+            self.logger.info("websocket: connected")
             while True:
-                try:
-                    received_data = await connection.receive_json()
-                except TypeError:
-                    continue
-                if received_data:
+                ws_message = await connection.receive()
+                if ws_message.type is WSMsgType.TEXT:
+                    received_data = self.json_loader(ws_message.data)
+                    raise_for_return_code(received_data)
+                    
                     if self.debug:
                         self.logger.debug("websocket received: " + str(received_data))
+                    
                     try:
                         event = await self.auto_parse_by_type(received_data)
                     except ValueError as e:
                         self.logger.error("".join(["received a unknown event: ", received_data.get("type"), str(received_data)]))
                         continue
+
                     with enter_context(app=self, event_i=event):
                         self.broadcast.postEvent(event)
+                elif ws_message.type is WSMsgType.CLOSED:
+                    self.logger.info("websocket: connection has been closed.")
+                    return
+                else:
+                    self.logger.debug("detected a unknown message type: {}".format(ws_message.type))
+
+    async def websocket_daemon(self):
+        while True:
+            self.logger.info("websocket daemon: websocket connection starting...")
+            try:
+                await self.ws_all_poster()
+            except aiohttp.client_exceptions.ClientConnectorError:
+                self.logger.info("websocket daemon: it seems that remote down, waiting for 10 seconds...")
+                await asyncio.sleep(10)
+            self.logger.info("websocket daemon: detected closed, restarting...")
     
     @requireAuthenticated
     async def http_fetchmessage_poster(self, delay=0.5, fetch_num=10):
@@ -998,6 +1114,19 @@ class GraiaMiraiApplication:
                         self.broadcast.postEvent(i)
                 if len(data) != fetch_num:
                     break
+
+    async def switch_event_detect_method(self):
+        config = await self.getConfig()
+        if not self.connect_info.websocket: # 不启用 websocket
+            self.logger.info("using http to receive event")
+            if config.enableWebsocket: # 配置中已经启用
+                await self.modifyConfig(enableWebsocket=False)
+                self.logger.info("found websocket enabled, so it has been disabled.")
+        else: # 启用ws
+            self.logger.info("using pure websocket to receive event")
+            if not config.enableWebsocket: # 配置中没启用
+                self.logger.info("found websocket disabled, so it has been enabled.")
+                await self.modifyConfig(enableWebsocket=True)
 
     async def initialize(self):
         start_time = time.time()
@@ -1028,17 +1157,7 @@ class GraiaMiraiApplication:
             )))
 
         # 自动变化fetch方式
-        config = await self.getConfig()
-        if not self.connect_info.websocket: # 不启用 websocket
-            self.logger.info("using http to receive event")
-            if config.enableWebsocket: # 配置中已经启用
-                await self.modifyConfig(enableWebsocket=False)
-                self.logger.info("found websocket enabled, so it has been disabled.")
-        else: # 启用ws
-            self.logger.info("using pure websocket to receive event")
-            if not config.enableWebsocket: # 配置中没启用
-                self.logger.info("found websocket disabled, so it has been enabled.")
-                await self.modifyConfig(enableWebsocket=True)
+        await self.switch_event_detect_method()
 
         self.logger.info("event receive method checked.")
         self.logger.info("this application's initialization has been completed.")
@@ -1061,7 +1180,7 @@ class GraiaMiraiApplication:
         ))
     
     def getFetching(self):
-        return self.http_fetchmessage_poster if not self.connect_info.websocket else self.ws_all_poster
+        return self.http_fetchmessage_poster if not self.connect_info.websocket else self.websocket_daemon
     
     async def shutdown(self):
         if self.broadcast is not None:
@@ -1110,3 +1229,18 @@ class GraiaMiraiApplication:
             raise TypeError("if you want to use fetching, you must setup a Broadcast.")
         loop = self.broadcast.loop
         return loop.create_task(self.getFetching()())
+
+    async def __aenter__(self) -> "GraiaMiraiApplication":
+        await self.authenticate()
+        await self.activeSession()
+
+        return self
+
+    async def __aexit__(self, exc_type, exc, tb):
+        try:
+            await self.signout()
+        except:
+            pass
+    
+        if tb is not None:
+            raise exc
