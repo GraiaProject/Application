@@ -9,7 +9,7 @@ from graia.broadcast.interfaces.dispatcher import DispatcherInterface
 from graia.application.exceptions import ConflictItem
 
 from graia.application.message.chain import MessageChain
-from graia.application.message.elements.internal import Plain, Source, Quote, Xml, Json, App, Poke
+from graia.application.message.elements.internal import At, FlashImage, Plain, Source, Quote, Voice, Xml, Json, App, Poke
 from .signature import FullMatch, NormalMatch, PatternReceiver
 from .pack import Arguments, merge_signature_chain
 from graia.application.utilles import InsertGenerator
@@ -18,10 +18,10 @@ import re
 import random
 import copy
 
+BLOCKING_ELEMENTS = (Xml, Json, App, Poke, Voice, FlashImage)
+
 T = Union[NormalMatch, PatternReceiver]
-
 MessageIndex = Tuple[int, Optional[int]]
-
 _T = TypeVar("_T")
 
 def origin_or_zero(origin: Optional[_T]) -> Union[_T, int]:
@@ -39,19 +39,29 @@ class Kanata(BaseDispatcher):
 
     parsed_items: ContextVar[Dict[str, MessageChain]]
 
+    allow_quote: bool
+    skip_one_at_in_quote: bool
+
     def __init__(self,
         signature_list: List[Union[NormalMatch, PatternReceiver]],
-        stop_exec_if_fail: bool = True
+        stop_exec_if_fail: bool = True,
+        allow_quote: bool = True,
+        skip_one_at_in_quote: bool = False
     ) -> None:
         """该魔法方法用于实例化该参数解析器.
 
         Args:
             signature_list (List[Union[NormalMatch, PatternReceiver]]): 匹配标识链
             stop_exec_if_fail (bool, optional): 是否在无可用匹配时停止监听器执行. Defaults to True.
+            allow_quote (bool, optional): 是否允许 Kanata 处理回复消息中的用户输入部分. Defaults to True.
+            skip_one_at_in_quote (bool, optional): 是否允许 Kanata 在处理回复消息中的用户输入部分时自动删除可能\
+                由 QQ 客户端添加的 At 和一个包含在单独 Plain 元素中的空格. Defaults to False.
         """
         self.signature_list = signature_list
         self.stop_exec_if_fail = stop_exec_if_fail
         self.parsed_items = ContextVar("kanata_parsed_items")
+        self.allow_quote = allow_quote
+        self.skip_one_at_in_quote = skip_one_at_in_quote
 
     @staticmethod
     def detect_index(
@@ -228,10 +238,22 @@ class Kanata(BaseDispatcher):
         # 因为 Dispatcher 的特性, 要用 yield (自动清理 self.parsed_items)
         token = None
         if self.parsed_items.get(None) is None:
-            message_chain = (await interface.lookup_param(
+            message_chain: MessageChain = (await interface.lookup_param(
                 "__kanata_messagechain__",
                 MessageChain, None
-            )).exclude(Source, Quote, Xml, Json, App, Poke)
+            )).exclude(Source)
+            if set([i.__class__ for i in message_chain.__root__]).intersection(BLOCKING_ELEMENTS):
+                raise ExecutionStop()
+            
+            if self.allow_quote and message_chain.has(Quote):
+                # 自动忽略自 Quote 后第一个 At
+                # 0: Quote, 1: At, 2: Plain(一个空格, 可能会在以后的 mirai 版本后被其处理, 这里先自动处理这个了.)
+                message_chain = message_chain[(3, None):]
+                if self.skip_one_at_in_quote and message_chain.__root__:
+                    if message_chain.__root__[0].__class__ is At:
+                        message_chain = message_chain[(1, 1):] # 利用 MessageIndex 可以非常快捷的实现特性.
+                print(message_chain)
+
             mapping_result = self.detect_and_mapping(
                 self.signature_list, message_chain
             )
