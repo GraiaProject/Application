@@ -10,7 +10,7 @@ class Image(ExternalElement):
     def asSerializationString(self) -> str:
         return f"[mirai:image:{self.imageId}]"
 
-class FlashImage(Image):
+class FlashImage(Image, ExternalElement):
     type = "FlashImage"
 
     def asSerializationString(self) -> str:

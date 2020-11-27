@@ -214,7 +214,7 @@ class MessageChain(BaseModel):
         Returns:
             List[T]: 获取到的符合要求的所有消息元素; 另: 可能是空列表([]).
         """
-        return [i for i in self.__root__ if isinstance(i, element_class)]
+        return [i for i in self.__root__ if type(i) is element_class]
 
     def asDisplay(self) -> str:
         """获取以字符串形式表示的消息链, 且趋于通常你见到的样子.
