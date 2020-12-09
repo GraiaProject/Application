@@ -10,6 +10,8 @@
 
 Tencent QQ 交流群: [邀请链接](https://jq.qq.com/?_wv=1027&k=VXp6plBD)
 
+Discussion: https://github.com/GraiaProject/Application/discussions
+
 #### 从 Pypi 安装
 ``` bash
 pip install graia-application-mirai
@@ -37,6 +39,8 @@ poetry install
 若在使用时发现了本项目的问题, 先检查文档中是否有提及这一情况,
 若没有, 你可以在我们的[问题追踪器](https://github.com/GraiaProject/Application/issues)处提出问题,
 我们会尽快解决你发现的问题.
+
+你也可以通过 Discussion/QQ 群等方式获取帮助，现在我们更推荐使用 [Discussion](https://github.com/GraiaProject/Application/discussions).
 
 **若使用中发现了并非本项目导致的问题, 请先向其他项目汇报问题, 当然, 记得通知我.**
 
