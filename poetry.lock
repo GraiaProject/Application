@@ -131,7 +131,7 @@ pygments = ["Pygments (>=2.2.0)"]
 
 [[package]]
 name = "graia-broadcast"
-version = "0.5.3"
+version = "0.6.1"
 description = "a highly customizable, elegantly designed event system based on asyncio"
 category = "main"
 optional = false
@@ -319,7 +319,7 @@ typing-extensions = {version = ">=3.7.4", markers = "python_version < \"3.8\""}
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.6"
-content-hash = "6b65939afefe61bb5f55660c3ea223dc4931aee840b4153391535ddb510f4796"
+content-hash = "d34c779dd735c75b8f7b10c87d37a82b2ba395a6e40ff6ef122b4be612ac1cad"
 
 [metadata.files]
 aiohttp = [
@@ -400,8 +400,8 @@ devtools = [
     {file = "devtools-0.5.1.tar.gz", hash = "sha256:51ca8d2e15b8a862875a4837db2bafbc6cda409c069e960aec3f4bbd91fe9c08"},
 ]
 graia-broadcast = [
-    {file = "graia-broadcast-0.5.3.tar.gz", hash = "sha256:1a7bfb45b41c22156bc2733f115012fa195fadb72d78dcee36ee7b9cf96dfb1f"},
-    {file = "graia_broadcast-0.5.3-py3-none-any.whl", hash = "sha256:77e7a2cec8511edced6d1e14686d9cf9811cef44becc84c4a006e7c03e4cf1ad"},
+    {file = "graia-broadcast-0.6.1.tar.gz", hash = "sha256:7e996f0a931eb1a29e7655e4a9dc1f300317b0c875cb7565e94c3c6446eb8a3a"},
+    {file = "graia_broadcast-0.6.1-py3-none-any.whl", hash = "sha256:9cd0c34e0fdf1a6ab651d6e650ff0b85e51b026f47c54e295ba974486dc4c4fd"},
 ]
 graphviz = [
     {file = "graphviz-0.15-py2.py3-none-any.whl", hash = "sha256:403b55553b235875fa521023a06d9c29b46f3a956f960d4e0a5b956bca9eb9ce"},

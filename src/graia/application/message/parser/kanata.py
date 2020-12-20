@@ -1,5 +1,7 @@
-from contextvars import ContextVar
+from contextvars import Context, ContextVar, Token
 from functools import lru_cache
+import functools
+from types import TracebackType
 from typing import Dict, List, Optional, Tuple, TypeVar, Union
 from graia.broadcast.entities.dispatcher import BaseDispatcher
 from graia.broadcast.entities.signatures import Force
@@ -54,6 +56,8 @@ class Kanata(BaseDispatcher):
 
     allow_quote: bool
     skip_one_at_in_quote: bool
+
+    content_token: Optional[Token] = None
 
     def __init__(
         self,
@@ -298,44 +302,55 @@ class Kanata(BaseDispatcher):
     def catch_argument_names(self) -> List[str]:
         return [i.name for i in self.signature_list if isinstance(i, PatternReceiver)]
 
-    async def catch(self, interface: DispatcherInterface):
-        # 因为 Dispatcher 的特性, 要用 yield (自动清理 self.parsed_items)
-        token = None
-        if self.parsed_items.get(None) is None:
-            message_chain: MessageChain = (
-                await interface.lookup_param(
-                    "__kanata_messagechain__", MessageChain, None
-                )
-            ).exclude(Source)
-            if set([i.__class__ for i in message_chain.__root__]).intersection(
-                BLOCKING_ELEMENTS
-            ):
+    async def beforeDispatch(self, interface: DispatcherInterface):
+        message_chain: MessageChain = (
+            await interface.lookup_param("__kanata_messagechain__", MessageChain, None)
+        ).exclude(Source)
+        if set([i.__class__ for i in message_chain.__root__]).intersection(
+            BLOCKING_ELEMENTS
+        ):
+            raise ExecutionStop()
+        if self.allow_quote and message_chain.has(Quote):
+            # 自动忽略自 Quote 后第一个 At
+            # 0: Quote, 1: At, 2: Plain(一个空格, 可能会在以后的 mirai 版本后被其处理, 这里先自动处理这个了.)
+            message_chain = message_chain[(3, None):]
+            if self.skip_one_at_in_quote and message_chain.__root__:
+                if message_chain.__root__[0].__class__ is At:
+                    message_chain = message_chain[
+                        (1, 1):
+                    ]  # 利用 MessageIndex 可以非常快捷的实现特性.
+        mapping_result = self.detect_and_mapping(self.signature_list, message_chain)
+        if mapping_result is not None:
+            self.content_token = self.parsed_items.set(self.allocation(mapping_result))
+            self.catch = lambda interface: Context.copy().run(
+                self.original_catch, interface
+            )
+        else:
+            if self.stop_exec_if_fail:
                 raise ExecutionStop()
 
-            if self.allow_quote and message_chain.has(Quote):
-                # 自动忽略自 Quote 后第一个 At
-                # 0: Quote, 1: At, 2: Plain(一个空格, 可能会在以后的 mirai 版本后被其处理, 这里先自动处理这个了.)
-                message_chain = message_chain[(3, None):]
-                if self.skip_one_at_in_quote and message_chain.__root__:
-                    if message_chain.__root__[0].__class__ is At:
-                        message_chain = message_chain[
-                            (1, 1):
-                        ]  # 利用 MessageIndex 可以非常快捷的实现特性.
-
-            mapping_result = self.detect_and_mapping(self.signature_list, message_chain)
-            if mapping_result is not None:
-                token = self.parsed_items.set(self.allocation(mapping_result))
-            else:
-                if self.stop_exec_if_fail:
-                    raise ExecutionStop()
-
+    async def original_catch(self, interface: DispatcherInterface):
+        if not self.content_token:
+            return
         random_id = random.random()
         current_item = self.parsed_items.get()
         if current_item is not None:
             result = current_item.get(interface.name, random_id)
-            yield Force(result) if result is not random_id else None
+            return Force(result) if result is not random_id else None
         else:
             if self.stop_exec_if_fail:
                 raise ExecutionStop()
-        if token is not None:
-            self.parsed_items.reset(token)
+
+    async def catch(self, interface):
+        pass
+
+    async def afterDispatch(
+        self,
+        interface: "IDispatcherInterface",
+        exception: Optional[Exception] = None,
+        tb: Optional[TracebackType] = None,
+    ):
+        if self.content_token:
+            self.parsed_items.reset(self.content_token)
+            self.catch = Kanata.catch
+            self.content_token = None
