@@ -128,3 +128,4 @@ dmypy.json
 # Pyre type checker
 .pyre/
 src/test.py
+src/test-mem.py

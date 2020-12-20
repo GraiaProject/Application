@@ -10,12 +10,14 @@ from graia.broadcast.entities.dispatcher import BaseDispatcher
 from graia.broadcast.interfaces.dispatcher import DispatcherInterface
 from datetime import datetime
 
+
 class EmptyDispatcher(BaseDispatcher):
     mixin = [ApplicationDispatcher]
-    
+
     @staticmethod
     def catch(interface):
         pass
+
 
 class BotOnlineEvent(MiraiEvent):
     """当该事件发生时, 应用实例所辖账号登录成功
@@ -31,6 +33,7 @@ class BotOnlineEvent(MiraiEvent):
 
     Dispatcher = EmptyDispatcher
 
+
 class BotOfflineEventActive(MiraiEvent):
     """当该事件发生时, 应用实例所辖账号主动离线
 
@@ -44,6 +47,7 @@ class BotOfflineEventActive(MiraiEvent):
     qq: int
 
     Dispatcher = EmptyDispatcher
+
 
 class BotOfflineEventForce(MiraiEvent):
     """当该事件发生时, 应用实例所辖账号被迫离线
@@ -59,6 +63,7 @@ class BotOfflineEventForce(MiraiEvent):
 
     Dispatcher = EmptyDispatcher
 
+
 class BotOfflineEventDropped(MiraiEvent):
     """当该事件发生时, 应用实例所辖账号与服务器的连接被服务器主动断开, 或因网络原因离线
 
@@ -72,6 +77,7 @@ class BotOfflineEventDropped(MiraiEvent):
     qq: int
 
     Dispatcher = EmptyDispatcher
+
 
 class BotReloginEvent(MiraiEvent):
     """当该事件发生时, 应用实例所辖账号正尝试重新登录
@@ -87,9 +93,10 @@ class BotReloginEvent(MiraiEvent):
 
     Dispatcher = EmptyDispatcher
 
+
 class BotGroupPermissionChangeEvent(MiraiEvent):
     """当该事件发生时, 应用实例所辖账号在一特定群组内所具有的权限发生变化
-    
+
     ** 注意: 当监听该事件或该类事件时, 请优先考虑使用原始事件类作为类型注解, 以此获得事件类实例, 便于获取更多的信息! **
 
     Allowed Extra Parameters(提供的额外注解支持):
@@ -102,6 +109,7 @@ class BotGroupPermissionChangeEvent(MiraiEvent):
     group: Group
 
     Dispatcher = EmptyDispatcher
+
 
 class BotMuteEvent(MiraiEvent):
     """当该事件发生时, 应用实例所辖账号在一特定群组内被管理员/群主禁言
@@ -129,6 +137,7 @@ class BotMuteEvent(MiraiEvent):
                 if interface.event.operator:
                     return interface.event.operator.group
 
+
 class BotUnmuteEvent(MiraiEvent):
     """当该事件发生时, 应用实例所辖账号在一特定群组内被管理员/群主解除禁言
 
@@ -139,6 +148,7 @@ class BotUnmuteEvent(MiraiEvent):
         Member (annotation, optional = None): 执行解除禁言操作的管理员/群主, 若为 None 则为应用实例所辖账号操作
         Group (annotation, optional = None): 发生该事件的群组
     """
+
     type = "BotUnmuteEvent"
     operator: Optional[Member]
 
@@ -152,6 +162,7 @@ class BotUnmuteEvent(MiraiEvent):
             elif interface.annotation is Group:
                 if interface.event.operator:
                     return interface.event.operator.group
+
 
 class BotJoinGroupEvent(MiraiEvent):
     """当该事件发生时, 应用实例所辖账号加入指定群组
@@ -174,6 +185,7 @@ class BotJoinGroupEvent(MiraiEvent):
             if interface.annotation is Group:
                 return interface.event.group
 
+
 class BotLeaveEventActive(MiraiEvent):
     """当该事件发生时, 应用实例所辖账号主动退出了某群组.
 
@@ -183,6 +195,7 @@ class BotLeaveEventActive(MiraiEvent):
         GraiaMiraiApplication (annotation): 发布事件的应用实例
         Group (annotation, optional = None): 发生该事件的群组
     """
+
     type: str = "BotLeaveEventActive"
     group: Group
 
@@ -194,6 +207,7 @@ class BotLeaveEventActive(MiraiEvent):
             if interface.annotation is Group:
                 return interface.event.group
 
+
 class BotLeaveEventKick(MiraiEvent):
     """当该事件发生时, 应用实例所辖账号被某群组的管理员/群主从该群组中删除.
 
@@ -203,6 +217,7 @@ class BotLeaveEventKick(MiraiEvent):
         GraiaMiraiApplication (annotation): 发布事件的应用实例
         Group (annotation, optional = None): 发生该事件的群组
     """
+
     type: str = "BotLeaveEventKick"
     group: Group
 
@@ -213,6 +228,7 @@ class BotLeaveEventKick(MiraiEvent):
         def catch(interface: DispatcherInterface):
             if interface.annotation is Group:
                 return interface.event.group
+
 
 class GroupRecallEvent(MiraiEvent):
     """当该事件发生时, 有群成员在指定群组撤回了一条消息, 注意, 这里的群成员若具有管理员/群主权限, 则他们可以撤回其他普通群员的消息, 且不受发出时间限制.
@@ -242,6 +258,7 @@ class GroupRecallEvent(MiraiEvent):
             elif interface.annotation is Member:
                 return interface.event.operator
 
+
 class FriendRecallEvent(MiraiEvent):
     """当该事件发生时, 有一位与应用实例所辖账号为好友关系的用户撤回了一条消息
 
@@ -258,6 +275,7 @@ class FriendRecallEvent(MiraiEvent):
     operator: int
 
     Dispatcher = EmptyDispatcher
+
 
 class GroupNameChangeEvent(MiraiEvent):
     """该事件发生时, 有一群组被修改了群名称
@@ -286,6 +304,7 @@ class GroupNameChangeEvent(MiraiEvent):
             elif interface.annotation is Member:
                 return interface.event.operator
 
+
 class GroupEntranceAnnouncementChangeEvent(MiraiEvent):
     """该事件发生时, 有一群组被修改了入群公告
 
@@ -312,6 +331,7 @@ class GroupEntranceAnnouncementChangeEvent(MiraiEvent):
                 return interface.event.group
             elif interface.annotation is Member:
                 return interface.event.operator
+
 
 class GroupMuteAllEvent(MiraiEvent):
     """该事件发生时, 有一群组开启了全体禁言
@@ -340,6 +360,7 @@ class GroupMuteAllEvent(MiraiEvent):
             elif interface.annotation is Member:
                 return interface.event.operator
 
+
 class GroupAllowAnonymousChatEvent(MiraiEvent):
     """该事件发生时, 有一群组修改了有关匿名聊天的相关设定
 
@@ -367,6 +388,7 @@ class GroupAllowAnonymousChatEvent(MiraiEvent):
             elif interface.annotation is Member:
                 return interface.event.operator
 
+
 class GroupAllowConfessTalkEvent(MiraiEvent):
     """该事件发生时, 有一群组修改了有关坦白说的相关设定
 
@@ -390,6 +412,7 @@ class GroupAllowConfessTalkEvent(MiraiEvent):
         def catch(interface: DispatcherInterface):
             if interface.annotation is Group:
                 return interface.event.group
+
 
 class GroupAllowMemberInviteEvent(MiraiEvent):
     """该事件发生时, 有一群组修改了有关是否允许已有成员邀请其他用户加入群组的相关设定
@@ -418,6 +441,7 @@ class GroupAllowMemberInviteEvent(MiraiEvent):
             elif interface.annotation is Member:
                 return interface.event.operator
 
+
 class MemberJoinEvent(MiraiEvent):
     """该事件发生时, 有一新成员加入了一特定群组
 
@@ -441,6 +465,7 @@ class MemberJoinEvent(MiraiEvent):
                 return interface.event.member
             elif interface.annotation is Group:
                 return interface.event.member.group
+
 
 class MemberLeaveEventKick(MiraiEvent):
     """该事件发生时, 有一群组成员被管理员/群主从群组中删除, 当 `operator` 为 `None` 时, 执行者为应用实例所辖账号.
@@ -472,6 +497,7 @@ class MemberLeaveEventKick(MiraiEvent):
             elif interface.annotation is Group:
                 return interface.event.member.group
 
+
 class MemberLeaveEventQuit(MiraiEvent):
     """该事件发生时, 有一群组成员主动退出群组.
 
@@ -495,6 +521,7 @@ class MemberLeaveEventQuit(MiraiEvent):
                 return interface.event.member
             elif interface.annotation is Group:
                 return interface.event.member.group
+
 
 class MemberCardChangeEvent(MiraiEvent):
     """该事件发生时, 有一群组成员的群名片被更改, 执行者可能是管理员/群主, 该成员自己, 也可能是应用实例所辖账号(这时, `operator` 为 `None`).
@@ -526,6 +553,7 @@ class MemberCardChangeEvent(MiraiEvent):
                 elif interface.default == "operator":
                     return interface.event.operator
 
+
 class MemberSpecialTitleChangeEvent(MiraiEvent):
     """该事件发生时, 有一群组成员的群头衔被更改, 执行者只可能是群组的群主.
 
@@ -552,6 +580,7 @@ class MemberSpecialTitleChangeEvent(MiraiEvent):
             elif interface.annotation is Group:
                 return interface.event.member.group
 
+
 class MemberPermissionChangeEvent(MiraiEvent):
     """该事件发生时, 有一群组成员的权限被更改/调整, 执行者只可能是群组的群主.
 
@@ -577,6 +606,7 @@ class MemberPermissionChangeEvent(MiraiEvent):
                 return interface.event.member
             elif interface.annotation is Group:
                 return interface.event.member.group
+
 
 class MemberMuteEvent(MiraiEvent):
     """该事件发生时, 有一群组成员被管理员/群组禁言, 当 `operator` 为 `None` 时为应用实例所辖账号操作.
@@ -609,6 +639,7 @@ class MemberMuteEvent(MiraiEvent):
             elif interface.annotation is Group:
                 return interface.member.group
 
+
 class MemberUnmuteEvent(MiraiEvent):
     """该事件发生时, 有一群组成员被管理员/群组解除禁言, 当 `operator` 为 `None` 时为应用实例所辖账号操作.
 
@@ -639,6 +670,7 @@ class MemberUnmuteEvent(MiraiEvent):
             elif interface.annotation is Group:
                 return interface.event.member.group
 
+
 class NewFriendRequestEvent(MiraiEvent):
     """当该事件发生时, 有一用户向机器人提起好友请求.
 
@@ -656,7 +688,7 @@ class NewFriendRequestEvent(MiraiEvent):
         event.nickname: str # 对方的昵称
         event.message: str # 对方发起请求时填写的描述
         ```
-        
+
         2. 同意请求: `await event.accept()`, 具体查看该方法所附带的说明.
         3. 拒绝请求: `await event.reject()`, 具体查看该方法所附带的说明.
         4. 拒绝并不再接受来自对方的请求: `await event.rejectAndBlock()`, 具体查看该方法所附带的说明.
@@ -664,7 +696,7 @@ class NewFriendRequestEvent(MiraiEvent):
 
     type = "NewFriendRequestEvent"
     requestId: int = Field(..., alias="eventId")
-    supplicant: int = Field(..., alias="fromId") # 即请求方 QQ
+    supplicant: int = Field(..., alias="fromId")  # 即请求方 QQ
     sourceGroup: Optional[int] = Field(..., alias="groupId")
     nickname: str = Field(..., alias="nick")
     message: str
@@ -687,14 +719,17 @@ class NewFriendRequestEvent(MiraiEvent):
         app = application.get()
         if not app.connect_info.sessionKey:
             raise InvaildSession("you must authenticate before this.")
-        async with app.session.post(app.url_gen("resp/newFriendRequestEvent"), json={
-            "sessionKey": app.connect_info.sessionKey,
-            "eventId": self.requestId,
-            "fromId": self.supplicant,
-            "groupId": self.sourceGroup,
-            "operate": 0,
-            "message": message
-        }) as response:
+        async with app.session.post(
+            app.url_gen("resp/newFriendRequestEvent"),
+            json={
+                "sessionKey": app.connect_info.sessionKey,
+                "eventId": self.requestId,
+                "fromId": self.supplicant,
+                "groupId": self.sourceGroup,
+                "operate": 0,
+                "message": message,
+            },
+        ) as response:
             response.raise_for_status()
             data = await response.json()
             raise_for_return_code(data)
@@ -715,14 +750,17 @@ class NewFriendRequestEvent(MiraiEvent):
         app = application.get()
         if not app.connect_info.sessionKey:
             raise InvaildSession("you must authenticate before this.")
-        async with app.session.post(app.url_gen("resp/newFriendRequestEvent"), json={
-            "sessionKey": app.connect_info.sessionKey,
-            "eventId": self.requestId,
-            "fromId": self.supplicant,
-            "groupId": self.sourceGroup,
-            "operate": 1,
-            "message": message
-        }) as response:
+        async with app.session.post(
+            app.url_gen("resp/newFriendRequestEvent"),
+            json={
+                "sessionKey": app.connect_info.sessionKey,
+                "eventId": self.requestId,
+                "fromId": self.supplicant,
+                "groupId": self.sourceGroup,
+                "operate": 1,
+                "message": message,
+            },
+        ) as response:
             response.raise_for_status()
             data = await response.json()
             raise_for_return_code(data)
@@ -743,17 +781,21 @@ class NewFriendRequestEvent(MiraiEvent):
         app = application.get()
         if not app.connect_info.sessionKey:
             raise InvaildSession("you must authenticate before this.")
-        async with app.session.post(app.url_gen("resp/newFriendRequestEvent"), json={
-            "sessionKey": app.connect_info.sessionKey,
-            "eventId": self.requestId,
-            "fromId": self.supplicant,
-            "groupId": self.sourceGroup,
-            "operate": 2,
-            "message": message
-        }) as response:
+        async with app.session.post(
+            app.url_gen("resp/newFriendRequestEvent"),
+            json={
+                "sessionKey": app.connect_info.sessionKey,
+                "eventId": self.requestId,
+                "fromId": self.supplicant,
+                "groupId": self.sourceGroup,
+                "operate": 2,
+                "message": message,
+            },
+        ) as response:
             response.raise_for_status()
             data = await response.json()
             raise_for_return_code(data)
+
 
 class MemberJoinRequestEvent(MiraiEvent):
     """当该事件发生时, 有一用户向机器人作为管理员/群主的群组申请加入群组.
@@ -773,7 +815,7 @@ class MemberJoinRequestEvent(MiraiEvent):
         event.nickname: str # 对方的昵称
         event.message: str # 对方发起请求时填写的描述
         ```
-        
+
         2. 同意请求: `await event.accept()`, 具体查看该方法所附带的说明.
         3. 拒绝请求: `await event.reject()`, 具体查看该方法所附带的说明.
         4. 忽略请求: `await event.ignore()`, 具体查看该方法所附带的说明.
@@ -783,7 +825,7 @@ class MemberJoinRequestEvent(MiraiEvent):
 
     type = "MemberJoinRequestEvent"
     requestId: int = Field(..., alias="eventId")
-    supplicant: int = Field(..., alias="fromId") # 即请求方 QQ
+    supplicant: int = Field(..., alias="fromId")  # 即请求方 QQ
     groupId: Optional[int] = Field(..., alias="groupId")
     groupName: str = Field(..., alias="groupName")
     nickname: str = Field(..., alias="nick")
@@ -807,14 +849,17 @@ class MemberJoinRequestEvent(MiraiEvent):
         app = application.get()
         if not app.connect_info.sessionKey:
             raise InvaildSession("you must authenticate before this.")
-        async with app.session.post(app.url_gen("resp/memberJoinRequestEvent"), json={
-            "sessionKey": app.connect_info.sessionKey,
-            "eventId": self.requestId,
-            "fromId": self.supplicant,
-            "groupId": self.groupId,
-            "operate": 0,
-            "message": message
-        }) as response:
+        async with app.session.post(
+            app.url_gen("resp/memberJoinRequestEvent"),
+            json={
+                "sessionKey": app.connect_info.sessionKey,
+                "eventId": self.requestId,
+                "fromId": self.supplicant,
+                "groupId": self.groupId,
+                "operate": 0,
+                "message": message,
+            },
+        ) as response:
             response.raise_for_status()
             data = await response.json()
             raise_for_return_code(data)
@@ -835,14 +880,17 @@ class MemberJoinRequestEvent(MiraiEvent):
         app = application.get()
         if not app.connect_info.sessionKey:
             raise InvaildSession("you must authenticate before this.")
-        async with app.session.post(app.url_gen("resp/memberJoinRequestEvent"), json={
-            "sessionKey": app.connect_info.sessionKey,
-            "eventId": self.requestId,
-            "fromId": self.supplicant,
-            "groupId": self.groupId,
-            "operate": 1,
-            "message": message
-        }) as response:
+        async with app.session.post(
+            app.url_gen("resp/memberJoinRequestEvent"),
+            json={
+                "sessionKey": app.connect_info.sessionKey,
+                "eventId": self.requestId,
+                "fromId": self.supplicant,
+                "groupId": self.groupId,
+                "operate": 1,
+                "message": message,
+            },
+        ) as response:
             response.raise_for_status()
             data = await response.json()
             raise_for_return_code(data)
@@ -863,14 +911,17 @@ class MemberJoinRequestEvent(MiraiEvent):
         app = application.get()
         if not app.connect_info.sessionKey:
             raise InvaildSession("you must authenticate before this.")
-        async with app.session.post(app.url_gen("resp/memberJoinRequestEvent"), json={
-            "sessionKey": app.connect_info.sessionKey,
-            "eventId": self.requestId,
-            "fromId": self.supplicant,
-            "groupId": self.groupId,
-            "operate": 2,
-            "message": message
-        }) as response:
+        async with app.session.post(
+            app.url_gen("resp/memberJoinRequestEvent"),
+            json={
+                "sessionKey": app.connect_info.sessionKey,
+                "eventId": self.requestId,
+                "fromId": self.supplicant,
+                "groupId": self.groupId,
+                "operate": 2,
+                "message": message,
+            },
+        ) as response:
             response.raise_for_status()
             data = await response.json()
             raise_for_return_code(data)
@@ -891,14 +942,17 @@ class MemberJoinRequestEvent(MiraiEvent):
         app = application.get()
         if not app.connect_info.sessionKey:
             raise InvaildSession("you must authenticate before this.")
-        async with app.session.post(app.url_gen("resp/memberJoinRequestEvent"), json={
-            "sessionKey": app.connect_info.sessionKey,
-            "eventId": self.requestId,
-            "fromId": self.supplicant,
-            "groupId": self.groupId,
-            "operate": 3,
-            "message": message
-        }) as response:
+        async with app.session.post(
+            app.url_gen("resp/memberJoinRequestEvent"),
+            json={
+                "sessionKey": app.connect_info.sessionKey,
+                "eventId": self.requestId,
+                "fromId": self.supplicant,
+                "groupId": self.groupId,
+                "operate": 3,
+                "message": message,
+            },
+        ) as response:
             response.raise_for_status()
             data = await response.json()
             raise_for_return_code(data)
@@ -919,17 +973,21 @@ class MemberJoinRequestEvent(MiraiEvent):
         app = application.get()
         if not app.connect_info.sessionKey:
             raise InvaildSession("you must authenticate before this.")
-        async with app.session.post(app.url_gen("resp/memberJoinRequestEvent"), json={
-            "sessionKey": app.connect_info.sessionKey,
-            "eventId": self.requestId,
-            "fromId": self.supplicant,
-            "groupId": self.groupId,
-            "operate": 4,
-            "message": message
-        }) as response:
+        async with app.session.post(
+            app.url_gen("resp/memberJoinRequestEvent"),
+            json={
+                "sessionKey": app.connect_info.sessionKey,
+                "eventId": self.requestId,
+                "fromId": self.supplicant,
+                "groupId": self.groupId,
+                "operate": 4,
+                "message": message,
+            },
+        ) as response:
             response.raise_for_status()
             data = await response.json()
             raise_for_return_code(data)
+
 
 class BotInvitedJoinGroupRequestEvent(MiraiEvent):
     """当该事件发生时, 应用实例所辖账号接受到来自某个账号的邀请加入某个群组的请求.
@@ -949,14 +1007,14 @@ class BotInvitedJoinGroupRequestEvent(MiraiEvent):
         event.nickname: str # 对方的昵称
         event.message: str # 对方发起请求时填写的描述
         ```
-        
+
         2. 同意请求: `await event.accept()`, 具体查看该方法所附带的说明.
         3. 拒绝请求: `await event.reject()`, 具体查看该方法所附带的说明.
     """
 
     type = "BotInvitedJoinGroupRequestEvent"
     requestId: int = Field(..., alias="eventId")
-    supplicant: int = Field(..., alias="fromId") # 即请求方 QQ
+    supplicant: int = Field(..., alias="fromId")  # 即请求方 QQ
     groupId: Optional[int] = Field(..., alias="groupId")
     groupName: str = Field(..., alias="groupName")
     nickname: str = Field(..., alias="nick")
@@ -980,14 +1038,17 @@ class BotInvitedJoinGroupRequestEvent(MiraiEvent):
         app = application.get()
         if not app.connect_info.sessionKey:
             raise InvaildSession("you must authenticate before this.")
-        async with app.session.post(app.url_gen("resp/botInvitedJoinGroupRequestEvent"), json={
-            "sessionKey": app.connect_info.sessionKey,
-            "eventId": self.requestId,
-            "fromId": self.supplicant,
-            "groupId": self.groupId,
-            "operate": 0,
-            "message": message
-        }) as response:
+        async with app.session.post(
+            app.url_gen("resp/botInvitedJoinGroupRequestEvent"),
+            json={
+                "sessionKey": app.connect_info.sessionKey,
+                "eventId": self.requestId,
+                "fromId": self.supplicant,
+                "groupId": self.groupId,
+                "operate": 0,
+                "message": message,
+            },
+        ) as response:
             response.raise_for_status()
             data = await response.json()
             raise_for_return_code(data)
@@ -1008,14 +1069,17 @@ class BotInvitedJoinGroupRequestEvent(MiraiEvent):
         app = application.get()
         if not app.connect_info.sessionKey:
             raise InvaildSession("you must authenticate before this.")
-        async with app.session.post(app.url_gen("resp/botInvitedJoinGroupRequestEvent"), json={
-            "sessionKey": app.connect_info.sessionKey,
-            "eventId": self.requestId,
-            "fromId": self.supplicant,
-            "groupId": self.groupId,
-            "operate": 1,
-            "message": message
-        }) as response:
+        async with app.session.post(
+            app.url_gen("resp/botInvitedJoinGroupRequestEvent"),
+            json={
+                "sessionKey": app.connect_info.sessionKey,
+                "eventId": self.requestId,
+                "fromId": self.supplicant,
+                "groupId": self.groupId,
+                "operate": 1,
+                "message": message,
+            },
+        ) as response:
             response.raise_for_status()
             data = await response.json()
             raise_for_return_code(data)

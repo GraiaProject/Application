@@ -2,6 +2,7 @@ import copy
 from typing import List, Sequence, Union
 from .signature import FullMatch, PatternReceiver
 
+
 class Arguments:
     content: List[PatternReceiver]
 
@@ -14,6 +15,7 @@ class Arguments:
 
     def __repr__(self) -> str:
         return "<Argument content={0}>".format(str(self.content))
+
 
 def merge_signature_chain_fullmatch(
     chain: Sequence[Union[FullMatch, PatternReceiver]]
@@ -36,6 +38,7 @@ def merge_signature_chain_fullmatch(
             temp_l1.clear()
 
     return type(chain)(result)
+
 
 def merge_signature_chain(
     chain: Sequence[Union[FullMatch, PatternReceiver]]

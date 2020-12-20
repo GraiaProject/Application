@@ -17,6 +17,7 @@ from graia.application.message.elements import external as External
 from aiohttp import ClientSession
 import json as MJson
 
+
 class Plain(InternalElement, ExternalElement):
     type: str = "Plain"
     text: str
@@ -31,26 +32,27 @@ class Plain(InternalElement, ExternalElement):
 
     def toExternal(self) -> "Plain":
         return self
-    
+
     @classmethod
     def fromExternal(_, external_element) -> "Plain":
         return external_element
 
     def asDisplay(self) -> str:
         return self.text
-    
+
     def asSerializationString(self) -> str:
         return self.text
+
 
 class Source(InternalElement, ExternalElement):
     "表示消息在一个特定聊天区域内的唯一标识"
     id: int
     time: datetime
-    
+
     @classmethod
     def fromExternal(_, external_element) -> "Source":
         return external_element
-    
+
     def asSerializationString(self) -> str:
         return f"[mirai:source:{self.id},{int(self.time.timestamp())}]"
 
@@ -58,6 +60,7 @@ class Source(InternalElement, ExternalElement):
         json_encoders = {
             datetime: lambda v: int(v.timestamp()),
         }
+
 
 class Quote(InternalElement, ExternalElement):
     "表示消息中回复其他消息/用户的部分, 通常包含一个完整的消息链(`origin` 属性)"
@@ -70,6 +73,7 @@ class Quote(InternalElement, ExternalElement):
     @validator("origin", pre=True)
     def _(cls, v):
         from ..chain import MessageChain
+
         return MessageChain.parse_obj(v)
 
     @classmethod
@@ -79,8 +83,10 @@ class Quote(InternalElement, ExternalElement):
     def asSerializationString(self) -> str:
         return f" [mirai:quote:{self.id}]"
 
+
 class At(InternalElement, ExternalElement):
     """该消息元素用于承载消息中用于提醒/呼唤特定用户的部分."""
+
     type: str = "At"
     target: int
     display: Optional[str] = None
@@ -99,7 +105,11 @@ class At(InternalElement, ExternalElement):
     def toExternal(self) -> "At":
         try:
             if image_method.get() != UploadMethods.Group:
-                raise InvaildArgument("you cannot use this element in this method: {0}".format(image_method.get().value))
+                raise InvaildArgument(
+                    "you cannot use this element in this method: {0}".format(
+                        image_method.get().value
+                    )
+                )
         except LookupError:
             pass
         return self
@@ -111,6 +121,7 @@ class At(InternalElement, ExternalElement):
     def fromExternal(cls, external_element) -> "At":
         return external_element
 
+
 class AtAll(InternalElement, ExternalElement):
     "该消息元素用于群组中的管理员提醒群组中的所有成员"
     type: str = "AtAll"
@@ -121,7 +132,11 @@ class AtAll(InternalElement, ExternalElement):
     def toExternal(self) -> "AtAll":
         try:
             if image_method.get() != UploadMethods.Group:
-                raise InvaildArgument("you cannot use this element in this method: {0}".format(image_method.get().value))
+                raise InvaildArgument(
+                    "you cannot use this element in this method: {0}".format(
+                        image_method.get().value
+                    )
+                )
         except LookupError:
             pass
         return self
@@ -129,9 +144,10 @@ class AtAll(InternalElement, ExternalElement):
     @classmethod
     def fromExternal(cls, external_element) -> "AtAll":
         return external_element
-    
+
     def asSerializationString(self) -> str:
         return "[mirai:atall]"
+
 
 class Face(InternalElement, ExternalElement):
     "表示消息中所附带的表情, 这些表情大多都是聊天工具内置的."
@@ -148,9 +164,10 @@ class Face(InternalElement, ExternalElement):
 
     def asDisplay(self) -> str:
         return "[表情]"
-    
+
     def asSerializationString(self) -> str:
         return f"[mirai:face:{self.faceId}]"
+
 
 class ImageType(Enum):
     Friend = "Friend"
@@ -158,11 +175,13 @@ class ImageType(Enum):
     Temp = "Temp"
     Unknown = "Unknown"
 
+
 image_upload_method_type_map = {
     UploadMethods.Friend: ImageType.Friend,
     UploadMethods.Group: ImageType.Group,
-    UploadMethods.Temp: ImageType.Temp
+    UploadMethods.Temp: ImageType.Temp,
 }
+
 
 class ShadowImage(InternalElement, ExternalElement, ShadowElement):
     method: Optional[UploadMethods]
@@ -171,12 +190,13 @@ class ShadowImage(InternalElement, ExternalElement, ShadowElement):
     def asFlash(self):
         self.is_flash = True
         return self
-    
+
     def fromExternal(cls, external_element) -> "InternalElement":
         return external_element
 
     class Config:
         allow_mutation = True
+
 
 class Image_LocalFile(ShadowImage):
     filepath: Path
@@ -189,17 +209,20 @@ class Image_LocalFile(ShadowImage):
         try:
             methodd = self.method or image_method.get()
         except LookupError:
-            raise ValueError("you should give the 'method' for upload when you are out of the event receiver.")
+            raise ValueError(
+                "you should give the 'method' for upload when you are out of the event receiver."
+            )
         if not self.is_flash:
             return await app.uploadImage(
-                self.filepath.read_bytes(),
-                methodd, return_external=True
+                self.filepath.read_bytes(), methodd, return_external=True
             )
         else:
-            return FlashImage.fromExternal(await app.uploadImage(
-                self.filepath.read_bytes(), methodd, return_external=True
-            )).toExternal()
-    
+            return FlashImage.fromExternal(
+                await app.uploadImage(
+                    self.filepath.read_bytes(), methodd, return_external=True
+                )
+            ).toExternal()
+
     async def getReal(self, method: UploadMethods) -> "Image":
         """从本 Shadow Element 中生成一真正的 Image 对象.
         Args:
@@ -210,12 +233,17 @@ class Image_LocalFile(ShadowImage):
             Image: 所生成的, 真正的 Image 对象.
         """
         app = application.get()
-        return await app.uploadImage(self.filepath.read_bytes(), method, return_external=True)
+        return await app.uploadImage(
+            self.filepath.read_bytes(), method, return_external=True
+        )
+
 
 class Image_UnsafeBytes(ShadowImage):
     image_bytes: bytes
 
-    def __init__(self, image_bytes: bytes, method: Optional[UploadMethods] = None) -> None:
+    def __init__(
+        self, image_bytes: bytes, method: Optional[UploadMethods] = None
+    ) -> None:
         super().__init__(image_bytes=image_bytes, method=method)
 
     async def toExternal(self):
@@ -223,13 +251,17 @@ class Image_UnsafeBytes(ShadowImage):
         try:
             methodd = self.method or image_method.get()
         except LookupError:
-            raise ValueError("you should give the 'method' for upload when you are out of the event receiver.")
+            raise ValueError(
+                "you should give the 'method' for upload when you are out of the event receiver."
+            )
         if not self.is_flash:
-            return await app.uploadImage(self.image_bytes, methodd, return_external=True)
-        else:
-            return FlashImage.fromExternal(await app.uploadImage(
+            return await app.uploadImage(
                 self.image_bytes, methodd, return_external=True
-            )).toExternal()
+            )
+        else:
+            return FlashImage.fromExternal(
+                await app.uploadImage(self.image_bytes, methodd, return_external=True)
+            ).toExternal()
 
     async def getReal(self, method: UploadMethods) -> "Image":
         """从本 Shadow Element 中生成一真正的 Image 对象.
@@ -243,28 +275,35 @@ class Image_UnsafeBytes(ShadowImage):
         app = application.get()
         return await app.uploadImage(self.image_bytes, method)
 
+
 class Image_NetworkAddress(ShadowImage):
     url: str
 
     def __init__(self, url: str, method: Optional[UploadMethods] = None) -> None:
         super().__init__(url=url, method=method)
-    
+
     async def toExternal(self):
         app = application.get()
         try:
             methodd = self.method or image_method.get()
         except LookupError:
-            raise ValueError("you should give the 'method' for upload when you are out of the event receiver.")
-        
+            raise ValueError(
+                "you should give the 'method' for upload when you are out of the event receiver."
+            )
+
         async with app.session.get(self.url) as response:
             response.raise_for_status()
             if not self.is_flash:
-                return await app.uploadImage(await response.read(), methodd, return_external=True)
-            else:
-                return FlashImage.fromExternal(await app.uploadImage(
+                return await app.uploadImage(
                     await response.read(), methodd, return_external=True
-                )).toExternal()
-    
+                )
+            else:
+                return FlashImage.fromExternal(
+                    await app.uploadImage(
+                        await response.read(), methodd, return_external=True
+                    )
+                ).toExternal()
+
     async def getReal(self, method: UploadMethods) -> "Image":
         """从本 Shadow Element 中生成一真正的 Image 对象.
         Args:
@@ -280,28 +319,30 @@ class Image_NetworkAddress(ShadowImage):
                 response.raise_for_status()
                 return await app.uploadImage(await response.read(), method)
 
+
 class Image(InternalElement):
     "该消息元素用于承载消息中所附带的图片."
     imageId: Optional[str] = None
     url: Optional[str] = None
     path: Optional[str] = None
     type: Optional[ImageType]
-    
+
     @validator("type", always=True)
     def _(cls, v, values) -> ImageType:
         if v:
             return v
         if "imageId" not in values:
             return ImageType.Unknown
-        if not values['imageId']:
+        if not values["imageId"]:
             return ImageType.Unknown
-        if values['imageId'].startswith("/"):
-            if len(values['imageId']) == 37:
+        if values["imageId"].startswith("/"):
+            if len(values["imageId"]) == 37:
                 return ImageType.Friend
             else:
                 return ImageType.Temp
-        elif values['imageId'].startswith("{") and\
-             values['imageId'].endswith("}.mirai"):
+        elif values["imageId"].startswith("{") and values["imageId"].endswith(
+            "}.mirai"
+        ):
             return ImageType.Group
         else:
             return ImageType.Unknown
@@ -312,25 +353,25 @@ class Image(InternalElement):
             if self.type != want_type and self.url:
                 app = application.get()
                 image_byte = await self.http_to_bytes()
-                return await app.uploadImage(image_byte, image_method.get(), return_external=True)
+                return await app.uploadImage(
+                    image_byte, image_method.get(), return_external=True
+                )
         except LookupError:
             pass
-        return External.Image(
-            imageId=self.imageId,
-            url=self.url,
-            path=self.path
-        )
+        return External.Image(imageId=self.imageId, url=self.url, path=self.path)
 
     @classmethod
     def fromExternal(cls, external_element) -> "Image":
         return cls(
             imageId=external_element.imageId,
             url=external_element.url,
-            path=external_element.path
+            path=external_element.path,
         )
-    
+
     @classmethod
-    def fromLocalFile(cls, filepath: Union[Path, str], method: Optional[UploadMethods] = None) -> "Image":
+    def fromLocalFile(
+        cls, filepath: Union[Path, str], method: Optional[UploadMethods] = None
+    ) -> "Image":
         """从本地文件中创建一个 Shadow Element, 以此在发送时自动上传图片至服务器, 并借此使包含的图片成功发送.
 
         Args:
@@ -343,7 +384,7 @@ class Image(InternalElement):
         Returns:
             [Shadow Element]: 返回值为一合法, 但不包括任何 Image 特征属性的叠加态消息元素; 其包含有一 asFlash 方法,
                 可以将当前图片转为闪照形式发送.
-        
+
         Examples:
         ``` python
         await app.sendGroupMessage(group, MessageChain.create([
@@ -372,7 +413,9 @@ class Image(InternalElement):
         return External.Image(path=str(path))
 
     @classmethod
-    def fromUnsafeBytes(cls, image_bytes: bytes, method: Optional[UploadMethods] = None) -> "Image":
+    def fromUnsafeBytes(
+        cls, image_bytes: bytes, method: Optional[UploadMethods] = None
+    ) -> "Image":
         """从不保证有效性的 bytes 中创建一个 Shadow Element, 以此在发送时自动作为图片上传至服务器, 并借此使其可能包含的图片成功发送.
 
         Args:
@@ -384,9 +427,11 @@ class Image(InternalElement):
                 可以将当前图片转为闪照形式发送.
         """
         return Image_UnsafeBytes(image_bytes, method)
-    
+
     @classmethod
-    def fromNetworkAddress(cls, url: str, method: Optional[UploadMethods] = None) -> "Image":
+    def fromNetworkAddress(
+        cls, url: str, method: Optional[UploadMethods] = None
+    ) -> "Image":
         """从不保证有效性的网络位置中创建一个 Shadow Element, 以此在发送时自动从该指定位置获取并作为图片上传至服务器,
         并借此使其可能包含的图片成功发送.
 
@@ -406,10 +451,10 @@ class Image(InternalElement):
     @classmethod
     def fromUnsafeAddress(cls, url: str) -> "External.Image":
         return External.Image(url=url)
-    
+
     def asDisplay(self) -> str:
         return "[图片]"
-    
+
     async def http_to_bytes(self, url: str = None) -> bytes:
         """从远端服务器获取图片的 bytes, 注意, 你无法获取并不包含 url 属性的本元素的 bytes.
 
@@ -428,12 +473,13 @@ class Image(InternalElement):
             async with session.get(self.url or url) as response:
                 response.raise_for_status()
                 return await response.read()
-    
+
     def asFlash(self) -> "FlashImage":
         return FlashImage.fromOriginalImage(self)
 
     def asSerializationString(self) -> str:
         return f"[mirai:image:{self.imageId}]"
+
 
 class FlashImage(Image, InternalElement):
     """用于承载 QQ 中的特殊消息: 闪照的消息组件.
@@ -442,18 +488,14 @@ class FlashImage(Image, InternalElement):
     """
 
     def toExternal(self):
-        return External.FlashImage(
-            imageId=self.imageId,
-            url=self.url,
-            path=self.path
-        )
+        return External.FlashImage(imageId=self.imageId, url=self.url, path=self.path)
 
     @classmethod
     def fromExternal(cls, external_element) -> "FlashImage":
         return cls(
             imageId=external_element.imageId,
             url=external_element.url,
-            path=external_element.path
+            path=external_element.path,
         )
 
     @classmethod
@@ -461,21 +503,23 @@ class FlashImage(Image, InternalElement):
         return cls(
             imageId=image_element.imageId,
             url=image_element.url,
-            path=image_element.path
+            path=image_element.path,
         )
 
     def asDisplay(self) -> str:
         return "[闪照]"
-    
+
     def asNormal(self) -> "Image":
         return Image.fromExternal(self)
 
     def asSerializationString(self) -> str:
         return f"[mirai:flash:{self.imageId}]"
 
+
 class VoiceUploadType(Enum):
     Group = "group"
     Unknown = "unknown"
+
 
 class Voice_LocalFile(ShadowElement, InternalElement, ExternalElement):
     filepath: Path
@@ -489,9 +533,13 @@ class Voice_LocalFile(ShadowElement, InternalElement, ExternalElement):
         try:
             methodd = self.method or image_method.get()
         except LookupError:
-            raise ValueError("you should give the 'method' for upload when you are out of the event receiver.")
-        
-        return await app.uploadVoice(self, self.filepath.read_bytes(), methodd, return_external=True)
+            raise ValueError(
+                "you should give the 'method' for upload when you are out of the event receiver."
+            )
+
+        return await app.uploadVoice(
+            self, self.filepath.read_bytes(), methodd, return_external=True
+        )
 
     async def getReal(self, method: UploadMethods) -> "Image":
         """从本 Shadow Element 中生成一真正的 Voice 对象.
@@ -503,7 +551,10 @@ class Voice_LocalFile(ShadowElement, InternalElement, ExternalElement):
             Voice: 所生成的, 真正的 Voice 对象.
         """
         app = application.get()
-        return await app.uploadVoice(self.filepath.read_bytes(), method, return_external=True)
+        return await app.uploadVoice(
+            self.filepath.read_bytes(), method, return_external=True
+        )
+
 
 class Voice(InternalElement):
     voiceId: Optional[str] = None
@@ -512,38 +563,36 @@ class Voice(InternalElement):
     type: Optional[VoiceUploadType]
 
     def toExternal(self):
-        return External.Voice(
-            voiceId=self.voiceId,
-            url=self.url,
-            path=self.path
-        )
+        return External.Voice(voiceId=self.voiceId, url=self.url, path=self.path)
 
     @classmethod
     def fromExternal(cls, external_element) -> "Voice":
         return cls(
             voiceId=external_element.voiceId,
             url=external_element.url,
-            path=external_element.path
+            path=external_element.path,
         )
 
     def asSerializationString(self) -> str:
         return f"[mirai:voice:{self.voiceId}]"
-    
+
     def asDisplay(self) -> str:
         return "[语音]"
-    
+
     @validator("type", always=True)
     def _(cls, v, values) -> VoiceUploadType:
         if v:
             return v
         if "voiceId" not in values:
             return VoiceUploadType.Unknown
-        if not values['voiceId']:
+        if not values["voiceId"]:
             return VoiceUploadType.Unknown
-        if values['voiceId']:
-            return VoiceUploadType.Group # mirai 当前版本只支持群语音.
+        if values["voiceId"]:
+            return VoiceUploadType.Group  # mirai 当前版本只支持群语音.
 
-    def fromLocalFile(self, filepath: Union[str, Path], method: Optional[UploadMethods] = None) -> "Voice":
+    def fromLocalFile(
+        self, filepath: Union[str, Path], method: Optional[UploadMethods] = None
+    ) -> "Voice":
         """从本地文件中创建一个 Shadow Element, 以此在发送时自动上传语音至服务器, 并借此使包含的语音成功发送.
 
         Args:
@@ -562,6 +611,7 @@ class Voice(InternalElement):
             raise FileNotFoundError("you should give us a existed file's path")
         return Voice_LocalFile(filepath, method)
 
+
 class Xml(InternalElement, ExternalElement):
     type = "Xml"
     xml: str
@@ -579,6 +629,7 @@ class Xml(InternalElement, ExternalElement):
     def asDisplay(self) -> str:
         return "[XML消息]"
 
+
 class Json(InternalElement, ExternalElement):
     type = "Json"
     Json: str = Field(..., alias="json")
@@ -589,20 +640,18 @@ class Json(InternalElement, ExternalElement):
         super().__init__(json=json)
 
     def dict(self, *args, **kwargs):
-        return super().dict(*args, **({
-            **kwargs,
-            "by_alias": True
-        }))
+        return super().dict(*args, **({**kwargs, "by_alias": True}))
 
     def asDisplay(self) -> str:
         return "[JSON消息]"
-    
+
     def toExternal(self) -> "Json":
         return self
-    
+
     @classmethod
     def fromExternal(_, external_element) -> "Json":
         return external_element
+
 
 class App(InternalElement, ExternalElement):
     type = "App"
@@ -610,13 +659,14 @@ class App(InternalElement, ExternalElement):
 
     def asDisplay(self) -> str:
         return "[APP消息]"
-    
+
     def toExternal(self) -> "App":
         return self
-    
+
     @classmethod
     def fromExternal(_, external_element) -> "App":
         return external_element
+
 
 class PokeMethods(Enum):
     Poke = "Poke"
@@ -626,19 +676,21 @@ class PokeMethods(Enum):
     SixSixSix = "SixSixSix"
     FangDaZhao = "FangDaZhao"
 
+
 class Poke(InternalElement, ExternalElement):
     type = "Poke"
     name: PokeMethods
 
     def asDisplay(self) -> str:
         return "[戳一戳:{0}]".format(self.name)
-    
+
     def toExternal(self) -> "Poke":
         return self
-    
+
     @classmethod
     def fromExternal(_, external_element) -> "Poke":
         return external_element
+
 
 from ..chain import MessageChain
 

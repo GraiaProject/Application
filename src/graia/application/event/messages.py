@@ -8,6 +8,7 @@ from graia.application.group import Member, Group
 from graia.application.friend import Friend
 from . import ApplicationDispatcher, MiraiEvent
 
+
 class FriendMessage(MiraiEvent):
     type: str = "FriendMessage"
     messageChain: MessageChain
@@ -20,6 +21,7 @@ class FriendMessage(MiraiEvent):
         def catch(interface: DispatcherInterface):
             if interface.annotation is Friend:
                 return interface.event.sender
+
 
 class GroupMessage(MiraiEvent):
     type: str = "GroupMessage"
@@ -35,6 +37,7 @@ class GroupMessage(MiraiEvent):
                 return interface.event.sender.group
             elif interface.annotation is Member:
                 return interface.event.sender
+
 
 class TempMessage(MiraiEvent):
     type: str = "TempMessage"

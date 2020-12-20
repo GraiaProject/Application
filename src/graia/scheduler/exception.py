@@ -1,2 +1,0 @@
-class AlreadyStarted(Exception):
-    pass

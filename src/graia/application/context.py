@@ -12,11 +12,13 @@ broadcast = ContextVar("broadcast")
 # sendGroupMessage 等发送message的指令将set该上下文条目.
 image_method = ContextVar("image_method")
 
+
 @contextmanager
 def enter_message_send_context(method: UploadMethods):
     t = image_method.set(method)
     yield
     image_method.reset(t)
+
 
 @contextmanager
 def enter_context(app=None, event_i=None):
@@ -41,5 +43,5 @@ def enter_context(app=None, event_i=None):
             event.reset(t2)
             event_loop.reset(t3)
             broadcast.reset(t4)
-    except ValueError: # 在测试 Scheduler 时发现的问题...辣鸡 Python!
+    except ValueError:  # 在测试 Scheduler 时发现的问题...辣鸡 Python!
         pass

@@ -3,9 +3,10 @@ from typing import Optional, Tuple
 import os
 import yarl
 
+
 class Session(BaseModel):
     """用于描述与上游接口会话, 并存储会话状态的实体类.
-    
+
     Attributes:
         host (AnyHttpUrl): `mirai-api-http` 服务所在的根接口地址
         authKey (str): 在 `mirai-api-http` 配置流程中定义, 需为相同的值以通过安全验证.
@@ -28,25 +29,28 @@ class Session(BaseModel):
 
         Args:
             url (str): `schema` 为 `mirai` 的链接, 具体请参考 python-mirai(v3) 的文档.
-        
+
         Returns:
             Session: 从给出的 url 生成的 `Session` 实例.
         """
 
         yarl_url = yarl.URL(url)
         return cls(
-            host=str(yarl.URL.build(
-                scheme="http",
-                host=yarl_url.host,
-                port=yarl_url.port,
-            )),
+            host=str(
+                yarl.URL.build(
+                    scheme="http",
+                    host=yarl_url.host,
+                    port=yarl_url.port,
+                )
+            ),
             authKey=yarl_url.query["authKey"],
             account=yarl_url.query["qq"],
-            websocket=yarl_url.path == "/ws"
+            websocket=yarl_url.path == "/ws",
         )
-    
+
     @classmethod
-    def fromEnv(cls,
+    def fromEnv(
+        cls,
         host: Optional[AnyHttpUrl] = None,
         authKey: Optional[str] = None,
         account: Optional[int] = None,
@@ -72,17 +76,17 @@ class Session(BaseModel):
         Returns:
             Session: 从给出的参数和所处环境变量生成的 `Session` 实例.
         """
-        return cls(**{
-            "host": host or os.getenv("GRAIA_HOST"),
-            "authKey": authKey or os.getenv("GRAIA_AUTHKEY"),
-            "account": account or os.getenv("GRAIA_ACCOUNT_ID"),
-            "websocket": websocket or ({
-                "false": False,
-                "true": True,
-                "1": True,
-                "0": False
-            }).get(os.getenv("GRAIA_WEBSOCKET_ENABLED").lower(), websocket)
-        })
+        return cls(
+            **{
+                "host": host or os.getenv("GRAIA_HOST"),
+                "authKey": authKey or os.getenv("GRAIA_AUTHKEY"),
+                "account": account or os.getenv("GRAIA_ACCOUNT_ID"),
+                "websocket": websocket
+                or ({"false": False, "true": True, "1": True, "0": False}).get(
+                    os.getenv("GRAIA_WEBSOCKET_ENABLED").lower(), websocket
+                ),
+            }
+        )
 
     class Config:
         allow_mutation = True
