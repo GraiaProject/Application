@@ -131,7 +131,7 @@ pygments = ["Pygments (>=2.2.0)"]
 
 [[package]]
 name = "graia-broadcast"
-version = "0.6.1"
+version = "0.6.2"
 description = "a highly customizable, elegantly designed event system based on asyncio"
 category = "main"
 optional = false
@@ -143,7 +143,7 @@ pydantic = ">=1.5.1,<1.7.1"
 
 [[package]]
 name = "graphviz"
-version = "0.15"
+version = "0.16"
 description = "Simple Python interface for Graphviz"
 category = "dev"
 optional = false
@@ -319,7 +319,7 @@ typing-extensions = {version = ">=3.7.4", markers = "python_version < \"3.8\""}
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.6"
-content-hash = "d34c779dd735c75b8f7b10c87d37a82b2ba395a6e40ff6ef122b4be612ac1cad"
+content-hash = "87679f10ebfd08b02cee536a36ff3e7a5ff15ab1e23db779af0efd252c87a87e"
 
 [metadata.files]
 aiohttp = [
@@ -400,12 +400,12 @@ devtools = [
     {file = "devtools-0.5.1.tar.gz", hash = "sha256:51ca8d2e15b8a862875a4837db2bafbc6cda409c069e960aec3f4bbd91fe9c08"},
 ]
 graia-broadcast = [
-    {file = "graia-broadcast-0.6.1.tar.gz", hash = "sha256:7e996f0a931eb1a29e7655e4a9dc1f300317b0c875cb7565e94c3c6446eb8a3a"},
-    {file = "graia_broadcast-0.6.1-py3-none-any.whl", hash = "sha256:9cd0c34e0fdf1a6ab651d6e650ff0b85e51b026f47c54e295ba974486dc4c4fd"},
+    {file = "graia-broadcast-0.6.2.tar.gz", hash = "sha256:2db9646166db067c033c7f7334f6f0c67d15343837cb27b6dd5c707211705e29"},
+    {file = "graia_broadcast-0.6.2-py3-none-any.whl", hash = "sha256:ea8fd088d631c9627b8ebfbc03d876c63951d9c00b4299709aa8f53a2dbd2488"},
 ]
 graphviz = [
-    {file = "graphviz-0.15-py2.py3-none-any.whl", hash = "sha256:403b55553b235875fa521023a06d9c29b46f3a956f960d4e0a5b956bca9eb9ce"},
-    {file = "graphviz-0.15.zip", hash = "sha256:2b85f105024e229ec330fe5067abbe9aa0d7708921a585ecc2bf56000bf5e027"},
+    {file = "graphviz-0.16-py2.py3-none-any.whl", hash = "sha256:3cad5517c961090dfc679df6402a57de62d97703e2880a1a46147bb0dc1639eb"},
+    {file = "graphviz-0.16.zip", hash = "sha256:d2d25af1c199cad567ce4806f0449cb74eb30cf451fd7597251e1da099ac6e57"},
 ]
 idna = [
     {file = "idna-2.10-py2.py3-none-any.whl", hash = "sha256:b97d804b1e9b523befed77c48dacec60e6dcb0b5391d57af6a65a312a90648c0"},
