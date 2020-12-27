@@ -5,18 +5,10 @@ from graia.application.context import application
 from graia.application.group import Group, Member, MemberPerm
 from graia.application.exceptions import InvaildArgument, InvaildSession
 from graia.application.utilles import raise_for_return_code
-from . import ApplicationDispatcher, MiraiEvent
+from . import ApplicationDispatcher, MiraiEvent, EmptyDispatcher
 from graia.broadcast.entities.dispatcher import BaseDispatcher
 from graia.broadcast.interfaces.dispatcher import DispatcherInterface
 from datetime import datetime
-
-
-class EmptyDispatcher(BaseDispatcher):
-    mixin = [ApplicationDispatcher]
-
-    @staticmethod
-    def catch(interface):
-        pass
 
 
 class BotOnlineEvent(MiraiEvent):

@@ -25,6 +25,12 @@ from graia.broadcast.entities.inject_rule import SpecialEventType
 from graia.broadcast.utilles import printer, run_always_await
 from yarl import URL
 
+from graia.application.event.network import (
+    RemoteException,
+    SessionRefreshFailed,
+    SessionRefreshed,
+)
+
 from .context import enter_context, enter_message_send_context
 from .entities import MiraiConfig, UploadMethods
 from .event.messages import FriendMessage, GroupMessage, TempMessage
@@ -75,6 +81,7 @@ def error_wrapper(network_action_callable: Callable):
                         await self.authenticate()
                         await self.activeSession()
                         await self.switch_event_detect_method()
+                        self.broadcast.postEvent(SessionRefreshed())
                         break
                     except Exception as e:
                         self.logger.error(
@@ -88,6 +95,7 @@ def error_wrapper(network_action_callable: Callable):
                     self.logger.error(
                         "failed to refreshing session at last, so raise the error."
                     )
+                    self.broadcast.postEvent(SessionRefreshFailed())
                     raise invaild_session_exc
             except aiohttp.web_exceptions.HTTPNotFound:
                 raise NotSupportedVersion(
@@ -95,7 +103,8 @@ def error_wrapper(network_action_callable: Callable):
                         network_action_callable.__name__
                     )
                 )
-            except aiohttp.web_exceptions.HTTPInternalServerError:
+            except aiohttp.web_exceptions.HTTPInternalServerError as e:
+                self.broadcast.postEvent(RemoteException())
                 self.logger.error(
                     "the remote throwed a exception, please check the console!"
                 )
@@ -105,6 +114,7 @@ def error_wrapper(network_action_callable: Callable):
                 aiohttp.web_exceptions.HTTPRequestURITooLong,
                 aiohttp.web_exceptions.HTTPTooManyRequests,
             ):
+
                 self.logger.error(
                     "ouch! it seems that we post in a wrong way for the action '{}', you should open a issue for Graia Application.".format(
                         network_action_callable.__name__
