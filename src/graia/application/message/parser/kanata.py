@@ -1,4 +1,4 @@
-from contextvars import Context, ContextVar, Token
+from contextvars import Context, ContextVar, Token, copy_context
 from functools import lru_cache
 import functools
 from types import TracebackType
@@ -303,6 +303,7 @@ class Kanata(BaseDispatcher):
         return [i.name for i in self.signature_list if isinstance(i, PatternReceiver)]
 
     async def beforeDispatch(self, interface: DispatcherInterface):
+        print("??")
         message_chain: MessageChain = (
             await interface.lookup_param("__kanata_messagechain__", MessageChain, None)
         ).exclude(Source)
@@ -320,16 +321,14 @@ class Kanata(BaseDispatcher):
                         (1, 1):
                     ]  # 利用 MessageIndex 可以非常快捷的实现特性.
         mapping_result = self.detect_and_mapping(self.signature_list, message_chain)
+        print(mapping_result)
         if mapping_result is not None:
             self.content_token = self.parsed_items.set(self.allocation(mapping_result))
-            self.catch = lambda interface: Context.copy().run(
-                self.original_catch, interface
-            )
         else:
             if self.stop_exec_if_fail:
                 raise ExecutionStop()
 
-    async def original_catch(self, interface: DispatcherInterface):
+    async def catch(self, interface: DispatcherInterface):
         if not self.content_token:
             return
         random_id = random.random()
@@ -340,9 +339,6 @@ class Kanata(BaseDispatcher):
         else:
             if self.stop_exec_if_fail:
                 raise ExecutionStop()
-
-    async def catch(self, interface):
-        pass
 
     async def afterDispatch(
         self,
