@@ -332,7 +332,7 @@ class MessageChain(BaseModel):
                 "{0} is not allowed for item getting".format(type(item))
             )
 
-    def subchain(self, item: slice) -> "MessageChain":
+    def subchain(self, item: slice, ignore_text_index: bool = False) -> "MessageChain":
         """对消息链执行分片操作
 
         Args:
@@ -351,16 +351,20 @@ class MessageChain(BaseModel):
             first_slice = result[item.start[0] :]
             if item.start[1] is not None and first_slice:  # text slice
                 if not isinstance(first_slice[0], Plain):
-                    raise TypeError(
-                        "the sliced chain does not starts with a Plain: {}".format(
-                            first_slice[0]
+                    if not ignore_text_index:
+                        raise TypeError(
+                            "the sliced chain does not starts with a Plain: {}".format(
+                                first_slice[0]
+                            )
                         )
-                    )
-                final_text = first_slice[0].text[item.start[1] :]
-                result = [
-                    *([Plain(final_text)] if final_text else []),
-                    *first_slice[1:],
-                ]
+                    else:
+                        result = first_slice
+                else:
+                    final_text = first_slice[0].text[item.start[1] :]
+                    result = [
+                        *([Plain(final_text)] if final_text else []),
+                        *first_slice[1:],
+                    ]
             else:
                 result = first_slice
         if item.stop:

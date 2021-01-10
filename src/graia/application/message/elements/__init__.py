@@ -4,7 +4,8 @@ from pydantic import BaseModel
 
 
 class Element(BaseModel):
-    pass
+    def __hash__(self):
+        return hash((type(self),) + tuple(self.__dict__.values()))
 
 
 class InternalElement(Element, abc.ABC):
