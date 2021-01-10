@@ -528,6 +528,9 @@ class Voice_LocalFile(ShadowElement, InternalElement, ExternalElement):
     def __init__(self, filepath: Path, method: Optional[UploadMethods] = None) -> None:
         super().__init__(filepath=filepath, method=method)
 
+    def fromExternal(cls, external_element) -> "InternalElement":
+        return external_element
+
     async def toExternal(self):
         app = application.get()
         try:
@@ -538,7 +541,7 @@ class Voice_LocalFile(ShadowElement, InternalElement, ExternalElement):
             )
 
         return await app.uploadVoice(
-            self, self.filepath.read_bytes(), methodd, return_external=True
+            self.filepath.read_bytes(), methodd, return_external=True
         )
 
     async def getReal(self, method: UploadMethods) -> "Image":

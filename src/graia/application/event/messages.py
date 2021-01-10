@@ -6,7 +6,15 @@ from graia.broadcast.entities.dispatcher import BaseDispatcher
 from graia.broadcast.interfaces.dispatcher import DispatcherInterface
 from graia.application.group import Member, Group
 from graia.application.friend import Friend
+from graia.application.message.elements.internal import Source
 from . import ApplicationDispatcher, MiraiEvent
+
+
+class SourceElementDispatcher(BaseDispatcher):
+    @staticmethod
+    def catch(interface: DispatcherInterface):
+        if interface.annotation is Source:
+            return interface.event.messageChain.getFirst(Source)
 
 
 class FriendMessage(MiraiEvent):
@@ -15,7 +23,7 @@ class FriendMessage(MiraiEvent):
     sender: Friend
 
     class Dispatcher(BaseDispatcher):
-        mixin = [MessageChainCatcher, ApplicationDispatcher]
+        mixin = [MessageChainCatcher, ApplicationDispatcher, SourceElementDispatcher]
 
         @staticmethod
         def catch(interface: DispatcherInterface):
@@ -29,7 +37,7 @@ class GroupMessage(MiraiEvent):
     sender: Member
 
     class Dispatcher(BaseDispatcher):
-        mixin = [MessageChainCatcher, ApplicationDispatcher]
+        mixin = [MessageChainCatcher, ApplicationDispatcher, SourceElementDispatcher]
 
         @staticmethod
         def catch(interface: DispatcherInterface):
@@ -49,7 +57,7 @@ class TempMessage(MiraiEvent):
         return super().parse_obj(obj)
 
     class Dispatcher(BaseDispatcher):
-        mixin = [MessageChainCatcher, ApplicationDispatcher]
+        mixin = [MessageChainCatcher, ApplicationDispatcher, SourceElementDispatcher]
 
         @staticmethod
         def catch(interface: DispatcherInterface):

@@ -30,6 +30,7 @@ from graia.application.event.network import (
     SessionRefreshFailed,
     SessionRefreshed,
 )
+from graia.application.test.request_tracing import HttpRequestTracing
 
 from .context import enter_context, enter_message_send_context
 from .entities import MiraiConfig, UploadMethods
@@ -183,13 +184,15 @@ class GraiaMiraiApplication:
         group_message_log_format: str = "{bot_id}: [{group_name}({group_id}] {member_name}({member_id}) -> {message_string}",
         friend_message_log_format: str = "{bot_id}: [{friend_name}({friend_id})] -> {message_string}",
         temp_message_log_format: str = "{bot_id}: [{group_name}({group_id}.{member_name}({member_id})] -> {message_string}",
-        json_loader: Callable[[Any], Any] = json.loads
+        json_loader: Callable[[Any], Any] = json.loads,
     ):
         self.broadcast = broadcast
         self.connect_info = connect_info
-        self.session = session or ClientSession(loop=broadcast.loop)
         self.logger = logger or LoggingLogger(**({"debug": True} if debug else {}))
         self.debug = debug
+        self.session = session or ClientSession(loop=broadcast.loop)
+        if debug:
+            self.session = HttpRequestTracing(self.logger).build_session(self.session)
 
         self.chat_log_enabled = enable_chat_log
 
@@ -562,7 +565,7 @@ class GraiaMiraiApplication:
         target: Union[Friend, int],
         message: MessageChain,
         *,
-        quote: Optional[Union[Source, int]] = None
+        quote: Optional[Union[Source, int]] = None,
     ) -> BotMessage:
         """发送消息给好友, 可以指定回复的消息.
 
@@ -614,7 +617,7 @@ class GraiaMiraiApplication:
         group: Union[Group, int],
         message: MessageChain,
         *,
-        quote: Optional[Union[Source, int]] = None
+        quote: Optional[Union[Source, int]] = None,
     ) -> BotMessage:
         """发送消息到群组内, 可以指定回复的消息.
 
@@ -665,7 +668,7 @@ class GraiaMiraiApplication:
         target: Union[Member, int],
         message: MessageChain,
         *,
-        quote: Optional[Union[Source, int]] = None
+        quote: Optional[Union[Source, int]] = None,
     ) -> BotMessage:
         """发送临时会话给群组中的特定成员, 可指定回复的消息.
 
@@ -1362,9 +1365,6 @@ class GraiaMiraiApplication:
                     received_data = self.json_loader(ws_message.data)
                     raise_for_return_code(received_data)
 
-                    if self.debug:
-                        self.logger.debug("websocket received: " + str(received_data))
-
                     try:
                         event = await self.auto_parse_by_type(received_data)
                     except ValueError as e:
@@ -1378,6 +1378,9 @@ class GraiaMiraiApplication:
                             )
                         )
                         continue
+
+                    if self.debug:
+                        self.logger.debug(f"websocket received: {event}")
 
                     with enter_context(app=self, event_i=event):
                         self.broadcast.postEvent(event)

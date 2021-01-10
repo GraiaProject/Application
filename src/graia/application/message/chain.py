@@ -1,5 +1,16 @@
 from __future__ import annotations
-from typing import Any, Dict, List, NoReturn, Sequence, Tuple, Type, Union, Optional
+from typing import (
+    Any,
+    Dict,
+    Iterable,
+    List,
+    NoReturn,
+    Sequence,
+    Tuple,
+    Type,
+    Union,
+    Optional,
+)
 
 from graia.application.exceptions import EntangledSuperposition
 from graia.broadcast.utilles import run_always_await
@@ -217,7 +228,7 @@ class MessageChain(BaseModel):
                     await run_always_await(
                         i.toExternal(
                             *(extra[i.__class__][0] if i.__class__ in extra else []),
-                            **(extra[i.__class__][1] if i.__class__ in extra else {})
+                            **(extra[i.__class__][1] if i.__class__ in extra else {}),
                         )
                     )
                 )
@@ -246,6 +257,29 @@ class MessageChain(BaseModel):
             List[T]: 获取到的符合要求的所有消息元素; 另: 可能是空列表([]).
         """
         return [i for i in self.__root__ if type(i) is element_class]
+
+    def getOne(self, element_class: Type[Element], index: int) -> T:
+        """获取消息链中第 index + 1 个特定类型的消息元素
+
+        Args:
+            element_class (Type[Element]): 指定的消息元素的类型, 例如 "Plain", "At", "Image" 等.
+            index (int): 索引, 从 0 开始数
+
+        Returns:
+            T: 消息链第 index + 1 个特定类型的消息元素
+        """
+        return self.get(element_class)[index]
+
+    def getFirst(self, element_class: Type[Element]) -> T:
+        """获取消息链中第 1 个特定类型的消息元素
+
+        Args:
+            element_class (Type[Element]): 指定的消息元素的类型, 例如 "Plain", "At", "Image" 等.
+
+        Returns:
+            T: 消息链第 1 个特定类型的消息元素
+        """
+        return self.getOne(element_class, 0)
 
     def asDisplay(self) -> str:
         """获取以字符串形式表示的消息链, 且趋于通常你见到的样子.
@@ -492,3 +526,23 @@ class MessageChain(BaseModel):
             MessageChain: 不包含以上元素的消息链.
         """
         return self.exclude(Source, Quote, Xml, Json, App, Poke)
+
+    def __repr__(self) -> str:
+        return f"MessageChain({repr(self.__root__)})"
+
+    def __iter__(self) -> Iterable[Element]:
+        yield from self.__root__
+
+    def startswith(self, string: str) -> bool:
+        from .elements.internal import Plain
+
+        if not self.__root__ or type(self.__root__[0]) is not Plain:
+            return False
+        return self.__root__[0].text.startswith(string)
+
+    def endswith(self, string: str) -> bool:
+        from .elements.internal import Plain
+
+        if not self.__root__ or type(self.__root__[-1]) is not Plain:
+            return False
+        return self.__root__[-1].text.endswith(string)

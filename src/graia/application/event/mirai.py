@@ -629,7 +629,7 @@ class MemberMuteEvent(MiraiEvent):
                 elif interface.default == "operator":
                     return interface.event.operator
             elif interface.annotation is Group:
-                return interface.member.group
+                return interface.event.member.group
 
 
 class MemberUnmuteEvent(MiraiEvent):

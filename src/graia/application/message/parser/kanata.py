@@ -148,7 +148,7 @@ class Kanata(BaseDispatcher):
                     # 推进当前进度.
                     plain_text_length = len(current_chain.__root__[0].text)
                     pattern_length = re_match_result.end() - re_match_result.start()
-                    if (pattern_length + 1) > plain_text_length:
+                    if (pattern_length + 1) > plain_text_length:  # 推进后可能造成错误
                         # 不推进 text_index 进度, 转而推进 element_index 进度
                         reached_message_index = (reached_message_index[0] + 1, None)
                     else:
@@ -303,7 +303,6 @@ class Kanata(BaseDispatcher):
         return [i.name for i in self.signature_list if isinstance(i, PatternReceiver)]
 
     async def beforeDispatch(self, interface: DispatcherInterface):
-        print("??")
         message_chain: MessageChain = (
             await interface.lookup_param("__kanata_messagechain__", MessageChain, None)
         ).exclude(Source)
@@ -321,7 +320,6 @@ class Kanata(BaseDispatcher):
                         (1, 1):
                     ]  # 利用 MessageIndex 可以非常快捷的实现特性.
         mapping_result = self.detect_and_mapping(self.signature_list, message_chain)
-        print(mapping_result)
         if mapping_result is not None:
             self.content_token = self.parsed_items.set(self.allocation(mapping_result))
         else:
