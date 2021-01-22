@@ -6,7 +6,6 @@ from aiohttp.tracing import TraceRequestEndParams, TraceRequestStartParams
 from ..logger import AbstractLogger
 import random
 import string
-from devtools import debug
 
 
 class HttpRequestTracing:
