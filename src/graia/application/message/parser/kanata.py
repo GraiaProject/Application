@@ -257,13 +257,7 @@ class Kanata(BaseDispatcher):
                             v[1][1]
                             - (
                                 origin_or_zero(v[0][1])
-                                if any(
-                                    [
-                                        v[0][0] + 1 == v[1][0],
-                                        v[0][0] == v[1][0],
-                                        v[0][0] - 1 == v[1][0],
-                                    ]
-                                )
+                                if (v[1][0] <= v[0][0] <= v[1][0])
                                 else 0
                             )
                         )

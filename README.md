@@ -33,6 +33,9 @@ poetry install
 我们在[这里](https://github.com/GraiaProject/Application/blob/master/CONTRIBUTING.md)写了你在贡献本项目及
 `Graia Project` 时所可能需要注意的事项.
 
+因为历史原因, 我们的文档, 即 [Graia Document](https://github.com/GreyElaina/GraiaDocument) 目前急需改进和完善,
+如果有意愿, 欢迎提起 Pull Request.
+
 若你在使用的过程中遇到了问题, 欢迎[提出聪明的问题](https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way/blob/master/README-zh_CN.md), 也请不要[使用糟糕的方式提问](https://github.com/tangx/Stop-Ask-Questions-The-Stupid-Ways), 我们希望有人能让这个项目变得更好.  
 
 若在使用时发现了本项目的问题, 先检查文档中是否有提及这一情况,

@@ -8,6 +8,7 @@ from typing import (
     Sequence,
     Tuple,
     Type,
+    TypeVar,
     Union,
     Optional,
 )
@@ -20,13 +21,8 @@ from .elements import ExternalElement, InternalElement, Element
 import regex
 import copy
 
-
-T = Element
+T = TypeVar("T", Type[Element])
 MessageIndex = Tuple[int, Optional[int]]
-
-
-def raiser(error):
-    raise error
 
 
 class MessageChain(BaseModel):
@@ -247,7 +243,7 @@ class MessageChain(BaseModel):
         """
         return element_class in [type(i) for i in self.__root__]
 
-    def get(self, element_class: Type[Element]) -> List[T]:
+    def get(self, element_class: T) -> List[T]:
         """获取消息链中所有特定类型的消息元素
 
         Args:
@@ -258,7 +254,7 @@ class MessageChain(BaseModel):
         """
         return [i for i in self.__root__ if type(i) is element_class]
 
-    def getOne(self, element_class: Type[Element], index: int) -> T:
+    def getOne(self, element_class: T, index: int) -> T:
         """获取消息链中第 index + 1 个特定类型的消息元素
 
         Args:
@@ -270,7 +266,7 @@ class MessageChain(BaseModel):
         """
         return self.get(element_class)[index]
 
-    def getFirst(self, element_class: Type[Element]) -> T:
+    def getFirst(self, element_class: T) -> T:
         """获取消息链中第 1 个特定类型的消息元素
 
         Args:
@@ -550,3 +546,20 @@ class MessageChain(BaseModel):
         if not self.__root__ or type(self.__root__[-1]) is not Plain:
             return False
         return self.__root__[-1].text.endswith(string)
+
+    def hasText(self, string: str) -> bool:
+        """判定消息链内是否包括相应字符串
+
+        Args:
+            string (str): 需要判断的字符串
+
+        Returns:
+            bool: 是否包括
+        """
+
+        from .elements.internal import Plain
+
+        for i in self.get(Plain):
+            if string in i.text:
+                return True
+        return False

@@ -13,6 +13,7 @@
  - 添加非必要的功能支持
  - 修改异常的代码行为
  - 在 Github Issue 里写关于某个文档尚未提到的特性的使用方法探索
+ - 帮助撰写 [GraiaDocument](https://github.com/GreyElaina/GraiaDocument)
 
 以下是我能想到的注意事项:
 

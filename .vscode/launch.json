@@ -5,6 +5,22 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Graia: Literature Test",
+            "type": "python",
+            "request": "launch",
+            "module": "graia.application.message.parser.literature",
+            "cwd": "${workspaceFolder}/src",
+            "justMyCode": false
+        },
+        {
+            "name": "Graia: Test for shlex",
+            "type": "python",
+            "request": "launch",
+            "module": "shlex",
+            "cwd": "${workspaceFolder}/src",
+            "justMyCode": false
+        },
+        {
             "name": "Python: test",
             "type": "python",
             "request": "launch",
