@@ -21,7 +21,7 @@ from .elements import ExternalElement, InternalElement, Element
 import regex
 import copy
 
-T = TypeVar("T", Type[Element])
+T = TypeVar("T", bound=Type[Element])
 MessageIndex = Tuple[int, Optional[int]]
 
 
