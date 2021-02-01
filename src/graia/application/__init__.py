@@ -1368,6 +1368,7 @@ class GraiaMiraiApplication:
                     try:
                         event = await self.auto_parse_by_type(received_data)
                     except ValueError as e:
+                        traceback.print_exc()
                         self.logger.error(
                             "".join(
                                 [

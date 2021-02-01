@@ -21,7 +21,6 @@ from .elements import ExternalElement, InternalElement, Element
 import regex
 import copy
 
-T = TypeVar("T")
 MessageIndex = Tuple[int, Optional[int]]
 
 
@@ -232,7 +231,7 @@ class MessageChain(BaseModel):
                 result.append(i)
         return MessageChain(__root__=tuple(result))
 
-    def has(self, element_class: T) -> bool:
+    def has(self, element_class: Element) -> bool:
         """判断消息链中是否含有特定类型的消息元素
 
         Args:
@@ -243,7 +242,7 @@ class MessageChain(BaseModel):
         """
         return element_class in [type(i) for i in self.__root__]
 
-    def get(self, element_class: T) -> List[T]:
+    def get(self, element_class: Element) -> List[Element]:
         """获取消息链中所有特定类型的消息元素
 
         Args:
@@ -254,7 +253,7 @@ class MessageChain(BaseModel):
         """
         return [i for i in self.__root__ if type(i) is element_class]
 
-    def getOne(self, element_class: T, index: int) -> T:
+    def getOne(self, element_class: Element, index: int) -> Element:
         """获取消息链中第 index + 1 个特定类型的消息元素
 
         Args:
@@ -266,7 +265,7 @@ class MessageChain(BaseModel):
         """
         return self.get(element_class)[index]
 
-    def getFirst(self, element_class: T) -> T:
+    def getFirst(self, element_class: Element) -> Element:
         """获取消息链中第 1 个特定类型的消息元素
 
         Args:
