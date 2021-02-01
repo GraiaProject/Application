@@ -100,10 +100,10 @@ class MessageChain(BaseModel):
             ```
     """
 
-    __root__: Union[List[T], Tuple[T]]
+    __root__: Sequence[Element]
 
     @classmethod
-    def create(cls, elements: Sequence[T]) -> "MessageChain":
+    def create(cls, elements: Sequence[Element]) -> "MessageChain":
         """从传入的序列(可以是元组 tuple, 也可以是列表 list) 创建消息链.
 
         Args:
@@ -115,7 +115,7 @@ class MessageChain(BaseModel):
         return cls(__root__=elements)
 
     @classmethod
-    def parse_obj(cls: Type["MessageChain"], obj: List[T]) -> "MessageChain":
+    def parse_obj(cls: Type["MessageChain"], obj: List[Element]) -> "MessageChain":
         """内部接口, 会自动将作为外部态的消息元素转为内部态.
 
         Args:
