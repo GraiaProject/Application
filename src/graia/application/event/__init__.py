@@ -9,7 +9,7 @@ class MiraiEvent(BaseEvent):
     __base_event__ = True
     type: str
 
-    @validator("type")
+    @validator("type", allow_reuse=True)
     def type_limit(cls, v):
         if cls.type != v:
             raise InvalidEventTypeDefinition(

@@ -70,7 +70,7 @@ class Quote(InternalElement, ExternalElement):
     targetId: int
     origin: "MessageChain"
 
-    @validator("origin", pre=True)
+    @validator("origin", pre=True, allow_reuse=True)
     def _(cls, v):
         from ..chain import MessageChain
 
@@ -327,7 +327,7 @@ class Image(InternalElement):
     path: Optional[str] = None
     type: Optional[ImageType]
 
-    @validator("type", always=True)
+    @validator("type", always=True, allow_reuse=True)
     def _(cls, v, values) -> ImageType:
         if v:
             return v
@@ -582,7 +582,7 @@ class Voice(InternalElement):
     def asDisplay(self) -> str:
         return "[语音]"
 
-    @validator("type", always=True)
+    @validator("type", always=True, allow_reuse=True)
     def _(cls, v, values) -> VoiceUploadType:
         if v:
             return v
