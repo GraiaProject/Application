@@ -1608,6 +1608,7 @@
                     <span class="k">try</span><span class="p">:</span>
                         <span class="n">event</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">auto_parse_by_type</span><span class="p">(</span><span class="n">received_data</span><span class="p">)</span>
                     <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                        <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">()</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
                             <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
                                 <span class="p">[</span>
@@ -3153,6 +3154,7 @@
                     <span class="k">try</span><span class="p">:</span>
                         <span class="n">event</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">auto_parse_by_type</span><span class="p">(</span><span class="n">received_data</span><span class="p">)</span>
                     <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                        <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">()</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
                             <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
                                 <span class="p">[</span>
@@ -3387,7 +3389,7 @@
 	group_message_log_format: str = &#39;{bot_id}: [{group_name}({group_id}] {member_name}({member_id}) -&gt; {message_string}&#39;,
 	friend_message_log_format: str = &#39;{bot_id}: [{friend_name}({friend_id})] -&gt; {message_string}&#39;,
 	temp_message_log_format: str = &#39;{bot_id}: [{group_name}({group_id}.{member_name}({member_id})] -&gt; {message_string}&#39;,
-	json_loader: Callable[[Any], Any] = &lt;function loads at 0x000001FD3CC6FE50&gt;
+	json_loader: Callable[[Any], Any] = &lt;function loads at 0x000002720397FE50&gt;
 )</span>        </div>
 
                         <details>
@@ -5755,6 +5757,7 @@ Returns:
                     <span class="k">try</span><span class="p">:</span>
                         <span class="n">event</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">auto_parse_by_type</span><span class="p">(</span><span class="n">received_data</span><span class="p">)</span>
                     <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                        <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">()</span>
                         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
                             <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
                                 <span class="p">[</span>

@@ -146,7 +146,6 @@
 <span class="kn">import</span> <span class="nn">regex</span>
 <span class="kn">import</span> <span class="nn">copy</span>
 
-<span class="n">T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;T&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="n">Type</span><span class="p">[</span><span class="n">Element</span><span class="p">])</span>
 <span class="n">MessageIndex</span> <span class="o">=</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span>
 
 
@@ -225,10 +224,10 @@
 <span class="sd">            ```</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">__root__</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">T</span><span class="p">],</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">T</span><span class="p">]]</span>
+    <span class="n">__root__</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Element</span><span class="p">]</span>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">elements</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">T</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;MessageChain&quot;</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">elements</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Element</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;MessageChain&quot;</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;从传入的序列(可以是元组 tuple, 也可以是列表 list) 创建消息链.</span>
 
 <span class="sd">        Args:</span>
@@ -240,7 +239,7 @@
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">__root__</span><span class="o">=</span><span class="n">elements</span><span class="p">)</span>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">parse_obj</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="s2">&quot;MessageChain&quot;</span><span class="p">],</span> <span class="n">obj</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">T</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;MessageChain&quot;</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">parse_obj</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="s2">&quot;MessageChain&quot;</span><span class="p">],</span> <span class="n">obj</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Element</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;MessageChain&quot;</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;内部接口, 会自动将作为外部态的消息元素转为内部态.</span>
 
 <span class="sd">        Args:</span>
@@ -357,7 +356,7 @@
                 <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">MessageChain</span><span class="p">(</span><span class="n">__root__</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span><span class="n">result</span><span class="p">))</span>
 
-    <span class="k">def</span> <span class="nf">has</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element_class</span><span class="p">:</span> <span class="n">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">has</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element_class</span><span class="p">:</span> <span class="n">Element</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;判断消息链中是否含有特定类型的消息元素</span>
 
 <span class="sd">        Args:</span>
@@ -368,7 +367,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">element_class</span> <span class="ow">in</span> <span class="p">[</span><span class="nb">type</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__root__</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element_class</span><span class="p">:</span> <span class="n">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element_class</span><span class="p">:</span> <span class="n">Element</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Element</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;获取消息链中所有特定类型的消息元素</span>
 
 <span class="sd">        Args:</span>
@@ -379,7 +378,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__root__</span> <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="ow">is</span> <span class="n">element_class</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">getOne</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element_class</span><span class="p">:</span> <span class="n">T</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">getOne</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element_class</span><span class="p">:</span> <span class="n">Element</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Element</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;获取消息链中第 index + 1 个特定类型的消息元素</span>
 
 <span class="sd">        Args:</span>
@@ -391,7 +390,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">element_class</span><span class="p">)[</span><span class="n">index</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">getFirst</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element_class</span><span class="p">:</span> <span class="n">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">getFirst</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element_class</span><span class="p">:</span> <span class="n">Element</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Element</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;获取消息链中第 1 个特定类型的消息元素</span>
 
 <span class="sd">        Args:</span>
@@ -417,7 +416,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            MessageChain: 拼接结果</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="nb">sum</span><span class="p">([</span><span class="n">i</span><span class="o">.</span><span class="n">__root__</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">chains</span><span class="p">],</span> <span class="p">[]))</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="nb">sum</span><span class="p">([</span><span class="nb">list</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">__root__</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">chains</span><span class="p">],</span> <span class="p">[]))</span>
 
     <span class="k">def</span> <span class="nf">plusWith</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">chains</span><span class="p">:</span> <span class="s2">&quot;MessageChain&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;MessageChain&quot;</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;在现有的基础上将另一消息链拼接到原来实例的尾部, 并生成, 返回新的实例.</span>
@@ -425,7 +424,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            MessageChain: 拼接结果</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="nb">sum</span><span class="p">([</span><span class="n">i</span><span class="o">.</span><span class="n">__root__</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">chains</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">__root__</span><span class="p">))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="nb">sum</span><span class="p">([</span><span class="nb">list</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">__root__</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">chains</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">__root__</span><span class="p">))</span>
 
     <span class="k">def</span> <span class="nf">plus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">chains</span><span class="p">:</span> <span class="s2">&quot;MessageChain&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NoReturn</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;在现有的基础上将另一消息链拼接到原来实例的尾部</span>
@@ -439,7 +438,7 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isImmutable</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;this chain is not mutable&quot;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">chains</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__root__</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">__root__</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__root__</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">__root__</span><span class="p">))</span>
 
     <span class="fm">__contains__</span> <span class="o">=</span> <span class="n">has</span>
 
@@ -777,10 +776,10 @@
 <span class="sd">            ```</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">__root__</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">T</span><span class="p">],</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">T</span><span class="p">]]</span>
+    <span class="n">__root__</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Element</span><span class="p">]</span>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">elements</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">T</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;MessageChain&quot;</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">elements</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Element</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;MessageChain&quot;</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;从传入的序列(可以是元组 tuple, 也可以是列表 list) 创建消息链.</span>
 
 <span class="sd">        Args:</span>
@@ -792,7 +791,7 @@
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">__root__</span><span class="o">=</span><span class="n">elements</span><span class="p">)</span>
 
     <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">parse_obj</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="s2">&quot;MessageChain&quot;</span><span class="p">],</span> <span class="n">obj</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">T</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;MessageChain&quot;</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">parse_obj</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="s2">&quot;MessageChain&quot;</span><span class="p">],</span> <span class="n">obj</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Element</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;MessageChain&quot;</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;内部接口, 会自动将作为外部态的消息元素转为内部态.</span>
 
 <span class="sd">        Args:</span>
@@ -909,7 +908,7 @@
                 <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">MessageChain</span><span class="p">(</span><span class="n">__root__</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span><span class="n">result</span><span class="p">))</span>
 
-    <span class="k">def</span> <span class="nf">has</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element_class</span><span class="p">:</span> <span class="n">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">has</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element_class</span><span class="p">:</span> <span class="n">Element</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;判断消息链中是否含有特定类型的消息元素</span>
 
 <span class="sd">        Args:</span>
@@ -920,7 +919,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">element_class</span> <span class="ow">in</span> <span class="p">[</span><span class="nb">type</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__root__</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element_class</span><span class="p">:</span> <span class="n">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element_class</span><span class="p">:</span> <span class="n">Element</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Element</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;获取消息链中所有特定类型的消息元素</span>
 
 <span class="sd">        Args:</span>
@@ -931,7 +930,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__root__</span> <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="ow">is</span> <span class="n">element_class</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">getOne</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element_class</span><span class="p">:</span> <span class="n">T</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">getOne</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element_class</span><span class="p">:</span> <span class="n">Element</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Element</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;获取消息链中第 index + 1 个特定类型的消息元素</span>
 
 <span class="sd">        Args:</span>
@@ -943,7 +942,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">element_class</span><span class="p">)[</span><span class="n">index</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">getFirst</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element_class</span><span class="p">:</span> <span class="n">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">getFirst</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element_class</span><span class="p">:</span> <span class="n">Element</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Element</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;获取消息链中第 1 个特定类型的消息元素</span>
 
 <span class="sd">        Args:</span>
@@ -969,7 +968,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            MessageChain: 拼接结果</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="nb">sum</span><span class="p">([</span><span class="n">i</span><span class="o">.</span><span class="n">__root__</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">chains</span><span class="p">],</span> <span class="p">[]))</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="nb">sum</span><span class="p">([</span><span class="nb">list</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">__root__</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">chains</span><span class="p">],</span> <span class="p">[]))</span>
 
     <span class="k">def</span> <span class="nf">plusWith</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">chains</span><span class="p">:</span> <span class="s2">&quot;MessageChain&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;MessageChain&quot;</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;在现有的基础上将另一消息链拼接到原来实例的尾部, 并生成, 返回新的实例.</span>
@@ -977,7 +976,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            MessageChain: 拼接结果</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="nb">sum</span><span class="p">([</span><span class="n">i</span><span class="o">.</span><span class="n">__root__</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">chains</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">__root__</span><span class="p">))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="nb">sum</span><span class="p">([</span><span class="nb">list</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">__root__</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">chains</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">__root__</span><span class="p">))</span>
 
     <span class="k">def</span> <span class="nf">plus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">chains</span><span class="p">:</span> <span class="s2">&quot;MessageChain&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NoReturn</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;在现有的基础上将另一消息链拼接到原来实例的尾部</span>
@@ -991,7 +990,7 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isImmutable</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;this chain is not mutable&quot;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">chains</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__root__</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">__root__</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__root__</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">__root__</span><span class="p">))</span>
 
     <span class="fm">__contains__</span> <span class="o">=</span> <span class="n">has</span>
 
@@ -1327,14 +1326,14 @@
                 <span class="def">def</span>
                 <span class="name">create</span><span class="signature">(
 	cls,
-	elements: Sequence[~T]
+	elements: Sequence[<a href="elements.html#Element">graia.application.message.elements.Element</a>]
 ) -&gt; <a href="#MessageChain">graia.application.message.chain.MessageChain</a></span>:
         </div>
 
                         <details>
                 <summary class="button">View Source</summary>
                 <div class="codehilite"><pre><span></span>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">elements</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">T</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;MessageChain&quot;</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">elements</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Element</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;MessageChain&quot;</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;从传入的序列(可以是元组 tuple, 也可以是列表 list) 创建消息链.</span>
 
 <span class="sd">        Args:</span>
@@ -1366,14 +1365,14 @@
                 <span class="def">def</span>
                 <span class="name">parse_obj</span><span class="signature">(
 	cls: type[<a href="#MessageChain">graia.application.message.chain.MessageChain</a>],
-	obj: List[~T]
+	obj: List[<a href="elements.html#Element">graia.application.message.elements.Element</a>]
 ) -&gt; <a href="#MessageChain">graia.application.message.chain.MessageChain</a></span>:
         </div>
 
                         <details>
                 <summary class="button">View Source</summary>
                 <div class="codehilite"><pre><span></span>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">parse_obj</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="s2">&quot;MessageChain&quot;</span><span class="p">],</span> <span class="n">obj</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">T</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;MessageChain&quot;</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">parse_obj</span><span class="p">(</span><span class="bp">cls</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="s2">&quot;MessageChain&quot;</span><span class="p">],</span> <span class="n">obj</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Element</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;MessageChain&quot;</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;内部接口, 会自动将作为外部态的消息元素转为内部态.</span>
 
 <span class="sd">        Args:</span>
@@ -1585,12 +1584,15 @@
                                             <div class="attr function">
             
                 <span class="def">def</span>
-                <span class="name">has</span><span class="signature">(self, element_class: ~T) -&gt; bool</span>:
+                <span class="name">has</span><span class="signature">(
+	self,
+	element_class: <a href="elements.html#Element">graia.application.message.elements.Element</a>
+) -&gt; bool</span>:
         </div>
 
                         <details>
                 <summary class="button">View Source</summary>
-                <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">has</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element_class</span><span class="p">:</span> <span class="n">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+                <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">has</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element_class</span><span class="p">:</span> <span class="n">Element</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;判断消息链中是否含有特定类型的消息元素</span>
 
 <span class="sd">        Args:</span>
@@ -1619,12 +1621,15 @@
                                             <div class="attr function">
             
                 <span class="def">def</span>
-                <span class="name">get</span><span class="signature">(self, element_class: ~T) -&gt; List[~T]</span>:
+                <span class="name">get</span><span class="signature">(
+	self,
+	element_class: <a href="elements.html#Element">graia.application.message.elements.Element</a>
+) -&gt; List[<a href="elements.html#Element">graia.application.message.elements.Element</a>]</span>:
         </div>
 
                         <details>
                 <summary class="button">View Source</summary>
-                <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element_class</span><span class="p">:</span> <span class="n">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
+                <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element_class</span><span class="p">:</span> <span class="n">Element</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Element</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;获取消息链中所有特定类型的消息元素</span>
 
 <span class="sd">        Args:</span>
@@ -1653,12 +1658,16 @@
                                             <div class="attr function">
             
                 <span class="def">def</span>
-                <span class="name">getOne</span><span class="signature">(self, element_class: ~T, index: int) -&gt; ~T</span>:
+                <span class="name">getOne</span><span class="signature">(
+	self,
+	element_class: <a href="elements.html#Element">graia.application.message.elements.Element</a>,
+	index: int
+) -&gt; <a href="elements.html#Element">graia.application.message.elements.Element</a></span>:
         </div>
 
                         <details>
                 <summary class="button">View Source</summary>
-                <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">getOne</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element_class</span><span class="p">:</span> <span class="n">T</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
+                <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">getOne</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element_class</span><span class="p">:</span> <span class="n">Element</span><span class="p">,</span> <span class="n">index</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Element</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;获取消息链中第 index + 1 个特定类型的消息元素</span>
 
 <span class="sd">        Args:</span>
@@ -1689,12 +1698,15 @@
                                             <div class="attr function">
             
                 <span class="def">def</span>
-                <span class="name">getFirst</span><span class="signature">(self, element_class: ~T) -&gt; ~T</span>:
+                <span class="name">getFirst</span><span class="signature">(
+	self,
+	element_class: <a href="elements.html#Element">graia.application.message.elements.Element</a>
+) -&gt; <a href="elements.html#Element">graia.application.message.elements.Element</a></span>:
         </div>
 
                         <details>
                 <summary class="button">View Source</summary>
-                <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">getFirst</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element_class</span><span class="p">:</span> <span class="n">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
+                <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">getFirst</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element_class</span><span class="p">:</span> <span class="n">Element</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Element</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;获取消息链中第 1 个特定类型的消息元素</span>
 
 <span class="sd">        Args:</span>
@@ -1767,7 +1779,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            MessageChain: 拼接结果</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="nb">sum</span><span class="p">([</span><span class="n">i</span><span class="o">.</span><span class="n">__root__</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">chains</span><span class="p">],</span> <span class="p">[]))</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="nb">sum</span><span class="p">([</span><span class="nb">list</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">__root__</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">chains</span><span class="p">],</span> <span class="p">[]))</span>
 </pre></div>
 
             </details>
@@ -1798,7 +1810,7 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            MessageChain: 拼接结果</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="nb">sum</span><span class="p">([</span><span class="n">i</span><span class="o">.</span><span class="n">__root__</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">chains</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">__root__</span><span class="p">))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="nb">sum</span><span class="p">([</span><span class="nb">list</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">__root__</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">chains</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">__root__</span><span class="p">))</span>
 </pre></div>
 
             </details>
@@ -1835,7 +1847,7 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isImmutable</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;this chain is not mutable&quot;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">chains</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__root__</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">__root__</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__root__</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">i</span><span class="o">.</span><span class="n">__root__</span><span class="p">))</span>
 </pre></div>
 
             </details>
