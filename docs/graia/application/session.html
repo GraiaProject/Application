@@ -276,13 +276,16 @@
 
                     <div class="docstring"><p>用于描述与上游接口会话, 并存储会话状态的实体类.</p>
 
-<p>Attributes:
-    host (AnyHttpUrl): <code>mirai-api-http</code> 服务所在的根接口地址
-    authKey (str): 在 <code>mirai-api-http</code> 配置流程中定义, 需为相同的值以通过安全验证.
-    account (int): 应用所使用账号的整数 ID.
-    websocket (bool): 是否使用 Websocket 方式获取事件, 若为 <code>False</code> 则使用 HTTP 短轮询方式获取事件, 性能较低.
-    sessionKey (str, optional): 会话标识, 即会话中用于进行操作的唯一认证凭证, 需要经过 <code>activeSession</code> 后才可用.
-    current_version (Tuple[int, int, int], optional): 上游服务的版本, 暂时没有自动获取.</p>
+<h6 id="attributes">Attributes</h6>
+
+<ul>
+<li><strong>host (AnyHttpUrl):</strong>  <code>mirai-api-http</code> 服务所在的根接口地址</li>
+<li><strong>authKey (str):</strong>  在 <code>mirai-api-http</code> 配置流程中定义, 需为相同的值以通过安全验证.</li>
+<li><strong>account (int):</strong>  应用所使用账号的整数 ID.</li>
+<li><strong>websocket (bool):</strong>  是否使用 Websocket 方式获取事件, 若为 <code>False</code> 则使用 HTTP 短轮询方式获取事件, 性能较低.</li>
+<li><strong>sessionKey (str, optional):</strong>  会话标识, 即会话中用于进行操作的唯一认证凭证, 需要经过 <code>activeSession</code> 后才可用.</li>
+<li><strong>currentversion (Tuple[int, int, int], optional):</strong>  上游服务的版本, 暂时没有自动获取.</li>
+</ul>
 </div>
 
 
@@ -374,11 +377,17 @@
 
                     <div class="docstring"><p>不再推荐的声明连接方式的方法, 用于兼容 v3 中的 url 声明连接信息的方法.</p>
 
-<p>Args:
-    url (str): <code>schema</code> 为 <code>mirai</code> 的链接, 具体请参考 python-mirai(v3) 的文档.</p>
+<h6 id="args">Args</h6>
 
-<p>Returns:
-    Session: 从给出的 url 生成的 <code><a href="#Session">Session</a></code> 实例.</p>
+<ul>
+<li><strong>url (str):</strong>  <code>schema</code> 为 <code>mirai</code> 的链接, 具体请参考 python-mirai(v3) 的文档.</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>Session: 从给出的 url 生成的 <code><a href="#Session">Session</a></code> 实例.</p>
+</blockquote>
 </div>
 
 
@@ -448,24 +457,30 @@
 <p>环境变量对应列表:</p>
 
 <ul>
-<li><code>GRAIA_HOST</code>: 与参数 <code>host</code> 同义;</li>
-<li><code>GRAIA_AUTHKEY</code>: 与参数 <code>authKey</code> 同义;</li>
-<li><code>GRAIA_ACCOUNT_ID</code>: 与参数 <code>account</code> 同义;</li>
-<li><code>GRAIA_WEBSOCKET_ENABLED</code>: 与参数 <code>websocket</code> 同义, 规则:
+<li><code>GRAIAHOST</code>: 与参数 <code>host</code> 同义;</li>
+<li><code>GRAIAAUTHKEY</code>: 与参数 <code>authKey</code> 同义;</li>
+<li><code>GRAIAACCOUNTID</code>: 与参数 <code>account</code> 同义;</li>
+<li><code>GRAIAWEBSOCKETENABLED</code>: 与参数 <code>websocket</code> 同义, 规则:
 <ul>
 <li><code>"true"</code> 或 <code>"1"</code> 得 <code>True</code>, 即启用 Websocket 方式连接;</li>
 <li><code>"false"</code> 或 <code>"0"</code> 得 <code>False</code>, 即禁用 Websocket 方式连接.</li>
 </ul></li>
 </ul>
 
-<p>Args:
-    host (AnyHttpUrl, optional): <code>mirai-api-http</code> 服务所在的根接口地址
-    authKey (str, optional): 在 <code>mirai-api-http</code> 配置流程中定义, 需为相同的值以通过安全验证.
-    account (int, optional): 应用所使用账号的整数 ID.
-    websocket (bool, optional): 是否使用 Websocket 方式获取事件, 若为 <code>False</code> 则使用 HTTP 短轮询方式获取事件, 性能较低, 默认为 <code>True</code>.</p>
+<h6 id="args">Args</h6>
 
-<p>Returns:
-    Session: 从给出的参数和所处环境变量生成的 <code><a href="#Session">Session</a></code> 实例.</p>
+<ul>
+<li><strong>host (AnyHttpUrl, optional):</strong>  <code>mirai-api-http</code> 服务所在的根接口地址</li>
+<li><strong>authKey (str, optional):</strong>  在 <code>mirai-api-http</code> 配置流程中定义, 需为相同的值以通过安全验证.</li>
+<li><strong>account (int, optional):</strong>  应用所使用账号的整数 ID.</li>
+<li><strong>websocket (bool, optional):</strong>  是否使用 Websocket 方式获取事件, 若为 <code>False</code> 则使用 HTTP 短轮询方式获取事件, 性能较低, 默认为 <code>True</code>.</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>Session: 从给出的参数和所处环境变量生成的 <code><a href="#Session">Session</a></code> 实例.</p>
+</blockquote>
 </div>
 
 

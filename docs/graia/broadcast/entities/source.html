@@ -112,13 +112,13 @@ this class parameterized with one or more type variables.
 For example, a generic mapping type might be defined as::</p>
 
 <p>class Mapping(Generic[KT, VT]):
-      def __getitem__(self, key: KT) -> VT:
+      def _getitem_(self, key: KT) -> VT:
           ...
       # Etc.</p>
 
 <p>This class can then be used as follows::</p>
 
-<p>def lookup_name(mapping: Mapping[KT, VT], key: KT, default: VT) -> VT:
+<p>def lookupname(mapping: Mapping[KT, VT], key: KT, default: VT) -> VT:
       try:
           return mapping[key]
       except KeyError:

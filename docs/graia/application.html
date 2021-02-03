@@ -3365,12 +3365,15 @@
                     <div class="docstring"><p>本类的实例即 应用实例(Application), 是面向 <code>mirai-api-http</code> 接口的实际功能实现.
 你的应用大多都围绕着本类及本类的实例展开.</p>
 
-<p>Attributes:
-    broadcast (Broadcast): 被指定的, 外置的事件系统, 即 <code>Broadcast Control</code>,
-        通常你不需要干涉该属性;
-    session (ClientSession): 即 <code>aiohttp.ClientSession</code> 的实例, 用于与 <code>mirai-api-http</code> 通讯.
-    connect_info (Session): 用于描述会话对象, 其中最重要的属性是 <code>sessionKey</code>, 用于存储当前的会话标识.
-    logger (AbstractLogger): 日志系统实现类的实例, 默认以 <code>logging</code> 为日志驱动.</p>
+<h6 id="attributes">Attributes</h6>
+
+<ul>
+<li><strong>broadcast (Broadcast):</strong>  被指定的, 外置的事件系统, 即 <code>Broadcast Control</code>,
+通常你不需要干涉该属性;</li>
+<li><strong>session (ClientSession):</strong>  即 <code>aiohttp.ClientSession</code> 的实例, 用于与 <code>mirai-api-http</code> 通讯.</li>
+<li><strong>connectinfo (Session):</strong>  用于描述会话对象, 其中最重要的属性是 <code>sessionKey</code>, 用于存储当前的会话标识.</li>
+<li><strong>logger (AbstractLogger):</strong>  日志系统实现类的实例, 默认以 <code>logging</code> 为日志驱动.</li>
+</ul>
 </div>
 
 
@@ -3389,7 +3392,7 @@
 	group_message_log_format: str = &#39;{bot_id}: [{group_name}({group_id}] {member_name}({member_id}) -&gt; {message_string}&#39;,
 	friend_message_log_format: str = &#39;{bot_id}: [{friend_name}({friend_id})] -&gt; {message_string}&#39;,
 	temp_message_log_format: str = &#39;{bot_id}: [{group_name}({group_id}.{member_name}({member_id})] -&gt; {message_string}&#39;,
-	json_loader: Callable[[Any], Any] = &lt;function loads at 0x000002720397FE50&gt;
+	json_loader: Callable[[Any], Any] = &lt;function loads at 0x000001EA0EB60E50&gt;
 )</span>        </div>
 
                         <details>
@@ -3634,13 +3637,19 @@
 
             </details>
 
-                    <div class="docstring"><p>从 connect_info 和 path 生成接口的地址.</p>
+                    <div class="docstring"><p>从 connectinfo 和 path 生成接口的地址.</p>
 
-<p>Args:
-    path (str): 需求的接口地址</p>
+<h6 id="args">Args</h6>
 
-<p>Returns:
-    str: 作为结果的地址</p>
+<ul>
+<li><strong>path (str):</strong>  需求的接口地址</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>str: 作为结果的地址</p>
+</blockquote>
 </div>
 
 
@@ -3687,11 +3696,17 @@
 
                     <div class="docstring"><p>从 <code>/about</code> 路由下获取当前使用的 <code>mirai-api-http</code> 版本, 注意, 该 API 并不是一开始就有的(1.6.2 版本才支持本接口).</p>
 
-<p>Args:
-    auto_set (bool, optional): 是否自动将版本存入 connect_info 以判断接口是否有效. Defaults to True.</p>
+<h6 id="args">Args</h6>
 
-<p>Returns:
-    Tuple: 以元组形式表示的版本信息.</p>
+<ul>
+<li><strong>autoset (bool, optional):</strong>  是否自动将版本存入 connectinfo 以判断接口是否有效. Defaults to True.</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>Tuple: 以元组形式表示的版本信息.</p>
+</blockquote>
 </div>
 
 
@@ -3727,8 +3742,11 @@
 
                     <div class="docstring"><p>从路由 <code>/auth</code> 下获取尚未被激活的会话标识并返回; 通常的, 你还需要使用 <code>activeSession</code> 方法激活它.</p>
 
-<p>Returns:
-    str: 即返回的会话标识</p>
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>str: 即返回的会话标识</p>
+</blockquote>
 </div>
 
 
@@ -3772,14 +3790,20 @@
 
             </details>
 
-                    <div class="docstring"><p>激活当前已经存入 connect_info 的会话标识,
+                    <div class="docstring"><p>激活当前已经存入 connectinfo 的会话标识,
 如果没有事先调用 <code>authenticate</code> 方法获取未激活的会话标识, 则会触发 <code>InvaildSession</code> 错误.</p>
 
-<p>Raises:
-    InvaildSession: 没有事先调用 <code>authenticate</code> 方法获取未激活的会话标识</p>
+<h6 id="raises">Raises</h6>
 
-<p>Returns:
-    NoReturn: 没有有意义的返回, 或者说, 返回 <code>None</code> 就代表这个操作成功了.</p>
+<ul>
+<li><strong>InvaildSession:</strong>  没有事先调用 <code>authenticate</code> 方法获取未激活的会话标识</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>NoReturn: 没有有意义的返回, 或者说, 返回 <code>None</code> 就代表这个操作成功了.</p>
+</blockquote>
 </div>
 
 
@@ -3828,11 +3852,17 @@
 
                     <div class="docstring"><p>释放当前激活/未激活的会话标识</p>
 
-<p>Raises:
-    InvaildSession: 没有事先调用 <code>authenticate</code> 方法获取会话标识</p>
+<h6 id="raises">Raises</h6>
 
-<p>Returns:
-    NoReturn: 没有有意义的返回, 或者说, 返回 <code>None</code> 就代表这个操作成功了.</p>
+<ul>
+<li><strong>InvaildSession:</strong>  没有事先调用 <code>authenticate</code> 方法获取会话标识</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>NoReturn: 没有有意义的返回, 或者说, 返回 <code>None</code> 就代表这个操作成功了.</p>
+</blockquote>
 </div>
 
 
@@ -3875,12 +3905,18 @@
 
                     <div class="docstring"><p>尝试从已知的群组唯一ID, 获取对应群组的信息; 可能返回 None.</p>
 
-<p>Args:
-    group_id (int): 尝试获取的群组的唯一 ID.</p>
+<h6 id="args">Args</h6>
 
-<p>Returns:
-    Group: 操作成功, 你得到了你应得的.
-    None: 未能获取到.</p>
+<ul>
+<li><strong>groupid (int):</strong>  尝试获取的群组的唯一 ID.</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>Group: 操作成功, 你得到了你应得的.
+  None: 未能获取到.</p>
+</blockquote>
 </div>
 
 
@@ -3923,8 +3959,11 @@
 
                     <div class="docstring"><p>获取当前会话账号所加入的所有群组的信息.</p>
 
-<p>Returns:
-    List[Group]: 当前会话账号所加入的所有群组的信息</p>
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>List[Group]: 当前会话账号所加入的所有群组的信息</p>
+</blockquote>
 </div>
 
 
@@ -3971,13 +4010,19 @@
 
                     <div class="docstring"><p>尝试从已知的群组唯一 ID 和已知的群组成员的 ID, 获取对应成员的信息; 可能返回 None.</p>
 
-<p>Args:
-    group_id (Union[Group, int]): 已知的群组唯一 ID
-    member_id (int): 已知的群组成员的 ID</p>
+<h6 id="args">Args</h6>
 
-<p>Returns:
-    Member: 操作成功, 你得到了你应得的.
-    None: 未能获取到.</p>
+<ul>
+<li><strong>groupid (Union[Group, int]):</strong>  已知的群组唯一 ID</li>
+<li><strong>memberid (int):</strong>  已知的群组成员的 ID</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>Member: 操作成功, 你得到了你应得的.
+  None: 未能获取到.</p>
+</blockquote>
 </div>
 
 
@@ -4029,11 +4074,17 @@
 
                     <div class="docstring"><p>获取群组中所有群组成员的信息</p>
 
-<p>Args:
-    group (Union[Group, int]): 群组/群组ID</p>
+<h6 id="args">Args</h6>
 
-<p>Returns:
-    List[Member]: 即群组中所有成员的可被获取到的信息.</p>
+<ul>
+<li><strong>group (Union[Group, int]):</strong>  群组/群组ID</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>List[Member]: 即群组中所有成员的可被获取到的信息.</p>
+</blockquote>
 </div>
 
 
@@ -4076,8 +4127,11 @@
 
                     <div class="docstring"><p>获取当前会话账号所拥有的所有好友的信息</p>
 
-<p>Returns:
-    List[Friend]: 当前会话账号所拥有的所有好友的信息</p>
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>List[Friend]: 当前会话账号所拥有的所有好友的信息</p>
+</blockquote>
 </div>
 
 
@@ -4120,12 +4174,18 @@
 
                     <div class="docstring"><p>从已知的可能的好友 ID, 获取 Friend 实例.</p>
 
-<p>Args:
-    friend_id (int): 已知的可能的好友 ID.</p>
+<h6 id="args">Args</h6>
 
-<p>Returns:
-    Friend: 操作成功, 你得到了你应得的.
-    None: 未能获取到.</p>
+<ul>
+<li><strong>friendid (int):</strong>  已知的可能的好友 ID.</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>Friend: 操作成功, 你得到了你应得的.
+  None: 未能获取到.</p>
+</blockquote>
 </div>
 
 
@@ -4181,14 +4241,22 @@
 
             </details>
 
-                    <div class="docstring"><p>上传一张图片到远端服务器, 需要提供: 图片的原始数据(bytes), 图片的上传类型; 你可以控制是否返回外部态的 Image 消息元素.
-Args:
-    image_bytes (bytes): 图片的原始数据
-    method (UploadMethods): 图片的上传类型
-    return_external (bool, optional): 是否返回外部态的 Image 消息元素. 默认为 False.
-Returns:
-    Image(internal): 内部态的 Image 消息元素
-    Image(external): 外部态的 Image 消息元素</p>
+                    <div class="docstring"><p>上传一张图片到远端服务器, 需要提供: 图片的原始数据(bytes), 图片的上传类型; 你可以控制是否返回外部态的 Image 消息元素.</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>imagebytes (bytes):</strong>  图片的原始数据</li>
+<li><strong>method (UploadMethods):</strong>  图片的上传类型</li>
+<li><strong>returnexternal (bool, optional):</strong>  是否返回外部态的 Image 消息元素. 默认为 False.</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>Image(internal): 内部态的 Image 消息元素
+  Image(external): 外部态的 Image 消息元素</p>
+</blockquote>
 </div>
 
 
@@ -4251,14 +4319,20 @@ Returns:
 
                     <div class="docstring"><p>上传一份语音数据(类型为原始 bytes)到远端服务器, 需要提供: 语音的原始数据(bytes), 语音的上传类型(默认为 Group); 你可以控制是否返回外部态的 Voice 消息元素.</p>
 
-<p>Args:
-    voice_bytes (bytes): 语音的原始数据
-    method (UploadMethods): 语音的上传类型, 默认为 <code>UploadMethods.Group</code>.
-    return_external (bool, optional): 是否返回外部态的 Voice 消息元素. 默认为 False.</p>
+<h6 id="args">Args</h6>
 
-<p>Returns:
-    Voice(internal): 内部态的 Voice 消息元素
-    Voice(external): 外部态的 Voice 消息元素</p>
+<ul>
+<li><strong>voicebytes (bytes):</strong>  语音的原始数据</li>
+<li><strong>method (UploadMethods):</strong>  语音的上传类型, 默认为 <code>UploadMethods.Group</code>.</li>
+<li><strong>returnexternal (bool, optional):</strong>  是否返回外部态的 Voice 消息元素. 默认为 False.</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>Voice(internal): 内部态的 Voice 消息元素
+  Voice(external): 外部态的 Voice 消息元素</p>
+</blockquote>
 </div>
 
 
@@ -4338,13 +4412,19 @@ Returns:
 
                     <div class="docstring"><p>发送消息给好友, 可以指定回复的消息.</p>
 
-<p>Args:
-    target (Union[Friend, int]): 指定的好友
-    message (MessageChain): 有效的, 可发送的(Sendable)消息链.
-    quote (Optional[Union[Source, int]], optional): 需要回复的消息, 不要忽视我啊喂?!!, 默认为 None.</p>
+<h6 id="args">Args</h6>
 
-<p>Returns:
-    BotMessage: 即当前会话账号所发出消息的元数据, 内包含有一 <code>messageId</code> 属性, 可用于回复.</p>
+<ul>
+<li><strong>target (Union[Friend, int]):</strong>  指定的好友</li>
+<li><strong>message (MessageChain):</strong>  有效的, 可发送的(Sendable)消息链.</li>
+<li><strong>quote (Optional[Union[Source, int]], optional):</strong>  需要回复的消息, 不要忽视我啊喂?!!, 默认为 None.</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>BotMessage: 即当前会话账号所发出消息的元数据, 内包含有一 <code>messageId</code> 属性, 可用于回复.</p>
+</blockquote>
 </div>
 
 
@@ -4422,13 +4502,19 @@ Returns:
 
                     <div class="docstring"><p>发送消息到群组内, 可以指定回复的消息.</p>
 
-<p>Args:
-    group (Union[Group, int]): 指定的群组, 可以是群组的 ID 也可以是 Group 实例.
-    message (MessageChain): 有效的, 可发送的(Sendable)消息链.
-    quote (Optional[Union[Source, int]], optional): 需要回复的消息, 不要忽视我啊喂?!!, 默认为 None.</p>
+<h6 id="args">Args</h6>
 
-<p>Returns:
-    BotMessage: 即当前会话账号所发出消息的元数据, 内包含有一 <code>messageId</code> 属性, 可用于回复.</p>
+<ul>
+<li><strong>group (Union[Group, int]):</strong>  指定的群组, 可以是群组的 ID 也可以是 Group 实例.</li>
+<li><strong>message (MessageChain):</strong>  有效的, 可发送的(Sendable)消息链.</li>
+<li><strong>quote (Optional[Union[Source, int]], optional):</strong>  需要回复的消息, 不要忽视我啊喂?!!, 默认为 None.</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>BotMessage: 即当前会话账号所发出消息的元数据, 内包含有一 <code>messageId</code> 属性, 可用于回复.</p>
+</blockquote>
 </div>
 
 
@@ -4513,14 +4599,20 @@ Returns:
 
                     <div class="docstring"><p>发送临时会话给群组中的特定成员, 可指定回复的消息.</p>
 
-<p>Args:
-    group (Union[Group, int]): 指定的群组, 可以是群组的 ID 也可以是 Group 实例.
-    target (Union[Member, int]): 指定的群组成员, 可以是成员的 ID 也可以是 Member 实例.
-    message (MessageChain): 有效的, 可发送的(Sendable)消息链.
-    quote (Optional[Union[Source, int]], optional): 需要回复的消息, 不要忽视我啊喂?!!, 默认为 None.</p>
+<h6 id="args">Args</h6>
 
-<p>Returns:
-    BotMessage: 即当前会话账号所发出消息的元数据, 内包含有一 <code>messageId</code> 属性, 可用于回复.</p>
+<ul>
+<li><strong>group (Union[Group, int]):</strong>  指定的群组, 可以是群组的 ID 也可以是 Group 实例.</li>
+<li><strong>target (Union[Member, int]):</strong>  指定的群组成员, 可以是成员的 ID 也可以是 Member 实例.</li>
+<li><strong>message (MessageChain):</strong>  有效的, 可发送的(Sendable)消息链.</li>
+<li><strong>quote (Optional[Union[Source, int]], optional):</strong>  需要回复的消息, 不要忽视我啊喂?!!, 默认为 None.</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>BotMessage: 即当前会话账号所发出消息的元数据, 内包含有一 <code>messageId</code> 属性, 可用于回复.</p>
+</blockquote>
 </div>
 
 
@@ -4570,11 +4662,17 @@ Returns:
 
                     <div class="docstring"><p>撤回特定的消息; 撤回自己的消息需要在发出后 2 分钟内才能成功撤回; 如果在群组内, 需要撤回他人的消息则需要管理员/群主权限.</p>
 
-<p>Args:
-    target (Union[Source, BotMessage, int]): 特定信息的 <code>messageId</code>, 可以是 <code>Source</code> 实例, <code>BotMessage</code> 实例或者是单纯的 int 整数.</p>
+<h6 id="args">Args</h6>
 
-<p>Returns:
-    NoReturn: 没有有意义的返回, 或者说, 返回 <code>None</code> 就代表这个操作成功了.</p>
+<ul>
+<li><strong>target (Union[Source, BotMessage, int]):</strong>  特定信息的 <code>messageId</code>, 可以是 <code>Source</code> 实例, <code>BotMessage</code> 实例或者是单纯的 int 整数.</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>NoReturn: 没有有意义的返回, 或者说, 返回 <code>None</code> 就代表这个操作成功了.</p>
+</blockquote>
 </div>
 
 
@@ -4643,11 +4741,17 @@ Returns:
 
                     <div class="docstring"><p>从路由 <code>/fetchMessage</code> 处获取指定数量的消息; 当关闭 Websocket 时, 该方法被用于获取事件.</p>
 
-<p>Args:
-    count (int, optional): 消息获取的数量. 默认为 10.</p>
+<h6 id="args">Args</h6>
 
-<p>Returns:
-    List[Union[GroupMessage, TempMessage, FriendMessage]]: 获取到的消息</p>
+<ul>
+<li><strong>count (int, optional):</strong>  消息获取的数量. 默认为 10.</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>List[Union[GroupMessage, TempMessage, FriendMessage]]: 获取到的消息</p>
+</blockquote>
 </div>
 
 
@@ -4884,11 +4988,17 @@ Returns:
 
                     <div class="docstring"><p>尝试从已知的 <code>messageId</code> 获取缓存中的消息</p>
 
-<p>Args:
-    source (Union[Source, int]): 需要获取的消息的 <code>messageId</code></p>
+<h6 id="args">Args</h6>
 
-<p>Returns:
-    Union[GroupMessage, TempMessage, FriendMessage]: 获取到的消息</p>
+<ul>
+<li><strong>source (Union[Source, int]):</strong>  需要获取的消息的 <code>messageId</code></li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>Union[GroupMessage, TempMessage, FriendMessage]: 获取到的消息</p>
+</blockquote>
 </div>
 
 
@@ -4934,8 +5044,11 @@ Returns:
 
                     <div class="docstring"><p>获取 <code>mirai-api-http</code> 内部缓存中的消息的数量</p>
 
-<p>Returns:
-    int: 缓存中的消息的数量</p>
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>int: 缓存中的消息的数量</p>
+</blockquote>
 </div>
 
 
@@ -4980,11 +5093,17 @@ Returns:
 
                     <div class="docstring"><p>在指定群组开启全体禁言, 需要当前会话账号在指定群主有相应权限(管理员或者群主权限)</p>
 
-<p>Args:
-    group (Union[Group, int]): 指定的群组.</p>
+<h6 id="args">Args</h6>
 
-<p>Returns:
-    NoReturn: 没有有意义的返回, 或者说, 返回 <code>None</code> 就代表这个操作成功了.</p>
+<ul>
+<li><strong>group (Union[Group, int]):</strong>  指定的群组.</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>NoReturn: 没有有意义的返回, 或者说, 返回 <code>None</code> 就代表这个操作成功了.</p>
+</blockquote>
 </div>
 
 
@@ -5029,11 +5148,17 @@ Returns:
 
                     <div class="docstring"><p>在指定群组关闭全体禁言, 需要当前会话账号在指定群主有相应权限(管理员或者群主权限)</p>
 
-<p>Args:
-    group (Union[Group, int]): 指定的群组.</p>
+<h6 id="args">Args</h6>
 
-<p>Returns:
-    NoReturn: 没有有意义的返回, 或者说, 返回 <code>None</code> 就代表这个操作成功了.</p>
+<ul>
+<li><strong>group (Union[Group, int]):</strong>  指定的群组.</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>NoReturn: 没有有意义的返回, 或者说, 返回 <code>None</code> 就代表这个操作成功了.</p>
+</blockquote>
 </div>
 
 
@@ -5097,16 +5222,25 @@ Returns:
                     <div class="docstring"><p>在指定群组禁言指定群成员; 需要具有相应权限(管理员/群主); <code>time</code> 不得大于 <code>30*24*60*60=2592000</code> 或小于 <code>0</code>, 否则会自动修正;
 当 <code>time</code> 小于等于 <code>0</code> 时, 不会触发禁言操作; 禁言对象极有可能触发 <code>PermissionError</code>, 在这之前请对其进行判断!</p>
 
-<p>Args:
-    group (Union[Group, int]): 指定的群组
-    member (Union[Member, int]): 指定的群成员(只能是普通群员或者是管理员, 后者则要求群主权限)
-    time (int): 禁言事件, 单位秒, 修正规则: <code>{time|0 &lt; time &lt;= 2592000}</code></p>
+<h6 id="args">Args</h6>
 
-<p>Raises:
-    PermissionError: 没有相应操作权限.</p>
+<ul>
+<li><strong>group (Union[Group, int]):</strong>  指定的群组</li>
+<li><strong>member (Union[Member, int]):</strong>  指定的群成员(只能是普通群员或者是管理员, 后者则要求群主权限)</li>
+<li><strong>time (int): 禁言事件, 单位秒, 修正规则:</strong>  <code>{time|0 &lt; time &lt;= 2592000}</code></li>
+</ul>
 
-<p>Returns:
-    NoReturn: 没有有意义的返回, 或者说, 返回 <code>None</code> 就代表这个操作成功了.</p>
+<h6 id="raises">Raises</h6>
+
+<ul>
+<li><strong>PermissionError:</strong>  没有相应操作权限.</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>NoReturn: 没有有意义的返回, 或者说, 返回 <code>None</code> 就代表这个操作成功了.</p>
+</blockquote>
 </div>
 
 
@@ -5162,15 +5296,24 @@ Returns:
 
                     <div class="docstring"><p>在指定群组解除对指定群成员的禁言; 需要具有相应权限(管理员/群主); 对象极有可能触发 <code>PermissionError</code>, 在这之前请对其进行判断!</p>
 
-<p>Args:
-    group (Union[Group, int]): 指定的群组
-    member (Union[Member, int]): 指定的群成员(只能是普通群员或者是管理员, 后者则要求群主权限)</p>
+<h6 id="args">Args</h6>
 
-<p>Raises:
-    PermissionError: 没有相应操作权限.</p>
+<ul>
+<li><strong>group (Union[Group, int]):</strong>  指定的群组</li>
+<li><strong>member (Union[Member, int]):</strong>  指定的群成员(只能是普通群员或者是管理员, 后者则要求群主权限)</li>
+</ul>
 
-<p>Returns:
-    NoReturn: 没有有意义的返回, 或者说, 返回 <code>None</code> 就代表这个操作成功了.</p>
+<h6 id="raises">Raises</h6>
+
+<ul>
+<li><strong>PermissionError:</strong>  没有相应操作权限.</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>NoReturn: 没有有意义的返回, 或者说, 返回 <code>None</code> 就代表这个操作成功了.</p>
+</blockquote>
 </div>
 
 
@@ -5229,13 +5372,19 @@ Returns:
 
                     <div class="docstring"><p>将目标群组成员从指定群组删除; 需要具有相应权限(管理员/群主)</p>
 
-<p>Args:
-    group (Union[Group, int]): 指定的群组
-    member (Union[Member, int]): 指定的群成员(只能是普通群员或者是管理员, 后者则要求群主权限)
-    message (Optional[str], optional): 如果给出, 则作为该操作的利益并向对象展示; 在当前版本中, 指定本参数无效. 默认为 None.</p>
+<h6 id="args">Args</h6>
 
-<p>Returns:
-    NoReturn: 没有有意义的返回, 或者说, 返回 <code>None</code> 就代表这个操作成功了.</p>
+<ul>
+<li><strong>group (Union[Group, int]):</strong>  指定的群组</li>
+<li><strong>member (Union[Member, int]):</strong>  指定的群成员(只能是普通群员或者是管理员, 后者则要求群主权限)</li>
+<li><strong>message (Optional[str], optional):</strong>  如果给出, 则作为该操作的利益并向对象展示; 在当前版本中, 指定本参数无效. 默认为 None.</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>NoReturn: 没有有意义的返回, 或者说, 返回 <code>None</code> 就代表这个操作成功了.</p>
+</blockquote>
 </div>
 
 
@@ -5280,11 +5429,17 @@ Returns:
 
                     <div class="docstring"><p>主动从指定群组退出</p>
 
-<p>Args:
-    group (Union[Group, int]): 需要退出的指定群组</p>
+<h6 id="args">Args</h6>
 
-<p>Returns:
-    NoReturn: 没有有意义的返回, 或者说, 返回 <code>None</code> 就代表这个操作成功了.</p>
+<ul>
+<li><strong>group (Union[Group, int]):</strong>  需要退出的指定群组</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>NoReturn: 没有有意义的返回, 或者说, 返回 <code>None</code> 就代表这个操作成功了.</p>
+</blockquote>
 </div>
 
 
@@ -5337,11 +5492,17 @@ Returns:
 
                     <div class="docstring"><p>获取指定群组的群设置</p>
 
-<p>Args:
-    group (Union[Group, int]): 需要获取群设置的指定群组</p>
+<h6 id="args">Args</h6>
 
-<p>Returns:
-    GroupConfig: 指定群组的群设置</p>
+<ul>
+<li><strong>group (Union[Group, int]):</strong>  需要获取群设置的指定群组</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>GroupConfig: 指定群组的群设置</p>
+</blockquote>
 </div>
 
 
@@ -5396,12 +5557,18 @@ Returns:
 
                     <div class="docstring"><p>修改指定群组的群设置; 需要具有相应权限(管理员/群主).</p>
 
-<p>Args:
-    group (Union[Group, int]): 需要修改群设置的指定群组
-    config (GroupConfig): 经过修改后的群设置</p>
+<h6 id="args">Args</h6>
 
-<p>Returns:
-    NoReturn: 没有有意义的返回, 或者说, 返回 <code>None</code> 就代表这个操作成功了.</p>
+<ul>
+<li><strong>group (Union[Group, int]):</strong>  需要修改群设置的指定群组</li>
+<li><strong>config (GroupConfig):</strong>  经过修改后的群设置</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>NoReturn: 没有有意义的返回, 或者说, 返回 <code>None</code> 就代表这个操作成功了.</p>
+</blockquote>
 </div>
 
 
@@ -5468,15 +5635,24 @@ Returns:
 
                     <div class="docstring"><p>获取指定群组成员的可修改状态.</p>
 
-<p>Args:
-    member (Union[Member, int]): 指定群成员, 可为 Member 实例, 若前设成立, 则不需要提供 group.
-    group (Optional[Union[Group, int]], optional): 如果 member 为 Member 实例, 则不需要提供本项, 否则需要. 默认为 None.</p>
+<h6 id="args">Args</h6>
 
-<p>Raises:
-    TypeError: 提供了错误的参数, 阅读有关文档得到问题原因</p>
+<ul>
+<li><strong>member (Union[Member, int]):</strong>  指定群成员, 可为 Member 实例, 若前设成立, 则不需要提供 group.</li>
+<li><strong>group (Optional[Union[Group, int]], optional):</strong>  如果 member 为 Member 实例, 则不需要提供本项, 否则需要. 默认为 None.</li>
+</ul>
 
-<p>Returns:
-    MemberInfo: 指定群组成员的可修改状态</p>
+<h6 id="raises">Raises</h6>
+
+<ul>
+<li><strong>TypeError:</strong>  提供了错误的参数, 阅读有关文档得到问题原因</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>MemberInfo: 指定群组成员的可修改状态</p>
+</blockquote>
 </div>
 
 
@@ -5544,16 +5720,25 @@ Returns:
 
                     <div class="docstring"><p>修改指定群组成员的可修改状态; 需要具有相应权限(管理员/群主).</p>
 
-<p>Args:
-    member (Union[Member, int]): 指定的群组成员, 可为 Member 实例, 若前设成立, 则不需要提供 group.
-    info (MemberInfo): 已修改的指定群组成员的可修改状态
-    group (Optional[Union[Group, int]], optional): 如果 member 为 Member 实例, 则不需要提供本项, 否则需要. 默认为 None.</p>
+<h6 id="args">Args</h6>
 
-<p>Raises:
-    TypeError: 提供了错误的参数, 阅读有关文档得到问题原因</p>
+<ul>
+<li><strong>member (Union[Member, int]):</strong>  指定的群组成员, 可为 Member 实例, 若前设成立, 则不需要提供 group.</li>
+<li><strong>info (MemberInfo):</strong>  已修改的指定群组成员的可修改状态</li>
+<li><strong>group (Optional[Union[Group, int]], optional):</strong>  如果 member 为 Member 实例, 则不需要提供本项, 否则需要. 默认为 None.</li>
+</ul>
 
-<p>Returns:
-    NoReturn: 没有有意义的返回, 或者说, 返回 <code>None</code> 就代表这个操作成功了.</p>
+<h6 id="raises">Raises</h6>
+
+<ul>
+<li><strong>TypeError:</strong>  提供了错误的参数, 阅读有关文档得到问题原因</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>NoReturn: 没有有意义的返回, 或者说, 返回 <code>None</code> 就代表这个操作成功了.</p>
+</blockquote>
 </div>
 
 
@@ -5597,8 +5782,11 @@ Returns:
 
                     <div class="docstring"><p>获取 mirai-api-http 中维护的当前会话的配置.</p>
 
-<p>Returns:
-    MiraiConfig: 当前会话的配置</p>
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>MiraiConfig: 当前会话的配置</p>
+</blockquote>
 </div>
 
 
@@ -5657,12 +5845,18 @@ Returns:
 
                     <div class="docstring"><p>修改当前会话的配置</p>
 
-<p>Args:
-    cacheSize (Optional[int], optional): 缓存消息的条数. Defaults to None.
-    enableWebsocket (Optional[bool], optional): 是否启用 Websocket 方式获取事件. Defaults to None.</p>
+<h6 id="args">Args</h6>
 
-<p>Returns:
-    NoReturn: 没有有意义的返回, 或者说, 返回 <code>None</code> 就代表这个操作成功了.</p>
+<ul>
+<li><strong>cacheSize (Optional[int], optional):</strong>  缓存消息的条数. Defaults to None.</li>
+<li><strong>enableWebsocket (Optional[bool], optional):</strong>  是否启用 Websocket 方式获取事件. Defaults to None.</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>NoReturn: 没有有意义的返回, 或者说, 返回 <code>None</code> 就代表这个操作成功了.</p>
+</blockquote>
 </div>
 
 
@@ -5713,15 +5907,24 @@ Returns:
 
                     <div class="docstring"><p>从尚未明确指定事件类型的对象中获取事件的定义, 并进行解析</p>
 
-<p>Args:
-    original_dict (dict): 用 dict 表示的序列化态事件, 应包含有字段 <code>type</code> 以供分析事件定义.</p>
+<h6 id="args">Args</h6>
 
-<p>Raises:
-    InvaildArgument: 目标对象中不包含字段 <code>type</code>
-    ValueError: 没有找到对应的字段, 通常的, 这意味着应用获取到了一个尚未被定义的事件, 请报告问题.</p>
+<ul>
+<li><strong>originaldict (dict):</strong>  用 dict 表示的序列化态事件, 应包含有字段 <code>type</code> 以供分析事件定义.</li>
+</ul>
 
-<p>Returns:
-    BaseEvent: 已经被序列化的事件</p>
+<h6 id="raises">Raises</h6>
+
+<ul>
+<li><strong>InvaildArgument:</strong>  目标对象中不包含字段 <code>type</code></li>
+<li><strong>ValueError:</strong>  没有找到对应的字段, 通常的, 这意味着应用获取到了一个尚未被定义的事件, 请报告问题.</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>BaseEvent: 已经被序列化的事件</p>
+</blockquote>
 </div>
 
 
