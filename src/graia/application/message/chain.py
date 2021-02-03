@@ -291,7 +291,7 @@ class MessageChain(BaseModel):
         Returns:
             MessageChain: 拼接结果
         """
-        return cls.create(sum([i.__root__ for i in chains], []))
+        return cls.create(sum([list(i.__root__) for i in chains], []))
 
     def plusWith(self, *chains: "MessageChain") -> "MessageChain":
         """在现有的基础上将另一消息链拼接到原来实例的尾部, 并生成, 返回新的实例.
@@ -299,7 +299,7 @@ class MessageChain(BaseModel):
         Returns:
             MessageChain: 拼接结果
         """
-        return self.create(sum([i.__root__ for i in chains], self.__root__))
+        return self.create(sum([list(i.__root__) for i in chains], self.__root__))
 
     def plus(self, *chains: "MessageChain") -> NoReturn:
         """在现有的基础上将另一消息链拼接到原来实例的尾部
@@ -313,7 +313,7 @@ class MessageChain(BaseModel):
         if self.isImmutable:
             raise ValueError("this chain is not mutable")
         for i in chains:
-            self.__root__.extend(i.__root__)
+            self.__root__.extend(list(i.__root__))
 
     __contains__ = has
 
