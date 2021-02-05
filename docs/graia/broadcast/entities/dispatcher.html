@@ -81,20 +81,57 @@
 
 
 <span class="k">class</span> <span class="nc">BaseDispatcher</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;所有非单函数型 Dispatcher 的基类, 用于为参数解析提供可扩展的支持.&quot;&quot;&quot;</span>
+
     <span class="n">always</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="s2">&quot;声明该 Dispatcher 是否应该在一次参数解析环节中至少被调用一次.&quot;</span>
+
     <span class="n">mixin</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="s2">&quot;BaseDispatcher&quot;</span><span class="p">]</span>
+    <span class="sd">&quot;&quot;&quot;声明该 Dispatcher 所包含的来自其他 Dispatcher 提供的参数解析支持,</span>
+<span class="sd">    若某参数该 Dispatcher 无法解析, 将跳转到该列表中并交由其中的 Dispatcher 进行解析,</span>
+<span class="sd">    该列表中的 Dispatcher 全部被调用过且都不返回一有效值时才会将解析权交由其他的 Dispatcher.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="nd">@abstractstaticmethod</span>
-    <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="s2">&quot;IDispatcherInterface&quot;</span><span class="p">):</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="s2">&quot;IDispatcherInterface&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;该方法可以是 `staticmethod`, `classmethod` 亦或是普通的方法/函数.</span>
+<span class="sd">        唯一的要求是 `Dispatcher.catch` 获取到的必须为一可调用异步 Callable.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            interface (IDispatcherInterface): `Dispatcher` 服务的主要对象, 可以从其中获取以下信息:</span>
+<span class="sd">             - 当前解析中的参数的信息;</span>
+<span class="sd">             - 当前执行的信息, 比如正在处理的事件, `Listener`/`ExecTarget` etc.;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span>
 
     <span class="k">def</span> <span class="nf">beforeDispatch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interface</span><span class="p">:</span> <span class="s2">&quot;IDispatcherInterface&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;生命周期钩子: 在解析参数前被调用</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            interface (IDispatcherInterface): `Dispatcher` 服务的主要对象, 可以从其中获取以下信息:</span>
+<span class="sd">             - 当前解析中的参数的信息;</span>
+<span class="sd">             - 当前执行的信息, 比如正在处理的事件, `Listener`/`ExecTarget` etc.;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span>
 
     <span class="k">def</span> <span class="nf">afterDispatch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interface</span><span class="p">:</span> <span class="s2">&quot;IDispatcherInterface&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;生命周期钩子: 在参数被解析完后被调用</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            interface (IDispatcherInterface): `Dispatcher` 服务的主要对象, 可以从其中获取以下信息:</span>
+<span class="sd">             - 当前解析中的参数的信息;</span>
+<span class="sd">             - 当前执行的信息, 比如正在处理的事件, `Listener`/`ExecTarget` etc.;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span>
 
     <span class="k">def</span> <span class="nf">beforeExecution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interface</span><span class="p">:</span> <span class="s2">&quot;IDispatcherInterface&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;生命周期钩子: 在整个执行流程(包括参数解析)开始前被调用</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            interface (IDispatcherInterface): `Dispatcher` 服务的主要对象, 可以从其中获取以下信息:</span>
+<span class="sd">             - 当前解析中的参数的信息;</span>
+<span class="sd">             - 当前执行的信息, 比如正在处理的事件, `Listener`/`ExecTarget` etc.;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span>
 
     <span class="k">def</span> <span class="nf">afterExecution</span><span class="p">(</span>
@@ -103,9 +140,25 @@
         <span class="n">exception</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="ne">Exception</span><span class="p">],</span>
         <span class="n">tb</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">TracebackType</span><span class="p">],</span>
     <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;生命周期钩子: 在整个执行流程(包括参数解析)完成(包含因异常被抛出而退出)后被调用.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            interface (IDispatcherInterface): `Dispatcher` 服务的主要对象, 可以从其中获取以下信息:</span>
+<span class="sd">             - 当前解析中的参数的信息;</span>
+<span class="sd">             - 当前执行的信息, 比如正在处理的事件, `Listener`/`ExecTarget` etc.;</span>
+<span class="sd">            exception (Optional[Exception]): 可能存在的异常对象, 若为 None 则表示无异常被抛出, 执行顺利完成.</span>
+<span class="sd">            tb (Optional[TracebackType]): 可能存在的异常堆栈对象, 若为 None 则表示无异常被抛出, 执行顺利完成.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span>
 
     <span class="k">def</span> <span class="nf">beforeTargetExec</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interface</span><span class="p">:</span> <span class="s2">&quot;IDispatcherInterface&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;生命周期钩子: 在参数解析完成后, 准备执行事件执行主体前被调用.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            interface (IDispatcherInterface): `Dispatcher` 服务的主要对象, 可以从其中获取以下信息:</span>
+<span class="sd">             - 当前解析中的参数的信息;</span>
+<span class="sd">             - 当前执行的信息, 比如正在处理的事件, `Listener`/`ExecTarget` etc.;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span>
 
     <span class="k">def</span> <span class="nf">afterTargetExec</span><span class="p">(</span>
@@ -114,9 +167,25 @@
         <span class="n">exception</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="ne">Exception</span><span class="p">],</span>
         <span class="n">tb</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">TracebackType</span><span class="p">],</span>
     <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;生命周期钩子: 在事件执行主体被执行完成后被调用.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            interface (IDispatcherInterface): `Dispatcher` 服务的主要对象, 可以从其中获取以下信息:</span>
+<span class="sd">             - 当前解析中的参数的信息;</span>
+<span class="sd">             - 当前执行的信息, 比如正在处理的事件, `Listener`/`ExecTarget` etc.;</span>
+<span class="sd">            exception (Optional[Exception]): 可能存在的异常对象, 若为 None 则表示无异常被抛出, 执行顺利完成.</span>
+<span class="sd">            tb (Optional[TracebackType]): 可能存在的异常堆栈对象, 若为 None 则表示无异常被抛出, 执行顺利完成.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span>
 
     <span class="k">def</span> <span class="nf">onActive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interface</span><span class="p">:</span> <span class="s2">&quot;IDispatcherInterface&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;生命周期钩子: 在该 Dispatcher 可用于参数解析时被立即调用.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            interface (IDispatcherInterface): `Dispatcher` 服务的主要对象, 可以从其中获取以下信息:</span>
+<span class="sd">             - 当前解析中的参数的信息;</span>
+<span class="sd">             - 当前执行的信息, 比如正在处理的事件, `Listener`/`ExecTarget` etc.;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span>
 
 
@@ -136,20 +205,57 @@
                         <details>
                 <summary class="button">View Source</summary>
                 <div class="codehilite"><pre><span></span><span class="k">class</span> <span class="nc">BaseDispatcher</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;所有非单函数型 Dispatcher 的基类, 用于为参数解析提供可扩展的支持.&quot;&quot;&quot;</span>
+
     <span class="n">always</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="s2">&quot;声明该 Dispatcher 是否应该在一次参数解析环节中至少被调用一次.&quot;</span>
+
     <span class="n">mixin</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="s2">&quot;BaseDispatcher&quot;</span><span class="p">]</span>
+    <span class="sd">&quot;&quot;&quot;声明该 Dispatcher 所包含的来自其他 Dispatcher 提供的参数解析支持,</span>
+<span class="sd">    若某参数该 Dispatcher 无法解析, 将跳转到该列表中并交由其中的 Dispatcher 进行解析,</span>
+<span class="sd">    该列表中的 Dispatcher 全部被调用过且都不返回一有效值时才会将解析权交由其他的 Dispatcher.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="nd">@abstractstaticmethod</span>
-    <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="s2">&quot;IDispatcherInterface&quot;</span><span class="p">):</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="s2">&quot;IDispatcherInterface&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;该方法可以是 `staticmethod`, `classmethod` 亦或是普通的方法/函数.</span>
+<span class="sd">        唯一的要求是 `Dispatcher.catch` 获取到的必须为一可调用异步 Callable.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            interface (IDispatcherInterface): `Dispatcher` 服务的主要对象, 可以从其中获取以下信息:</span>
+<span class="sd">             - 当前解析中的参数的信息;</span>
+<span class="sd">             - 当前执行的信息, 比如正在处理的事件, `Listener`/`ExecTarget` etc.;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span>
 
     <span class="k">def</span> <span class="nf">beforeDispatch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interface</span><span class="p">:</span> <span class="s2">&quot;IDispatcherInterface&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;生命周期钩子: 在解析参数前被调用</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            interface (IDispatcherInterface): `Dispatcher` 服务的主要对象, 可以从其中获取以下信息:</span>
+<span class="sd">             - 当前解析中的参数的信息;</span>
+<span class="sd">             - 当前执行的信息, 比如正在处理的事件, `Listener`/`ExecTarget` etc.;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span>
 
     <span class="k">def</span> <span class="nf">afterDispatch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interface</span><span class="p">:</span> <span class="s2">&quot;IDispatcherInterface&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;生命周期钩子: 在参数被解析完后被调用</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            interface (IDispatcherInterface): `Dispatcher` 服务的主要对象, 可以从其中获取以下信息:</span>
+<span class="sd">             - 当前解析中的参数的信息;</span>
+<span class="sd">             - 当前执行的信息, 比如正在处理的事件, `Listener`/`ExecTarget` etc.;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span>
 
     <span class="k">def</span> <span class="nf">beforeExecution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interface</span><span class="p">:</span> <span class="s2">&quot;IDispatcherInterface&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;生命周期钩子: 在整个执行流程(包括参数解析)开始前被调用</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            interface (IDispatcherInterface): `Dispatcher` 服务的主要对象, 可以从其中获取以下信息:</span>
+<span class="sd">             - 当前解析中的参数的信息;</span>
+<span class="sd">             - 当前执行的信息, 比如正在处理的事件, `Listener`/`ExecTarget` etc.;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span>
 
     <span class="k">def</span> <span class="nf">afterExecution</span><span class="p">(</span>
@@ -158,9 +264,25 @@
         <span class="n">exception</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="ne">Exception</span><span class="p">],</span>
         <span class="n">tb</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">TracebackType</span><span class="p">],</span>
     <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;生命周期钩子: 在整个执行流程(包括参数解析)完成(包含因异常被抛出而退出)后被调用.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            interface (IDispatcherInterface): `Dispatcher` 服务的主要对象, 可以从其中获取以下信息:</span>
+<span class="sd">             - 当前解析中的参数的信息;</span>
+<span class="sd">             - 当前执行的信息, 比如正在处理的事件, `Listener`/`ExecTarget` etc.;</span>
+<span class="sd">            exception (Optional[Exception]): 可能存在的异常对象, 若为 None 则表示无异常被抛出, 执行顺利完成.</span>
+<span class="sd">            tb (Optional[TracebackType]): 可能存在的异常堆栈对象, 若为 None 则表示无异常被抛出, 执行顺利完成.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span>
 
     <span class="k">def</span> <span class="nf">beforeTargetExec</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interface</span><span class="p">:</span> <span class="s2">&quot;IDispatcherInterface&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;生命周期钩子: 在参数解析完成后, 准备执行事件执行主体前被调用.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            interface (IDispatcherInterface): `Dispatcher` 服务的主要对象, 可以从其中获取以下信息:</span>
+<span class="sd">             - 当前解析中的参数的信息;</span>
+<span class="sd">             - 当前执行的信息, 比如正在处理的事件, `Listener`/`ExecTarget` etc.;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span>
 
     <span class="k">def</span> <span class="nf">afterTargetExec</span><span class="p">(</span>
@@ -169,15 +291,33 @@
         <span class="n">exception</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="ne">Exception</span><span class="p">],</span>
         <span class="n">tb</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">TracebackType</span><span class="p">],</span>
     <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;生命周期钩子: 在事件执行主体被执行完成后被调用.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            interface (IDispatcherInterface): `Dispatcher` 服务的主要对象, 可以从其中获取以下信息:</span>
+<span class="sd">             - 当前解析中的参数的信息;</span>
+<span class="sd">             - 当前执行的信息, 比如正在处理的事件, `Listener`/`ExecTarget` etc.;</span>
+<span class="sd">            exception (Optional[Exception]): 可能存在的异常对象, 若为 None 则表示无异常被抛出, 执行顺利完成.</span>
+<span class="sd">            tb (Optional[TracebackType]): 可能存在的异常堆栈对象, 若为 None 则表示无异常被抛出, 执行顺利完成.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span>
 
     <span class="k">def</span> <span class="nf">onActive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interface</span><span class="p">:</span> <span class="s2">&quot;IDispatcherInterface&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;生命周期钩子: 在该 Dispatcher 可用于参数解析时被立即调用.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            interface (IDispatcherInterface): `Dispatcher` 服务的主要对象, 可以从其中获取以下信息:</span>
+<span class="sd">             - 当前解析中的参数的信息;</span>
+<span class="sd">             - 当前执行的信息, 比如正在处理的事件, `Listener`/`ExecTarget` etc.;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span>
 </pre></div>
 
             </details>
 
-        
+                    <div class="docstring"><p>所有非单函数型 Dispatcher 的基类, 用于为参数解析提供可扩展的支持.</p>
+</div>
+
 
                             <div id="BaseDispatcher.__init__" class="classattr">
                                             <div class="attr function">
@@ -193,7 +333,9 @@
             <span class="name">always</span><span class="annotation">: bool</span>
         </div>
 
-        
+                    <div class="docstring"><p>声明该 Dispatcher 是否应该在一次参数解析环节中至少被调用一次.</p>
+</div>
+
 
                             </div>
                             <div id="BaseDispatcher.mixin" class="classattr">
@@ -201,14 +343,18 @@
             <span class="name">mixin</span><span class="annotation">: list[<a href="#BaseDispatcher">graia.broadcast.entities.dispatcher.BaseDispatcher</a>]</span>
         </div>
 
-        
+                    <div class="docstring"><p>声明该 Dispatcher 所包含的来自其他 Dispatcher 提供的参数解析支持,
+若某参数该 Dispatcher 无法解析, 将跳转到该列表中并交由其中的 Dispatcher 进行解析,
+该列表中的 Dispatcher 全部被调用过且都不返回一有效值时才会将解析权交由其他的 Dispatcher.</p>
+</div>
+
 
                             </div>
                             <div id="BaseDispatcher.catch" class="classattr">
                                             <div class="attr function">
                         <div class="decorator">@abstractstaticmethod</div>
 
-                <span class="def">def</span>
+                <span class="def">async def</span>
                 <span class="name">catch</span><span class="signature">(
 	interface: <a href="../abstract/interfaces/dispatcher.html#IDispatcherInterface">graia.broadcast.abstract.interfaces.dispatcher.IDispatcherInterface</a>
 )</span>:
@@ -217,13 +363,33 @@
                         <details>
                 <summary class="button">View Source</summary>
                 <div class="codehilite"><pre><span></span>    <span class="nd">@abstractstaticmethod</span>
-    <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="s2">&quot;IDispatcherInterface&quot;</span><span class="p">):</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="s2">&quot;IDispatcherInterface&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;该方法可以是 `staticmethod`, `classmethod` 亦或是普通的方法/函数.</span>
+<span class="sd">        唯一的要求是 `Dispatcher.catch` 获取到的必须为一可调用异步 Callable.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            interface (IDispatcherInterface): `Dispatcher` 服务的主要对象, 可以从其中获取以下信息:</span>
+<span class="sd">             - 当前解析中的参数的信息;</span>
+<span class="sd">             - 当前执行的信息, 比如正在处理的事件, `Listener`/`ExecTarget` etc.;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span>
 </pre></div>
 
             </details>
 
-        
+                    <div class="docstring"><p>该方法可以是 <code>staticmethod</code>, <code>classmethod</code> 亦或是普通的方法/函数.
+唯一的要求是 <code>Dispatcher.catch</code> 获取到的必须为一可调用异步 Callable.</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>interface (IDispatcherInterface): <code>Dispatcher</code> 服务的主要对象, 可以从其中获取以下信息:</strong>  - 当前解析中的参数的信息;
+<ul>
+<li>当前执行的信息, 比如正在处理的事件, <code>Listener</code>/<code>ExecTarget</code> etc.;</li>
+</ul></li>
+</ul>
+</div>
+
 
                             </div>
                             <div id="BaseDispatcher.beforeDispatch" class="classattr">
@@ -239,12 +405,30 @@
                         <details>
                 <summary class="button">View Source</summary>
                 <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">beforeDispatch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interface</span><span class="p">:</span> <span class="s2">&quot;IDispatcherInterface&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;生命周期钩子: 在解析参数前被调用</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            interface (IDispatcherInterface): `Dispatcher` 服务的主要对象, 可以从其中获取以下信息:</span>
+<span class="sd">             - 当前解析中的参数的信息;</span>
+<span class="sd">             - 当前执行的信息, 比如正在处理的事件, `Listener`/`ExecTarget` etc.;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span>
 </pre></div>
 
             </details>
 
-        
+                    <div class="docstring"><p>生命周期钩子: 在解析参数前被调用</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>interface (IDispatcherInterface): <code>Dispatcher</code> 服务的主要对象, 可以从其中获取以下信息:</strong>  - 当前解析中的参数的信息;
+<ul>
+<li>当前执行的信息, 比如正在处理的事件, <code>Listener</code>/<code>ExecTarget</code> etc.;</li>
+</ul></li>
+</ul>
+</div>
+
 
                             </div>
                             <div id="BaseDispatcher.afterDispatch" class="classattr">
@@ -260,12 +444,30 @@
                         <details>
                 <summary class="button">View Source</summary>
                 <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">afterDispatch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interface</span><span class="p">:</span> <span class="s2">&quot;IDispatcherInterface&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;生命周期钩子: 在参数被解析完后被调用</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            interface (IDispatcherInterface): `Dispatcher` 服务的主要对象, 可以从其中获取以下信息:</span>
+<span class="sd">             - 当前解析中的参数的信息;</span>
+<span class="sd">             - 当前执行的信息, 比如正在处理的事件, `Listener`/`ExecTarget` etc.;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span>
 </pre></div>
 
             </details>
 
-        
+                    <div class="docstring"><p>生命周期钩子: 在参数被解析完后被调用</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>interface (IDispatcherInterface): <code>Dispatcher</code> 服务的主要对象, 可以从其中获取以下信息:</strong>  - 当前解析中的参数的信息;
+<ul>
+<li>当前执行的信息, 比如正在处理的事件, <code>Listener</code>/<code>ExecTarget</code> etc.;</li>
+</ul></li>
+</ul>
+</div>
+
 
                             </div>
                             <div id="BaseDispatcher.beforeExecution" class="classattr">
@@ -281,12 +483,30 @@
                         <details>
                 <summary class="button">View Source</summary>
                 <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">beforeExecution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interface</span><span class="p">:</span> <span class="s2">&quot;IDispatcherInterface&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;生命周期钩子: 在整个执行流程(包括参数解析)开始前被调用</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            interface (IDispatcherInterface): `Dispatcher` 服务的主要对象, 可以从其中获取以下信息:</span>
+<span class="sd">             - 当前解析中的参数的信息;</span>
+<span class="sd">             - 当前执行的信息, 比如正在处理的事件, `Listener`/`ExecTarget` etc.;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span>
 </pre></div>
 
             </details>
 
-        
+                    <div class="docstring"><p>生命周期钩子: 在整个执行流程(包括参数解析)开始前被调用</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>interface (IDispatcherInterface): <code>Dispatcher</code> 服务的主要对象, 可以从其中获取以下信息:</strong>  - 当前解析中的参数的信息;
+<ul>
+<li>当前执行的信息, 比如正在处理的事件, <code>Listener</code>/<code>ExecTarget</code> etc.;</li>
+</ul></li>
+</ul>
+</div>
+
 
                             </div>
                             <div id="BaseDispatcher.afterExecution" class="classattr">
@@ -309,12 +529,34 @@
         <span class="n">exception</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="ne">Exception</span><span class="p">],</span>
         <span class="n">tb</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">TracebackType</span><span class="p">],</span>
     <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;生命周期钩子: 在整个执行流程(包括参数解析)完成(包含因异常被抛出而退出)后被调用.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            interface (IDispatcherInterface): `Dispatcher` 服务的主要对象, 可以从其中获取以下信息:</span>
+<span class="sd">             - 当前解析中的参数的信息;</span>
+<span class="sd">             - 当前执行的信息, 比如正在处理的事件, `Listener`/`ExecTarget` etc.;</span>
+<span class="sd">            exception (Optional[Exception]): 可能存在的异常对象, 若为 None 则表示无异常被抛出, 执行顺利完成.</span>
+<span class="sd">            tb (Optional[TracebackType]): 可能存在的异常堆栈对象, 若为 None 则表示无异常被抛出, 执行顺利完成.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span>
 </pre></div>
 
             </details>
 
-        
+                    <div class="docstring"><p>生命周期钩子: 在整个执行流程(包括参数解析)完成(包含因异常被抛出而退出)后被调用.</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>interface (IDispatcherInterface): <code>Dispatcher</code> 服务的主要对象, 可以从其中获取以下信息:</strong>  - 当前解析中的参数的信息;
+<ul>
+<li>当前执行的信息, 比如正在处理的事件, <code>Listener</code>/<code>ExecTarget</code> etc.;</li>
+</ul></li>
+<li><strong>exception (Optional[Exception]):</strong>  可能存在的异常对象, 若为 None 则表示无异常被抛出, 执行顺利完成.</li>
+<li><strong>tb (Optional[TracebackType]):</strong>  可能存在的异常堆栈对象, 若为 None 则表示无异常被抛出, 执行顺利完成.</li>
+</ul>
+</div>
+
 
                             </div>
                             <div id="BaseDispatcher.beforeTargetExec" class="classattr">
@@ -330,12 +572,30 @@
                         <details>
                 <summary class="button">View Source</summary>
                 <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">beforeTargetExec</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interface</span><span class="p">:</span> <span class="s2">&quot;IDispatcherInterface&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;生命周期钩子: 在参数解析完成后, 准备执行事件执行主体前被调用.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            interface (IDispatcherInterface): `Dispatcher` 服务的主要对象, 可以从其中获取以下信息:</span>
+<span class="sd">             - 当前解析中的参数的信息;</span>
+<span class="sd">             - 当前执行的信息, 比如正在处理的事件, `Listener`/`ExecTarget` etc.;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span>
 </pre></div>
 
             </details>
 
-        
+                    <div class="docstring"><p>生命周期钩子: 在参数解析完成后, 准备执行事件执行主体前被调用.</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>interface (IDispatcherInterface): <code>Dispatcher</code> 服务的主要对象, 可以从其中获取以下信息:</strong>  - 当前解析中的参数的信息;
+<ul>
+<li>当前执行的信息, 比如正在处理的事件, <code>Listener</code>/<code>ExecTarget</code> etc.;</li>
+</ul></li>
+</ul>
+</div>
+
 
                             </div>
                             <div id="BaseDispatcher.afterTargetExec" class="classattr">
@@ -358,12 +618,34 @@
         <span class="n">exception</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="ne">Exception</span><span class="p">],</span>
         <span class="n">tb</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">TracebackType</span><span class="p">],</span>
     <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;生命周期钩子: 在事件执行主体被执行完成后被调用.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            interface (IDispatcherInterface): `Dispatcher` 服务的主要对象, 可以从其中获取以下信息:</span>
+<span class="sd">             - 当前解析中的参数的信息;</span>
+<span class="sd">             - 当前执行的信息, 比如正在处理的事件, `Listener`/`ExecTarget` etc.;</span>
+<span class="sd">            exception (Optional[Exception]): 可能存在的异常对象, 若为 None 则表示无异常被抛出, 执行顺利完成.</span>
+<span class="sd">            tb (Optional[TracebackType]): 可能存在的异常堆栈对象, 若为 None 则表示无异常被抛出, 执行顺利完成.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span>
 </pre></div>
 
             </details>
 
-        
+                    <div class="docstring"><p>生命周期钩子: 在事件执行主体被执行完成后被调用.</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>interface (IDispatcherInterface): <code>Dispatcher</code> 服务的主要对象, 可以从其中获取以下信息:</strong>  - 当前解析中的参数的信息;
+<ul>
+<li>当前执行的信息, 比如正在处理的事件, <code>Listener</code>/<code>ExecTarget</code> etc.;</li>
+</ul></li>
+<li><strong>exception (Optional[Exception]):</strong>  可能存在的异常对象, 若为 None 则表示无异常被抛出, 执行顺利完成.</li>
+<li><strong>tb (Optional[TracebackType]):</strong>  可能存在的异常堆栈对象, 若为 None 则表示无异常被抛出, 执行顺利完成.</li>
+</ul>
+</div>
+
 
                             </div>
                             <div id="BaseDispatcher.onActive" class="classattr">
@@ -379,12 +661,30 @@
                         <details>
                 <summary class="button">View Source</summary>
                 <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">onActive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interface</span><span class="p">:</span> <span class="s2">&quot;IDispatcherInterface&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;生命周期钩子: 在该 Dispatcher 可用于参数解析时被立即调用.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            interface (IDispatcherInterface): `Dispatcher` 服务的主要对象, 可以从其中获取以下信息:</span>
+<span class="sd">             - 当前解析中的参数的信息;</span>
+<span class="sd">             - 当前执行的信息, 比如正在处理的事件, `Listener`/`ExecTarget` etc.;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">pass</span>
 </pre></div>
 
             </details>
 
-        
+                    <div class="docstring"><p>生命周期钩子: 在该 Dispatcher 可用于参数解析时被立即调用.</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>interface (IDispatcherInterface): <code>Dispatcher</code> 服务的主要对象, 可以从其中获取以下信息:</strong>  - 当前解析中的参数的信息;
+<ul>
+<li>当前执行的信息, 比如正在处理的事件, <code>Listener</code>/<code>ExecTarget</code> etc.;</li>
+</ul></li>
+</ul>
+</div>
+
 
                             </div>
                 </section>

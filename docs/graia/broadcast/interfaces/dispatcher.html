@@ -308,17 +308,8 @@
                 <span class="k">return</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">alive_dispatchers</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">current_generator</span><span class="p">,</span> <span class="kc">True</span><span class="p">))</span>
-        <span class="k">elif</span> <span class="n">isgeneratorfunction</span><span class="p">(</span><span class="n">dispatcher_callable</span><span class="p">):</span>
-            <span class="n">current_generator</span> <span class="o">=</span> <span class="n">dispatcher_callable</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__iter__</span><span class="p">()</span>
-
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">result</span> <span class="o">=</span> <span class="n">current_generator</span><span class="o">.</span><span class="fm">__next__</span><span class="p">()</span>
-            <span class="k">except</span> <span class="ne">StopIteration</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                <span class="n">result</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">value</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">alive_dispatchers</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">current_generator</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">run_always_await_safely</span><span class="p">(</span><span class="n">dispatcher_callable</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">dispatcher_callable</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">result</span>
 
@@ -587,7 +578,9 @@
 
             </details>
 
-        
+                    <div class="docstring"><p>所有非单函数型 Dispatcher 的基类, 用于为参数解析提供可扩展的支持.</p>
+</div>
+
 
                             <div id="EmptyEvent.Dispatcher.__init__" class="classattr">
                                             <div class="attr function">
@@ -615,7 +608,19 @@
 
             </details>
 
-        
+                    <div class="docstring"><p>该方法可以是 <code>staticmethod</code>, <code>classmethod</code> 亦或是普通的方法/函数.
+唯一的要求是 <code>Dispatcher.catch</code> 获取到的必须为一可调用异步 Callable.</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>interface (IDispatcherInterface): <code>Dispatcher</code> 服务的主要对象, 可以从其中获取以下信息:</strong>  - 当前解析中的参数的信息;
+<ul>
+<li>当前执行的信息, 比如正在处理的事件, <code>Listener</code>/<code>ExecTarget</code> etc.;</li>
+</ul></li>
+</ul>
+</div>
+
 
                             </div>
                             <div class="inherited">
@@ -793,17 +798,8 @@
                 <span class="k">return</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">alive_dispatchers</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">current_generator</span><span class="p">,</span> <span class="kc">True</span><span class="p">))</span>
-        <span class="k">elif</span> <span class="n">isgeneratorfunction</span><span class="p">(</span><span class="n">dispatcher_callable</span><span class="p">):</span>
-            <span class="n">current_generator</span> <span class="o">=</span> <span class="n">dispatcher_callable</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__iter__</span><span class="p">()</span>
-
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">result</span> <span class="o">=</span> <span class="n">current_generator</span><span class="o">.</span><span class="fm">__next__</span><span class="p">()</span>
-            <span class="k">except</span> <span class="ne">StopIteration</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                <span class="n">result</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">value</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">alive_dispatchers</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">current_generator</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">run_always_await_safely</span><span class="p">(</span><span class="n">dispatcher_callable</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">dispatcher_callable</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">result</span>
 
@@ -1301,17 +1297,8 @@
                 <span class="k">return</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">alive_dispatchers</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">current_generator</span><span class="p">,</span> <span class="kc">True</span><span class="p">))</span>
-        <span class="k">elif</span> <span class="n">isgeneratorfunction</span><span class="p">(</span><span class="n">dispatcher_callable</span><span class="p">):</span>
-            <span class="n">current_generator</span> <span class="o">=</span> <span class="n">dispatcher_callable</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__iter__</span><span class="p">()</span>
-
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">result</span> <span class="o">=</span> <span class="n">current_generator</span><span class="o">.</span><span class="fm">__next__</span><span class="p">()</span>
-            <span class="k">except</span> <span class="ne">StopIteration</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                <span class="n">result</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">value</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">alive_dispatchers</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">current_generator</span><span class="p">,</span> <span class="kc">False</span><span class="p">))</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">run_always_await_safely</span><span class="p">(</span><span class="n">dispatcher_callable</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">dispatcher_callable</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">result</span>
 </pre></div>

@@ -1009,7 +1009,7 @@
         <span class="n">mixin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApplicationDispatcher</span><span class="p">]</span>
 
         <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">operator</span>
             <span class="k">elif</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
@@ -1035,7 +1035,7 @@
         <span class="n">mixin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApplicationDispatcher</span><span class="p">]</span>
 
         <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">operator</span>
             <span class="k">elif</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
@@ -1060,7 +1060,7 @@
         <span class="n">mixin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApplicationDispatcher</span><span class="p">]</span>
 
         <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">group</span>
 
@@ -1082,7 +1082,7 @@
         <span class="n">mixin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApplicationDispatcher</span><span class="p">]</span>
 
         <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">group</span>
 
@@ -1104,7 +1104,7 @@
         <span class="n">mixin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApplicationDispatcher</span><span class="p">]</span>
 
         <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">group</span>
 
@@ -1131,7 +1131,7 @@
         <span class="n">mixin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApplicationDispatcher</span><span class="p">]</span>
 
         <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">group</span>
             <span class="k">elif</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
@@ -1177,7 +1177,7 @@
         <span class="n">mixin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApplicationDispatcher</span><span class="p">]</span>
 
         <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">group</span>
             <span class="k">elif</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
@@ -1205,7 +1205,7 @@
         <span class="n">mixin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApplicationDispatcher</span><span class="p">]</span>
 
         <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">group</span>
             <span class="k">elif</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
@@ -1233,7 +1233,7 @@
         <span class="n">mixin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApplicationDispatcher</span><span class="p">]</span>
 
         <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">group</span>
             <span class="k">elif</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
@@ -1261,7 +1261,7 @@
         <span class="n">mixin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApplicationDispatcher</span><span class="p">]</span>
 
         <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">group</span>
             <span class="k">elif</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
@@ -1288,7 +1288,7 @@
         <span class="n">mixin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApplicationDispatcher</span><span class="p">]</span>
 
         <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">group</span>
 
@@ -1314,7 +1314,7 @@
         <span class="n">mixin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApplicationDispatcher</span><span class="p">]</span>
 
         <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">group</span>
             <span class="k">elif</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
@@ -1339,7 +1339,7 @@
         <span class="n">mixin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApplicationDispatcher</span><span class="p">]</span>
 
         <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">member</span>
             <span class="k">elif</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
@@ -1367,7 +1367,7 @@
         <span class="n">mixin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApplicationDispatcher</span><span class="p">]</span>
 
         <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">default</span> <span class="o">==</span> <span class="s2">&quot;target&quot;</span><span class="p">:</span>
                     <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">member</span>
@@ -1395,7 +1395,7 @@
         <span class="n">mixin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApplicationDispatcher</span><span class="p">]</span>
 
         <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">member</span>
             <span class="k">elif</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
@@ -1425,7 +1425,7 @@
         <span class="n">mixin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApplicationDispatcher</span><span class="p">]</span>
 
         <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">default</span> <span class="o">==</span> <span class="s2">&quot;target&quot;</span><span class="p">:</span>
                     <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">member</span>
@@ -1453,7 +1453,7 @@
         <span class="n">mixin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApplicationDispatcher</span><span class="p">]</span>
 
         <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">member</span>
             <span class="k">elif</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
@@ -1480,7 +1480,7 @@
         <span class="n">mixin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApplicationDispatcher</span><span class="p">]</span>
 
         <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">member</span>
             <span class="k">elif</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
@@ -1509,7 +1509,7 @@
         <span class="n">mixin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApplicationDispatcher</span><span class="p">]</span>
 
         <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">default</span> <span class="o">==</span> <span class="s2">&quot;target&quot;</span><span class="p">:</span>
                     <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">member</span>
@@ -1540,7 +1540,7 @@
         <span class="n">mixin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApplicationDispatcher</span><span class="p">]</span>
 
         <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">default</span> <span class="o">==</span> <span class="s2">&quot;target&quot;</span><span class="p">:</span>
                     <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">member</span>
@@ -2517,7 +2517,7 @@
         <span class="n">mixin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApplicationDispatcher</span><span class="p">]</span>
 
         <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">operator</span>
             <span class="k">elif</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
@@ -2604,7 +2604,7 @@
         <span class="n">mixin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApplicationDispatcher</span><span class="p">]</span>
 
         <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">operator</span>
             <span class="k">elif</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
@@ -2614,7 +2614,9 @@
 
             </details>
 
-        
+                    <div class="docstring"><p>所有非单函数型 Dispatcher 的基类, 用于为参数解析提供可扩展的支持.</p>
+</div>
+
 
                             <div id="BotMuteEvent.Dispatcher.__init__" class="classattr">
                                             <div class="attr function">
@@ -2630,21 +2632,25 @@
             <span class="name">mixin</span><span class="annotation">: list[<a href="../../broadcast/entities/dispatcher.html#BaseDispatcher">graia.broadcast.entities.dispatcher.BaseDispatcher</a>]</span><span class="default_value"> = [&lt;class &#39;<a href="../event.html#ApplicationDispatcher">graia.application.event.ApplicationDispatcher</a>&#39;&gt;]</span>
         </div>
 
-        
+                    <div class="docstring"><p>声明该 Dispatcher 所包含的来自其他 Dispatcher 提供的参数解析支持,
+若某参数该 Dispatcher 无法解析, 将跳转到该列表中并交由其中的 Dispatcher 进行解析,
+该列表中的 Dispatcher 全部被调用过且都不返回一有效值时才会将解析权交由其他的 Dispatcher.</p>
+</div>
+
 
                             </div>
                             <div id="BotMuteEvent.Dispatcher.catch" class="classattr">
                                             <div class="attr function">
                         <div class="decorator">@staticmethod</div>
 
-                <span class="def">def</span>
+                <span class="def">async def</span>
                 <span class="name">catch</span><span class="signature">(interface: <a href="../../broadcast/interfaces/dispatcher.html#DispatcherInterface">graia.broadcast.interfaces.dispatcher.DispatcherInterface</a>)</span>:
         </div>
 
                         <details>
                 <summary class="button">View Source</summary>
                 <div class="codehilite"><pre><span></span>        <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">operator</span>
             <span class="k">elif</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
@@ -2654,7 +2660,19 @@
 
             </details>
 
-        
+                    <div class="docstring"><p>该方法可以是 <code>staticmethod</code>, <code>classmethod</code> 亦或是普通的方法/函数.
+唯一的要求是 <code>Dispatcher.catch</code> 获取到的必须为一可调用异步 Callable.</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>interface (IDispatcherInterface): <code>Dispatcher</code> 服务的主要对象, 可以从其中获取以下信息:</strong>  - 当前解析中的参数的信息;
+<ul>
+<li>当前执行的信息, 比如正在处理的事件, <code>Listener</code>/<code>ExecTarget</code> etc.;</li>
+</ul></li>
+</ul>
+</div>
+
 
                             </div>
                             <div class="inherited">
@@ -2701,7 +2719,7 @@
         <span class="n">mixin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApplicationDispatcher</span><span class="p">]</span>
 
         <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">operator</span>
             <span class="k">elif</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
@@ -2780,7 +2798,7 @@
         <span class="n">mixin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApplicationDispatcher</span><span class="p">]</span>
 
         <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">operator</span>
             <span class="k">elif</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
@@ -2790,7 +2808,9 @@
 
             </details>
 
-        
+                    <div class="docstring"><p>所有非单函数型 Dispatcher 的基类, 用于为参数解析提供可扩展的支持.</p>
+</div>
+
 
                             <div id="BotUnmuteEvent.Dispatcher.__init__" class="classattr">
                                             <div class="attr function">
@@ -2806,21 +2826,25 @@
             <span class="name">mixin</span><span class="annotation">: list[<a href="../../broadcast/entities/dispatcher.html#BaseDispatcher">graia.broadcast.entities.dispatcher.BaseDispatcher</a>]</span><span class="default_value"> = [&lt;class &#39;<a href="../event.html#ApplicationDispatcher">graia.application.event.ApplicationDispatcher</a>&#39;&gt;]</span>
         </div>
 
-        
+                    <div class="docstring"><p>声明该 Dispatcher 所包含的来自其他 Dispatcher 提供的参数解析支持,
+若某参数该 Dispatcher 无法解析, 将跳转到该列表中并交由其中的 Dispatcher 进行解析,
+该列表中的 Dispatcher 全部被调用过且都不返回一有效值时才会将解析权交由其他的 Dispatcher.</p>
+</div>
+
 
                             </div>
                             <div id="BotUnmuteEvent.Dispatcher.catch" class="classattr">
                                             <div class="attr function">
                         <div class="decorator">@staticmethod</div>
 
-                <span class="def">def</span>
+                <span class="def">async def</span>
                 <span class="name">catch</span><span class="signature">(interface: <a href="../../broadcast/interfaces/dispatcher.html#DispatcherInterface">graia.broadcast.interfaces.dispatcher.DispatcherInterface</a>)</span>:
         </div>
 
                         <details>
                 <summary class="button">View Source</summary>
                 <div class="codehilite"><pre><span></span>        <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">operator</span>
             <span class="k">elif</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
@@ -2830,7 +2854,19 @@
 
             </details>
 
-        
+                    <div class="docstring"><p>该方法可以是 <code>staticmethod</code>, <code>classmethod</code> 亦或是普通的方法/函数.
+唯一的要求是 <code>Dispatcher.catch</code> 获取到的必须为一可调用异步 Callable.</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>interface (IDispatcherInterface): <code>Dispatcher</code> 服务的主要对象, 可以从其中获取以下信息:</strong>  - 当前解析中的参数的信息;
+<ul>
+<li>当前执行的信息, 比如正在处理的事件, <code>Listener</code>/<code>ExecTarget</code> etc.;</li>
+</ul></li>
+</ul>
+</div>
+
 
                             </div>
                             <div class="inherited">
@@ -2876,7 +2912,7 @@
         <span class="n">mixin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApplicationDispatcher</span><span class="p">]</span>
 
         <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">group</span>
 </pre></div>
@@ -2951,7 +2987,7 @@
         <span class="n">mixin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApplicationDispatcher</span><span class="p">]</span>
 
         <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">operator</span>
             <span class="k">elif</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
@@ -2961,7 +2997,9 @@
 
             </details>
 
-        
+                    <div class="docstring"><p>所有非单函数型 Dispatcher 的基类, 用于为参数解析提供可扩展的支持.</p>
+</div>
+
 
                             <div id="BotJoinGroupEvent.Dispatcher.__init__" class="classattr">
                                             <div class="attr function">
@@ -2977,28 +3015,44 @@
             <span class="name">mixin</span><span class="annotation">: list[<a href="../../broadcast/entities/dispatcher.html#BaseDispatcher">graia.broadcast.entities.dispatcher.BaseDispatcher</a>]</span><span class="default_value"> = [&lt;class &#39;<a href="../event.html#ApplicationDispatcher">graia.application.event.ApplicationDispatcher</a>&#39;&gt;]</span>
         </div>
 
-        
+                    <div class="docstring"><p>声明该 Dispatcher 所包含的来自其他 Dispatcher 提供的参数解析支持,
+若某参数该 Dispatcher 无法解析, 将跳转到该列表中并交由其中的 Dispatcher 进行解析,
+该列表中的 Dispatcher 全部被调用过且都不返回一有效值时才会将解析权交由其他的 Dispatcher.</p>
+</div>
+
 
                             </div>
                             <div id="BotJoinGroupEvent.Dispatcher.catch" class="classattr">
                                             <div class="attr function">
                         <div class="decorator">@staticmethod</div>
 
-                <span class="def">def</span>
+                <span class="def">async def</span>
                 <span class="name">catch</span><span class="signature">(interface: <a href="../../broadcast/interfaces/dispatcher.html#DispatcherInterface">graia.broadcast.interfaces.dispatcher.DispatcherInterface</a>)</span>:
         </div>
 
                         <details>
                 <summary class="button">View Source</summary>
                 <div class="codehilite"><pre><span></span>        <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">group</span>
 </pre></div>
 
             </details>
 
-        
+                    <div class="docstring"><p>该方法可以是 <code>staticmethod</code>, <code>classmethod</code> 亦或是普通的方法/函数.
+唯一的要求是 <code>Dispatcher.catch</code> 获取到的必须为一可调用异步 Callable.</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>interface (IDispatcherInterface): <code>Dispatcher</code> 服务的主要对象, 可以从其中获取以下信息:</strong>  - 当前解析中的参数的信息;
+<ul>
+<li>当前执行的信息, 比如正在处理的事件, <code>Listener</code>/<code>ExecTarget</code> etc.;</li>
+</ul></li>
+</ul>
+</div>
+
 
                             </div>
                             <div class="inherited">
@@ -3044,7 +3098,7 @@
         <span class="n">mixin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApplicationDispatcher</span><span class="p">]</span>
 
         <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">group</span>
 </pre></div>
@@ -3119,7 +3173,7 @@
         <span class="n">mixin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApplicationDispatcher</span><span class="p">]</span>
 
         <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">operator</span>
             <span class="k">elif</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
@@ -3129,7 +3183,9 @@
 
             </details>
 
-        
+                    <div class="docstring"><p>所有非单函数型 Dispatcher 的基类, 用于为参数解析提供可扩展的支持.</p>
+</div>
+
 
                             <div id="BotLeaveEventActive.Dispatcher.__init__" class="classattr">
                                             <div class="attr function">
@@ -3145,28 +3201,44 @@
             <span class="name">mixin</span><span class="annotation">: list[<a href="../../broadcast/entities/dispatcher.html#BaseDispatcher">graia.broadcast.entities.dispatcher.BaseDispatcher</a>]</span><span class="default_value"> = [&lt;class &#39;<a href="../event.html#ApplicationDispatcher">graia.application.event.ApplicationDispatcher</a>&#39;&gt;]</span>
         </div>
 
-        
+                    <div class="docstring"><p>声明该 Dispatcher 所包含的来自其他 Dispatcher 提供的参数解析支持,
+若某参数该 Dispatcher 无法解析, 将跳转到该列表中并交由其中的 Dispatcher 进行解析,
+该列表中的 Dispatcher 全部被调用过且都不返回一有效值时才会将解析权交由其他的 Dispatcher.</p>
+</div>
+
 
                             </div>
                             <div id="BotLeaveEventActive.Dispatcher.catch" class="classattr">
                                             <div class="attr function">
                         <div class="decorator">@staticmethod</div>
 
-                <span class="def">def</span>
+                <span class="def">async def</span>
                 <span class="name">catch</span><span class="signature">(interface: <a href="../../broadcast/interfaces/dispatcher.html#DispatcherInterface">graia.broadcast.interfaces.dispatcher.DispatcherInterface</a>)</span>:
         </div>
 
                         <details>
                 <summary class="button">View Source</summary>
                 <div class="codehilite"><pre><span></span>        <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">group</span>
 </pre></div>
 
             </details>
 
-        
+                    <div class="docstring"><p>该方法可以是 <code>staticmethod</code>, <code>classmethod</code> 亦或是普通的方法/函数.
+唯一的要求是 <code>Dispatcher.catch</code> 获取到的必须为一可调用异步 Callable.</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>interface (IDispatcherInterface): <code>Dispatcher</code> 服务的主要对象, 可以从其中获取以下信息:</strong>  - 当前解析中的参数的信息;
+<ul>
+<li>当前执行的信息, 比如正在处理的事件, <code>Listener</code>/<code>ExecTarget</code> etc.;</li>
+</ul></li>
+</ul>
+</div>
+
 
                             </div>
                             <div class="inherited">
@@ -3212,7 +3284,7 @@
         <span class="n">mixin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApplicationDispatcher</span><span class="p">]</span>
 
         <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">group</span>
 </pre></div>
@@ -3287,7 +3359,7 @@
         <span class="n">mixin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApplicationDispatcher</span><span class="p">]</span>
 
         <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">operator</span>
             <span class="k">elif</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
@@ -3297,7 +3369,9 @@
 
             </details>
 
-        
+                    <div class="docstring"><p>所有非单函数型 Dispatcher 的基类, 用于为参数解析提供可扩展的支持.</p>
+</div>
+
 
                             <div id="BotLeaveEventKick.Dispatcher.__init__" class="classattr">
                                             <div class="attr function">
@@ -3313,28 +3387,44 @@
             <span class="name">mixin</span><span class="annotation">: list[<a href="../../broadcast/entities/dispatcher.html#BaseDispatcher">graia.broadcast.entities.dispatcher.BaseDispatcher</a>]</span><span class="default_value"> = [&lt;class &#39;<a href="../event.html#ApplicationDispatcher">graia.application.event.ApplicationDispatcher</a>&#39;&gt;]</span>
         </div>
 
-        
+                    <div class="docstring"><p>声明该 Dispatcher 所包含的来自其他 Dispatcher 提供的参数解析支持,
+若某参数该 Dispatcher 无法解析, 将跳转到该列表中并交由其中的 Dispatcher 进行解析,
+该列表中的 Dispatcher 全部被调用过且都不返回一有效值时才会将解析权交由其他的 Dispatcher.</p>
+</div>
+
 
                             </div>
                             <div id="BotLeaveEventKick.Dispatcher.catch" class="classattr">
                                             <div class="attr function">
                         <div class="decorator">@staticmethod</div>
 
-                <span class="def">def</span>
+                <span class="def">async def</span>
                 <span class="name">catch</span><span class="signature">(interface: <a href="../../broadcast/interfaces/dispatcher.html#DispatcherInterface">graia.broadcast.interfaces.dispatcher.DispatcherInterface</a>)</span>:
         </div>
 
                         <details>
                 <summary class="button">View Source</summary>
                 <div class="codehilite"><pre><span></span>        <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">group</span>
 </pre></div>
 
             </details>
 
-        
+                    <div class="docstring"><p>该方法可以是 <code>staticmethod</code>, <code>classmethod</code> 亦或是普通的方法/函数.
+唯一的要求是 <code>Dispatcher.catch</code> 获取到的必须为一可调用异步 Callable.</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>interface (IDispatcherInterface): <code>Dispatcher</code> 服务的主要对象, 可以从其中获取以下信息:</strong>  - 当前解析中的参数的信息;
+<ul>
+<li>当前执行的信息, 比如正在处理的事件, <code>Listener</code>/<code>ExecTarget</code> etc.;</li>
+</ul></li>
+</ul>
+</div>
+
 
                             </div>
                             <div class="inherited">
@@ -3385,7 +3475,7 @@
         <span class="n">mixin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApplicationDispatcher</span><span class="p">]</span>
 
         <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">group</span>
             <span class="k">elif</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
@@ -3495,7 +3585,7 @@
         <span class="n">mixin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApplicationDispatcher</span><span class="p">]</span>
 
         <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">operator</span>
             <span class="k">elif</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
@@ -3505,7 +3595,9 @@
 
             </details>
 
-        
+                    <div class="docstring"><p>所有非单函数型 Dispatcher 的基类, 用于为参数解析提供可扩展的支持.</p>
+</div>
+
 
                             <div id="GroupRecallEvent.Dispatcher.__init__" class="classattr">
                                             <div class="attr function">
@@ -3521,21 +3613,25 @@
             <span class="name">mixin</span><span class="annotation">: list[<a href="../../broadcast/entities/dispatcher.html#BaseDispatcher">graia.broadcast.entities.dispatcher.BaseDispatcher</a>]</span><span class="default_value"> = [&lt;class &#39;<a href="../event.html#ApplicationDispatcher">graia.application.event.ApplicationDispatcher</a>&#39;&gt;]</span>
         </div>
 
-        
+                    <div class="docstring"><p>声明该 Dispatcher 所包含的来自其他 Dispatcher 提供的参数解析支持,
+若某参数该 Dispatcher 无法解析, 将跳转到该列表中并交由其中的 Dispatcher 进行解析,
+该列表中的 Dispatcher 全部被调用过且都不返回一有效值时才会将解析权交由其他的 Dispatcher.</p>
+</div>
+
 
                             </div>
                             <div id="GroupRecallEvent.Dispatcher.catch" class="classattr">
                                             <div class="attr function">
                         <div class="decorator">@staticmethod</div>
 
-                <span class="def">def</span>
+                <span class="def">async def</span>
                 <span class="name">catch</span><span class="signature">(interface: <a href="../../broadcast/interfaces/dispatcher.html#DispatcherInterface">graia.broadcast.interfaces.dispatcher.DispatcherInterface</a>)</span>:
         </div>
 
                         <details>
                 <summary class="button">View Source</summary>
                 <div class="codehilite"><pre><span></span>        <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">group</span>
             <span class="k">elif</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
@@ -3544,7 +3640,19 @@
 
             </details>
 
-        
+                    <div class="docstring"><p>该方法可以是 <code>staticmethod</code>, <code>classmethod</code> 亦或是普通的方法/函数.
+唯一的要求是 <code>Dispatcher.catch</code> 获取到的必须为一可调用异步 Callable.</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>interface (IDispatcherInterface): <code>Dispatcher</code> 服务的主要对象, 可以从其中获取以下信息:</strong>  - 当前解析中的参数的信息;
+<ul>
+<li>当前执行的信息, 比如正在处理的事件, <code>Listener</code>/<code>ExecTarget</code> etc.;</li>
+</ul></li>
+</ul>
+</div>
+
 
                             </div>
                             <div class="inherited">
@@ -3705,7 +3813,7 @@
         <span class="n">mixin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApplicationDispatcher</span><span class="p">]</span>
 
         <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">group</span>
             <span class="k">elif</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
@@ -3807,7 +3915,7 @@
         <span class="n">mixin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApplicationDispatcher</span><span class="p">]</span>
 
         <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">operator</span>
             <span class="k">elif</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
@@ -3817,7 +3925,9 @@
 
             </details>
 
-        
+                    <div class="docstring"><p>所有非单函数型 Dispatcher 的基类, 用于为参数解析提供可扩展的支持.</p>
+</div>
+
 
                             <div id="GroupNameChangeEvent.Dispatcher.__init__" class="classattr">
                                             <div class="attr function">
@@ -3833,21 +3943,25 @@
             <span class="name">mixin</span><span class="annotation">: list[<a href="../../broadcast/entities/dispatcher.html#BaseDispatcher">graia.broadcast.entities.dispatcher.BaseDispatcher</a>]</span><span class="default_value"> = [&lt;class &#39;<a href="../event.html#ApplicationDispatcher">graia.application.event.ApplicationDispatcher</a>&#39;&gt;]</span>
         </div>
 
-        
+                    <div class="docstring"><p>声明该 Dispatcher 所包含的来自其他 Dispatcher 提供的参数解析支持,
+若某参数该 Dispatcher 无法解析, 将跳转到该列表中并交由其中的 Dispatcher 进行解析,
+该列表中的 Dispatcher 全部被调用过且都不返回一有效值时才会将解析权交由其他的 Dispatcher.</p>
+</div>
+
 
                             </div>
                             <div id="GroupNameChangeEvent.Dispatcher.catch" class="classattr">
                                             <div class="attr function">
                         <div class="decorator">@staticmethod</div>
 
-                <span class="def">def</span>
+                <span class="def">async def</span>
                 <span class="name">catch</span><span class="signature">(interface: <a href="../../broadcast/interfaces/dispatcher.html#DispatcherInterface">graia.broadcast.interfaces.dispatcher.DispatcherInterface</a>)</span>:
         </div>
 
                         <details>
                 <summary class="button">View Source</summary>
                 <div class="codehilite"><pre><span></span>        <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">group</span>
             <span class="k">elif</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
@@ -3856,7 +3970,19 @@
 
             </details>
 
-        
+                    <div class="docstring"><p>该方法可以是 <code>staticmethod</code>, <code>classmethod</code> 亦或是普通的方法/函数.
+唯一的要求是 <code>Dispatcher.catch</code> 获取到的必须为一可调用异步 Callable.</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>interface (IDispatcherInterface): <code>Dispatcher</code> 服务的主要对象, 可以从其中获取以下信息:</strong>  - 当前解析中的参数的信息;
+<ul>
+<li>当前执行的信息, 比如正在处理的事件, <code>Listener</code>/<code>ExecTarget</code> etc.;</li>
+</ul></li>
+</ul>
+</div>
+
 
                             </div>
                             <div class="inherited">
@@ -3906,7 +4032,7 @@
         <span class="n">mixin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApplicationDispatcher</span><span class="p">]</span>
 
         <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">group</span>
             <span class="k">elif</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
@@ -4008,7 +4134,7 @@
         <span class="n">mixin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApplicationDispatcher</span><span class="p">]</span>
 
         <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">operator</span>
             <span class="k">elif</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
@@ -4018,7 +4144,9 @@
 
             </details>
 
-        
+                    <div class="docstring"><p>所有非单函数型 Dispatcher 的基类, 用于为参数解析提供可扩展的支持.</p>
+</div>
+
 
                             <div id="GroupEntranceAnnouncementChangeEvent.Dispatcher.__init__" class="classattr">
                                             <div class="attr function">
@@ -4034,21 +4162,25 @@
             <span class="name">mixin</span><span class="annotation">: list[<a href="../../broadcast/entities/dispatcher.html#BaseDispatcher">graia.broadcast.entities.dispatcher.BaseDispatcher</a>]</span><span class="default_value"> = [&lt;class &#39;<a href="../event.html#ApplicationDispatcher">graia.application.event.ApplicationDispatcher</a>&#39;&gt;]</span>
         </div>
 
-        
+                    <div class="docstring"><p>声明该 Dispatcher 所包含的来自其他 Dispatcher 提供的参数解析支持,
+若某参数该 Dispatcher 无法解析, 将跳转到该列表中并交由其中的 Dispatcher 进行解析,
+该列表中的 Dispatcher 全部被调用过且都不返回一有效值时才会将解析权交由其他的 Dispatcher.</p>
+</div>
+
 
                             </div>
                             <div id="GroupEntranceAnnouncementChangeEvent.Dispatcher.catch" class="classattr">
                                             <div class="attr function">
                         <div class="decorator">@staticmethod</div>
 
-                <span class="def">def</span>
+                <span class="def">async def</span>
                 <span class="name">catch</span><span class="signature">(interface: <a href="../../broadcast/interfaces/dispatcher.html#DispatcherInterface">graia.broadcast.interfaces.dispatcher.DispatcherInterface</a>)</span>:
         </div>
 
                         <details>
                 <summary class="button">View Source</summary>
                 <div class="codehilite"><pre><span></span>        <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">group</span>
             <span class="k">elif</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
@@ -4057,7 +4189,19 @@
 
             </details>
 
-        
+                    <div class="docstring"><p>该方法可以是 <code>staticmethod</code>, <code>classmethod</code> 亦或是普通的方法/函数.
+唯一的要求是 <code>Dispatcher.catch</code> 获取到的必须为一可调用异步 Callable.</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>interface (IDispatcherInterface): <code>Dispatcher</code> 服务的主要对象, 可以从其中获取以下信息:</strong>  - 当前解析中的参数的信息;
+<ul>
+<li>当前执行的信息, 比如正在处理的事件, <code>Listener</code>/<code>ExecTarget</code> etc.;</li>
+</ul></li>
+</ul>
+</div>
+
 
                             </div>
                             <div class="inherited">
@@ -4107,7 +4251,7 @@
         <span class="n">mixin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApplicationDispatcher</span><span class="p">]</span>
 
         <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">group</span>
             <span class="k">elif</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
@@ -4209,7 +4353,7 @@
         <span class="n">mixin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApplicationDispatcher</span><span class="p">]</span>
 
         <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">operator</span>
             <span class="k">elif</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
@@ -4219,7 +4363,9 @@
 
             </details>
 
-        
+                    <div class="docstring"><p>所有非单函数型 Dispatcher 的基类, 用于为参数解析提供可扩展的支持.</p>
+</div>
+
 
                             <div id="GroupMuteAllEvent.Dispatcher.__init__" class="classattr">
                                             <div class="attr function">
@@ -4235,21 +4381,25 @@
             <span class="name">mixin</span><span class="annotation">: list[<a href="../../broadcast/entities/dispatcher.html#BaseDispatcher">graia.broadcast.entities.dispatcher.BaseDispatcher</a>]</span><span class="default_value"> = [&lt;class &#39;<a href="../event.html#ApplicationDispatcher">graia.application.event.ApplicationDispatcher</a>&#39;&gt;]</span>
         </div>
 
-        
+                    <div class="docstring"><p>声明该 Dispatcher 所包含的来自其他 Dispatcher 提供的参数解析支持,
+若某参数该 Dispatcher 无法解析, 将跳转到该列表中并交由其中的 Dispatcher 进行解析,
+该列表中的 Dispatcher 全部被调用过且都不返回一有效值时才会将解析权交由其他的 Dispatcher.</p>
+</div>
+
 
                             </div>
                             <div id="GroupMuteAllEvent.Dispatcher.catch" class="classattr">
                                             <div class="attr function">
                         <div class="decorator">@staticmethod</div>
 
-                <span class="def">def</span>
+                <span class="def">async def</span>
                 <span class="name">catch</span><span class="signature">(interface: <a href="../../broadcast/interfaces/dispatcher.html#DispatcherInterface">graia.broadcast.interfaces.dispatcher.DispatcherInterface</a>)</span>:
         </div>
 
                         <details>
                 <summary class="button">View Source</summary>
                 <div class="codehilite"><pre><span></span>        <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">group</span>
             <span class="k">elif</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
@@ -4258,7 +4408,19 @@
 
             </details>
 
-        
+                    <div class="docstring"><p>该方法可以是 <code>staticmethod</code>, <code>classmethod</code> 亦或是普通的方法/函数.
+唯一的要求是 <code>Dispatcher.catch</code> 获取到的必须为一可调用异步 Callable.</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>interface (IDispatcherInterface): <code>Dispatcher</code> 服务的主要对象, 可以从其中获取以下信息:</strong>  - 当前解析中的参数的信息;
+<ul>
+<li>当前执行的信息, 比如正在处理的事件, <code>Listener</code>/<code>ExecTarget</code> etc.;</li>
+</ul></li>
+</ul>
+</div>
+
 
                             </div>
                             <div class="inherited">
@@ -4308,7 +4470,7 @@
         <span class="n">mixin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApplicationDispatcher</span><span class="p">]</span>
 
         <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">group</span>
             <span class="k">elif</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
@@ -4410,7 +4572,7 @@
         <span class="n">mixin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApplicationDispatcher</span><span class="p">]</span>
 
         <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">operator</span>
             <span class="k">elif</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
@@ -4420,7 +4582,9 @@
 
             </details>
 
-        
+                    <div class="docstring"><p>所有非单函数型 Dispatcher 的基类, 用于为参数解析提供可扩展的支持.</p>
+</div>
+
 
                             <div id="GroupAllowAnonymousChatEvent.Dispatcher.__init__" class="classattr">
                                             <div class="attr function">
@@ -4436,21 +4600,25 @@
             <span class="name">mixin</span><span class="annotation">: list[<a href="../../broadcast/entities/dispatcher.html#BaseDispatcher">graia.broadcast.entities.dispatcher.BaseDispatcher</a>]</span><span class="default_value"> = [&lt;class &#39;<a href="../event.html#ApplicationDispatcher">graia.application.event.ApplicationDispatcher</a>&#39;&gt;]</span>
         </div>
 
-        
+                    <div class="docstring"><p>声明该 Dispatcher 所包含的来自其他 Dispatcher 提供的参数解析支持,
+若某参数该 Dispatcher 无法解析, 将跳转到该列表中并交由其中的 Dispatcher 进行解析,
+该列表中的 Dispatcher 全部被调用过且都不返回一有效值时才会将解析权交由其他的 Dispatcher.</p>
+</div>
+
 
                             </div>
                             <div id="GroupAllowAnonymousChatEvent.Dispatcher.catch" class="classattr">
                                             <div class="attr function">
                         <div class="decorator">@staticmethod</div>
 
-                <span class="def">def</span>
+                <span class="def">async def</span>
                 <span class="name">catch</span><span class="signature">(interface: <a href="../../broadcast/interfaces/dispatcher.html#DispatcherInterface">graia.broadcast.interfaces.dispatcher.DispatcherInterface</a>)</span>:
         </div>
 
                         <details>
                 <summary class="button">View Source</summary>
                 <div class="codehilite"><pre><span></span>        <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">group</span>
             <span class="k">elif</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
@@ -4459,7 +4627,19 @@
 
             </details>
 
-        
+                    <div class="docstring"><p>该方法可以是 <code>staticmethod</code>, <code>classmethod</code> 亦或是普通的方法/函数.
+唯一的要求是 <code>Dispatcher.catch</code> 获取到的必须为一可调用异步 Callable.</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>interface (IDispatcherInterface): <code>Dispatcher</code> 服务的主要对象, 可以从其中获取以下信息:</strong>  - 当前解析中的参数的信息;
+<ul>
+<li>当前执行的信息, 比如正在处理的事件, <code>Listener</code>/<code>ExecTarget</code> etc.;</li>
+</ul></li>
+</ul>
+</div>
+
 
                             </div>
                             <div class="inherited">
@@ -4508,7 +4688,7 @@
         <span class="n">mixin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApplicationDispatcher</span><span class="p">]</span>
 
         <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">group</span>
 </pre></div>
@@ -4607,7 +4787,7 @@
         <span class="n">mixin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApplicationDispatcher</span><span class="p">]</span>
 
         <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">operator</span>
             <span class="k">elif</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
@@ -4617,7 +4797,9 @@
 
             </details>
 
-        
+                    <div class="docstring"><p>所有非单函数型 Dispatcher 的基类, 用于为参数解析提供可扩展的支持.</p>
+</div>
+
 
                             <div id="GroupAllowConfessTalkEvent.Dispatcher.__init__" class="classattr">
                                             <div class="attr function">
@@ -4633,28 +4815,44 @@
             <span class="name">mixin</span><span class="annotation">: list[<a href="../../broadcast/entities/dispatcher.html#BaseDispatcher">graia.broadcast.entities.dispatcher.BaseDispatcher</a>]</span><span class="default_value"> = [&lt;class &#39;<a href="../event.html#ApplicationDispatcher">graia.application.event.ApplicationDispatcher</a>&#39;&gt;]</span>
         </div>
 
-        
+                    <div class="docstring"><p>声明该 Dispatcher 所包含的来自其他 Dispatcher 提供的参数解析支持,
+若某参数该 Dispatcher 无法解析, 将跳转到该列表中并交由其中的 Dispatcher 进行解析,
+该列表中的 Dispatcher 全部被调用过且都不返回一有效值时才会将解析权交由其他的 Dispatcher.</p>
+</div>
+
 
                             </div>
                             <div id="GroupAllowConfessTalkEvent.Dispatcher.catch" class="classattr">
                                             <div class="attr function">
                         <div class="decorator">@staticmethod</div>
 
-                <span class="def">def</span>
+                <span class="def">async def</span>
                 <span class="name">catch</span><span class="signature">(interface: <a href="../../broadcast/interfaces/dispatcher.html#DispatcherInterface">graia.broadcast.interfaces.dispatcher.DispatcherInterface</a>)</span>:
         </div>
 
                         <details>
                 <summary class="button">View Source</summary>
                 <div class="codehilite"><pre><span></span>        <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">group</span>
 </pre></div>
 
             </details>
 
-        
+                    <div class="docstring"><p>该方法可以是 <code>staticmethod</code>, <code>classmethod</code> 亦或是普通的方法/函数.
+唯一的要求是 <code>Dispatcher.catch</code> 获取到的必须为一可调用异步 Callable.</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>interface (IDispatcherInterface): <code>Dispatcher</code> 服务的主要对象, 可以从其中获取以下信息:</strong>  - 当前解析中的参数的信息;
+<ul>
+<li>当前执行的信息, 比如正在处理的事件, <code>Listener</code>/<code>ExecTarget</code> etc.;</li>
+</ul></li>
+</ul>
+</div>
+
 
                             </div>
                             <div class="inherited">
@@ -4704,7 +4902,7 @@
         <span class="n">mixin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApplicationDispatcher</span><span class="p">]</span>
 
         <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">group</span>
             <span class="k">elif</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
@@ -4806,7 +5004,7 @@
         <span class="n">mixin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApplicationDispatcher</span><span class="p">]</span>
 
         <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">operator</span>
             <span class="k">elif</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
@@ -4816,7 +5014,9 @@
 
             </details>
 
-        
+                    <div class="docstring"><p>所有非单函数型 Dispatcher 的基类, 用于为参数解析提供可扩展的支持.</p>
+</div>
+
 
                             <div id="GroupAllowMemberInviteEvent.Dispatcher.__init__" class="classattr">
                                             <div class="attr function">
@@ -4832,21 +5032,25 @@
             <span class="name">mixin</span><span class="annotation">: list[<a href="../../broadcast/entities/dispatcher.html#BaseDispatcher">graia.broadcast.entities.dispatcher.BaseDispatcher</a>]</span><span class="default_value"> = [&lt;class &#39;<a href="../event.html#ApplicationDispatcher">graia.application.event.ApplicationDispatcher</a>&#39;&gt;]</span>
         </div>
 
-        
+                    <div class="docstring"><p>声明该 Dispatcher 所包含的来自其他 Dispatcher 提供的参数解析支持,
+若某参数该 Dispatcher 无法解析, 将跳转到该列表中并交由其中的 Dispatcher 进行解析,
+该列表中的 Dispatcher 全部被调用过且都不返回一有效值时才会将解析权交由其他的 Dispatcher.</p>
+</div>
+
 
                             </div>
                             <div id="GroupAllowMemberInviteEvent.Dispatcher.catch" class="classattr">
                                             <div class="attr function">
                         <div class="decorator">@staticmethod</div>
 
-                <span class="def">def</span>
+                <span class="def">async def</span>
                 <span class="name">catch</span><span class="signature">(interface: <a href="../../broadcast/interfaces/dispatcher.html#DispatcherInterface">graia.broadcast.interfaces.dispatcher.DispatcherInterface</a>)</span>:
         </div>
 
                         <details>
                 <summary class="button">View Source</summary>
                 <div class="codehilite"><pre><span></span>        <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">group</span>
             <span class="k">elif</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
@@ -4855,7 +5059,19 @@
 
             </details>
 
-        
+                    <div class="docstring"><p>该方法可以是 <code>staticmethod</code>, <code>classmethod</code> 亦或是普通的方法/函数.
+唯一的要求是 <code>Dispatcher.catch</code> 获取到的必须为一可调用异步 Callable.</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>interface (IDispatcherInterface): <code>Dispatcher</code> 服务的主要对象, 可以从其中获取以下信息:</strong>  - 当前解析中的参数的信息;
+<ul>
+<li>当前执行的信息, 比如正在处理的事件, <code>Listener</code>/<code>ExecTarget</code> etc.;</li>
+</ul></li>
+</ul>
+</div>
+
 
                             </div>
                             <div class="inherited">
@@ -4902,7 +5118,7 @@
         <span class="n">mixin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApplicationDispatcher</span><span class="p">]</span>
 
         <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">member</span>
             <span class="k">elif</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
@@ -4980,7 +5196,7 @@
         <span class="n">mixin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApplicationDispatcher</span><span class="p">]</span>
 
         <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">operator</span>
             <span class="k">elif</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
@@ -4990,7 +5206,9 @@
 
             </details>
 
-        
+                    <div class="docstring"><p>所有非单函数型 Dispatcher 的基类, 用于为参数解析提供可扩展的支持.</p>
+</div>
+
 
                             <div id="MemberJoinEvent.Dispatcher.__init__" class="classattr">
                                             <div class="attr function">
@@ -5006,21 +5224,25 @@
             <span class="name">mixin</span><span class="annotation">: list[<a href="../../broadcast/entities/dispatcher.html#BaseDispatcher">graia.broadcast.entities.dispatcher.BaseDispatcher</a>]</span><span class="default_value"> = [&lt;class &#39;<a href="../event.html#ApplicationDispatcher">graia.application.event.ApplicationDispatcher</a>&#39;&gt;]</span>
         </div>
 
-        
+                    <div class="docstring"><p>声明该 Dispatcher 所包含的来自其他 Dispatcher 提供的参数解析支持,
+若某参数该 Dispatcher 无法解析, 将跳转到该列表中并交由其中的 Dispatcher 进行解析,
+该列表中的 Dispatcher 全部被调用过且都不返回一有效值时才会将解析权交由其他的 Dispatcher.</p>
+</div>
+
 
                             </div>
                             <div id="MemberJoinEvent.Dispatcher.catch" class="classattr">
                                             <div class="attr function">
                         <div class="decorator">@staticmethod</div>
 
-                <span class="def">def</span>
+                <span class="def">async def</span>
                 <span class="name">catch</span><span class="signature">(interface: <a href="../../broadcast/interfaces/dispatcher.html#DispatcherInterface">graia.broadcast.interfaces.dispatcher.DispatcherInterface</a>)</span>:
         </div>
 
                         <details>
                 <summary class="button">View Source</summary>
                 <div class="codehilite"><pre><span></span>        <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">member</span>
             <span class="k">elif</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
@@ -5029,7 +5251,19 @@
 
             </details>
 
-        
+                    <div class="docstring"><p>该方法可以是 <code>staticmethod</code>, <code>classmethod</code> 亦或是普通的方法/函数.
+唯一的要求是 <code>Dispatcher.catch</code> 获取到的必须为一可调用异步 Callable.</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>interface (IDispatcherInterface): <code>Dispatcher</code> 服务的主要对象, 可以从其中获取以下信息:</strong>  - 当前解析中的参数的信息;
+<ul>
+<li>当前执行的信息, 比如正在处理的事件, <code>Listener</code>/<code>ExecTarget</code> etc.;</li>
+</ul></li>
+</ul>
+</div>
+
 
                             </div>
                             <div class="inherited">
@@ -5079,7 +5313,7 @@
         <span class="n">mixin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApplicationDispatcher</span><span class="p">]</span>
 
         <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">default</span> <span class="o">==</span> <span class="s2">&quot;target&quot;</span><span class="p">:</span>
                     <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">member</span>
@@ -5170,7 +5404,7 @@
         <span class="n">mixin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApplicationDispatcher</span><span class="p">]</span>
 
         <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">operator</span>
             <span class="k">elif</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
@@ -5180,7 +5414,9 @@
 
             </details>
 
-        
+                    <div class="docstring"><p>所有非单函数型 Dispatcher 的基类, 用于为参数解析提供可扩展的支持.</p>
+</div>
+
 
                             <div id="MemberLeaveEventKick.Dispatcher.__init__" class="classattr">
                                             <div class="attr function">
@@ -5196,21 +5432,25 @@
             <span class="name">mixin</span><span class="annotation">: list[<a href="../../broadcast/entities/dispatcher.html#BaseDispatcher">graia.broadcast.entities.dispatcher.BaseDispatcher</a>]</span><span class="default_value"> = [&lt;class &#39;<a href="../event.html#ApplicationDispatcher">graia.application.event.ApplicationDispatcher</a>&#39;&gt;]</span>
         </div>
 
-        
+                    <div class="docstring"><p>声明该 Dispatcher 所包含的来自其他 Dispatcher 提供的参数解析支持,
+若某参数该 Dispatcher 无法解析, 将跳转到该列表中并交由其中的 Dispatcher 进行解析,
+该列表中的 Dispatcher 全部被调用过且都不返回一有效值时才会将解析权交由其他的 Dispatcher.</p>
+</div>
+
 
                             </div>
                             <div id="MemberLeaveEventKick.Dispatcher.catch" class="classattr">
                                             <div class="attr function">
                         <div class="decorator">@staticmethod</div>
 
-                <span class="def">def</span>
+                <span class="def">async def</span>
                 <span class="name">catch</span><span class="signature">(interface: <a href="../../broadcast/interfaces/dispatcher.html#DispatcherInterface">graia.broadcast.interfaces.dispatcher.DispatcherInterface</a>)</span>:
         </div>
 
                         <details>
                 <summary class="button">View Source</summary>
                 <div class="codehilite"><pre><span></span>        <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">default</span> <span class="o">==</span> <span class="s2">&quot;target&quot;</span><span class="p">:</span>
                     <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">member</span>
@@ -5222,7 +5462,19 @@
 
             </details>
 
-        
+                    <div class="docstring"><p>该方法可以是 <code>staticmethod</code>, <code>classmethod</code> 亦或是普通的方法/函数.
+唯一的要求是 <code>Dispatcher.catch</code> 获取到的必须为一可调用异步 Callable.</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>interface (IDispatcherInterface): <code>Dispatcher</code> 服务的主要对象, 可以从其中获取以下信息:</strong>  - 当前解析中的参数的信息;
+<ul>
+<li>当前执行的信息, 比如正在处理的事件, <code>Listener</code>/<code>ExecTarget</code> etc.;</li>
+</ul></li>
+</ul>
+</div>
+
 
                             </div>
                             <div class="inherited">
@@ -5269,7 +5521,7 @@
         <span class="n">mixin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApplicationDispatcher</span><span class="p">]</span>
 
         <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">member</span>
             <span class="k">elif</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
@@ -5347,7 +5599,7 @@
         <span class="n">mixin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApplicationDispatcher</span><span class="p">]</span>
 
         <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">operator</span>
             <span class="k">elif</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
@@ -5357,7 +5609,9 @@
 
             </details>
 
-        
+                    <div class="docstring"><p>所有非单函数型 Dispatcher 的基类, 用于为参数解析提供可扩展的支持.</p>
+</div>
+
 
                             <div id="MemberLeaveEventQuit.Dispatcher.__init__" class="classattr">
                                             <div class="attr function">
@@ -5373,21 +5627,25 @@
             <span class="name">mixin</span><span class="annotation">: list[<a href="../../broadcast/entities/dispatcher.html#BaseDispatcher">graia.broadcast.entities.dispatcher.BaseDispatcher</a>]</span><span class="default_value"> = [&lt;class &#39;<a href="../event.html#ApplicationDispatcher">graia.application.event.ApplicationDispatcher</a>&#39;&gt;]</span>
         </div>
 
-        
+                    <div class="docstring"><p>声明该 Dispatcher 所包含的来自其他 Dispatcher 提供的参数解析支持,
+若某参数该 Dispatcher 无法解析, 将跳转到该列表中并交由其中的 Dispatcher 进行解析,
+该列表中的 Dispatcher 全部被调用过且都不返回一有效值时才会将解析权交由其他的 Dispatcher.</p>
+</div>
+
 
                             </div>
                             <div id="MemberLeaveEventQuit.Dispatcher.catch" class="classattr">
                                             <div class="attr function">
                         <div class="decorator">@staticmethod</div>
 
-                <span class="def">def</span>
+                <span class="def">async def</span>
                 <span class="name">catch</span><span class="signature">(interface: <a href="../../broadcast/interfaces/dispatcher.html#DispatcherInterface">graia.broadcast.interfaces.dispatcher.DispatcherInterface</a>)</span>:
         </div>
 
                         <details>
                 <summary class="button">View Source</summary>
                 <div class="codehilite"><pre><span></span>        <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">member</span>
             <span class="k">elif</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
@@ -5396,7 +5654,19 @@
 
             </details>
 
-        
+                    <div class="docstring"><p>该方法可以是 <code>staticmethod</code>, <code>classmethod</code> 亦或是普通的方法/函数.
+唯一的要求是 <code>Dispatcher.catch</code> 获取到的必须为一可调用异步 Callable.</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>interface (IDispatcherInterface): <code>Dispatcher</code> 服务的主要对象, 可以从其中获取以下信息:</strong>  - 当前解析中的参数的信息;
+<ul>
+<li>当前执行的信息, 比如正在处理的事件, <code>Listener</code>/<code>ExecTarget</code> etc.;</li>
+</ul></li>
+</ul>
+</div>
+
 
                             </div>
                             <div class="inherited">
@@ -5448,7 +5718,7 @@
         <span class="n">mixin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApplicationDispatcher</span><span class="p">]</span>
 
         <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">default</span> <span class="o">==</span> <span class="s2">&quot;target&quot;</span><span class="p">:</span>
                     <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">member</span>
@@ -5553,7 +5823,7 @@
         <span class="n">mixin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApplicationDispatcher</span><span class="p">]</span>
 
         <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">operator</span>
             <span class="k">elif</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
@@ -5563,7 +5833,9 @@
 
             </details>
 
-        
+                    <div class="docstring"><p>所有非单函数型 Dispatcher 的基类, 用于为参数解析提供可扩展的支持.</p>
+</div>
+
 
                             <div id="MemberCardChangeEvent.Dispatcher.__init__" class="classattr">
                                             <div class="attr function">
@@ -5579,21 +5851,25 @@
             <span class="name">mixin</span><span class="annotation">: list[<a href="../../broadcast/entities/dispatcher.html#BaseDispatcher">graia.broadcast.entities.dispatcher.BaseDispatcher</a>]</span><span class="default_value"> = [&lt;class &#39;<a href="../event.html#ApplicationDispatcher">graia.application.event.ApplicationDispatcher</a>&#39;&gt;]</span>
         </div>
 
-        
+                    <div class="docstring"><p>声明该 Dispatcher 所包含的来自其他 Dispatcher 提供的参数解析支持,
+若某参数该 Dispatcher 无法解析, 将跳转到该列表中并交由其中的 Dispatcher 进行解析,
+该列表中的 Dispatcher 全部被调用过且都不返回一有效值时才会将解析权交由其他的 Dispatcher.</p>
+</div>
+
 
                             </div>
                             <div id="MemberCardChangeEvent.Dispatcher.catch" class="classattr">
                                             <div class="attr function">
                         <div class="decorator">@staticmethod</div>
 
-                <span class="def">def</span>
+                <span class="def">async def</span>
                 <span class="name">catch</span><span class="signature">(interface: <a href="../../broadcast/interfaces/dispatcher.html#DispatcherInterface">graia.broadcast.interfaces.dispatcher.DispatcherInterface</a>)</span>:
         </div>
 
                         <details>
                 <summary class="button">View Source</summary>
                 <div class="codehilite"><pre><span></span>        <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">default</span> <span class="o">==</span> <span class="s2">&quot;target&quot;</span><span class="p">:</span>
                     <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">member</span>
@@ -5603,7 +5879,19 @@
 
             </details>
 
-        
+                    <div class="docstring"><p>该方法可以是 <code>staticmethod</code>, <code>classmethod</code> 亦或是普通的方法/函数.
+唯一的要求是 <code>Dispatcher.catch</code> 获取到的必须为一可调用异步 Callable.</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>interface (IDispatcherInterface): <code>Dispatcher</code> 服务的主要对象, 可以从其中获取以下信息:</strong>  - 当前解析中的参数的信息;
+<ul>
+<li>当前执行的信息, 比如正在处理的事件, <code>Listener</code>/<code>ExecTarget</code> etc.;</li>
+</ul></li>
+</ul>
+</div>
+
 
                             </div>
                             <div class="inherited">
@@ -5652,7 +5940,7 @@
         <span class="n">mixin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApplicationDispatcher</span><span class="p">]</span>
 
         <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">member</span>
             <span class="k">elif</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
@@ -5746,7 +6034,7 @@
         <span class="n">mixin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApplicationDispatcher</span><span class="p">]</span>
 
         <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">operator</span>
             <span class="k">elif</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
@@ -5756,7 +6044,9 @@
 
             </details>
 
-        
+                    <div class="docstring"><p>所有非单函数型 Dispatcher 的基类, 用于为参数解析提供可扩展的支持.</p>
+</div>
+
 
                             <div id="MemberSpecialTitleChangeEvent.Dispatcher.__init__" class="classattr">
                                             <div class="attr function">
@@ -5772,21 +6062,25 @@
             <span class="name">mixin</span><span class="annotation">: list[<a href="../../broadcast/entities/dispatcher.html#BaseDispatcher">graia.broadcast.entities.dispatcher.BaseDispatcher</a>]</span><span class="default_value"> = [&lt;class &#39;<a href="../event.html#ApplicationDispatcher">graia.application.event.ApplicationDispatcher</a>&#39;&gt;]</span>
         </div>
 
-        
+                    <div class="docstring"><p>声明该 Dispatcher 所包含的来自其他 Dispatcher 提供的参数解析支持,
+若某参数该 Dispatcher 无法解析, 将跳转到该列表中并交由其中的 Dispatcher 进行解析,
+该列表中的 Dispatcher 全部被调用过且都不返回一有效值时才会将解析权交由其他的 Dispatcher.</p>
+</div>
+
 
                             </div>
                             <div id="MemberSpecialTitleChangeEvent.Dispatcher.catch" class="classattr">
                                             <div class="attr function">
                         <div class="decorator">@staticmethod</div>
 
-                <span class="def">def</span>
+                <span class="def">async def</span>
                 <span class="name">catch</span><span class="signature">(interface: <a href="../../broadcast/interfaces/dispatcher.html#DispatcherInterface">graia.broadcast.interfaces.dispatcher.DispatcherInterface</a>)</span>:
         </div>
 
                         <details>
                 <summary class="button">View Source</summary>
                 <div class="codehilite"><pre><span></span>        <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">member</span>
             <span class="k">elif</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
@@ -5795,7 +6089,19 @@
 
             </details>
 
-        
+                    <div class="docstring"><p>该方法可以是 <code>staticmethod</code>, <code>classmethod</code> 亦或是普通的方法/函数.
+唯一的要求是 <code>Dispatcher.catch</code> 获取到的必须为一可调用异步 Callable.</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>interface (IDispatcherInterface): <code>Dispatcher</code> 服务的主要对象, 可以从其中获取以下信息:</strong>  - 当前解析中的参数的信息;
+<ul>
+<li>当前执行的信息, 比如正在处理的事件, <code>Listener</code>/<code>ExecTarget</code> etc.;</li>
+</ul></li>
+</ul>
+</div>
+
 
                             </div>
                             <div class="inherited">
@@ -5844,7 +6150,7 @@
         <span class="n">mixin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApplicationDispatcher</span><span class="p">]</span>
 
         <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">member</span>
             <span class="k">elif</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
@@ -5938,7 +6244,7 @@
         <span class="n">mixin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApplicationDispatcher</span><span class="p">]</span>
 
         <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">operator</span>
             <span class="k">elif</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
@@ -5948,7 +6254,9 @@
 
             </details>
 
-        
+                    <div class="docstring"><p>所有非单函数型 Dispatcher 的基类, 用于为参数解析提供可扩展的支持.</p>
+</div>
+
 
                             <div id="MemberPermissionChangeEvent.Dispatcher.__init__" class="classattr">
                                             <div class="attr function">
@@ -5964,21 +6272,25 @@
             <span class="name">mixin</span><span class="annotation">: list[<a href="../../broadcast/entities/dispatcher.html#BaseDispatcher">graia.broadcast.entities.dispatcher.BaseDispatcher</a>]</span><span class="default_value"> = [&lt;class &#39;<a href="../event.html#ApplicationDispatcher">graia.application.event.ApplicationDispatcher</a>&#39;&gt;]</span>
         </div>
 
-        
+                    <div class="docstring"><p>声明该 Dispatcher 所包含的来自其他 Dispatcher 提供的参数解析支持,
+若某参数该 Dispatcher 无法解析, 将跳转到该列表中并交由其中的 Dispatcher 进行解析,
+该列表中的 Dispatcher 全部被调用过且都不返回一有效值时才会将解析权交由其他的 Dispatcher.</p>
+</div>
+
 
                             </div>
                             <div id="MemberPermissionChangeEvent.Dispatcher.catch" class="classattr">
                                             <div class="attr function">
                         <div class="decorator">@staticmethod</div>
 
-                <span class="def">def</span>
+                <span class="def">async def</span>
                 <span class="name">catch</span><span class="signature">(interface: <a href="../../broadcast/interfaces/dispatcher.html#DispatcherInterface">graia.broadcast.interfaces.dispatcher.DispatcherInterface</a>)</span>:
         </div>
 
                         <details>
                 <summary class="button">View Source</summary>
                 <div class="codehilite"><pre><span></span>        <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">member</span>
             <span class="k">elif</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
@@ -5987,7 +6299,19 @@
 
             </details>
 
-        
+                    <div class="docstring"><p>该方法可以是 <code>staticmethod</code>, <code>classmethod</code> 亦或是普通的方法/函数.
+唯一的要求是 <code>Dispatcher.catch</code> 获取到的必须为一可调用异步 Callable.</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>interface (IDispatcherInterface): <code>Dispatcher</code> 服务的主要对象, 可以从其中获取以下信息:</strong>  - 当前解析中的参数的信息;
+<ul>
+<li>当前执行的信息, 比如正在处理的事件, <code>Listener</code>/<code>ExecTarget</code> etc.;</li>
+</ul></li>
+</ul>
+</div>
+
 
                             </div>
                             <div class="inherited">
@@ -6038,7 +6362,7 @@
         <span class="n">mixin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApplicationDispatcher</span><span class="p">]</span>
 
         <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">default</span> <span class="o">==</span> <span class="s2">&quot;target&quot;</span><span class="p">:</span>
                     <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">member</span>
@@ -6137,7 +6461,7 @@
         <span class="n">mixin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApplicationDispatcher</span><span class="p">]</span>
 
         <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">operator</span>
             <span class="k">elif</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
@@ -6147,7 +6471,9 @@
 
             </details>
 
-        
+                    <div class="docstring"><p>所有非单函数型 Dispatcher 的基类, 用于为参数解析提供可扩展的支持.</p>
+</div>
+
 
                             <div id="MemberMuteEvent.Dispatcher.__init__" class="classattr">
                                             <div class="attr function">
@@ -6163,21 +6489,25 @@
             <span class="name">mixin</span><span class="annotation">: list[<a href="../../broadcast/entities/dispatcher.html#BaseDispatcher">graia.broadcast.entities.dispatcher.BaseDispatcher</a>]</span><span class="default_value"> = [&lt;class &#39;<a href="../event.html#ApplicationDispatcher">graia.application.event.ApplicationDispatcher</a>&#39;&gt;]</span>
         </div>
 
-        
+                    <div class="docstring"><p>声明该 Dispatcher 所包含的来自其他 Dispatcher 提供的参数解析支持,
+若某参数该 Dispatcher 无法解析, 将跳转到该列表中并交由其中的 Dispatcher 进行解析,
+该列表中的 Dispatcher 全部被调用过且都不返回一有效值时才会将解析权交由其他的 Dispatcher.</p>
+</div>
+
 
                             </div>
                             <div id="MemberMuteEvent.Dispatcher.catch" class="classattr">
                                             <div class="attr function">
                         <div class="decorator">@staticmethod</div>
 
-                <span class="def">def</span>
+                <span class="def">async def</span>
                 <span class="name">catch</span><span class="signature">(interface: <a href="../../broadcast/interfaces/dispatcher.html#DispatcherInterface">graia.broadcast.interfaces.dispatcher.DispatcherInterface</a>)</span>:
         </div>
 
                         <details>
                 <summary class="button">View Source</summary>
                 <div class="codehilite"><pre><span></span>        <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">default</span> <span class="o">==</span> <span class="s2">&quot;target&quot;</span><span class="p">:</span>
                     <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">member</span>
@@ -6189,7 +6519,19 @@
 
             </details>
 
-        
+                    <div class="docstring"><p>该方法可以是 <code>staticmethod</code>, <code>classmethod</code> 亦或是普通的方法/函数.
+唯一的要求是 <code>Dispatcher.catch</code> 获取到的必须为一可调用异步 Callable.</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>interface (IDispatcherInterface): <code>Dispatcher</code> 服务的主要对象, 可以从其中获取以下信息:</strong>  - 当前解析中的参数的信息;
+<ul>
+<li>当前执行的信息, 比如正在处理的事件, <code>Listener</code>/<code>ExecTarget</code> etc.;</li>
+</ul></li>
+</ul>
+</div>
+
 
                             </div>
                             <div class="inherited">
@@ -6239,7 +6581,7 @@
         <span class="n">mixin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApplicationDispatcher</span><span class="p">]</span>
 
         <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">default</span> <span class="o">==</span> <span class="s2">&quot;target&quot;</span><span class="p">:</span>
                     <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">member</span>
@@ -6330,7 +6672,7 @@
         <span class="n">mixin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApplicationDispatcher</span><span class="p">]</span>
 
         <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">operator</span>
             <span class="k">elif</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Group</span><span class="p">:</span>
@@ -6340,7 +6682,9 @@
 
             </details>
 
-        
+                    <div class="docstring"><p>所有非单函数型 Dispatcher 的基类, 用于为参数解析提供可扩展的支持.</p>
+</div>
+
 
                             <div id="MemberUnmuteEvent.Dispatcher.__init__" class="classattr">
                                             <div class="attr function">
@@ -6356,21 +6700,25 @@
             <span class="name">mixin</span><span class="annotation">: list[<a href="../../broadcast/entities/dispatcher.html#BaseDispatcher">graia.broadcast.entities.dispatcher.BaseDispatcher</a>]</span><span class="default_value"> = [&lt;class &#39;<a href="../event.html#ApplicationDispatcher">graia.application.event.ApplicationDispatcher</a>&#39;&gt;]</span>
         </div>
 
-        
+                    <div class="docstring"><p>声明该 Dispatcher 所包含的来自其他 Dispatcher 提供的参数解析支持,
+若某参数该 Dispatcher 无法解析, 将跳转到该列表中并交由其中的 Dispatcher 进行解析,
+该列表中的 Dispatcher 全部被调用过且都不返回一有效值时才会将解析权交由其他的 Dispatcher.</p>
+</div>
+
 
                             </div>
                             <div id="MemberUnmuteEvent.Dispatcher.catch" class="classattr">
                                             <div class="attr function">
                         <div class="decorator">@staticmethod</div>
 
-                <span class="def">def</span>
+                <span class="def">async def</span>
                 <span class="name">catch</span><span class="signature">(interface: <a href="../../broadcast/interfaces/dispatcher.html#DispatcherInterface">graia.broadcast.interfaces.dispatcher.DispatcherInterface</a>)</span>:
         </div>
 
                         <details>
                 <summary class="button">View Source</summary>
                 <div class="codehilite"><pre><span></span>        <span class="nd">@staticmethod</span>
-        <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
+        <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">annotation</span> <span class="ow">is</span> <span class="n">Member</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">interface</span><span class="o">.</span><span class="n">default</span> <span class="o">==</span> <span class="s2">&quot;target&quot;</span><span class="p">:</span>
                     <span class="k">return</span> <span class="n">interface</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">member</span>
@@ -6382,7 +6730,19 @@
 
             </details>
 
-        
+                    <div class="docstring"><p>该方法可以是 <code>staticmethod</code>, <code>classmethod</code> 亦或是普通的方法/函数.
+唯一的要求是 <code>Dispatcher.catch</code> 获取到的必须为一可调用异步 Callable.</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>interface (IDispatcherInterface): <code>Dispatcher</code> 服务的主要对象, 可以从其中获取以下信息:</strong>  - 当前解析中的参数的信息;
+<ul>
+<li>当前执行的信息, 比如正在处理的事件, <code>Listener</code>/<code>ExecTarget</code> etc.;</li>
+</ul></li>
+</ul>
+</div>
+
 
                             </div>
                             <div class="inherited">

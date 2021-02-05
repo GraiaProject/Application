@@ -12,7 +12,7 @@ class ApplicationLaunched(BaseEvent):
 
     class Dispatcher(BaseDispatcher):
         @staticmethod
-        def catch(interface: "DispatcherInterface"):
+        async def catch(interface: "DispatcherInterface"):
             from .. import GraiaMiraiApplication
 
             if interface.annotation is GraiaMiraiApplication:
@@ -27,7 +27,7 @@ class ApplicationLaunchedBlocking(BaseEvent):
 
     class Dispatcher(BaseDispatcher):
         @staticmethod
-        def catch(interface: "DispatcherInterface"):
+        async def catch(interface: "DispatcherInterface"):
             from .. import GraiaMiraiApplication
 
             if interface.annotation is GraiaMiraiApplication:
@@ -42,7 +42,7 @@ class ApplicationShutdowned(BaseEvent):
 
     class Dispatcher(BaseDispatcher):
         @staticmethod
-        def catch(interface: "DispatcherInterface"):
+        async def catch(interface: "DispatcherInterface"):
             from .. import GraiaMiraiApplication
 
             if interface.annotation is GraiaMiraiApplication:

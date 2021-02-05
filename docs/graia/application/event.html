@@ -132,7 +132,7 @@
 
 <span class="k">class</span> <span class="nc">ApplicationDispatcher</span><span class="p">(</span><span class="n">BaseDispatcher</span><span class="p">):</span>
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">):</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">interface</span><span class="o">.</span><span class="n">annotation</span><span class="p">,</span> <span class="s2">&quot;__name__&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;GraiaMiraiApplication&quot;</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">application</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
 
@@ -141,7 +141,7 @@
     <span class="n">mixin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApplicationDispatcher</span><span class="p">]</span>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">):</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">):</span>
         <span class="k">pass</span>
 </pre></div>
 
@@ -309,14 +309,16 @@
                 <summary class="button">View Source</summary>
                 <div class="codehilite"><pre><span></span><span class="k">class</span> <span class="nc">ApplicationDispatcher</span><span class="p">(</span><span class="n">BaseDispatcher</span><span class="p">):</span>
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">):</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">interface</span><span class="o">.</span><span class="n">annotation</span><span class="p">,</span> <span class="s2">&quot;__name__&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;GraiaMiraiApplication&quot;</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">application</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
 </pre></div>
 
             </details>
 
-        
+                    <div class="docstring"><p>所有非单函数型 Dispatcher 的基类, 用于为参数解析提供可扩展的支持.</p>
+</div>
+
 
                             <div id="ApplicationDispatcher.__init__" class="classattr">
                                             <div class="attr function">
@@ -331,21 +333,33 @@
                                             <div class="attr function">
                         <div class="decorator">@staticmethod</div>
 
-                <span class="def">def</span>
+                <span class="def">async def</span>
                 <span class="name">catch</span><span class="signature">(interface)</span>:
         </div>
 
                         <details>
                 <summary class="button">View Source</summary>
                 <div class="codehilite"><pre><span></span>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">):</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">):</span>
         <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">interface</span><span class="o">.</span><span class="n">annotation</span><span class="p">,</span> <span class="s2">&quot;__name__&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;GraiaMiraiApplication&quot;</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">application</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
 </pre></div>
 
             </details>
 
-        
+                    <div class="docstring"><p>该方法可以是 <code>staticmethod</code>, <code>classmethod</code> 亦或是普通的方法/函数.
+唯一的要求是 <code>Dispatcher.catch</code> 获取到的必须为一可调用异步 Callable.</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>interface (IDispatcherInterface): <code>Dispatcher</code> 服务的主要对象, 可以从其中获取以下信息:</strong>  - 当前解析中的参数的信息;
+<ul>
+<li>当前执行的信息, 比如正在处理的事件, <code>Listener</code>/<code>ExecTarget</code> etc.;</li>
+</ul></li>
+</ul>
+</div>
+
 
                             </div>
                             <div class="inherited">
@@ -379,13 +393,15 @@
     <span class="n">mixin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApplicationDispatcher</span><span class="p">]</span>
 
     <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">):</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">):</span>
         <span class="k">pass</span>
 </pre></div>
 
             </details>
 
-        
+                    <div class="docstring"><p>所有非单函数型 Dispatcher 的基类, 用于为参数解析提供可扩展的支持.</p>
+</div>
+
 
                             <div id="EmptyDispatcher.__init__" class="classattr">
                                             <div class="attr function">
@@ -401,27 +417,43 @@
             <span class="name">mixin</span><span class="annotation">: list[<a href="../broadcast/entities/dispatcher.html#BaseDispatcher">graia.broadcast.entities.dispatcher.BaseDispatcher</a>]</span><span class="default_value"> = [&lt;class &#39;<a href="#ApplicationDispatcher">graia.application.event.ApplicationDispatcher</a>&#39;&gt;]</span>
         </div>
 
-        
+                    <div class="docstring"><p>声明该 Dispatcher 所包含的来自其他 Dispatcher 提供的参数解析支持,
+若某参数该 Dispatcher 无法解析, 将跳转到该列表中并交由其中的 Dispatcher 进行解析,
+该列表中的 Dispatcher 全部被调用过且都不返回一有效值时才会将解析权交由其他的 Dispatcher.</p>
+</div>
+
 
                             </div>
                             <div id="EmptyDispatcher.catch" class="classattr">
                                             <div class="attr function">
                         <div class="decorator">@staticmethod</div>
 
-                <span class="def">def</span>
+                <span class="def">async def</span>
                 <span class="name">catch</span><span class="signature">(interface)</span>:
         </div>
 
                         <details>
                 <summary class="button">View Source</summary>
                 <div class="codehilite"><pre><span></span>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">):</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="n">interface</span><span class="p">):</span>
         <span class="k">pass</span>
 </pre></div>
 
             </details>
 
-        
+                    <div class="docstring"><p>该方法可以是 <code>staticmethod</code>, <code>classmethod</code> 亦或是普通的方法/函数.
+唯一的要求是 <code>Dispatcher.catch</code> 获取到的必须为一可调用异步 Callable.</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>interface (IDispatcherInterface): <code>Dispatcher</code> 服务的主要对象, 可以从其中获取以下信息:</strong>  - 当前解析中的参数的信息;
+<ul>
+<li>当前执行的信息, 比如正在处理的事件, <code>Listener</code>/<code>ExecTarget</code> etc.;</li>
+</ul></li>
+</ul>
+</div>
+
 
                             </div>
                             <div class="inherited">

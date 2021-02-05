@@ -385,7 +385,7 @@
         <span class="k">return</span> <span class="n">result</span>
 
     <span class="nd">@lru_cache</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">catch_argument_names</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">catch_argument_names</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">signature_list</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">PatternReceiver</span><span class="p">)]</span>
 
     <span class="k">async</span> <span class="k">def</span> <span class="nf">beforeDispatch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
@@ -717,7 +717,7 @@
         <span class="k">return</span> <span class="n">result</span>
 
     <span class="nd">@lru_cache</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">catch_argument_names</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">catch_argument_names</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">signature_list</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">PatternReceiver</span><span class="p">)]</span>
 
     <span class="k">async</span> <span class="k">def</span> <span class="nf">beforeDispatch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interface</span><span class="p">:</span> <span class="n">DispatcherInterface</span><span class="p">):</span>
@@ -831,7 +831,9 @@
             <span class="name">always</span><span class="annotation">: bool</span><span class="default_value"> = True</span>
         </div>
 
-        
+                    <div class="docstring"><p>声明该 Dispatcher 是否应该在一次参数解析环节中至少被调用一次.</p>
+</div>
+
 
                             </div>
                             <div id="Kanata.signature_list" class="classattr">
@@ -1160,7 +1162,7 @@
                         <details>
                 <summary class="button">View Source</summary>
                 <div class="codehilite"><pre><span></span>    <span class="nd">@lru_cache</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">catch_argument_names</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">catch_argument_names</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">signature_list</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">PatternReceiver</span><span class="p">)]</span>
 </pre></div>
 
@@ -1208,7 +1210,18 @@
 
             </details>
 
-        
+                    <div class="docstring"><p>生命周期钩子: 在解析参数前被调用</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>interface (IDispatcherInterface): <code>Dispatcher</code> 服务的主要对象, 可以从其中获取以下信息:</strong>  - 当前解析中的参数的信息;
+<ul>
+<li>当前执行的信息, 比如正在处理的事件, <code>Listener</code>/<code>ExecTarget</code> etc.;</li>
+</ul></li>
+</ul>
+</div>
+
 
                             </div>
                             <div id="Kanata.catch" class="classattr">
@@ -1238,7 +1251,19 @@
 
             </details>
 
-        
+                    <div class="docstring"><p>该方法可以是 <code>staticmethod</code>, <code>classmethod</code> 亦或是普通的方法/函数.
+唯一的要求是 <code>Dispatcher.catch</code> 获取到的必须为一可调用异步 Callable.</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>interface (IDispatcherInterface): <code>Dispatcher</code> 服务的主要对象, 可以从其中获取以下信息:</strong>  - 当前解析中的参数的信息;
+<ul>
+<li>当前执行的信息, 比如正在处理的事件, <code>Listener</code>/<code>ExecTarget</code> etc.;</li>
+</ul></li>
+</ul>
+</div>
+
 
                             </div>
                             <div id="Kanata.afterDispatch" class="classattr">
@@ -1269,7 +1294,18 @@
 
             </details>
 
-        
+                    <div class="docstring"><p>生命周期钩子: 在参数被解析完后被调用</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>interface (IDispatcherInterface): <code>Dispatcher</code> 服务的主要对象, 可以从其中获取以下信息:</strong>  - 当前解析中的参数的信息;
+<ul>
+<li>当前执行的信息, 比如正在处理的事件, <code>Listener</code>/<code>ExecTarget</code> etc.;</li>
+</ul></li>
+</ul>
+</div>
+
 
                             </div>
                             <div class="inherited">

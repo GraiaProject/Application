@@ -75,7 +75,7 @@
                 <div class="codehilite"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Type</span>
 <span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABCMeta</span><span class="p">,</span> <span class="n">abstractmethod</span>
 
-<span class="kn">from</span> <span class="nn">graia.broadcast.entities.decorater</span> <span class="kn">import</span> <span class="n">Decorater</span>
+<span class="kn">from</span> <span class="nn">graia.broadcast.entities.decorator</span> <span class="kn">import</span> <span class="n">Decorator</span>
 <span class="kn">from</span> <span class="nn">..entities.event</span> <span class="kn">import</span> <span class="n">BaseEvent</span>
 <span class="kn">from</span> <span class="nn">..typing</span> <span class="kn">import</span> <span class="n">T_Dispatcher</span>
 
@@ -83,7 +83,7 @@
 <span class="k">class</span> <span class="nc">Waiter</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">):</span>
     <span class="n">listening_events</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Type</span><span class="p">[</span><span class="n">BaseEvent</span><span class="p">]]</span>
     <span class="n">using_dispatchers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">T_Dispatcher</span><span class="p">]</span>
-    <span class="n">using_decorators</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Decorater</span><span class="p">]</span>
+    <span class="n">using_decorators</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Decorator</span><span class="p">]</span>
     <span class="n">priority</span><span class="p">:</span> <span class="nb">int</span>
     <span class="n">enable_internal_access</span><span class="p">:</span> <span class="nb">bool</span>
     <span class="n">block_propagation</span><span class="p">:</span> <span class="nb">bool</span>
@@ -93,7 +93,7 @@
         <span class="bp">cls</span><span class="p">,</span>
         <span class="n">listening_events</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Type</span><span class="p">[</span><span class="n">BaseEvent</span><span class="p">]],</span>
         <span class="n">using_dispatchers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">T_Dispatcher</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">using_decorators</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Decorater</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">using_decorators</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Decorator</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">priority</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">15</span><span class="p">,</span>  <span class="c1"># 默认情况下都是需要高于默认 16 的监听吧...</span>
         <span class="n">enable_internal_access</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">block_propagation</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
@@ -123,7 +123,7 @@
         <span class="bp">cls</span><span class="p">,</span>
         <span class="n">listening_events</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Type</span><span class="p">[</span><span class="n">BaseEvent</span><span class="p">]],</span>
         <span class="n">using_dispatchers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">T_Dispatcher</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">using_decorators</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Decorater</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">using_decorators</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Decorator</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">priority</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">15</span><span class="p">,</span>  <span class="c1"># 默认情况下都是需要高于默认 16 的监听吧...</span>
         <span class="n">enable_internal_access</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">block_propagation</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
@@ -162,7 +162,7 @@
                 <div class="codehilite"><pre><span></span><span class="k">class</span> <span class="nc">Waiter</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">):</span>
     <span class="n">listening_events</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Type</span><span class="p">[</span><span class="n">BaseEvent</span><span class="p">]]</span>
     <span class="n">using_dispatchers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">T_Dispatcher</span><span class="p">]</span>
-    <span class="n">using_decorators</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Decorater</span><span class="p">]</span>
+    <span class="n">using_decorators</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Decorator</span><span class="p">]</span>
     <span class="n">priority</span><span class="p">:</span> <span class="nb">int</span>
     <span class="n">enable_internal_access</span><span class="p">:</span> <span class="nb">bool</span>
     <span class="n">block_propagation</span><span class="p">:</span> <span class="nb">bool</span>
@@ -172,7 +172,7 @@
         <span class="bp">cls</span><span class="p">,</span>
         <span class="n">listening_events</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Type</span><span class="p">[</span><span class="n">BaseEvent</span><span class="p">]],</span>
         <span class="n">using_dispatchers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">T_Dispatcher</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">using_decorators</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Decorater</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">using_decorators</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Decorator</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">priority</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">15</span><span class="p">,</span>  <span class="c1"># 默认情况下都是需要高于默认 16 的监听吧...</span>
         <span class="n">enable_internal_access</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">block_propagation</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
@@ -202,7 +202,7 @@
         <span class="bp">cls</span><span class="p">,</span>
         <span class="n">listening_events</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Type</span><span class="p">[</span><span class="n">BaseEvent</span><span class="p">]],</span>
         <span class="n">using_dispatchers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">T_Dispatcher</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">using_decorators</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Decorater</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">using_decorators</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Decorator</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">priority</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">15</span><span class="p">,</span>  <span class="c1"># 默认情况下都是需要高于默认 16 的监听吧...</span>
         <span class="n">enable_internal_access</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">block_propagation</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
@@ -257,7 +257,7 @@
                             </div>
                             <div id="Waiter.using_decorators" class="classattr">
                                                     <div class="attr variable">
-            <span class="name">using_decorators</span><span class="annotation">: List[<a href="../entities/decorater.html#Decorater">graia.broadcast.entities.decorater.Decorater</a>]</span>
+            <span class="name">using_decorators</span><span class="annotation">: List[<a href="../entities/decorator.html#Decorator">graia.broadcast.entities.decorator.Decorator</a>]</span>
         </div>
 
         
@@ -296,7 +296,7 @@
 	cls,
 	listening_events: List[Type[<a href="../entities/event.html#BaseEvent">graia.broadcast.entities.event.BaseEvent</a>]],
 	using_dispatchers: List[Union[Type[ForwardRef(&#39;BaseDispatcher&#39;)], ForwardRef(&#39;BaseDispatcher&#39;), Callable[[ForwardRef(&#39;IDispatcherInterface&#39;)], Any]]] = None,
-	using_decorators: List[<a href="../entities/decorater.html#Decorater">graia.broadcast.entities.decorater.Decorater</a>] = None,
+	using_decorators: List[<a href="../entities/decorator.html#Decorator">graia.broadcast.entities.decorator.Decorator</a>] = None,
 	priority: int = 15,
 	enable_internal_access: bool = False,
 	block_propagation: bool = False
@@ -310,7 +310,7 @@
         <span class="bp">cls</span><span class="p">,</span>
         <span class="n">listening_events</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Type</span><span class="p">[</span><span class="n">BaseEvent</span><span class="p">]],</span>
         <span class="n">using_dispatchers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">T_Dispatcher</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">using_decorators</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Decorater</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">using_decorators</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Decorator</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">priority</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">15</span><span class="p">,</span>  <span class="c1"># 默认情况下都是需要高于默认 16 的监听吧...</span>
         <span class="n">enable_internal_access</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">block_propagation</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
@@ -365,7 +365,7 @@
 	cls,
 	listening_events: List[Type[<a href="../entities/event.html#BaseEvent">graia.broadcast.entities.event.BaseEvent</a>]],
 	using_dispatchers: List[Union[Type[ForwardRef(&#39;BaseDispatcher&#39;)], ForwardRef(&#39;BaseDispatcher&#39;), Callable[[ForwardRef(&#39;IDispatcherInterface&#39;)], Any]]] = None,
-	using_decorators: List[<a href="../entities/decorater.html#Decorater">graia.broadcast.entities.decorater.Decorater</a>] = None,
+	using_decorators: List[<a href="../entities/decorator.html#Decorator">graia.broadcast.entities.decorator.Decorator</a>] = None,
 	priority: int = 15,
 	enable_internal_access: bool = False,
 	block_propagation: bool = False
@@ -379,7 +379,7 @@
         <span class="bp">cls</span><span class="p">,</span>
         <span class="n">listening_events</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Type</span><span class="p">[</span><span class="n">BaseEvent</span><span class="p">]],</span>
         <span class="n">using_dispatchers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">T_Dispatcher</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">using_decorators</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Decorater</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">using_decorators</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Decorator</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">priority</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">15</span><span class="p">,</span>  <span class="c1"># 默认情况下都是需要高于默认 16 的监听吧...</span>
         <span class="n">enable_internal_access</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
         <span class="n">block_propagation</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>

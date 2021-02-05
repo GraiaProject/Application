@@ -35,7 +35,7 @@
                                     <a class="variable" href="#ExecTarget.inline_dispatchers">inline_dispatchers</a>
                             </li>
                             <li>
-                                    <a class="variable" href="#ExecTarget.headless_decoraters">headless_decoraters</a>
+                                    <a class="variable" href="#ExecTarget.headless_decorators">headless_decorators</a>
                             </li>
                             <li>
                                     <a class="variable" href="#ExecTarget.enable_internal_access">enable_internal_access</a>
@@ -63,7 +63,7 @@
                 <div class="codehilite"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">from</span> <span class="nn">..typing</span> <span class="kn">import</span> <span class="n">T_Dispatcher</span>
-<span class="kn">from</span> <span class="nn">.decorater</span> <span class="kn">import</span> <span class="n">Decorater</span>
+<span class="kn">from</span> <span class="nn">.decorator</span> <span class="kn">import</span> <span class="n">Decorator</span>
 
 
 <span class="k">class</span> <span class="nc">ExecTarget</span><span class="p">:</span>
@@ -71,19 +71,19 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">callable</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span>
         <span class="n">inline_dispatchers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">T_Dispatcher</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">headless_decoraters</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Decorater</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">headless_decorators</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Decorator</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">enable_internal_access</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">callable</span> <span class="o">=</span> <span class="n">callable</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">inline_dispatchers</span> <span class="o">=</span> <span class="n">inline_dispatchers</span> <span class="ow">or</span> <span class="p">[]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">headless_decoraters</span> <span class="o">=</span> <span class="n">headless_decoraters</span> <span class="ow">or</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">headless_decorators</span> <span class="o">=</span> <span class="n">headless_decorators</span> <span class="ow">or</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">enable_internal_access</span> <span class="o">=</span> <span class="n">enable_internal_access</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">dispatcher_statistics</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;total&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;statistics&quot;</span><span class="p">:</span> <span class="p">{}}</span>
 
     <span class="n">callable</span><span class="p">:</span> <span class="n">Callable</span>
     <span class="n">inline_dispatchers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">T_Dispatcher</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">headless_decoraters</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Decorater</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">headless_decorators</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Decorator</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">enable_internal_access</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="n">dispatcher_statistics</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Dict</span><span class="p">]]</span>
@@ -106,19 +106,19 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">callable</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span>
         <span class="n">inline_dispatchers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">T_Dispatcher</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">headless_decoraters</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Decorater</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">headless_decorators</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Decorator</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">enable_internal_access</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">callable</span> <span class="o">=</span> <span class="n">callable</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">inline_dispatchers</span> <span class="o">=</span> <span class="n">inline_dispatchers</span> <span class="ow">or</span> <span class="p">[]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">headless_decoraters</span> <span class="o">=</span> <span class="n">headless_decoraters</span> <span class="ow">or</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">headless_decorators</span> <span class="o">=</span> <span class="n">headless_decorators</span> <span class="ow">or</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">enable_internal_access</span> <span class="o">=</span> <span class="n">enable_internal_access</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">dispatcher_statistics</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;total&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;statistics&quot;</span><span class="p">:</span> <span class="p">{}}</span>
 
     <span class="n">callable</span><span class="p">:</span> <span class="n">Callable</span>
     <span class="n">inline_dispatchers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">T_Dispatcher</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">headless_decoraters</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Decorater</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">headless_decorators</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Decorator</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">enable_internal_access</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="n">dispatcher_statistics</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Dict</span><span class="p">]]</span>
@@ -135,7 +135,7 @@
 	self,
 	callable: Callable,
 	inline_dispatchers: List[Union[Type[ForwardRef(&#39;BaseDispatcher&#39;)], ForwardRef(&#39;BaseDispatcher&#39;), Callable[[ForwardRef(&#39;IDispatcherInterface&#39;)], Any]]] = None,
-	headless_decoraters: List[<a href="decorater.html#Decorater">graia.broadcast.entities.decorater.Decorater</a>] = None,
+	headless_decorators: List[<a href="decorator.html#Decorator">graia.broadcast.entities.decorator.Decorator</a>] = None,
 	enable_internal_access: bool = False
 )</span>        </div>
 
@@ -145,12 +145,12 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">callable</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span>
         <span class="n">inline_dispatchers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">T_Dispatcher</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">headless_decoraters</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Decorater</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">headless_decorators</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Decorator</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">enable_internal_access</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">callable</span> <span class="o">=</span> <span class="n">callable</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">inline_dispatchers</span> <span class="o">=</span> <span class="n">inline_dispatchers</span> <span class="ow">or</span> <span class="p">[]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">headless_decoraters</span> <span class="o">=</span> <span class="n">headless_decoraters</span> <span class="ow">or</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">headless_decorators</span> <span class="o">=</span> <span class="n">headless_decorators</span> <span class="ow">or</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">enable_internal_access</span> <span class="o">=</span> <span class="n">enable_internal_access</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">dispatcher_statistics</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;total&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;statistics&quot;</span><span class="p">:</span> <span class="p">{}}</span>
@@ -177,9 +177,9 @@
         
 
                             </div>
-                            <div id="ExecTarget.headless_decoraters" class="classattr">
+                            <div id="ExecTarget.headless_decorators" class="classattr">
                                                     <div class="attr variable">
-            <span class="name">headless_decoraters</span><span class="annotation">: List[<a href="decorater.html#Decorater">graia.broadcast.entities.decorater.Decorater</a>]</span><span class="default_value"> = []</span>
+            <span class="name">headless_decorators</span><span class="annotation">: List[<a href="decorator.html#Decorator">graia.broadcast.entities.decorator.Decorator</a>]</span><span class="default_value"> = []</span>
         </div>
 
         

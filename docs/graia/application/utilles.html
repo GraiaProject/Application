@@ -253,7 +253,7 @@
     <span class="k">def</span> <span class="nf">afterExecution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interface</span><span class="p">:</span> <span class="s2">&quot;IDispatcherInterface&quot;</span><span class="p">,</span> <span class="n">exception</span><span class="p">,</span> <span class="n">tb</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="fm">__exit__</span><span class="p">(</span><span class="n">exception</span><span class="o">.</span><span class="vm">__class__</span> <span class="k">if</span> <span class="n">exception</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span> <span class="n">exception</span><span class="p">,</span> <span class="n">tb</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interface</span><span class="p">:</span> <span class="s2">&quot;DispatcherInterface&quot;</span><span class="p">):</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interface</span><span class="p">:</span> <span class="s2">&quot;DispatcherInterface&quot;</span><span class="p">):</span>
         <span class="k">pass</span>
 
 
@@ -512,13 +512,15 @@
     <span class="k">def</span> <span class="nf">afterExecution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interface</span><span class="p">:</span> <span class="s2">&quot;IDispatcherInterface&quot;</span><span class="p">,</span> <span class="n">exception</span><span class="p">,</span> <span class="n">tb</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="fm">__exit__</span><span class="p">(</span><span class="n">exception</span><span class="o">.</span><span class="vm">__class__</span> <span class="k">if</span> <span class="n">exception</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span> <span class="n">exception</span><span class="p">,</span> <span class="n">tb</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interface</span><span class="p">:</span> <span class="s2">&quot;DispatcherInterface&quot;</span><span class="p">):</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interface</span><span class="p">:</span> <span class="s2">&quot;DispatcherInterface&quot;</span><span class="p">):</span>
         <span class="k">pass</span>
 </pre></div>
 
             </details>
 
-        
+                    <div class="docstring"><p>所有非单函数型 Dispatcher 的基类, 用于为参数解析提供可扩展的支持.</p>
+</div>
+
 
                             <div id="AppMiddlewareAsDispatcher.__init__" class="classattr">
                                             <div class="attr function">
@@ -541,7 +543,9 @@
             <span class="name">always</span><span class="annotation">: bool</span><span class="default_value"> = True</span>
         </div>
 
-        
+                    <div class="docstring"><p>声明该 Dispatcher 是否应该在一次参数解析环节中至少被调用一次.</p>
+</div>
+
 
                             </div>
                             <div id="AppMiddlewareAsDispatcher.context" class="classattr">
@@ -568,7 +572,18 @@
 
             </details>
 
-        
+                    <div class="docstring"><p>生命周期钩子: 在整个执行流程(包括参数解析)开始前被调用</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>interface (IDispatcherInterface): <code>Dispatcher</code> 服务的主要对象, 可以从其中获取以下信息:</strong>  - 当前解析中的参数的信息;
+<ul>
+<li>当前执行的信息, 比如正在处理的事件, <code>Listener</code>/<code>ExecTarget</code> etc.;</li>
+</ul></li>
+</ul>
+</div>
+
 
                             </div>
                             <div id="AppMiddlewareAsDispatcher.afterExecution" class="classattr">
@@ -586,13 +601,26 @@
 
             </details>
 
-        
+                    <div class="docstring"><p>生命周期钩子: 在整个执行流程(包括参数解析)完成(包含因异常被抛出而退出)后被调用.</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>interface (IDispatcherInterface): <code>Dispatcher</code> 服务的主要对象, 可以从其中获取以下信息:</strong>  - 当前解析中的参数的信息;
+<ul>
+<li>当前执行的信息, 比如正在处理的事件, <code>Listener</code>/<code>ExecTarget</code> etc.;</li>
+</ul></li>
+<li><strong>exception (Optional[Exception]):</strong>  可能存在的异常对象, 若为 None 则表示无异常被抛出, 执行顺利完成.</li>
+<li><strong>tb (Optional[TracebackType]):</strong>  可能存在的异常堆栈对象, 若为 None 则表示无异常被抛出, 执行顺利完成.</li>
+</ul>
+</div>
+
 
                             </div>
                             <div id="AppMiddlewareAsDispatcher.catch" class="classattr">
                                             <div class="attr function">
             
-                <span class="def">def</span>
+                <span class="def">async def</span>
                 <span class="name">catch</span><span class="signature">(
 	self,
 	interface: <a href="../broadcast/interfaces/dispatcher.html#DispatcherInterface">graia.broadcast.interfaces.dispatcher.DispatcherInterface</a>
@@ -601,13 +629,25 @@
 
                         <details>
                 <summary class="button">View Source</summary>
-                <div class="codehilite"><pre><span></span>    <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interface</span><span class="p">:</span> <span class="s2">&quot;DispatcherInterface&quot;</span><span class="p">):</span>
+                <div class="codehilite"><pre><span></span>    <span class="k">async</span> <span class="k">def</span> <span class="nf">catch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">interface</span><span class="p">:</span> <span class="s2">&quot;DispatcherInterface&quot;</span><span class="p">):</span>
         <span class="k">pass</span>
 </pre></div>
 
             </details>
 
-        
+                    <div class="docstring"><p>该方法可以是 <code>staticmethod</code>, <code>classmethod</code> 亦或是普通的方法/函数.
+唯一的要求是 <code>Dispatcher.catch</code> 获取到的必须为一可调用异步 Callable.</p>
+
+<h6 id="args">Args</h6>
+
+<ul>
+<li><strong>interface (IDispatcherInterface): <code>Dispatcher</code> 服务的主要对象, 可以从其中获取以下信息:</strong>  - 当前解析中的参数的信息;
+<ul>
+<li>当前执行的信息, 比如正在处理的事件, <code>Listener</code>/<code>ExecTarget</code> etc.;</li>
+</ul></li>
+</ul>
+</div>
+
 
                             </div>
                             <div class="inherited">

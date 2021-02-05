@@ -12,7 +12,7 @@ from . import ApplicationDispatcher, MiraiEvent
 
 class SourceElementDispatcher(BaseDispatcher):
     @staticmethod
-    def catch(interface: DispatcherInterface):
+    async def catch(interface: DispatcherInterface):
         if interface.annotation is Source:
             return interface.event.messageChain.getFirst(Source)
 
@@ -26,7 +26,7 @@ class FriendMessage(MiraiEvent):
         mixin = [MessageChainCatcher, ApplicationDispatcher, SourceElementDispatcher]
 
         @staticmethod
-        def catch(interface: DispatcherInterface):
+        async def catch(interface: DispatcherInterface):
             if interface.annotation is Friend:
                 return interface.event.sender
 
@@ -40,7 +40,7 @@ class GroupMessage(MiraiEvent):
         mixin = [MessageChainCatcher, ApplicationDispatcher, SourceElementDispatcher]
 
         @staticmethod
-        def catch(interface: DispatcherInterface):
+        async def catch(interface: DispatcherInterface):
             if interface.annotation is Group:
                 return interface.event.sender.group
             elif interface.annotation is Member:
@@ -60,7 +60,7 @@ class TempMessage(MiraiEvent):
         mixin = [MessageChainCatcher, ApplicationDispatcher, SourceElementDispatcher]
 
         @staticmethod
-        def catch(interface: DispatcherInterface):
+        async def catch(interface: DispatcherInterface):
             if interface.annotation is Group:
                 return interface.event.sender.group
             elif interface.annotation is Member:

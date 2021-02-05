@@ -26,7 +26,7 @@ class MiraiEvent(BaseEvent):
 
 class ApplicationDispatcher(BaseDispatcher):
     @staticmethod
-    def catch(interface):
+    async def catch(interface):
         if getattr(interface.annotation, "__name__", None) == "GraiaMiraiApplication":
             return application.get()
 
@@ -35,5 +35,5 @@ class EmptyDispatcher(BaseDispatcher):
     mixin = [ApplicationDispatcher]
 
     @staticmethod
-    def catch(interface):
+    async def catch(interface):
         pass

@@ -81,7 +81,7 @@
                 <div class="codehilite"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">NoReturn</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Type</span><span class="p">,</span> <span class="n">Union</span>
 
 <span class="kn">from</span> <span class="nn">.entities.inject_rule</span> <span class="kn">import</span> <span class="n">BaseRule</span>
-<span class="kn">from</span> <span class="nn">.entities.decorater</span> <span class="kn">import</span> <span class="n">Decorater</span>
+<span class="kn">from</span> <span class="nn">.entities.decorator</span> <span class="kn">import</span> <span class="n">Decorator</span>
 <span class="kn">from</span> <span class="nn">.entities.dispatcher</span> <span class="kn">import</span> <span class="n">BaseDispatcher</span>
 <span class="kn">from</span> <span class="nn">.entities.event</span> <span class="kn">import</span> <span class="n">BaseEvent</span>
 <span class="kn">from</span> <span class="nn">.exceptions</span> <span class="kn">import</span> <span class="n">InvaildEventName</span><span class="p">,</span> <span class="n">RegisteredEventListener</span>
@@ -140,7 +140,7 @@
         <span class="n">event</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Type</span><span class="p">[</span><span class="n">BaseEvent</span><span class="p">]],</span>
         <span class="n">priority</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span>
         <span class="n">dispatchers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Type</span><span class="p">[</span><span class="n">BaseDispatcher</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[],</span>
-        <span class="n">headless_decoraters</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Decorater</span><span class="p">]</span> <span class="o">=</span> <span class="p">[],</span>
+        <span class="n">headless_decorators</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Decorator</span><span class="p">]</span> <span class="o">=</span> <span class="p">[],</span>
         <span class="n">enable_internal_access</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
@@ -160,7 +160,7 @@
                         <span class="n">inline_dispatchers</span><span class="o">=</span><span class="n">dispatchers</span><span class="p">,</span>
                         <span class="n">priority</span><span class="o">=</span><span class="n">priority</span><span class="p">,</span>
                         <span class="n">listening_events</span><span class="o">=</span><span class="p">[</span><span class="n">event</span><span class="p">],</span>
-                        <span class="n">headless_decoraters</span><span class="o">=</span><span class="n">headless_decoraters</span><span class="p">,</span>
+                        <span class="n">headless_decorators</span><span class="o">=</span><span class="n">headless_decorators</span><span class="p">,</span>
                         <span class="n">enable_internal_access</span><span class="o">=</span><span class="n">enable_internal_access</span><span class="p">,</span>
                     <span class="p">)</span>
                 <span class="p">)</span>
@@ -247,7 +247,7 @@
         <span class="n">event</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Type</span><span class="p">[</span><span class="n">BaseEvent</span><span class="p">]],</span>
         <span class="n">priority</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span>
         <span class="n">dispatchers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Type</span><span class="p">[</span><span class="n">BaseDispatcher</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[],</span>
-        <span class="n">headless_decoraters</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Decorater</span><span class="p">]</span> <span class="o">=</span> <span class="p">[],</span>
+        <span class="n">headless_decorators</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Decorator</span><span class="p">]</span> <span class="o">=</span> <span class="p">[],</span>
         <span class="n">enable_internal_access</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
@@ -267,7 +267,7 @@
                         <span class="n">inline_dispatchers</span><span class="o">=</span><span class="n">dispatchers</span><span class="p">,</span>
                         <span class="n">priority</span><span class="o">=</span><span class="n">priority</span><span class="p">,</span>
                         <span class="n">listening_events</span><span class="o">=</span><span class="p">[</span><span class="n">event</span><span class="p">],</span>
-                        <span class="n">headless_decoraters</span><span class="o">=</span><span class="n">headless_decoraters</span><span class="p">,</span>
+                        <span class="n">headless_decorators</span><span class="o">=</span><span class="n">headless_decorators</span><span class="p">,</span>
                         <span class="n">enable_internal_access</span><span class="o">=</span><span class="n">enable_internal_access</span><span class="p">,</span>
                     <span class="p">)</span>
                 <span class="p">)</span>
@@ -464,7 +464,7 @@
 	event: Union[str, Type[<a href="entities/event.html#BaseEvent">graia.broadcast.entities.event.BaseEvent</a>]],
 	priority: int = 16,
 	dispatchers: List[Type[<a href="entities/dispatcher.html#BaseDispatcher">graia.broadcast.entities.dispatcher.BaseDispatcher</a>]] = [],
-	headless_decoraters: List[<a href="entities/decorater.html#Decorater">graia.broadcast.entities.decorater.Decorater</a>] = [],
+	headless_decorators: List[<a href="entities/decorator.html#Decorator">graia.broadcast.entities.decorator.Decorator</a>] = [],
 	enable_internal_access: bool = False
 )</span>:
         </div>
@@ -476,7 +476,7 @@
         <span class="n">event</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Type</span><span class="p">[</span><span class="n">BaseEvent</span><span class="p">]],</span>
         <span class="n">priority</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span>
         <span class="n">dispatchers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Type</span><span class="p">[</span><span class="n">BaseDispatcher</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[],</span>
-        <span class="n">headless_decoraters</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Decorater</span><span class="p">]</span> <span class="o">=</span> <span class="p">[],</span>
+        <span class="n">headless_decorators</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Decorator</span><span class="p">]</span> <span class="o">=</span> <span class="p">[],</span>
         <span class="n">enable_internal_access</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
@@ -496,7 +496,7 @@
                         <span class="n">inline_dispatchers</span><span class="o">=</span><span class="n">dispatchers</span><span class="p">,</span>
                         <span class="n">priority</span><span class="o">=</span><span class="n">priority</span><span class="p">,</span>
                         <span class="n">listening_events</span><span class="o">=</span><span class="p">[</span><span class="n">event</span><span class="p">],</span>
-                        <span class="n">headless_decoraters</span><span class="o">=</span><span class="n">headless_decoraters</span><span class="p">,</span>
+                        <span class="n">headless_decorators</span><span class="o">=</span><span class="n">headless_decorators</span><span class="p">,</span>
                         <span class="n">enable_internal_access</span><span class="o">=</span><span class="n">enable_internal_access</span><span class="p">,</span>
                     <span class="p">)</span>
                 <span class="p">)</span>

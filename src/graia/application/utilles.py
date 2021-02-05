@@ -140,7 +140,7 @@ class AppMiddlewareAsDispatcher(BaseDispatcher):
     def afterExecution(self, interface: "IDispatcherInterface", exception, tb):
         self.context.__exit__(exception.__class__ if exception else None, exception, tb)
 
-    def catch(self, interface: "DispatcherInterface"):
+    async def catch(self, interface: "DispatcherInterface"):
         pass
 
 

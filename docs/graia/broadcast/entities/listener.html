@@ -59,7 +59,7 @@
 <span class="kn">from</span> <span class="nn">.dispatcher</span> <span class="kn">import</span> <span class="n">BaseDispatcher</span>
 <span class="kn">from</span> <span class="nn">.event</span> <span class="kn">import</span> <span class="n">BaseEvent</span>
 <span class="kn">from</span> <span class="nn">.namespace</span> <span class="kn">import</span> <span class="n">Namespace</span>
-<span class="kn">from</span> <span class="nn">.decorater</span> <span class="kn">import</span> <span class="n">Decorater</span>
+<span class="kn">from</span> <span class="nn">.decorator</span> <span class="kn">import</span> <span class="n">Decorator</span>
 
 <span class="kn">from</span> <span class="nn">.exectarget</span> <span class="kn">import</span> <span class="n">ExecTarget</span>
 
@@ -71,12 +71,12 @@
         <span class="n">namespace</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">,</span>
         <span class="n">listening_events</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Type</span><span class="p">[</span><span class="n">BaseEvent</span><span class="p">]],</span>
         <span class="n">inline_dispatchers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">BaseDispatcher</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">headless_decoraters</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Decorater</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">headless_decorators</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Decorator</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">priority</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span>
         <span class="n">enable_internal_access</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
-            <span class="n">callable</span><span class="p">,</span> <span class="n">inline_dispatchers</span><span class="p">,</span> <span class="n">headless_decoraters</span><span class="p">,</span> <span class="n">enable_internal_access</span>
+            <span class="n">callable</span><span class="p">,</span> <span class="n">inline_dispatchers</span><span class="p">,</span> <span class="n">headless_decorators</span><span class="p">,</span> <span class="n">enable_internal_access</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">namespace</span> <span class="o">=</span> <span class="n">namespace</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">listening_events</span> <span class="o">=</span> <span class="n">listening_events</span>
@@ -106,12 +106,12 @@
         <span class="n">namespace</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">,</span>
         <span class="n">listening_events</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Type</span><span class="p">[</span><span class="n">BaseEvent</span><span class="p">]],</span>
         <span class="n">inline_dispatchers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">BaseDispatcher</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">headless_decoraters</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Decorater</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">headless_decorators</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Decorator</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">priority</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span>
         <span class="n">enable_internal_access</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
-            <span class="n">callable</span><span class="p">,</span> <span class="n">inline_dispatchers</span><span class="p">,</span> <span class="n">headless_decoraters</span><span class="p">,</span> <span class="n">enable_internal_access</span>
+            <span class="n">callable</span><span class="p">,</span> <span class="n">inline_dispatchers</span><span class="p">,</span> <span class="n">headless_decorators</span><span class="p">,</span> <span class="n">enable_internal_access</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">namespace</span> <span class="o">=</span> <span class="n">namespace</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">listening_events</span> <span class="o">=</span> <span class="n">listening_events</span>
@@ -135,7 +135,7 @@
 	namespace: <a href="namespace.html#Namespace">graia.broadcast.entities.namespace.Namespace</a>,
 	listening_events: List[Type[<a href="event.html#BaseEvent">graia.broadcast.entities.event.BaseEvent</a>]],
 	inline_dispatchers: List[<a href="dispatcher.html#BaseDispatcher">graia.broadcast.entities.dispatcher.BaseDispatcher</a>] = None,
-	headless_decoraters: List[<a href="decorater.html#Decorater">graia.broadcast.entities.decorater.Decorater</a>] = None,
+	headless_decorators: List[<a href="decorator.html#Decorator">graia.broadcast.entities.decorator.Decorator</a>] = None,
 	priority: int = 16,
 	enable_internal_access: bool = False
 )</span>        </div>
@@ -148,12 +148,12 @@
         <span class="n">namespace</span><span class="p">:</span> <span class="n">Namespace</span><span class="p">,</span>
         <span class="n">listening_events</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Type</span><span class="p">[</span><span class="n">BaseEvent</span><span class="p">]],</span>
         <span class="n">inline_dispatchers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">BaseDispatcher</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">headless_decoraters</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Decorater</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">headless_decorators</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Decorator</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">priority</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">16</span><span class="p">,</span>
         <span class="n">enable_internal_access</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
-            <span class="n">callable</span><span class="p">,</span> <span class="n">inline_dispatchers</span><span class="p">,</span> <span class="n">headless_decoraters</span><span class="p">,</span> <span class="n">enable_internal_access</span>
+            <span class="n">callable</span><span class="p">,</span> <span class="n">inline_dispatchers</span><span class="p">,</span> <span class="n">headless_decorators</span><span class="p">,</span> <span class="n">enable_internal_access</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">namespace</span> <span class="o">=</span> <span class="n">namespace</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">listening_events</span> <span class="o">=</span> <span class="n">listening_events</span>
@@ -195,7 +195,7 @@
                                     <div><dt><a href="exectarget.html#ExecTarget">graia.broadcast.entities.exectarget.ExecTarget</a></dt>
                                         <dd class="variable"><a href="exectarget.html#ExecTarget.callable">callable</a></dd>
                     <dd class="variable"><a href="exectarget.html#ExecTarget.inline_dispatchers">inline_dispatchers</a></dd>
-                    <dd class="variable"><a href="exectarget.html#ExecTarget.headless_decoraters">headless_decoraters</a></dd>
+                    <dd class="variable"><a href="exectarget.html#ExecTarget.headless_decorators">headless_decorators</a></dd>
                     <dd class="variable"><a href="exectarget.html#ExecTarget.enable_internal_access">enable_internal_access</a></dd>
                     <dd class="variable"><a href="exectarget.html#ExecTarget.dispatcher_statistics">dispatcher_statistics</a></dd>
 

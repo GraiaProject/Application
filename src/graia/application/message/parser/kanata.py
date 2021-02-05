@@ -293,7 +293,7 @@ class Kanata(BaseDispatcher):
         return result
 
     @lru_cache(None)
-    def catch_argument_names(self) -> List[str]:
+    async def catch_argument_names(self) -> List[str]:
         return [i.name for i in self.signature_list if isinstance(i, PatternReceiver)]
 
     async def beforeDispatch(self, interface: DispatcherInterface):
