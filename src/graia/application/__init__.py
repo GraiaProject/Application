@@ -10,6 +10,7 @@ from typing import Any, Callable, List, NoReturn, Optional, Tuple, TypeVar, Unio
 
 import aiohttp.client_exceptions
 import aiohttp.web_exceptions
+import aiohttp.client_ws
 import graia.application.event.mirai  # for init events
 from aiohttp import ClientSession, FormData
 from aiohttp.http_websocket import WSMsgType
@@ -1348,50 +1349,81 @@ class GraiaMiraiApplication:
             )
         )
 
+    async def ws_ping(
+        self, ws_connect: aiohttp.client_ws.ClientWebSocketResponse, delay: float = 30.0
+    ):
+        while True:
+            try:
+                await ws_connect.ping()
+                self.logger.debug("websocket ping: client ping")
+            except asyncio.CancelledError:
+                self.logger.debug("websocket ping: exiting....")
+                return
+            except:
+                self.logger.exception("websocket ping: ping failed")
+            self.logger.debug("websocket ping: delay {0}s.".format(delay))
+            await asyncio.sleep(delay)
+
     @error_wrapper
     @requireAuthenticated
     async def ws_all_poster(self):
+        ping_task = None
+
         async with self.session.ws_connect(
             str(
                 URL(self.url_gen("all")).with_query(
                     {"sessionKey": self.connect_info.sessionKey}
                 )
-            )
+            ),
+            autoping=False,
         ) as connection:
             self.logger.info("websocket: connected")
-            while True:
-                ws_message = await connection.receive()
-                if ws_message.type is WSMsgType.TEXT:
-                    received_data = self.json_loader(ws_message.data)
-                    raise_for_return_code(received_data)
 
-                    try:
-                        event = await self.auto_parse_by_type(received_data)
-                    except ValueError as e:
-                        traceback.print_exc()
-                        self.logger.error(
-                            "".join(
-                                [
-                                    "received a unknown event: ",
-                                    received_data.get("type"),
-                                    str(received_data),
-                                ]
+            ping_task = self.broadcast.loop.create_task(self.ws_ping(connection))
+            self.logger.info("websocket: ping task created")
+
+            try:
+                while True:
+                    ws_message = await connection.receive()
+                    if ws_message.type is WSMsgType.TEXT:
+                        received_data = self.json_loader(ws_message.data)
+                        raise_for_return_code(received_data)
+
+                        try:
+                            event = await self.auto_parse_by_type(received_data)
+                        except ValueError as e:
+                            traceback.print_exc()
+                            self.logger.error(
+                                "".join(
+                                    [
+                                        "received a unknown event: ",
+                                        received_data.get("type"),
+                                        str(received_data),
+                                    ]
+                                )
+                            )
+                            continue
+
+                        if self.debug:
+                            self.logger.debug(f"websocket received: {event}")
+
+                        with enter_context(app=self, event_i=event):
+                            self.broadcast.postEvent(event)
+                    elif ws_message.type is WSMsgType.CLOSED:
+                        self.logger.info("websocket: connection has been closed.")
+                        return
+                    elif ws_message.type is WSMsgType.PONG:
+                        self.logger.debug("websocket: received pong from remote")
+                    else:
+                        self.logger.debug(
+                            "detected a unknown message type: {}".format(
+                                ws_message.type
                             )
                         )
-                        continue
-
-                    if self.debug:
-                        self.logger.debug(f"websocket received: {event}")
-
-                    with enter_context(app=self, event_i=event):
-                        self.broadcast.postEvent(event)
-                elif ws_message.type is WSMsgType.CLOSED:
-                    self.logger.info("websocket: connection has been closed.")
-                    return
-                else:
-                    self.logger.debug(
-                        "detected a unknown message type: {}".format(ws_message.type)
-                    )
+            finally:
+                if ping_task:
+                    ping_task.cancel()
+                    self.logger.debug("websocket: outer canceled ping task")
 
     async def websocket_daemon(self):
         while True:

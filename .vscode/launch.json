@@ -24,8 +24,9 @@
             "name": "Python: test",
             "type": "python",
             "request": "launch",
-            "program": "./src/test-mem.py",
-            "console": "integratedTerminal"
+            "program": "./src/test.py",
+            "console": "integratedTerminal",
+            "justMyCode": false
         }
     ]
 }

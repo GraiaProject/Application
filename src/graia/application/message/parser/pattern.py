@@ -1,4 +1,4 @@
-from typing import Any, List
+from typing import Any, List, Optional
 from dataclasses import dataclass
 
 
@@ -6,6 +6,7 @@ from dataclasses import dataclass
 class ParamPattern:
     keywords: List[str]
     default: Any = None
+    help_message: Optional[str] = None
 
 
 @dataclass(init=True, eq=True, repr=True)

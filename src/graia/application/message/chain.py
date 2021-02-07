@@ -475,7 +475,7 @@ class MessageChain(BaseModel):
             type(self.__root__)([i for i in self.__root__ if type(i) in types])
         )
 
-    def split(self, pattern: str) -> List["MessageChain"]:
+    def split(self, pattern: str, raw_string: bool = False) -> List["MessageChain"]:
         """和 `str.split` 差不多, 提供一个字符串, 然后返回分割结果.
 
         Returns:
@@ -492,7 +492,7 @@ class MessageChain(BaseModel):
                     if tmp and index > 0:
                         result.append(MessageChain.create(tmp))
                         tmp = []
-                    if split_str:
+                    if split_str or raw_string:
                         tmp.append(Plain(split_str))
             else:
                 tmp.append(element)

@@ -3,7 +3,6 @@ from typing import Any, Callable, ContextManager, Iterable, List, Union, TypeVar
 from graia.broadcast.entities.dispatcher import BaseDispatcher
 from graia.broadcast.interfaces.dispatcher import DispatcherInterface
 
-from graia.application.event import MiraiEvent
 from .exceptions import (
     AccountMuted,
     AccountNotFound,
@@ -174,12 +173,26 @@ class InsertGenerator:
     def __iter__(self):
         for i in self.base:
             if self.insert_items:
-                yield from self.insert_items.pop()
+                yield self.insert_items.pop()
             yield i
         else:
             if self.insert_items:
-                for i in self.insert_items[::-1]:
-                    yield from i
+                yield from self.insert_items[::-1]
+
+
+class MultiUsageGenerator(InsertGenerator):
+    continue_count: int
+
+    def __init__(self, base_iterable: Iterable, pre_items: List[Any] = None) -> None:
+        super().__init__(base_iterable, pre_items=pre_items)
+        self.continue_count = 0
+
+    def __iter__(self):
+        for i in super().__iter__():
+            if self.continue_count > 0:
+                self.continue_count -= 1
+                continue
+            yield i
 
 
 class AutoUnpackTuple:
