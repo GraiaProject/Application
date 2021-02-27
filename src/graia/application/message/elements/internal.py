@@ -100,7 +100,7 @@ class At(InternalElement, ExternalElement):
         super().__init__(target=target, **kwargs)
 
     def asDisplay(self) -> str:
-        return str(self.display)
+        return str(self.display) if self.display else f"@{self.target}"
 
     def toExternal(self) -> "At":
         try:

@@ -4,7 +4,8 @@ from dataclasses import dataclass
 
 @dataclass(init=True, eq=True, repr=True)
 class ParamPattern:
-    keywords: List[str]
+    longs: List[str]
+    short: Optional[str] = None
     default: Any = None
     help_message: Optional[str] = None
 
