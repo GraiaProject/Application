@@ -28,18 +28,8 @@ from graia.application.message.parser.pattern import (
     ParamPattern,
     SwitchParameter,
 )
-from graia.application.utilles import MultiUsageGenerator
 
 BLOCKING_ELEMENTS = (Xml, Json, App, Poke, Voice, FlashImage)
-
-
-async def async_tb_printer(coro):
-    try:
-        return await coro
-    except:
-        import traceback
-
-        traceback.print_exc()
 
 
 class Literature(BaseDispatcher):

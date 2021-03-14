@@ -334,7 +334,7 @@ class Kanata(BaseDispatcher):
 
     async def afterDispatch(
         self,
-        interface: "IDispatcherInterface",
+        interface: "DispatcherInterface",
         exception: Optional[Exception] = None,
         tb: Optional[TracebackType] = None,
     ):

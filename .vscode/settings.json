@@ -1,3 +1,4 @@
 {
-    "python.pythonPath": "C:\\Users\\Elaina\\AppData\\Local\\pypoetry\\Cache\\virtualenvs\\graia-application-mirai-s-A4g-JQ-py3.8"
+    "python.pythonPath": "C:\\Users\\Elaina\\AppData\\Local\\pypoetry\\Cache\\virtualenvs\\graia-application-mirai-s-A4g-JQ-py3.8",
+    "python.linting.enabled": true
 }

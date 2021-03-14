@@ -22,7 +22,6 @@ from graia.application.event.lifecycle import (  # for init lifecycle events
 )
 from graia.broadcast import Broadcast
 from graia.broadcast.entities.event import BaseEvent
-from graia.broadcast.entities.inject_rule import SpecialEventType
 from graia.broadcast.utilles import printer, run_always_await
 from yarl import URL
 
@@ -198,9 +197,6 @@ class GraiaMiraiApplication:
         self.chat_log_enabled = enable_chat_log
 
         if broadcast is not None:
-            # self.broadcast.addInjectionRule(
-            #    SpecialEventType(MiraiEvent, AppMiddlewareAsDispatcher(self))
-            # )
             self.broadcast.dispatcher_interface.inject_global_raw(
                 AppMiddlewareAsDispatcher(self)
             )

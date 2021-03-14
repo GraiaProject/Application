@@ -132,15 +132,18 @@ class AppMiddlewareAsDispatcher(BaseDispatcher):
     def __init__(self, app) -> None:
         self.app = app
 
-    def beforeExecution(self, interface: "IDispatcherInterface"):
+    def beforeExecution(self, interface: "DispatcherInterface"):
         self.context = enter_context(self.app, interface.event)
         self.context.__enter__()
 
-    def afterExecution(self, interface: "IDispatcherInterface", exception, tb):
+    def afterExecution(self, interface: "DispatcherInterface", exception, tb):
         self.context.__exit__(exception.__class__ if exception else None, exception, tb)
 
     async def catch(self, interface: "DispatcherInterface"):
-        pass
+        from graia.application import GraiaMiraiApplication
+
+        if interface.annotation is GraiaMiraiApplication:
+            return self.app
 
 
 def context_enter_auto(context):
