@@ -1,4 +1,7 @@
-from pydantic import validator
+from typing import List
+from datetime import datetime
+from pydantic import validator, Field
+from pydantic.main import BaseModel
 
 from graia.application.event.dispatcher import MessageChainCatcher
 from graia.application.message.chain import MessageChain
@@ -65,3 +68,40 @@ class TempMessage(MiraiEvent):
                 return interface.event.sender.group
             elif interface.annotation is Member:
                 return interface.event.sender
+
+
+class ForwardContentMessage(BaseModel):
+    senderId: int
+    senderName: str
+
+    messageChain: MessageChain
+
+    time: datetime
+
+
+class Forward(MiraiEvent):
+    type: str = "Forward"
+
+    "表示该条转发消息的标题, 通常为 `群聊的聊天记录`"
+    title: str
+
+    "显示在消息列表中的预览文本, 调用 asDisplay 方法返回该值"
+    brief: str
+
+    "似乎没有什么用, 这个东西找不到在哪里显示"
+    source: str
+
+    "描述, 通常都像: `查看 x 条转发消息` 这样"
+    summary: str
+
+    content: List[ForwardContentMessage] = Field(..., alias="nodeList")
+
+    def asDisplay(self):
+        return self.brief
+
+    class Dispatcher(BaseDispatcher):
+        mixin = [MessageChainCatcher, ApplicationDispatcher]
+
+        @staticmethod
+        async def catch(interface: DispatcherInterface):
+            pass

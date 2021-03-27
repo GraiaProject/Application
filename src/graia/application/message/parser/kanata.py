@@ -52,12 +52,10 @@ class Kanata(BaseDispatcher):
     signature_list: List[Union[NormalMatch, PatternReceiver]]
     stop_exec_if_fail: bool = True
 
-    parsed_items: ContextVar[Dict[str, MessageChain]]
+    parsed_items: Dict[str, MessageChain]
 
     allow_quote: bool
     skip_one_at_in_quote: bool
-
-    content_token: Optional[Token] = None
 
     def __init__(
         self,
@@ -77,7 +75,7 @@ class Kanata(BaseDispatcher):
         """
         self.signature_list = signature_list
         self.stop_exec_if_fail = stop_exec_if_fail
-        self.parsed_items = ContextVar("kanata_parsed_items")
+        self.parsed_items = None
         self.allow_quote = allow_quote
         self.skip_one_at_in_quote = skip_one_at_in_quote
 
@@ -315,16 +313,14 @@ class Kanata(BaseDispatcher):
                     ]  # 利用 MessageIndex 可以非常快捷的实现特性.
         mapping_result = self.detect_and_mapping(self.signature_list, message_chain)
         if mapping_result is not None:
-            self.content_token = self.parsed_items.set(self.allocation(mapping_result))
+            self.parsed_items = self.allocation(mapping_result)
         else:
             if self.stop_exec_if_fail:
                 raise ExecutionStop()
 
     async def catch(self, interface: DispatcherInterface):
-        if not self.content_token:
-            return
         random_id = random.random()
-        current_item = self.parsed_items.get()
+        current_item = self.parsed_items
         if current_item is not None:
             result = current_item.get(interface.name, random_id)
             return Force(result) if result is not random_id else None
@@ -338,7 +334,4 @@ class Kanata(BaseDispatcher):
         exception: Optional[Exception] = None,
         tb: Optional[TracebackType] = None,
     ):
-        if self.content_token:
-            self.parsed_items.reset(self.content_token)
-            self.catch = Kanata.catch
-            self.content_token = None
+        self.parsed_items = None
