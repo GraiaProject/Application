@@ -3,7 +3,7 @@ from typing import NoReturn, Optional
 from pydantic import Field
 from graia.application.context import application
 from graia.application.group import Group, Member, MemberPerm
-from graia.application.exceptions import InvaildArgument, InvaildSession
+from graia.application.exceptions import InvaildSession
 from graia.application.utilles import raise_for_return_code
 from . import ApplicationDispatcher, MiraiEvent, EmptyDispatcher
 from graia.broadcast.entities.dispatcher import BaseDispatcher
@@ -790,6 +790,12 @@ class NewFriendRequestEvent(MiraiEvent):
 
 class NudgeEvent(MiraiEvent):
     type = "NudgeEvent"
+
+    fromId: int = Field(..., alias="fromId")
+    target: int = Field(..., alias="target")
+    subject = Field(..., alias="subject")
+    action: str = Field(..., alias="action")
+    suffix: str = Field(..., alias="suffix")
 
     Dispatcher = EmptyDispatcher
 
