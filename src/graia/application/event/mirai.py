@@ -788,6 +788,11 @@ class NewFriendRequestEvent(MiraiEvent):
             data = await response.json()
             raise_for_return_code(data)
 
+class NudgeEvent(MiraiEvent):
+    type = "NudgeEvent"
+
+    Dispatcher = EmptyDispatcher
+
 
 class MemberJoinRequestEvent(MiraiEvent):
     """当该事件发生时, 有一用户向机器人作为管理员/群主的群组申请加入群组.

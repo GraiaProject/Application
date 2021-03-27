@@ -715,6 +715,28 @@ class GraiaMiraiApplication:
     @error_wrapper
     @requireAuthenticated
     @applicationContextManager
+    async def sendNudge(
+            self,
+            target: Union[Member, Friend, int],
+            subject: Union[Member, Friend, int]
+        ) -> NoReturn:
+            async with self.session.post(
+                    self.url_gen("sendNudge"),
+                    json={
+                        "sessionKey": self.connect_info.sessionKey,
+                        "target": target.id if isinstance(target, (Group, Member)) else target,
+                        "subject": subject.id if isinstance(subject, (Group, Member)) else subject ,
+                        "kind": "Group" if isinstance(subject, Group) else "Friend"
+                    }
+                    ) as response:
+                    response.raise_for_status()
+                    data = await response.json()
+                    raise_for_return_code(data)
+
+
+    @error_wrapper
+    @requireAuthenticated
+    @applicationContextManager
     async def revokeMessage(self, target: Union[Source, BotMessage, int]) -> NoReturn:
         """撤回特定的消息; 撤回自己的消息需要在发出后 2 分钟内才能成功撤回; 如果在群组内, 需要撤回他人的消息则需要管理员/群主权限.
 
