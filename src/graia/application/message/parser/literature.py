@@ -12,6 +12,7 @@ from graia.broadcast.utilles import printer
 from graia.application.message.chain import MessageChain, MessageIndex
 from graia.application.message.elements import Element
 from graia.application.message.elements.internal import (
+    At,
     App,
     Json,
     Plain,
@@ -39,9 +40,20 @@ class Literature(BaseDispatcher):
     prefixs: Tuple[str]  # 匹配前缀
     arguments: Dict[str, ParamPattern]
 
-    def __init__(self, *prefixs, arguments: Dict[str, ParamPattern]) -> None:
+    allow_quote: bool
+    skip_one_at_in_quote: bool
+
+    def __init__(
+        self,
+        *prefixs,
+        arguments: Dict[str, ParamPattern] = None,
+        allow_quote: bool = False,
+        skip_one_at_in_quote: bool = False,
+    ) -> None:
         self.prefixs = prefixs
-        self.arguments = arguments
+        self.arguments = arguments or {}
+        self.allow_quote = allow_quote
+        self.skip_one_at_in_quote = skip_one_at_in_quote
 
     def trans_to_map(self, message_chain: MessageChain):
         string_result: List[str] = []
@@ -112,7 +124,7 @@ class Literature(BaseDispatcher):
                         Plain(i)
                         if not re.match("^\$\d+$", i)
                         else id_elem_map[int(i[1:])]
-                        for i in printer(re.split(r"((?<!\\)\$[0-9]+)", v))
+                        for i in re.split(r"((?<!\\)\$[0-9]+)", v)
                         if i
                     ]
                 ).asMerged()
@@ -183,6 +195,12 @@ class Literature(BaseDispatcher):
             BLOCKING_ELEMENTS
         ):
             raise ExecutionStop()
+        if self.allow_quote and message_chain.has(Quote):
+            # 自动忽略自 Quote 后第一个 At
+            message_chain = message_chain[(1, None):]
+            if self.skip_one_at_in_quote and message_chain.__root__:
+                if message_chain.__root__[0].__class__ is At:
+                    message_chain = message_chain[(1, 1):]
         noprefix = self.prefix_match(message_chain)
         if noprefix is None:
             raise ExecutionStop()
