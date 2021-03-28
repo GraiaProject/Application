@@ -1,4 +1,3 @@
-from contextvars import Context, ContextVar, Token, copy_context
 from functools import lru_cache
 import functools
 from types import TracebackType
@@ -46,9 +45,6 @@ def origin_or_zero(origin: Optional[_T]) -> Union[_T, int]:
 
 class Kanata(BaseDispatcher):
     "彼方."
-
-    always = True  # 兼容重构版的 bcc.
-
     signature_list: List[Union[NormalMatch, PatternReceiver]]
     stop_exec_if_fail: bool = True
 
@@ -308,9 +304,8 @@ class Kanata(BaseDispatcher):
             message_chain = message_chain[(3, None):]
             if self.skip_one_at_in_quote and message_chain.__root__:
                 if message_chain.__root__[0].__class__ is At:
-                    message_chain = message_chain[
-                        (1, 1):
-                    ]  # 利用 MessageIndex 可以非常快捷的实现特性.
+                    message_chain = message_chain[(1, 1):]
+
         mapping_result = self.detect_and_mapping(self.signature_list, message_chain)
         if mapping_result is not None:
             self.parsed_items = self.allocation(mapping_result)
@@ -319,10 +314,12 @@ class Kanata(BaseDispatcher):
                 raise ExecutionStop()
 
     async def catch(self, interface: DispatcherInterface):
+        if interface.name == "__kanata_messagechain__":
+            return
+
         random_id = random.random()
-        current_item = self.parsed_items
-        if current_item is not None:
-            result = current_item.get(interface.name, random_id)
+        if self.parsed_items is not None:
+            result = self.parsed_items.get(interface.name, random_id)
             return Force(result) if result is not random_id else None
         else:
             if self.stop_exec_if_fail:
