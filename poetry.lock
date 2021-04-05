@@ -186,7 +186,7 @@ reference = "tuna-tsinghua"
 
 [[package]]
 name = "graia-broadcast"
-version = "0.8.7"
+version = "0.8.9"
 description = "a highly customizable, elegantly designed event system based on asyncio"
 category = "main"
 optional = false
@@ -195,11 +195,6 @@ python-versions = ">=3.6,<4.0"
 [package.dependencies]
 iterwrapper = ">=0.1.2,<0.2.0"
 pydantic = "<=1.7.1"
-
-[package.source]
-type = "legacy"
-url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple"
-reference = "tuna-tsinghua"
 
 [[package]]
 name = "graphviz"
@@ -553,8 +548,8 @@ devtools = [
     {file = "devtools-0.5.1.tar.gz", hash = "sha256:51ca8d2e15b8a862875a4837db2bafbc6cda409c069e960aec3f4bbd91fe9c08"},
 ]
 graia-broadcast = [
-    {file = "graia-broadcast-0.8.7.tar.gz", hash = "sha256:cea0b27b28d0ee4e562f6da5ba71a69acee63cc4cd8d64c09f67c140428ab093"},
-    {file = "graia_broadcast-0.8.7-py3-none-any.whl", hash = "sha256:6ac73a8fc2fc95dcaa7aca8ec566f274c988ff141cb2506281d74a474b963f5f"},
+    {file = "graia-broadcast-0.8.9.tar.gz", hash = "sha256:5a2663707f017a098b7435a396f34f644698b78790238d8ddd4a3e933bfe39bd"},
+    {file = "graia_broadcast-0.8.9-py3-none-any.whl", hash = "sha256:eda7d6bd93837dc5740f6047aa65c2fd2b723f1aa5663fdc072c3e9a7ae1dfce"},
 ]
 graphviz = [
     {file = "graphviz-0.16-py2.py3-none-any.whl", hash = "sha256:3cad5517c961090dfc679df6402a57de62d97703e2880a1a46147bb0dc1639eb"},

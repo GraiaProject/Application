@@ -50,7 +50,6 @@ class HttpRequestTracing:
             trace_config.freeze()
 
         def hook_method(method):
-            @functools.wraps(method.__func__)
             def hooked_wrapper(*args, **kwargs):
                 return method(*args, **{**kwargs, "trace_request_ctx": (args, kwargs)})
 

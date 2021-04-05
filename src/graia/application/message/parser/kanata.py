@@ -6,6 +6,11 @@ from graia.broadcast.entities.dispatcher import BaseDispatcher
 from graia.broadcast.entities.signatures import Force
 from graia.broadcast.exceptions import ExecutionStop
 from graia.broadcast.interfaces.dispatcher import DispatcherInterface
+from graia.broadcast.builtin.factory import (
+    AsyncDispatcherContextManager,
+    ResponseCodeEnum,
+    StatusCodeEnum,
+)
 
 from graia.application.exceptions import ConflictItem
 
@@ -43,7 +48,7 @@ def origin_or_zero(origin: Optional[_T]) -> Union[_T, int]:
     return origin
 
 
-class Kanata(BaseDispatcher):
+class Kanata(AsyncDispatcherContextManager):
     "彼方."
     signature_list: List[Union[NormalMatch, PatternReceiver]]
     stop_exec_if_fail: bool = True
@@ -52,6 +57,9 @@ class Kanata(BaseDispatcher):
 
     allow_quote: bool
     skip_one_at_in_quote: bool
+
+    args = ()
+    kwargs = {}
 
     def __init__(
         self,
@@ -290,7 +298,10 @@ class Kanata(BaseDispatcher):
     async def catch_argument_names(self) -> List[str]:
         return [i.name for i in self.signature_list if isinstance(i, PatternReceiver)]
 
-    async def beforeDispatch(self, interface: DispatcherInterface):
+    async def generator_factory(self):
+        interface: DispatcherInterface = (yield)
+        current_status: StatusCodeEnum = StatusCodeEnum.DISPATCHING  # init stat
+
         message_chain: MessageChain = (
             await interface.lookup_param("__kanata_messagechain__", MessageChain, None)
         ).exclude(Source)
@@ -308,27 +319,21 @@ class Kanata(BaseDispatcher):
 
         mapping_result = self.detect_and_mapping(self.signature_list, message_chain)
         if mapping_result is not None:
-            self.parsed_items = self.allocation(mapping_result)
+            parsed_items = self.allocation(mapping_result)
         else:
             if self.stop_exec_if_fail:
                 raise ExecutionStop()
+        yield
+        while current_status is StatusCodeEnum.DISPATCHING:
+            result = None
 
-    async def catch(self, interface: DispatcherInterface):
-        if interface.name == "__kanata_messagechain__":
-            return
+            if interface.name != "__kanata_messagechain__":
+                random_id = random.random()
+                if parsed_items is not None:
+                    item = parsed_items.get(interface.name, random_id)
+                    result = Force(item) if item is not random_id else None
+                else:
+                    if self.stop_exec_if_fail:
+                        raise ExecutionStop()
 
-        random_id = random.random()
-        if self.parsed_items is not None:
-            result = self.parsed_items.get(interface.name, random_id)
-            return Force(result) if result is not random_id else None
-        else:
-            if self.stop_exec_if_fail:
-                raise ExecutionStop()
-
-    async def afterDispatch(
-        self,
-        interface: "DispatcherInterface",
-        exception: Optional[Exception] = None,
-        tb: Optional[TracebackType] = None,
-    ):
-        self.parsed_items = None
+            current_status, external = yield (ResponseCodeEnum.VALUE, result)
