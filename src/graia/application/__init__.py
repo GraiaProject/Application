@@ -181,7 +181,7 @@ class GraiaMiraiApplication:
         logger: Optional[AbstractLogger] = None,
         debug: bool = False,
         enable_chat_log: bool = True,
-        group_message_log_format: str = "{bot_id}: [{group_name}({group_id}] {member_name}({member_id}) -> {message_string}",
+        group_message_log_format: str = "{bot_id}: [{group_name}({group_id})] {member_name}({member_id}) -> {message_string}",
         friend_message_log_format: str = "{bot_id}: [{friend_name}({friend_id})] -> {message_string}",
         temp_message_log_format: str = "{bot_id}: [{group_name}({group_id}.{member_name}({member_id})] -> {message_string}",
         json_loader: Callable[[Any], Any] = json.loads,

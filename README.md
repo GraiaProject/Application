@@ -59,8 +59,10 @@ poetry install
  - [`Broadcast Control`](https://github.com/GraiaProject/BroadcastControl): 扩展性强大, 模块间低耦合, 高灵活性的事件系统支持
 
 `Graia Application` 同样还关联了其他 `Graia Project` 项目:
- - [`Components`](https://github.com/GraiaProject/Components): 简单的信息链元素选择器
- - [`Template`](https://github.com/GraiaProject/Template): 消息模板支持
+ - [`Components`](https://github.com/GraiaProject/Components): 简单的消息链元素选择器
+ - [`Template`](https://github.com/GraiaProject/Template): 消息模板
+ - [`Saya`](https://github.com/GraiaProject/Saya) 为该项目提供了间接但简洁的模块管理系统. [文档](https://graia-document.vercel.app/docs/saya/saya-index)
+   - 关于 `Saya`: 这是一个全新的系统, 包含的潜力不亚于 `Application`, 并且实现了更方便的面向模块的 API, 但如果你需要应用到 `Application` 上, 则仍需要先学习相关的内容.
 
 若有相关需求, 我们也强烈建议配合以下独立 `Graia Project` 项目使用:
  - [`Scheduler`](https://github.com/GraiaProject/Scheduler): 简洁的基于 `asyncio` 的定时任务实现.
