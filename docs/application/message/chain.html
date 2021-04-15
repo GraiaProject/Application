@@ -1,0 +1,2186 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.9.2" />
+<title>graia.application.message.chain API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>graia.application.message.chain</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">from __future__ import annotations
+from typing import (
+    Any,
+    Dict,
+    Iterable,
+    List,
+    NoReturn,
+    Sequence,
+    Tuple,
+    Type,
+    TypeVar,
+    Union,
+    Optional,
+)
+
+from graia.application.exceptions import EntangledSuperposition
+from graia.broadcast.utilles import run_always_await
+from pydantic import BaseModel
+
+from .elements import ExternalElement, InternalElement, Element
+import regex
+import copy
+
+MessageIndex = Tuple[int, Optional[int]]
+
+
+class MessageChain(BaseModel):
+    &#34;&#34;&#34;即 &#34;消息链&#34;, 被用于承载整个消息内容的数据结构, 包含有一有序列表, 包含有继承了 Element 的各式类实例.
+
+    Example:
+        1. 你可以使用 `MessageChain.create` 方法创建一个消息链:
+
+            ``` python
+            MessageChain.create([
+                Plain(&#34;这是盛放在这个消息链中的一个 Plain 元素&#34;)
+            ])
+            ```
+
+        2. 你可以使用 `MessageChain.isImmutable` 方法判定消息链的可变型:
+
+            ``` python
+            print(message.isImmutable()) # 监听器获取到的消息链默认为 False.
+            ```
+
+        3. 你可以使用 `MessageChain.asMutable` 和 `MessageChain.asImmutable` 方法分别获得可变与不可变的消息链.
+
+        4. 你可以使用 `MessageChain.isSendable` 方法检查消息链是否可以被 **完整无误** 的发送.
+
+        5. 使用 `MessageChain.asSendable` 方法, 将自动过滤原消息链中的无法发送的元素, 并返回一个新的, 可被发送的消息链.
+
+        6. `MessageChain.has` 方法可用于判断特定的元素类型是否存在于消息链中:
+
+            ``` python
+            print(message.has(At))
+            # 使用 in 运算符也可以
+            print(At in message)
+            ```
+
+        7. 可以使用 `MessageChain.get` 方法获取消息链中的所有特定类型的元素:
+
+            ``` python
+            print(message.get(Image)) # -&gt; List[Image]
+            # 使用类似取出列表中元素的形式也可以:
+            print(message[Image]) # -&gt; List[Image]
+            ```
+
+        8. 使用 `MessageChain.asDisplay` 方法可以获取到字符串形式表示的消息, 至于字面意思, 看示例:
+
+            ``` python
+            print(MessageChain.create([
+                Plain(&#34;text&#34;), At(123, display=&#34;某人&#34;), Image(...)
+            ]).asDisplay()) # -&gt; &#34;text@某人 [图片]&#34;
+            ```
+
+        9. 使用 `MessageChain.join` 方法可以拼接多个消息链:
+
+            ``` python
+            MessageChain.join(
+                message1, message2, message3, ...
+            ) # -&gt; MessageChain
+            ```
+        10. `MessageChain.plusWith` 方法将在现有的基础上将另一消息链拼接到原来实例的尾部, 并生成, 返回新的实例; 该方法不改变原有和传入的实例.
+
+        11. `MessageChain.plus` 方法将在现有的基础上将另一消息链拼接到原来实例的尾部; 该方法更改了原有的实例, 并要求 `isMutable` 方法返回 `True` 才可以执行.
+
+        12. `MessageChain.asSerializationString` 方法可将消息链对象转为以 &#34;Mirai 码&#34; 表示特殊对象的字符串
+
+        13. `MessageChain.fromSerializationString` 方法可以从以 &#34;Mirai 码&#34; 表示特殊对象的字符串解析为消息链, 不过可能不完整.
+
+        14. `MessageChain.asMerged` 方法可以将消息链中相邻的 Plain 元素合并为一个 Plain 元素.
+
+        15. 你可以通过一个分片实例取项, 这个分片的 `start` 和 `end` 的 Type Annotation 都是 `Optional[MessageIndex]`:
+
+            ``` python
+            message = MessageChain.create([
+                Plain(&#34;123456789&#34;), At(123), Plain(&#34;3423&#34;)
+            ])
+            message.asMerged()[(0, 12):] # =&gt; [At(123), Plain(&#34;3423&#34;)]
+            ```
+    &#34;&#34;&#34;
+
+    __root__: Sequence[Element]
+
+    @classmethod
+    def create(cls, elements: Sequence[Element]) -&gt; &#34;MessageChain&#34;:
+        &#34;&#34;&#34;从传入的序列(可以是元组 tuple, 也可以是列表 list) 创建消息链.
+
+        Args:
+            elements (Sequence[T]): 包含且仅包含消息元素的序列
+
+        Returns:
+            MessageChain: 以传入的序列作为所承载消息的消息链
+        &#34;&#34;&#34;
+        return cls(__root__=elements)
+
+    @classmethod
+    def parse_obj(cls: Type[&#34;MessageChain&#34;], obj: List[Element]) -&gt; &#34;MessageChain&#34;:
+        &#34;&#34;&#34;内部接口, 会自动将作为外部态的消息元素转为内部态.
+
+        Args:
+            obj (List[T]): 需要反序列化的对象
+
+        Returns:
+            MessageChain: 内部承载有尽量有效的内部态消息元素的消息链
+        &#34;&#34;&#34;
+        handled_elements = []
+        for i in obj:
+            if isinstance(i, InternalElement):
+                handled_elements.append(i)
+            elif isinstance(i, ExternalElement):
+                for ii in InternalElement.__subclasses__():
+                    if ii.__name__ == i.__class__.__name__:
+                        handled_elements.append(ii.fromExternal(i))
+            elif isinstance(i, dict) and &#34;type&#34; in i:
+                for ii in ExternalElement.__subclasses__():
+                    if ii.__name__ == i[&#34;type&#34;]:
+                        for iii in InternalElement.__subclasses__():
+                            if iii.__name__ == i[&#34;type&#34;]:
+                                handled_elements.append(
+                                    iii.fromExternal(ii.parse_obj(i))
+                                )
+        return cls(__root__=tuple(handled_elements))  # 默认是不可变型
+
+    @property
+    def isImmutable(self) -&gt; bool:
+        &#34;&#34;&#34;判断消息链是否不可变
+
+        Returns:
+            bool: 判断结果, `True` 为不可变, `False` 为可变
+        &#34;&#34;&#34;
+        return isinstance(self.__root__, tuple)
+
+    def asMutable(self) -&gt; &#34;MessageChain&#34;:
+        &#34;&#34;&#34;将消息链转换为可变形态的消息链
+
+        Returns:
+            MessageChain: 内部消息结构可变的消息链
+        &#34;&#34;&#34;
+        return MessageChain(__root__=list(self.__root__))
+
+    def asImmutable(self) -&gt; &#34;MessageChain&#34;:
+        &#34;&#34;&#34;将消息链转换为不可变形态的消息链
+
+        Returns:
+            MessageChain: 内部消息结构不可变的消息链
+        &#34;&#34;&#34;
+        return MessageChain(__root__=tuple(self.__root__))
+
+    @property
+    def isSendable(self) -&gt; bool:
+        &#34;&#34;&#34;判断消息链是否可以被 sendGroupMessage 等发送消息的方法正确发送的方法, 注意, 这个方法并不是万能的.
+
+        Returns:
+            bool: 判断的结果, True 为可发送, False 则反之.
+        &#34;&#34;&#34;
+        return all(
+            all(
+                [
+                    isinstance(i, (InternalElement, ExternalElement)),
+                    hasattr(i, &#34;toExternal&#34;),
+                    getattr(i.__class__, &#34;toExternal&#34;) != InternalElement.toExternal,
+                ]
+            )
+            for i in self.__root__
+        )
+
+    def asSendable(self) -&gt; &#34;MessageChain&#34;:
+        &#34;&#34;&#34;将消息链尽量转换为能够为发送消息的方法正确发送的新消息链, 该方法不保证转换无误差性, 且不保证转化后是否可以被发送.
+
+        Returns:
+            MessageChain: 返回的可能可以正确发送的消息链.
+        &#34;&#34;&#34;
+        return MessageChain(
+            __root__=tuple(
+                [
+                    i
+                    for i in self.__root__
+                    if all(
+                        [
+                            isinstance(i, InternalElement),
+                            hasattr(i, &#34;toExternal&#34;),
+                            getattr(i.__class__, &#34;toExternal&#34;)
+                            != InternalElement.toExternal,
+                        ]
+                    )
+                ]
+            )
+        )
+
+    async def build(
+        self, **extra: Dict[InternalElement, Tuple[list, dict]]
+    ) -&gt; &#34;MessageChain&#34;:
+        result = []
+        for i in self.__root__:
+            if isinstance(i, InternalElement):
+                if getattr(i.__class__, &#34;toExternal&#34;) == InternalElement.toExternal:
+                    raise EntangledSuperposition(
+                        &#34;You define an object that cannot be sent: {0}&#34;.format(
+                            i.__class__.__name__
+                        )
+                    )
+                result.append(
+                    await run_always_await(
+                        i.toExternal(
+                            *(extra[i.__class__][0] if i.__class__ in extra else []),
+                            **(extra[i.__class__][1] if i.__class__ in extra else {}),
+                        )
+                    )
+                )
+            else:
+                result.append(i)
+        return MessageChain(__root__=tuple(result))
+
+    def has(self, element_class: Element) -&gt; bool:
+        &#34;&#34;&#34;判断消息链中是否含有特定类型的消息元素
+
+        Args:
+            element_class (T): 需要判断的消息元素的类型, 例如 &#34;Plain&#34;, &#34;At&#34;, &#34;Image&#34; 等.
+
+        Returns:
+            bool: 判断结果
+        &#34;&#34;&#34;
+        return element_class in [type(i) for i in self.__root__]
+
+    def get(self, element_class: Element) -&gt; List[Element]:
+        &#34;&#34;&#34;获取消息链中所有特定类型的消息元素
+
+        Args:
+            element_class (T): 指定的消息元素的类型, 例如 &#34;Plain&#34;, &#34;At&#34;, &#34;Image&#34; 等.
+
+        Returns:
+            List[T]: 获取到的符合要求的所有消息元素; 另: 可能是空列表([]).
+        &#34;&#34;&#34;
+        return [i for i in self.__root__ if type(i) is element_class]
+
+    def getOne(self, element_class: Element, index: int) -&gt; Element:
+        &#34;&#34;&#34;获取消息链中第 index + 1 个特定类型的消息元素
+
+        Args:
+            element_class (Type[Element]): 指定的消息元素的类型, 例如 &#34;Plain&#34;, &#34;At&#34;, &#34;Image&#34; 等.
+            index (int): 索引, 从 0 开始数
+
+        Returns:
+            T: 消息链第 index + 1 个特定类型的消息元素
+        &#34;&#34;&#34;
+        return self.get(element_class)[index]
+
+    def getFirst(self, element_class: Element) -&gt; Element:
+        &#34;&#34;&#34;获取消息链中第 1 个特定类型的消息元素
+
+        Args:
+            element_class (Type[Element]): 指定的消息元素的类型, 例如 &#34;Plain&#34;, &#34;At&#34;, &#34;Image&#34; 等.
+
+        Returns:
+            T: 消息链第 1 个特定类型的消息元素
+        &#34;&#34;&#34;
+        return self.getOne(element_class, 0)
+
+    def asDisplay(self) -&gt; str:
+        &#34;&#34;&#34;获取以字符串形式表示的消息链, 且趋于通常你见到的样子.
+
+        Returns:
+            str: 以字符串形式表示的消息链
+        &#34;&#34;&#34;
+        return &#34;&#34;.join(i.asDisplay() for i in self.__root__)
+
+    @classmethod
+    def join(cls, *chains: &#34;MessageChain&#34;) -&gt; &#34;MessageChain&#34;:
+        &#34;&#34;&#34;拼接参数中给出的所有消息链
+
+        Returns:
+            MessageChain: 拼接结果
+        &#34;&#34;&#34;
+        return cls.create(sum([list(i.__root__) for i in chains], []))
+
+    def plusWith(self, *chains: &#34;MessageChain&#34;) -&gt; &#34;MessageChain&#34;:
+        &#34;&#34;&#34;在现有的基础上将另一消息链拼接到原来实例的尾部, 并生成, 返回新的实例.
+
+        Returns:
+            MessageChain: 拼接结果
+        &#34;&#34;&#34;
+        return self.create(sum([list(i.__root__) for i in chains], self.__root__))
+
+    def plus(self, *chains: &#34;MessageChain&#34;) -&gt; NoReturn:
+        &#34;&#34;&#34;在现有的基础上将另一消息链拼接到原来实例的尾部
+
+        Raises:
+            ValueError: 原有的消息链不可变, 需要转为可变形态.
+
+        Returns:
+            NoReturn: 本方法无返回.
+        &#34;&#34;&#34;
+        if self.isImmutable:
+            raise ValueError(&#34;this chain is not mutable&#34;)
+        for i in chains:
+            self.__root__.extend(list(i.__root__))
+
+    __contains__ = has
+
+    def __getitem__(self, item: Union[Type[Element], slice]):
+        if isinstance(item, slice):
+            return self.subchain(item)
+        elif issubclass(item, Element):
+            return self.get(item)
+        else:
+            raise NotImplementedError(
+                &#34;{0} is not allowed for item getting&#34;.format(type(item))
+            )
+
+    def subchain(self, item: slice, ignore_text_index: bool = False) -&gt; &#34;MessageChain&#34;:
+        &#34;&#34;&#34;对消息链执行分片操作
+
+        Args:
+            item (slice): 这个分片的 `start` 和 `end` 的 Type Annotation 都是 `Optional[MessageIndex]`
+
+        Raises:
+            TypeError: TextIndex 取到了错误的位置
+
+        Returns:
+            MessageChain: 分片后得到的新消息链, 绝对是原消息链的子集.
+        &#34;&#34;&#34;
+        from .elements.internal import Plain
+
+        result = copy.copy(self.__root__)
+        if item.start:
+            first_slice = result[item.start[0] :]
+            if item.start[1] is not None and first_slice:  # text slice
+                if not isinstance(first_slice[0], Plain):
+                    if not ignore_text_index:
+                        raise TypeError(
+                            &#34;the sliced chain does not starts with a Plain: {}&#34;.format(
+                                first_slice[0]
+                            )
+                        )
+                    else:
+                        result = first_slice
+                else:
+                    final_text = first_slice[0].text[item.start[1] :]
+                    result = [
+                        *([Plain(final_text)] if final_text else []),
+                        *first_slice[1:],
+                    ]
+            else:
+                result = first_slice
+        if item.stop:
+            first_slice = result[: item.stop[0]]
+            if item.stop[1] is not None and first_slice:  # text slice
+                if not isinstance(first_slice[-1], Plain):
+                    raise TypeError(
+                        &#34;the sliced chain does not ends with a Plain: {}&#34;.format(
+                            first_slice[-1]
+                        )
+                    )
+                final_text = first_slice[-1].text[: item.stop[1]]
+                result = [
+                    *first_slice[:-1],
+                    *([Plain(final_text)] if final_text else []),
+                ]
+            else:
+                result = first_slice
+        return MessageChain.create(result)
+
+    def asSerializationString(self) -&gt; str:
+        &#34;&#34;&#34;将消息链对象转为以 &#34;Mirai 码&#34; 表示特殊对象的字符串. 为了保证可逆，纯文本中的&#39;[&#39;用&#39;[_&#39;替代
+
+        Returns:
+            str: 以 &#34;Mirai 码&#34; 表示特殊对象的字符串
+        &#34;&#34;&#34;
+        from .elements.internal import Plain
+
+        result = []
+        for e in self.__root__:
+            if isinstance(e, Plain):
+                result.append(e.asSerializationString().replace(&#34;[&#34;, &#34;[_&#34;))
+            else:
+                result.append(e.asSerializationString())
+        return &#34;&#34;.join(result)
+
+    @classmethod
+    def fromSerializationString(cls, string: str) -&gt; &#34;MessageChain&#34;:
+        &#34;&#34;&#34;将以 &#34;Mirai 码&#34; 表示特殊对象的字符串转为消息链对象
+
+        Returns:
+            MessageChain: 转换后得到的消息链, 所包含的信息可能不完整.
+        &#34;&#34;&#34;
+        from .elements.internal import Plain, At, AtAll, Source, FlashImage, Image, Face
+
+        PARSE_FUNCTIONS = {
+            &#34;atall&#34;: lambda args: AtAll(),
+            &#34;source&#34;: lambda args: Source(id=args[0], time=args[1]),
+            &#34;at&#34;: lambda args: At(target=args[0], display=args[1]),
+            &#34;face&#34;: lambda args: Face(faceId=args[0]),
+            &#34;image&#34;: lambda args: Image(imageId=args[0]),
+            &#34;flash&#34;: lambda args: FlashImage(imageId=args[0]),
+        }
+        result = []
+        for match in regex.split(r&#34;(\[mirai:.+?\])&#34;, string):
+            mirai = regex.fullmatch(r&#34;\[mirai:(.+?)(:(.+?))\]&#34;, match)
+            if mirai:
+                # 容错：参数数量太少不行，太多可以
+                args = mirai.group(3).split(&#34;,&#34;)
+                result.append(PARSE_FUNCTIONS[mirai.group(1)](args))
+            elif match:
+                result.append(Plain(match.replace(&#34;[_&#34;, &#34;[&#34;)))
+        return MessageChain.create(result)
+
+    def asMerged(self) -&gt; &#34;MessageChain&#34;:
+        &#34;&#34;&#34;合并相邻的 Plain 项, 并返回一个新的消息链实例
+
+        Returns:
+            MessageChain: 得到的新的消息链实例, 里面不应存在有任何的相邻的 Plain 元素.
+        &#34;&#34;&#34;
+        from .elements.internal import Plain
+
+        result = []
+
+        plain = []
+        for i in self.__root__:
+            if not isinstance(i, Plain):
+                if plain:
+                    result.append(Plain(&#34;&#34;.join(plain)))
+                    plain.clear()  # 清空缓存
+                result.append(i)
+            else:
+                plain.append(i.text)
+        else:
+            if plain:
+                result.append(Plain(&#34;&#34;.join(plain)))
+                plain.clear()  # 清空缓存
+        return MessageChain.create(type(self.__root__)(result))  # 维持 Mutable
+
+    def exclude(self, *types: Type[Element]) -&gt; MessageChain:
+        &#34;&#34;&#34;将除了在给出的消息元素类型中符合的消息元素重新包装为一个新的消息链
+
+        Args:
+            *types (Type[Element]): 将排除在外的消息元素类型
+
+        Returns:
+            MessageChain: 返回的消息链中不包含参数中给出的消息元素类型
+        &#34;&#34;&#34;
+        return self.create(
+            type(self.__root__)([i for i in self.__root__ if type(i) not in types])
+        )
+
+    def include(self, *types: Type[Element]) -&gt; MessageChain:
+        &#34;&#34;&#34;将只在给出的消息元素类型中符合的消息元素重新包装为一个新的消息链
+
+        Args:
+            *types (Type[Element]): 将只包含在内的消息元素类型
+
+        Returns:
+            MessageChain: 返回的消息链中只包含参数中给出的消息元素类型
+        &#34;&#34;&#34;
+        return self.create(
+            type(self.__root__)([i for i in self.__root__ if type(i) in types])
+        )
+
+    def split(self, pattern: str, raw_string: bool = False) -&gt; List[&#34;MessageChain&#34;]:
+        &#34;&#34;&#34;和 `str.split` 差不多, 提供一个字符串, 然后返回分割结果.
+
+        Returns:
+            List[&#34;MessageChain&#34;]: 分割结果, 行为和 `str.split` 差不多.
+        &#34;&#34;&#34;
+        from .elements.internal import Plain
+
+        result: List[&#34;MessageChain&#34;] = []
+        tmp = []
+        for element in self.__root__:
+            if isinstance(element, Plain):
+                split_result = element.text.split(pattern)
+                for index, split_str in enumerate(split_result):
+                    if tmp and index &gt; 0:
+                        result.append(MessageChain.create(tmp))
+                        tmp = []
+                    if split_str or raw_string:
+                        tmp.append(Plain(split_str))
+            else:
+                tmp.append(element)
+        else:
+            if tmp:
+                result.append(MessageChain.create(tmp))
+                tmp = []
+        return result
+
+    def asHypertext(self) -&gt; &#34;MessageChain&#34;:
+        from graia.application.message.elements.internal import (
+            Source,
+            Quote,
+            Xml,
+            Json,
+            App,
+            Poke,
+        )
+
+        &#34;&#34;&#34;将消息链转换为**不包含以下消息元素**的消息链:
+
+         - `Source`
+         - `Quote`
+         - `Xml`
+         - `Json`
+         - `App`
+         - `Poke`
+
+        Returns:
+            MessageChain: 不包含以上元素的消息链.
+        &#34;&#34;&#34;
+        return self.exclude(Source, Quote, Xml, Json, App, Poke)
+
+    def __repr__(self) -&gt; str:
+        return f&#34;MessageChain({repr(self.__root__)})&#34;
+
+    def __iter__(self) -&gt; Iterable[Element]:
+        yield from self.__root__
+
+    def startswith(self, string: str) -&gt; bool:
+        from .elements.internal import Plain
+
+        if not self.__root__ or type(self.__root__[0]) is not Plain:
+            return False
+        return self.__root__[0].text.startswith(string)
+
+    def endswith(self, string: str) -&gt; bool:
+        from .elements.internal import Plain
+
+        if not self.__root__ or type(self.__root__[-1]) is not Plain:
+            return False
+        return self.__root__[-1].text.endswith(string)
+
+    def hasText(self, string: str) -&gt; bool:
+        &#34;&#34;&#34;判定消息链内是否包括相应字符串
+
+        Args:
+            string (str): 需要判断的字符串
+
+        Returns:
+            bool: 是否包括
+        &#34;&#34;&#34;
+
+        from .elements.internal import Plain
+
+        for i in self.get(Plain):
+            if string in i.text:
+                return True
+        return False</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="graia.application.message.chain.MessageChain"><code class="flex name class">
+<span>class <span class="ident">MessageChain</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>即 "消息链", 被用于承载整个消息内容的数据结构, 包含有一有序列表, 包含有继承了 Element 的各式类实例.</p>
+<h2 id="example">Example</h2>
+<ol>
+<li>
+<p>你可以使用 <code><a title="graia.application.message.chain.MessageChain.create" href="#graia.application.message.chain.MessageChain.create">MessageChain.create()</a></code> 方法创建一个消息链:</p>
+<p><code>python
+MessageChain.create([
+Plain("这是盛放在这个消息链中的一个 Plain 元素")
+])</code></p>
+</li>
+<li>
+<p>你可以使用 <code><a title="graia.application.message.chain.MessageChain.isImmutable" href="#graia.application.message.chain.MessageChain.isImmutable">MessageChain.isImmutable</a></code> 方法判定消息链的可变型:</p>
+<p><code>python
+print(message.isImmutable()) # 监听器获取到的消息链默认为 False.</code></p>
+</li>
+<li>
+<p>你可以使用 <code><a title="graia.application.message.chain.MessageChain.asMutable" href="#graia.application.message.chain.MessageChain.asMutable">MessageChain.asMutable()</a></code> 和 <code><a title="graia.application.message.chain.MessageChain.asImmutable" href="#graia.application.message.chain.MessageChain.asImmutable">MessageChain.asImmutable()</a></code> 方法分别获得可变与不可变的消息链.</p>
+</li>
+<li>
+<p>你可以使用 <code><a title="graia.application.message.chain.MessageChain.isSendable" href="#graia.application.message.chain.MessageChain.isSendable">MessageChain.isSendable</a></code> 方法检查消息链是否可以被 <strong>完整无误</strong> 的发送.</p>
+</li>
+<li>
+<p>使用 <code><a title="graia.application.message.chain.MessageChain.asSendable" href="#graia.application.message.chain.MessageChain.asSendable">MessageChain.asSendable()</a></code> 方法, 将自动过滤原消息链中的无法发送的元素, 并返回一个新的, 可被发送的消息链.</p>
+</li>
+<li>
+<p><code><a title="graia.application.message.chain.MessageChain.has" href="#graia.application.message.chain.MessageChain.has">MessageChain.has()</a></code> 方法可用于判断特定的元素类型是否存在于消息链中:</p>
+<p>``` python
+print(message.has(At))</p>
+<h1 id="in">使用 in 运算符也可以</h1>
+<p>print(At in message)
+```</p>
+</li>
+<li>
+<p>可以使用 <code><a title="graia.application.message.chain.MessageChain.get" href="#graia.application.message.chain.MessageChain.get">MessageChain.get()</a></code> 方法获取消息链中的所有特定类型的元素:</p>
+<p>``` python
+print(message.get(Image)) # -&gt; List[Image]</p>
+<h1 id="_1">使用类似取出列表中元素的形式也可以:</h1>
+<p>print(message[Image]) # -&gt; List[Image]
+```</p>
+</li>
+<li>
+<p>使用 <code><a title="graia.application.message.chain.MessageChain.asDisplay" href="#graia.application.message.chain.MessageChain.asDisplay">MessageChain.asDisplay()</a></code> 方法可以获取到字符串形式表示的消息, 至于字面意思, 看示例:</p>
+<p><code>python
+print(MessageChain.create([
+Plain("text"), At(123, display="某人"), Image(...)
+]).asDisplay()) # -&gt; "text@某人 [图片]"</code></p>
+</li>
+<li>
+<p>使用 <code><a title="graia.application.message.chain.MessageChain.join" href="#graia.application.message.chain.MessageChain.join">MessageChain.join()</a></code> 方法可以拼接多个消息链:</p>
+<p><code>python
+MessageChain.join(
+message1, message2, message3, ...
+) # -&gt; MessageChain</code>
+10. <code><a title="graia.application.message.chain.MessageChain.plusWith" href="#graia.application.message.chain.MessageChain.plusWith">MessageChain.plusWith()</a></code> 方法将在现有的基础上将另一消息链拼接到原来实例的尾部, 并生成, 返回新的实例; 该方法不改变原有和传入的实例.</p>
+</li>
+<li>
+<p><code><a title="graia.application.message.chain.MessageChain.plus" href="#graia.application.message.chain.MessageChain.plus">MessageChain.plus()</a></code> 方法将在现有的基础上将另一消息链拼接到原来实例的尾部; 该方法更改了原有的实例, 并要求 <code>isMutable</code> 方法返回 <code>True</code> 才可以执行.</p>
+</li>
+<li>
+<p><code><a title="graia.application.message.chain.MessageChain.asSerializationString" href="#graia.application.message.chain.MessageChain.asSerializationString">MessageChain.asSerializationString()</a></code> 方法可将消息链对象转为以 "Mirai 码" 表示特殊对象的字符串</p>
+</li>
+<li>
+<p><code><a title="graia.application.message.chain.MessageChain.fromSerializationString" href="#graia.application.message.chain.MessageChain.fromSerializationString">MessageChain.fromSerializationString()</a></code> 方法可以从以 "Mirai 码" 表示特殊对象的字符串解析为消息链, 不过可能不完整.</p>
+</li>
+<li>
+<p><code><a title="graia.application.message.chain.MessageChain.asMerged" href="#graia.application.message.chain.MessageChain.asMerged">MessageChain.asMerged()</a></code> 方法可以将消息链中相邻的 Plain 元素合并为一个 Plain 元素.</p>
+</li>
+<li>
+<p>你可以通过一个分片实例取项, 这个分片的 <code>start</code> 和 <code>end</code> 的 Type Annotation 都是 <code>Optional[MessageIndex]</code>:</p>
+<p><code>python
+message = MessageChain.create([
+Plain("123456789"), At(123), Plain("3423")
+])
+message.asMerged()[(0, 12):] # =&gt; [At(123), Plain("3423")]</code></p>
+</li>
+</ol>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises ValidationError if the input data cannot be parsed to form a valid model.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class MessageChain(BaseModel):
+    &#34;&#34;&#34;即 &#34;消息链&#34;, 被用于承载整个消息内容的数据结构, 包含有一有序列表, 包含有继承了 Element 的各式类实例.
+
+    Example:
+        1. 你可以使用 `MessageChain.create` 方法创建一个消息链:
+
+            ``` python
+            MessageChain.create([
+                Plain(&#34;这是盛放在这个消息链中的一个 Plain 元素&#34;)
+            ])
+            ```
+
+        2. 你可以使用 `MessageChain.isImmutable` 方法判定消息链的可变型:
+
+            ``` python
+            print(message.isImmutable()) # 监听器获取到的消息链默认为 False.
+            ```
+
+        3. 你可以使用 `MessageChain.asMutable` 和 `MessageChain.asImmutable` 方法分别获得可变与不可变的消息链.
+
+        4. 你可以使用 `MessageChain.isSendable` 方法检查消息链是否可以被 **完整无误** 的发送.
+
+        5. 使用 `MessageChain.asSendable` 方法, 将自动过滤原消息链中的无法发送的元素, 并返回一个新的, 可被发送的消息链.
+
+        6. `MessageChain.has` 方法可用于判断特定的元素类型是否存在于消息链中:
+
+            ``` python
+            print(message.has(At))
+            # 使用 in 运算符也可以
+            print(At in message)
+            ```
+
+        7. 可以使用 `MessageChain.get` 方法获取消息链中的所有特定类型的元素:
+
+            ``` python
+            print(message.get(Image)) # -&gt; List[Image]
+            # 使用类似取出列表中元素的形式也可以:
+            print(message[Image]) # -&gt; List[Image]
+            ```
+
+        8. 使用 `MessageChain.asDisplay` 方法可以获取到字符串形式表示的消息, 至于字面意思, 看示例:
+
+            ``` python
+            print(MessageChain.create([
+                Plain(&#34;text&#34;), At(123, display=&#34;某人&#34;), Image(...)
+            ]).asDisplay()) # -&gt; &#34;text@某人 [图片]&#34;
+            ```
+
+        9. 使用 `MessageChain.join` 方法可以拼接多个消息链:
+
+            ``` python
+            MessageChain.join(
+                message1, message2, message3, ...
+            ) # -&gt; MessageChain
+            ```
+        10. `MessageChain.plusWith` 方法将在现有的基础上将另一消息链拼接到原来实例的尾部, 并生成, 返回新的实例; 该方法不改变原有和传入的实例.
+
+        11. `MessageChain.plus` 方法将在现有的基础上将另一消息链拼接到原来实例的尾部; 该方法更改了原有的实例, 并要求 `isMutable` 方法返回 `True` 才可以执行.
+
+        12. `MessageChain.asSerializationString` 方法可将消息链对象转为以 &#34;Mirai 码&#34; 表示特殊对象的字符串
+
+        13. `MessageChain.fromSerializationString` 方法可以从以 &#34;Mirai 码&#34; 表示特殊对象的字符串解析为消息链, 不过可能不完整.
+
+        14. `MessageChain.asMerged` 方法可以将消息链中相邻的 Plain 元素合并为一个 Plain 元素.
+
+        15. 你可以通过一个分片实例取项, 这个分片的 `start` 和 `end` 的 Type Annotation 都是 `Optional[MessageIndex]`:
+
+            ``` python
+            message = MessageChain.create([
+                Plain(&#34;123456789&#34;), At(123), Plain(&#34;3423&#34;)
+            ])
+            message.asMerged()[(0, 12):] # =&gt; [At(123), Plain(&#34;3423&#34;)]
+            ```
+    &#34;&#34;&#34;
+
+    __root__: Sequence[Element]
+
+    @classmethod
+    def create(cls, elements: Sequence[Element]) -&gt; &#34;MessageChain&#34;:
+        &#34;&#34;&#34;从传入的序列(可以是元组 tuple, 也可以是列表 list) 创建消息链.
+
+        Args:
+            elements (Sequence[T]): 包含且仅包含消息元素的序列
+
+        Returns:
+            MessageChain: 以传入的序列作为所承载消息的消息链
+        &#34;&#34;&#34;
+        return cls(__root__=elements)
+
+    @classmethod
+    def parse_obj(cls: Type[&#34;MessageChain&#34;], obj: List[Element]) -&gt; &#34;MessageChain&#34;:
+        &#34;&#34;&#34;内部接口, 会自动将作为外部态的消息元素转为内部态.
+
+        Args:
+            obj (List[T]): 需要反序列化的对象
+
+        Returns:
+            MessageChain: 内部承载有尽量有效的内部态消息元素的消息链
+        &#34;&#34;&#34;
+        handled_elements = []
+        for i in obj:
+            if isinstance(i, InternalElement):
+                handled_elements.append(i)
+            elif isinstance(i, ExternalElement):
+                for ii in InternalElement.__subclasses__():
+                    if ii.__name__ == i.__class__.__name__:
+                        handled_elements.append(ii.fromExternal(i))
+            elif isinstance(i, dict) and &#34;type&#34; in i:
+                for ii in ExternalElement.__subclasses__():
+                    if ii.__name__ == i[&#34;type&#34;]:
+                        for iii in InternalElement.__subclasses__():
+                            if iii.__name__ == i[&#34;type&#34;]:
+                                handled_elements.append(
+                                    iii.fromExternal(ii.parse_obj(i))
+                                )
+        return cls(__root__=tuple(handled_elements))  # 默认是不可变型
+
+    @property
+    def isImmutable(self) -&gt; bool:
+        &#34;&#34;&#34;判断消息链是否不可变
+
+        Returns:
+            bool: 判断结果, `True` 为不可变, `False` 为可变
+        &#34;&#34;&#34;
+        return isinstance(self.__root__, tuple)
+
+    def asMutable(self) -&gt; &#34;MessageChain&#34;:
+        &#34;&#34;&#34;将消息链转换为可变形态的消息链
+
+        Returns:
+            MessageChain: 内部消息结构可变的消息链
+        &#34;&#34;&#34;
+        return MessageChain(__root__=list(self.__root__))
+
+    def asImmutable(self) -&gt; &#34;MessageChain&#34;:
+        &#34;&#34;&#34;将消息链转换为不可变形态的消息链
+
+        Returns:
+            MessageChain: 内部消息结构不可变的消息链
+        &#34;&#34;&#34;
+        return MessageChain(__root__=tuple(self.__root__))
+
+    @property
+    def isSendable(self) -&gt; bool:
+        &#34;&#34;&#34;判断消息链是否可以被 sendGroupMessage 等发送消息的方法正确发送的方法, 注意, 这个方法并不是万能的.
+
+        Returns:
+            bool: 判断的结果, True 为可发送, False 则反之.
+        &#34;&#34;&#34;
+        return all(
+            all(
+                [
+                    isinstance(i, (InternalElement, ExternalElement)),
+                    hasattr(i, &#34;toExternal&#34;),
+                    getattr(i.__class__, &#34;toExternal&#34;) != InternalElement.toExternal,
+                ]
+            )
+            for i in self.__root__
+        )
+
+    def asSendable(self) -&gt; &#34;MessageChain&#34;:
+        &#34;&#34;&#34;将消息链尽量转换为能够为发送消息的方法正确发送的新消息链, 该方法不保证转换无误差性, 且不保证转化后是否可以被发送.
+
+        Returns:
+            MessageChain: 返回的可能可以正确发送的消息链.
+        &#34;&#34;&#34;
+        return MessageChain(
+            __root__=tuple(
+                [
+                    i
+                    for i in self.__root__
+                    if all(
+                        [
+                            isinstance(i, InternalElement),
+                            hasattr(i, &#34;toExternal&#34;),
+                            getattr(i.__class__, &#34;toExternal&#34;)
+                            != InternalElement.toExternal,
+                        ]
+                    )
+                ]
+            )
+        )
+
+    async def build(
+        self, **extra: Dict[InternalElement, Tuple[list, dict]]
+    ) -&gt; &#34;MessageChain&#34;:
+        result = []
+        for i in self.__root__:
+            if isinstance(i, InternalElement):
+                if getattr(i.__class__, &#34;toExternal&#34;) == InternalElement.toExternal:
+                    raise EntangledSuperposition(
+                        &#34;You define an object that cannot be sent: {0}&#34;.format(
+                            i.__class__.__name__
+                        )
+                    )
+                result.append(
+                    await run_always_await(
+                        i.toExternal(
+                            *(extra[i.__class__][0] if i.__class__ in extra else []),
+                            **(extra[i.__class__][1] if i.__class__ in extra else {}),
+                        )
+                    )
+                )
+            else:
+                result.append(i)
+        return MessageChain(__root__=tuple(result))
+
+    def has(self, element_class: Element) -&gt; bool:
+        &#34;&#34;&#34;判断消息链中是否含有特定类型的消息元素
+
+        Args:
+            element_class (T): 需要判断的消息元素的类型, 例如 &#34;Plain&#34;, &#34;At&#34;, &#34;Image&#34; 等.
+
+        Returns:
+            bool: 判断结果
+        &#34;&#34;&#34;
+        return element_class in [type(i) for i in self.__root__]
+
+    def get(self, element_class: Element) -&gt; List[Element]:
+        &#34;&#34;&#34;获取消息链中所有特定类型的消息元素
+
+        Args:
+            element_class (T): 指定的消息元素的类型, 例如 &#34;Plain&#34;, &#34;At&#34;, &#34;Image&#34; 等.
+
+        Returns:
+            List[T]: 获取到的符合要求的所有消息元素; 另: 可能是空列表([]).
+        &#34;&#34;&#34;
+        return [i for i in self.__root__ if type(i) is element_class]
+
+    def getOne(self, element_class: Element, index: int) -&gt; Element:
+        &#34;&#34;&#34;获取消息链中第 index + 1 个特定类型的消息元素
+
+        Args:
+            element_class (Type[Element]): 指定的消息元素的类型, 例如 &#34;Plain&#34;, &#34;At&#34;, &#34;Image&#34; 等.
+            index (int): 索引, 从 0 开始数
+
+        Returns:
+            T: 消息链第 index + 1 个特定类型的消息元素
+        &#34;&#34;&#34;
+        return self.get(element_class)[index]
+
+    def getFirst(self, element_class: Element) -&gt; Element:
+        &#34;&#34;&#34;获取消息链中第 1 个特定类型的消息元素
+
+        Args:
+            element_class (Type[Element]): 指定的消息元素的类型, 例如 &#34;Plain&#34;, &#34;At&#34;, &#34;Image&#34; 等.
+
+        Returns:
+            T: 消息链第 1 个特定类型的消息元素
+        &#34;&#34;&#34;
+        return self.getOne(element_class, 0)
+
+    def asDisplay(self) -&gt; str:
+        &#34;&#34;&#34;获取以字符串形式表示的消息链, 且趋于通常你见到的样子.
+
+        Returns:
+            str: 以字符串形式表示的消息链
+        &#34;&#34;&#34;
+        return &#34;&#34;.join(i.asDisplay() for i in self.__root__)
+
+    @classmethod
+    def join(cls, *chains: &#34;MessageChain&#34;) -&gt; &#34;MessageChain&#34;:
+        &#34;&#34;&#34;拼接参数中给出的所有消息链
+
+        Returns:
+            MessageChain: 拼接结果
+        &#34;&#34;&#34;
+        return cls.create(sum([list(i.__root__) for i in chains], []))
+
+    def plusWith(self, *chains: &#34;MessageChain&#34;) -&gt; &#34;MessageChain&#34;:
+        &#34;&#34;&#34;在现有的基础上将另一消息链拼接到原来实例的尾部, 并生成, 返回新的实例.
+
+        Returns:
+            MessageChain: 拼接结果
+        &#34;&#34;&#34;
+        return self.create(sum([list(i.__root__) for i in chains], self.__root__))
+
+    def plus(self, *chains: &#34;MessageChain&#34;) -&gt; NoReturn:
+        &#34;&#34;&#34;在现有的基础上将另一消息链拼接到原来实例的尾部
+
+        Raises:
+            ValueError: 原有的消息链不可变, 需要转为可变形态.
+
+        Returns:
+            NoReturn: 本方法无返回.
+        &#34;&#34;&#34;
+        if self.isImmutable:
+            raise ValueError(&#34;this chain is not mutable&#34;)
+        for i in chains:
+            self.__root__.extend(list(i.__root__))
+
+    __contains__ = has
+
+    def __getitem__(self, item: Union[Type[Element], slice]):
+        if isinstance(item, slice):
+            return self.subchain(item)
+        elif issubclass(item, Element):
+            return self.get(item)
+        else:
+            raise NotImplementedError(
+                &#34;{0} is not allowed for item getting&#34;.format(type(item))
+            )
+
+    def subchain(self, item: slice, ignore_text_index: bool = False) -&gt; &#34;MessageChain&#34;:
+        &#34;&#34;&#34;对消息链执行分片操作
+
+        Args:
+            item (slice): 这个分片的 `start` 和 `end` 的 Type Annotation 都是 `Optional[MessageIndex]`
+
+        Raises:
+            TypeError: TextIndex 取到了错误的位置
+
+        Returns:
+            MessageChain: 分片后得到的新消息链, 绝对是原消息链的子集.
+        &#34;&#34;&#34;
+        from .elements.internal import Plain
+
+        result = copy.copy(self.__root__)
+        if item.start:
+            first_slice = result[item.start[0] :]
+            if item.start[1] is not None and first_slice:  # text slice
+                if not isinstance(first_slice[0], Plain):
+                    if not ignore_text_index:
+                        raise TypeError(
+                            &#34;the sliced chain does not starts with a Plain: {}&#34;.format(
+                                first_slice[0]
+                            )
+                        )
+                    else:
+                        result = first_slice
+                else:
+                    final_text = first_slice[0].text[item.start[1] :]
+                    result = [
+                        *([Plain(final_text)] if final_text else []),
+                        *first_slice[1:],
+                    ]
+            else:
+                result = first_slice
+        if item.stop:
+            first_slice = result[: item.stop[0]]
+            if item.stop[1] is not None and first_slice:  # text slice
+                if not isinstance(first_slice[-1], Plain):
+                    raise TypeError(
+                        &#34;the sliced chain does not ends with a Plain: {}&#34;.format(
+                            first_slice[-1]
+                        )
+                    )
+                final_text = first_slice[-1].text[: item.stop[1]]
+                result = [
+                    *first_slice[:-1],
+                    *([Plain(final_text)] if final_text else []),
+                ]
+            else:
+                result = first_slice
+        return MessageChain.create(result)
+
+    def asSerializationString(self) -&gt; str:
+        &#34;&#34;&#34;将消息链对象转为以 &#34;Mirai 码&#34; 表示特殊对象的字符串. 为了保证可逆，纯文本中的&#39;[&#39;用&#39;[_&#39;替代
+
+        Returns:
+            str: 以 &#34;Mirai 码&#34; 表示特殊对象的字符串
+        &#34;&#34;&#34;
+        from .elements.internal import Plain
+
+        result = []
+        for e in self.__root__:
+            if isinstance(e, Plain):
+                result.append(e.asSerializationString().replace(&#34;[&#34;, &#34;[_&#34;))
+            else:
+                result.append(e.asSerializationString())
+        return &#34;&#34;.join(result)
+
+    @classmethod
+    def fromSerializationString(cls, string: str) -&gt; &#34;MessageChain&#34;:
+        &#34;&#34;&#34;将以 &#34;Mirai 码&#34; 表示特殊对象的字符串转为消息链对象
+
+        Returns:
+            MessageChain: 转换后得到的消息链, 所包含的信息可能不完整.
+        &#34;&#34;&#34;
+        from .elements.internal import Plain, At, AtAll, Source, FlashImage, Image, Face
+
+        PARSE_FUNCTIONS = {
+            &#34;atall&#34;: lambda args: AtAll(),
+            &#34;source&#34;: lambda args: Source(id=args[0], time=args[1]),
+            &#34;at&#34;: lambda args: At(target=args[0], display=args[1]),
+            &#34;face&#34;: lambda args: Face(faceId=args[0]),
+            &#34;image&#34;: lambda args: Image(imageId=args[0]),
+            &#34;flash&#34;: lambda args: FlashImage(imageId=args[0]),
+        }
+        result = []
+        for match in regex.split(r&#34;(\[mirai:.+?\])&#34;, string):
+            mirai = regex.fullmatch(r&#34;\[mirai:(.+?)(:(.+?))\]&#34;, match)
+            if mirai:
+                # 容错：参数数量太少不行，太多可以
+                args = mirai.group(3).split(&#34;,&#34;)
+                result.append(PARSE_FUNCTIONS[mirai.group(1)](args))
+            elif match:
+                result.append(Plain(match.replace(&#34;[_&#34;, &#34;[&#34;)))
+        return MessageChain.create(result)
+
+    def asMerged(self) -&gt; &#34;MessageChain&#34;:
+        &#34;&#34;&#34;合并相邻的 Plain 项, 并返回一个新的消息链实例
+
+        Returns:
+            MessageChain: 得到的新的消息链实例, 里面不应存在有任何的相邻的 Plain 元素.
+        &#34;&#34;&#34;
+        from .elements.internal import Plain
+
+        result = []
+
+        plain = []
+        for i in self.__root__:
+            if not isinstance(i, Plain):
+                if plain:
+                    result.append(Plain(&#34;&#34;.join(plain)))
+                    plain.clear()  # 清空缓存
+                result.append(i)
+            else:
+                plain.append(i.text)
+        else:
+            if plain:
+                result.append(Plain(&#34;&#34;.join(plain)))
+                plain.clear()  # 清空缓存
+        return MessageChain.create(type(self.__root__)(result))  # 维持 Mutable
+
+    def exclude(self, *types: Type[Element]) -&gt; MessageChain:
+        &#34;&#34;&#34;将除了在给出的消息元素类型中符合的消息元素重新包装为一个新的消息链
+
+        Args:
+            *types (Type[Element]): 将排除在外的消息元素类型
+
+        Returns:
+            MessageChain: 返回的消息链中不包含参数中给出的消息元素类型
+        &#34;&#34;&#34;
+        return self.create(
+            type(self.__root__)([i for i in self.__root__ if type(i) not in types])
+        )
+
+    def include(self, *types: Type[Element]) -&gt; MessageChain:
+        &#34;&#34;&#34;将只在给出的消息元素类型中符合的消息元素重新包装为一个新的消息链
+
+        Args:
+            *types (Type[Element]): 将只包含在内的消息元素类型
+
+        Returns:
+            MessageChain: 返回的消息链中只包含参数中给出的消息元素类型
+        &#34;&#34;&#34;
+        return self.create(
+            type(self.__root__)([i for i in self.__root__ if type(i) in types])
+        )
+
+    def split(self, pattern: str, raw_string: bool = False) -&gt; List[&#34;MessageChain&#34;]:
+        &#34;&#34;&#34;和 `str.split` 差不多, 提供一个字符串, 然后返回分割结果.
+
+        Returns:
+            List[&#34;MessageChain&#34;]: 分割结果, 行为和 `str.split` 差不多.
+        &#34;&#34;&#34;
+        from .elements.internal import Plain
+
+        result: List[&#34;MessageChain&#34;] = []
+        tmp = []
+        for element in self.__root__:
+            if isinstance(element, Plain):
+                split_result = element.text.split(pattern)
+                for index, split_str in enumerate(split_result):
+                    if tmp and index &gt; 0:
+                        result.append(MessageChain.create(tmp))
+                        tmp = []
+                    if split_str or raw_string:
+                        tmp.append(Plain(split_str))
+            else:
+                tmp.append(element)
+        else:
+            if tmp:
+                result.append(MessageChain.create(tmp))
+                tmp = []
+        return result
+
+    def asHypertext(self) -&gt; &#34;MessageChain&#34;:
+        from graia.application.message.elements.internal import (
+            Source,
+            Quote,
+            Xml,
+            Json,
+            App,
+            Poke,
+        )
+
+        &#34;&#34;&#34;将消息链转换为**不包含以下消息元素**的消息链:
+
+         - `Source`
+         - `Quote`
+         - `Xml`
+         - `Json`
+         - `App`
+         - `Poke`
+
+        Returns:
+            MessageChain: 不包含以上元素的消息链.
+        &#34;&#34;&#34;
+        return self.exclude(Source, Quote, Xml, Json, App, Poke)
+
+    def __repr__(self) -&gt; str:
+        return f&#34;MessageChain({repr(self.__root__)})&#34;
+
+    def __iter__(self) -&gt; Iterable[Element]:
+        yield from self.__root__
+
+    def startswith(self, string: str) -&gt; bool:
+        from .elements.internal import Plain
+
+        if not self.__root__ or type(self.__root__[0]) is not Plain:
+            return False
+        return self.__root__[0].text.startswith(string)
+
+    def endswith(self, string: str) -&gt; bool:
+        from .elements.internal import Plain
+
+        if not self.__root__ or type(self.__root__[-1]) is not Plain:
+            return False
+        return self.__root__[-1].text.endswith(string)
+
+    def hasText(self, string: str) -&gt; bool:
+        &#34;&#34;&#34;判定消息链内是否包括相应字符串
+
+        Args:
+            string (str): 需要判断的字符串
+
+        Returns:
+            bool: 是否包括
+        &#34;&#34;&#34;
+
+        from .elements.internal import Plain
+
+        for i in self.get(Plain):
+            if string in i.text:
+                return True
+        return False</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>pydantic.main.BaseModel</li>
+<li>pydantic.utils.Representation</li>
+</ul>
+<h3>Static methods</h3>
+<dl>
+<dt id="graia.application.message.chain.MessageChain.create"><code class="name flex">
+<span>def <span class="ident">create</span></span>(<span>elements: Sequence[Element]) ‑> <a title="graia.application.message.chain.MessageChain" href="#graia.application.message.chain.MessageChain">MessageChain</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>从传入的序列(可以是元组 tuple, 也可以是列表 list) 创建消息链.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>elements</code></strong> :&ensp;<code>Sequence[T]</code></dt>
+<dd>包含且仅包含消息元素的序列</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code><a title="graia.application.message.chain.MessageChain" href="#graia.application.message.chain.MessageChain">MessageChain</a></code></dt>
+<dd>以传入的序列作为所承载消息的消息链</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@classmethod
+def create(cls, elements: Sequence[Element]) -&gt; &#34;MessageChain&#34;:
+    &#34;&#34;&#34;从传入的序列(可以是元组 tuple, 也可以是列表 list) 创建消息链.
+
+    Args:
+        elements (Sequence[T]): 包含且仅包含消息元素的序列
+
+    Returns:
+        MessageChain: 以传入的序列作为所承载消息的消息链
+    &#34;&#34;&#34;
+    return cls(__root__=elements)</code></pre>
+</details>
+</dd>
+<dt id="graia.application.message.chain.MessageChain.fromSerializationString"><code class="name flex">
+<span>def <span class="ident">fromSerializationString</span></span>(<span>string: str) ‑> <a title="graia.application.message.chain.MessageChain" href="#graia.application.message.chain.MessageChain">MessageChain</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>将以 "Mirai 码" 表示特殊对象的字符串转为消息链对象</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code><a title="graia.application.message.chain.MessageChain" href="#graia.application.message.chain.MessageChain">MessageChain</a></code></dt>
+<dd>转换后得到的消息链, 所包含的信息可能不完整.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@classmethod
+def fromSerializationString(cls, string: str) -&gt; &#34;MessageChain&#34;:
+    &#34;&#34;&#34;将以 &#34;Mirai 码&#34; 表示特殊对象的字符串转为消息链对象
+
+    Returns:
+        MessageChain: 转换后得到的消息链, 所包含的信息可能不完整.
+    &#34;&#34;&#34;
+    from .elements.internal import Plain, At, AtAll, Source, FlashImage, Image, Face
+
+    PARSE_FUNCTIONS = {
+        &#34;atall&#34;: lambda args: AtAll(),
+        &#34;source&#34;: lambda args: Source(id=args[0], time=args[1]),
+        &#34;at&#34;: lambda args: At(target=args[0], display=args[1]),
+        &#34;face&#34;: lambda args: Face(faceId=args[0]),
+        &#34;image&#34;: lambda args: Image(imageId=args[0]),
+        &#34;flash&#34;: lambda args: FlashImage(imageId=args[0]),
+    }
+    result = []
+    for match in regex.split(r&#34;(\[mirai:.+?\])&#34;, string):
+        mirai = regex.fullmatch(r&#34;\[mirai:(.+?)(:(.+?))\]&#34;, match)
+        if mirai:
+            # 容错：参数数量太少不行，太多可以
+            args = mirai.group(3).split(&#34;,&#34;)
+            result.append(PARSE_FUNCTIONS[mirai.group(1)](args))
+        elif match:
+            result.append(Plain(match.replace(&#34;[_&#34;, &#34;[&#34;)))
+    return MessageChain.create(result)</code></pre>
+</details>
+</dd>
+<dt id="graia.application.message.chain.MessageChain.join"><code class="name flex">
+<span>def <span class="ident">join</span></span>(<span>*chains: "'<a title="graia.application.message.chain.MessageChain" href="#graia.application.message.chain.MessageChain">MessageChain</a>'") ‑> <a title="graia.application.message.chain.MessageChain" href="#graia.application.message.chain.MessageChain">MessageChain</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>拼接参数中给出的所有消息链</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code><a title="graia.application.message.chain.MessageChain" href="#graia.application.message.chain.MessageChain">MessageChain</a></code></dt>
+<dd>拼接结果</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@classmethod
+def join(cls, *chains: &#34;MessageChain&#34;) -&gt; &#34;MessageChain&#34;:
+    &#34;&#34;&#34;拼接参数中给出的所有消息链
+
+    Returns:
+        MessageChain: 拼接结果
+    &#34;&#34;&#34;
+    return cls.create(sum([list(i.__root__) for i in chains], []))</code></pre>
+</details>
+</dd>
+<dt id="graia.application.message.chain.MessageChain.parse_obj"><code class="name flex">
+<span>def <span class="ident">parse_obj</span></span>(<span>obj: List[Element]) ‑> <a title="graia.application.message.chain.MessageChain" href="#graia.application.message.chain.MessageChain">MessageChain</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>内部接口, 会自动将作为外部态的消息元素转为内部态.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>obj</code></strong> :&ensp;<code>List[T]</code></dt>
+<dd>需要反序列化的对象</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code><a title="graia.application.message.chain.MessageChain" href="#graia.application.message.chain.MessageChain">MessageChain</a></code></dt>
+<dd>内部承载有尽量有效的内部态消息元素的消息链</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@classmethod
+def parse_obj(cls: Type[&#34;MessageChain&#34;], obj: List[Element]) -&gt; &#34;MessageChain&#34;:
+    &#34;&#34;&#34;内部接口, 会自动将作为外部态的消息元素转为内部态.
+
+    Args:
+        obj (List[T]): 需要反序列化的对象
+
+    Returns:
+        MessageChain: 内部承载有尽量有效的内部态消息元素的消息链
+    &#34;&#34;&#34;
+    handled_elements = []
+    for i in obj:
+        if isinstance(i, InternalElement):
+            handled_elements.append(i)
+        elif isinstance(i, ExternalElement):
+            for ii in InternalElement.__subclasses__():
+                if ii.__name__ == i.__class__.__name__:
+                    handled_elements.append(ii.fromExternal(i))
+        elif isinstance(i, dict) and &#34;type&#34; in i:
+            for ii in ExternalElement.__subclasses__():
+                if ii.__name__ == i[&#34;type&#34;]:
+                    for iii in InternalElement.__subclasses__():
+                        if iii.__name__ == i[&#34;type&#34;]:
+                            handled_elements.append(
+                                iii.fromExternal(ii.parse_obj(i))
+                            )
+    return cls(__root__=tuple(handled_elements))  # 默认是不可变型</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Instance variables</h3>
+<dl>
+<dt id="graia.application.message.chain.MessageChain.isImmutable"><code class="name">var <span class="ident">isImmutable</span> : bool</code></dt>
+<dd>
+<div class="desc"><p>判断消息链是否不可变</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>bool</code></dt>
+<dd>判断结果, <code>True</code> 为不可变, <code>False</code> 为可变</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def isImmutable(self) -&gt; bool:
+    &#34;&#34;&#34;判断消息链是否不可变
+
+    Returns:
+        bool: 判断结果, `True` 为不可变, `False` 为可变
+    &#34;&#34;&#34;
+    return isinstance(self.__root__, tuple)</code></pre>
+</details>
+</dd>
+<dt id="graia.application.message.chain.MessageChain.isSendable"><code class="name">var <span class="ident">isSendable</span> : bool</code></dt>
+<dd>
+<div class="desc"><p>判断消息链是否可以被 sendGroupMessage 等发送消息的方法正确发送的方法, 注意, 这个方法并不是万能的.</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>bool</code></dt>
+<dd>判断的结果, True 为可发送, False 则反之.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@property
+def isSendable(self) -&gt; bool:
+    &#34;&#34;&#34;判断消息链是否可以被 sendGroupMessage 等发送消息的方法正确发送的方法, 注意, 这个方法并不是万能的.
+
+    Returns:
+        bool: 判断的结果, True 为可发送, False 则反之.
+    &#34;&#34;&#34;
+    return all(
+        all(
+            [
+                isinstance(i, (InternalElement, ExternalElement)),
+                hasattr(i, &#34;toExternal&#34;),
+                getattr(i.__class__, &#34;toExternal&#34;) != InternalElement.toExternal,
+            ]
+        )
+        for i in self.__root__
+    )</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="graia.application.message.chain.MessageChain.asDisplay"><code class="name flex">
+<span>def <span class="ident">asDisplay</span></span>(<span>self) ‑> str</span>
+</code></dt>
+<dd>
+<div class="desc"><p>获取以字符串形式表示的消息链, 且趋于通常你见到的样子.</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>str</code></dt>
+<dd>以字符串形式表示的消息链</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def asDisplay(self) -&gt; str:
+    &#34;&#34;&#34;获取以字符串形式表示的消息链, 且趋于通常你见到的样子.
+
+    Returns:
+        str: 以字符串形式表示的消息链
+    &#34;&#34;&#34;
+    return &#34;&#34;.join(i.asDisplay() for i in self.__root__)</code></pre>
+</details>
+</dd>
+<dt id="graia.application.message.chain.MessageChain.asHypertext"><code class="name flex">
+<span>def <span class="ident">asHypertext</span></span>(<span>self) ‑> <a title="graia.application.message.chain.MessageChain" href="#graia.application.message.chain.MessageChain">MessageChain</a></span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def asHypertext(self) -&gt; &#34;MessageChain&#34;:
+    from graia.application.message.elements.internal import (
+        Source,
+        Quote,
+        Xml,
+        Json,
+        App,
+        Poke,
+    )
+
+    &#34;&#34;&#34;将消息链转换为**不包含以下消息元素**的消息链:
+
+     - `Source`
+     - `Quote`
+     - `Xml`
+     - `Json`
+     - `App`
+     - `Poke`
+
+    Returns:
+        MessageChain: 不包含以上元素的消息链.
+    &#34;&#34;&#34;
+    return self.exclude(Source, Quote, Xml, Json, App, Poke)</code></pre>
+</details>
+</dd>
+<dt id="graia.application.message.chain.MessageChain.asImmutable"><code class="name flex">
+<span>def <span class="ident">asImmutable</span></span>(<span>self) ‑> <a title="graia.application.message.chain.MessageChain" href="#graia.application.message.chain.MessageChain">MessageChain</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>将消息链转换为不可变形态的消息链</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code><a title="graia.application.message.chain.MessageChain" href="#graia.application.message.chain.MessageChain">MessageChain</a></code></dt>
+<dd>内部消息结构不可变的消息链</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def asImmutable(self) -&gt; &#34;MessageChain&#34;:
+    &#34;&#34;&#34;将消息链转换为不可变形态的消息链
+
+    Returns:
+        MessageChain: 内部消息结构不可变的消息链
+    &#34;&#34;&#34;
+    return MessageChain(__root__=tuple(self.__root__))</code></pre>
+</details>
+</dd>
+<dt id="graia.application.message.chain.MessageChain.asMerged"><code class="name flex">
+<span>def <span class="ident">asMerged</span></span>(<span>self) ‑> <a title="graia.application.message.chain.MessageChain" href="#graia.application.message.chain.MessageChain">MessageChain</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>合并相邻的 Plain 项, 并返回一个新的消息链实例</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code><a title="graia.application.message.chain.MessageChain" href="#graia.application.message.chain.MessageChain">MessageChain</a></code></dt>
+<dd>得到的新的消息链实例, 里面不应存在有任何的相邻的 Plain 元素.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def asMerged(self) -&gt; &#34;MessageChain&#34;:
+    &#34;&#34;&#34;合并相邻的 Plain 项, 并返回一个新的消息链实例
+
+    Returns:
+        MessageChain: 得到的新的消息链实例, 里面不应存在有任何的相邻的 Plain 元素.
+    &#34;&#34;&#34;
+    from .elements.internal import Plain
+
+    result = []
+
+    plain = []
+    for i in self.__root__:
+        if not isinstance(i, Plain):
+            if plain:
+                result.append(Plain(&#34;&#34;.join(plain)))
+                plain.clear()  # 清空缓存
+            result.append(i)
+        else:
+            plain.append(i.text)
+    else:
+        if plain:
+            result.append(Plain(&#34;&#34;.join(plain)))
+            plain.clear()  # 清空缓存
+    return MessageChain.create(type(self.__root__)(result))  # 维持 Mutable</code></pre>
+</details>
+</dd>
+<dt id="graia.application.message.chain.MessageChain.asMutable"><code class="name flex">
+<span>def <span class="ident">asMutable</span></span>(<span>self) ‑> <a title="graia.application.message.chain.MessageChain" href="#graia.application.message.chain.MessageChain">MessageChain</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>将消息链转换为可变形态的消息链</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code><a title="graia.application.message.chain.MessageChain" href="#graia.application.message.chain.MessageChain">MessageChain</a></code></dt>
+<dd>内部消息结构可变的消息链</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def asMutable(self) -&gt; &#34;MessageChain&#34;:
+    &#34;&#34;&#34;将消息链转换为可变形态的消息链
+
+    Returns:
+        MessageChain: 内部消息结构可变的消息链
+    &#34;&#34;&#34;
+    return MessageChain(__root__=list(self.__root__))</code></pre>
+</details>
+</dd>
+<dt id="graia.application.message.chain.MessageChain.asSendable"><code class="name flex">
+<span>def <span class="ident">asSendable</span></span>(<span>self) ‑> <a title="graia.application.message.chain.MessageChain" href="#graia.application.message.chain.MessageChain">MessageChain</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>将消息链尽量转换为能够为发送消息的方法正确发送的新消息链, 该方法不保证转换无误差性, 且不保证转化后是否可以被发送.</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code><a title="graia.application.message.chain.MessageChain" href="#graia.application.message.chain.MessageChain">MessageChain</a></code></dt>
+<dd>返回的可能可以正确发送的消息链.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def asSendable(self) -&gt; &#34;MessageChain&#34;:
+    &#34;&#34;&#34;将消息链尽量转换为能够为发送消息的方法正确发送的新消息链, 该方法不保证转换无误差性, 且不保证转化后是否可以被发送.
+
+    Returns:
+        MessageChain: 返回的可能可以正确发送的消息链.
+    &#34;&#34;&#34;
+    return MessageChain(
+        __root__=tuple(
+            [
+                i
+                for i in self.__root__
+                if all(
+                    [
+                        isinstance(i, InternalElement),
+                        hasattr(i, &#34;toExternal&#34;),
+                        getattr(i.__class__, &#34;toExternal&#34;)
+                        != InternalElement.toExternal,
+                    ]
+                )
+            ]
+        )
+    )</code></pre>
+</details>
+</dd>
+<dt id="graia.application.message.chain.MessageChain.asSerializationString"><code class="name flex">
+<span>def <span class="ident">asSerializationString</span></span>(<span>self) ‑> str</span>
+</code></dt>
+<dd>
+<div class="desc"><p>将消息链对象转为以 "Mirai 码" 表示特殊对象的字符串. 为了保证可逆，纯文本中的'['用'[_'替代</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>str</code></dt>
+<dd>以 "Mirai 码" 表示特殊对象的字符串</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def asSerializationString(self) -&gt; str:
+    &#34;&#34;&#34;将消息链对象转为以 &#34;Mirai 码&#34; 表示特殊对象的字符串. 为了保证可逆，纯文本中的&#39;[&#39;用&#39;[_&#39;替代
+
+    Returns:
+        str: 以 &#34;Mirai 码&#34; 表示特殊对象的字符串
+    &#34;&#34;&#34;
+    from .elements.internal import Plain
+
+    result = []
+    for e in self.__root__:
+        if isinstance(e, Plain):
+            result.append(e.asSerializationString().replace(&#34;[&#34;, &#34;[_&#34;))
+        else:
+            result.append(e.asSerializationString())
+    return &#34;&#34;.join(result)</code></pre>
+</details>
+</dd>
+<dt id="graia.application.message.chain.MessageChain.build"><code class="name flex">
+<span>async def <span class="ident">build</span></span>(<span>self, **extra: Dict[InternalElement, Tuple[list, dict]]) ‑> <a title="graia.application.message.chain.MessageChain" href="#graia.application.message.chain.MessageChain">MessageChain</a></span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def build(
+    self, **extra: Dict[InternalElement, Tuple[list, dict]]
+) -&gt; &#34;MessageChain&#34;:
+    result = []
+    for i in self.__root__:
+        if isinstance(i, InternalElement):
+            if getattr(i.__class__, &#34;toExternal&#34;) == InternalElement.toExternal:
+                raise EntangledSuperposition(
+                    &#34;You define an object that cannot be sent: {0}&#34;.format(
+                        i.__class__.__name__
+                    )
+                )
+            result.append(
+                await run_always_await(
+                    i.toExternal(
+                        *(extra[i.__class__][0] if i.__class__ in extra else []),
+                        **(extra[i.__class__][1] if i.__class__ in extra else {}),
+                    )
+                )
+            )
+        else:
+            result.append(i)
+    return MessageChain(__root__=tuple(result))</code></pre>
+</details>
+</dd>
+<dt id="graia.application.message.chain.MessageChain.endswith"><code class="name flex">
+<span>def <span class="ident">endswith</span></span>(<span>self, string: str) ‑> bool</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def endswith(self, string: str) -&gt; bool:
+    from .elements.internal import Plain
+
+    if not self.__root__ or type(self.__root__[-1]) is not Plain:
+        return False
+    return self.__root__[-1].text.endswith(string)</code></pre>
+</details>
+</dd>
+<dt id="graia.application.message.chain.MessageChain.exclude"><code class="name flex">
+<span>def <span class="ident">exclude</span></span>(<span>self, *types: Type[Element]) ‑> <a title="graia.application.message.chain.MessageChain" href="#graia.application.message.chain.MessageChain">MessageChain</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>将除了在给出的消息元素类型中符合的消息元素重新包装为一个新的消息链</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>*types</code></strong> :&ensp;<code>Type[Element]</code></dt>
+<dd>将排除在外的消息元素类型</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code><a title="graia.application.message.chain.MessageChain" href="#graia.application.message.chain.MessageChain">MessageChain</a></code></dt>
+<dd>返回的消息链中不包含参数中给出的消息元素类型</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def exclude(self, *types: Type[Element]) -&gt; MessageChain:
+    &#34;&#34;&#34;将除了在给出的消息元素类型中符合的消息元素重新包装为一个新的消息链
+
+    Args:
+        *types (Type[Element]): 将排除在外的消息元素类型
+
+    Returns:
+        MessageChain: 返回的消息链中不包含参数中给出的消息元素类型
+    &#34;&#34;&#34;
+    return self.create(
+        type(self.__root__)([i for i in self.__root__ if type(i) not in types])
+    )</code></pre>
+</details>
+</dd>
+<dt id="graia.application.message.chain.MessageChain.get"><code class="name flex">
+<span>def <span class="ident">get</span></span>(<span>self, element_class: Element) ‑> List[<a title="graia.application.message.elements.Element" href="elements/index.html#graia.application.message.elements.Element">Element</a>]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>获取消息链中所有特定类型的消息元素</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>element_class</code></strong> :&ensp;<code>T</code></dt>
+<dd>指定的消息元素的类型, 例如 "Plain", "At", "Image" 等.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>List[T]</code></dt>
+<dd>获取到的符合要求的所有消息元素; 另: 可能是空列表([]).</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get(self, element_class: Element) -&gt; List[Element]:
+    &#34;&#34;&#34;获取消息链中所有特定类型的消息元素
+
+    Args:
+        element_class (T): 指定的消息元素的类型, 例如 &#34;Plain&#34;, &#34;At&#34;, &#34;Image&#34; 等.
+
+    Returns:
+        List[T]: 获取到的符合要求的所有消息元素; 另: 可能是空列表([]).
+    &#34;&#34;&#34;
+    return [i for i in self.__root__ if type(i) is element_class]</code></pre>
+</details>
+</dd>
+<dt id="graia.application.message.chain.MessageChain.getFirst"><code class="name flex">
+<span>def <span class="ident">getFirst</span></span>(<span>self, element_class: Element) ‑> <a title="graia.application.message.elements.Element" href="elements/index.html#graia.application.message.elements.Element">Element</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>获取消息链中第 1 个特定类型的消息元素</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>element_class</code></strong> :&ensp;<code>Type[Element]</code></dt>
+<dd>指定的消息元素的类型, 例如 "Plain", "At", "Image" 等.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>T</code></dt>
+<dd>消息链第 1 个特定类型的消息元素</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getFirst(self, element_class: Element) -&gt; Element:
+    &#34;&#34;&#34;获取消息链中第 1 个特定类型的消息元素
+
+    Args:
+        element_class (Type[Element]): 指定的消息元素的类型, 例如 &#34;Plain&#34;, &#34;At&#34;, &#34;Image&#34; 等.
+
+    Returns:
+        T: 消息链第 1 个特定类型的消息元素
+    &#34;&#34;&#34;
+    return self.getOne(element_class, 0)</code></pre>
+</details>
+</dd>
+<dt id="graia.application.message.chain.MessageChain.getOne"><code class="name flex">
+<span>def <span class="ident">getOne</span></span>(<span>self, element_class: Element, index: int) ‑> <a title="graia.application.message.elements.Element" href="elements/index.html#graia.application.message.elements.Element">Element</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>获取消息链中第 index + 1 个特定类型的消息元素</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>element_class</code></strong> :&ensp;<code>Type[Element]</code></dt>
+<dd>指定的消息元素的类型, 例如 "Plain", "At", "Image" 等.</dd>
+<dt><strong><code>index</code></strong> :&ensp;<code>int</code></dt>
+<dd>索引, 从 0 开始数</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>T</code></dt>
+<dd>消息链第 index + 1 个特定类型的消息元素</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getOne(self, element_class: Element, index: int) -&gt; Element:
+    &#34;&#34;&#34;获取消息链中第 index + 1 个特定类型的消息元素
+
+    Args:
+        element_class (Type[Element]): 指定的消息元素的类型, 例如 &#34;Plain&#34;, &#34;At&#34;, &#34;Image&#34; 等.
+        index (int): 索引, 从 0 开始数
+
+    Returns:
+        T: 消息链第 index + 1 个特定类型的消息元素
+    &#34;&#34;&#34;
+    return self.get(element_class)[index]</code></pre>
+</details>
+</dd>
+<dt id="graia.application.message.chain.MessageChain.has"><code class="name flex">
+<span>def <span class="ident">has</span></span>(<span>self, element_class: Element) ‑> bool</span>
+</code></dt>
+<dd>
+<div class="desc"><p>判断消息链中是否含有特定类型的消息元素</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>element_class</code></strong> :&ensp;<code>T</code></dt>
+<dd>需要判断的消息元素的类型, 例如 "Plain", "At", "Image" 等.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>bool</code></dt>
+<dd>判断结果</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def has(self, element_class: Element) -&gt; bool:
+    &#34;&#34;&#34;判断消息链中是否含有特定类型的消息元素
+
+    Args:
+        element_class (T): 需要判断的消息元素的类型, 例如 &#34;Plain&#34;, &#34;At&#34;, &#34;Image&#34; 等.
+
+    Returns:
+        bool: 判断结果
+    &#34;&#34;&#34;
+    return element_class in [type(i) for i in self.__root__]</code></pre>
+</details>
+</dd>
+<dt id="graia.application.message.chain.MessageChain.hasText"><code class="name flex">
+<span>def <span class="ident">hasText</span></span>(<span>self, string: str) ‑> bool</span>
+</code></dt>
+<dd>
+<div class="desc"><p>判定消息链内是否包括相应字符串</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>string</code></strong> :&ensp;<code>str</code></dt>
+<dd>需要判断的字符串</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>bool</code></dt>
+<dd>是否包括</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def hasText(self, string: str) -&gt; bool:
+    &#34;&#34;&#34;判定消息链内是否包括相应字符串
+
+    Args:
+        string (str): 需要判断的字符串
+
+    Returns:
+        bool: 是否包括
+    &#34;&#34;&#34;
+
+    from .elements.internal import Plain
+
+    for i in self.get(Plain):
+        if string in i.text:
+            return True
+    return False</code></pre>
+</details>
+</dd>
+<dt id="graia.application.message.chain.MessageChain.include"><code class="name flex">
+<span>def <span class="ident">include</span></span>(<span>self, *types: Type[Element]) ‑> <a title="graia.application.message.chain.MessageChain" href="#graia.application.message.chain.MessageChain">MessageChain</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>将只在给出的消息元素类型中符合的消息元素重新包装为一个新的消息链</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>*types</code></strong> :&ensp;<code>Type[Element]</code></dt>
+<dd>将只包含在内的消息元素类型</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code><a title="graia.application.message.chain.MessageChain" href="#graia.application.message.chain.MessageChain">MessageChain</a></code></dt>
+<dd>返回的消息链中只包含参数中给出的消息元素类型</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def include(self, *types: Type[Element]) -&gt; MessageChain:
+    &#34;&#34;&#34;将只在给出的消息元素类型中符合的消息元素重新包装为一个新的消息链
+
+    Args:
+        *types (Type[Element]): 将只包含在内的消息元素类型
+
+    Returns:
+        MessageChain: 返回的消息链中只包含参数中给出的消息元素类型
+    &#34;&#34;&#34;
+    return self.create(
+        type(self.__root__)([i for i in self.__root__ if type(i) in types])
+    )</code></pre>
+</details>
+</dd>
+<dt id="graia.application.message.chain.MessageChain.plus"><code class="name flex">
+<span>def <span class="ident">plus</span></span>(<span>self, *chains: "'<a title="graia.application.message.chain.MessageChain" href="#graia.application.message.chain.MessageChain">MessageChain</a>'") ‑> NoReturn</span>
+</code></dt>
+<dd>
+<div class="desc"><p>在现有的基础上将另一消息链拼接到原来实例的尾部</p>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>ValueError</code></dt>
+<dd>原有的消息链不可变, 需要转为可变形态.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>NoReturn</code></dt>
+<dd>本方法无返回.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plus(self, *chains: &#34;MessageChain&#34;) -&gt; NoReturn:
+    &#34;&#34;&#34;在现有的基础上将另一消息链拼接到原来实例的尾部
+
+    Raises:
+        ValueError: 原有的消息链不可变, 需要转为可变形态.
+
+    Returns:
+        NoReturn: 本方法无返回.
+    &#34;&#34;&#34;
+    if self.isImmutable:
+        raise ValueError(&#34;this chain is not mutable&#34;)
+    for i in chains:
+        self.__root__.extend(list(i.__root__))</code></pre>
+</details>
+</dd>
+<dt id="graia.application.message.chain.MessageChain.plusWith"><code class="name flex">
+<span>def <span class="ident">plusWith</span></span>(<span>self, *chains: "'<a title="graia.application.message.chain.MessageChain" href="#graia.application.message.chain.MessageChain">MessageChain</a>'") ‑> <a title="graia.application.message.chain.MessageChain" href="#graia.application.message.chain.MessageChain">MessageChain</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>在现有的基础上将另一消息链拼接到原来实例的尾部, 并生成, 返回新的实例.</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code><a title="graia.application.message.chain.MessageChain" href="#graia.application.message.chain.MessageChain">MessageChain</a></code></dt>
+<dd>拼接结果</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plusWith(self, *chains: &#34;MessageChain&#34;) -&gt; &#34;MessageChain&#34;:
+    &#34;&#34;&#34;在现有的基础上将另一消息链拼接到原来实例的尾部, 并生成, 返回新的实例.
+
+    Returns:
+        MessageChain: 拼接结果
+    &#34;&#34;&#34;
+    return self.create(sum([list(i.__root__) for i in chains], self.__root__))</code></pre>
+</details>
+</dd>
+<dt id="graia.application.message.chain.MessageChain.split"><code class="name flex">
+<span>def <span class="ident">split</span></span>(<span>self, pattern: str, raw_string: bool = False) ‑> List[<a title="graia.application.message.chain.MessageChain" href="#graia.application.message.chain.MessageChain">MessageChain</a>]</span>
+</code></dt>
+<dd>
+<div class="desc"><p>和 <code>str.split</code> 差不多, 提供一个字符串, 然后返回分割结果.</p>
+<h2 id="returns">Returns</h2>
+<p>List["MessageChain"]: 分割结果, 行为和 <code>str.split</code> 差不多.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def split(self, pattern: str, raw_string: bool = False) -&gt; List[&#34;MessageChain&#34;]:
+    &#34;&#34;&#34;和 `str.split` 差不多, 提供一个字符串, 然后返回分割结果.
+
+    Returns:
+        List[&#34;MessageChain&#34;]: 分割结果, 行为和 `str.split` 差不多.
+    &#34;&#34;&#34;
+    from .elements.internal import Plain
+
+    result: List[&#34;MessageChain&#34;] = []
+    tmp = []
+    for element in self.__root__:
+        if isinstance(element, Plain):
+            split_result = element.text.split(pattern)
+            for index, split_str in enumerate(split_result):
+                if tmp and index &gt; 0:
+                    result.append(MessageChain.create(tmp))
+                    tmp = []
+                if split_str or raw_string:
+                    tmp.append(Plain(split_str))
+        else:
+            tmp.append(element)
+    else:
+        if tmp:
+            result.append(MessageChain.create(tmp))
+            tmp = []
+    return result</code></pre>
+</details>
+</dd>
+<dt id="graia.application.message.chain.MessageChain.startswith"><code class="name flex">
+<span>def <span class="ident">startswith</span></span>(<span>self, string: str) ‑> bool</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def startswith(self, string: str) -&gt; bool:
+    from .elements.internal import Plain
+
+    if not self.__root__ or type(self.__root__[0]) is not Plain:
+        return False
+    return self.__root__[0].text.startswith(string)</code></pre>
+</details>
+</dd>
+<dt id="graia.application.message.chain.MessageChain.subchain"><code class="name flex">
+<span>def <span class="ident">subchain</span></span>(<span>self, item: slice, ignore_text_index: bool = False) ‑> <a title="graia.application.message.chain.MessageChain" href="#graia.application.message.chain.MessageChain">MessageChain</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>对消息链执行分片操作</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>item</code></strong> :&ensp;<code>slice</code></dt>
+<dd>这个分片的 <code>start</code> 和 <code>end</code> 的 Type Annotation 都是 <code>Optional[MessageIndex]</code></dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>TypeError</code></dt>
+<dd>TextIndex 取到了错误的位置</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code><a title="graia.application.message.chain.MessageChain" href="#graia.application.message.chain.MessageChain">MessageChain</a></code></dt>
+<dd>分片后得到的新消息链, 绝对是原消息链的子集.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def subchain(self, item: slice, ignore_text_index: bool = False) -&gt; &#34;MessageChain&#34;:
+    &#34;&#34;&#34;对消息链执行分片操作
+
+    Args:
+        item (slice): 这个分片的 `start` 和 `end` 的 Type Annotation 都是 `Optional[MessageIndex]`
+
+    Raises:
+        TypeError: TextIndex 取到了错误的位置
+
+    Returns:
+        MessageChain: 分片后得到的新消息链, 绝对是原消息链的子集.
+    &#34;&#34;&#34;
+    from .elements.internal import Plain
+
+    result = copy.copy(self.__root__)
+    if item.start:
+        first_slice = result[item.start[0] :]
+        if item.start[1] is not None and first_slice:  # text slice
+            if not isinstance(first_slice[0], Plain):
+                if not ignore_text_index:
+                    raise TypeError(
+                        &#34;the sliced chain does not starts with a Plain: {}&#34;.format(
+                            first_slice[0]
+                        )
+                    )
+                else:
+                    result = first_slice
+            else:
+                final_text = first_slice[0].text[item.start[1] :]
+                result = [
+                    *([Plain(final_text)] if final_text else []),
+                    *first_slice[1:],
+                ]
+        else:
+            result = first_slice
+    if item.stop:
+        first_slice = result[: item.stop[0]]
+        if item.stop[1] is not None and first_slice:  # text slice
+            if not isinstance(first_slice[-1], Plain):
+                raise TypeError(
+                    &#34;the sliced chain does not ends with a Plain: {}&#34;.format(
+                        first_slice[-1]
+                    )
+                )
+            final_text = first_slice[-1].text[: item.stop[1]]
+            result = [
+                *first_slice[:-1],
+                *([Plain(final_text)] if final_text else []),
+            ]
+        else:
+            result = first_slice
+    return MessageChain.create(result)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="graia.application.message" href="index.html">graia.application.message</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="graia.application.message.chain.MessageChain" href="#graia.application.message.chain.MessageChain">MessageChain</a></code></h4>
+<ul class="">
+<li><code><a title="graia.application.message.chain.MessageChain.asDisplay" href="#graia.application.message.chain.MessageChain.asDisplay">asDisplay</a></code></li>
+<li><code><a title="graia.application.message.chain.MessageChain.asHypertext" href="#graia.application.message.chain.MessageChain.asHypertext">asHypertext</a></code></li>
+<li><code><a title="graia.application.message.chain.MessageChain.asImmutable" href="#graia.application.message.chain.MessageChain.asImmutable">asImmutable</a></code></li>
+<li><code><a title="graia.application.message.chain.MessageChain.asMerged" href="#graia.application.message.chain.MessageChain.asMerged">asMerged</a></code></li>
+<li><code><a title="graia.application.message.chain.MessageChain.asMutable" href="#graia.application.message.chain.MessageChain.asMutable">asMutable</a></code></li>
+<li><code><a title="graia.application.message.chain.MessageChain.asSendable" href="#graia.application.message.chain.MessageChain.asSendable">asSendable</a></code></li>
+<li><code><a title="graia.application.message.chain.MessageChain.asSerializationString" href="#graia.application.message.chain.MessageChain.asSerializationString">asSerializationString</a></code></li>
+<li><code><a title="graia.application.message.chain.MessageChain.build" href="#graia.application.message.chain.MessageChain.build">build</a></code></li>
+<li><code><a title="graia.application.message.chain.MessageChain.create" href="#graia.application.message.chain.MessageChain.create">create</a></code></li>
+<li><code><a title="graia.application.message.chain.MessageChain.endswith" href="#graia.application.message.chain.MessageChain.endswith">endswith</a></code></li>
+<li><code><a title="graia.application.message.chain.MessageChain.exclude" href="#graia.application.message.chain.MessageChain.exclude">exclude</a></code></li>
+<li><code><a title="graia.application.message.chain.MessageChain.fromSerializationString" href="#graia.application.message.chain.MessageChain.fromSerializationString">fromSerializationString</a></code></li>
+<li><code><a title="graia.application.message.chain.MessageChain.get" href="#graia.application.message.chain.MessageChain.get">get</a></code></li>
+<li><code><a title="graia.application.message.chain.MessageChain.getFirst" href="#graia.application.message.chain.MessageChain.getFirst">getFirst</a></code></li>
+<li><code><a title="graia.application.message.chain.MessageChain.getOne" href="#graia.application.message.chain.MessageChain.getOne">getOne</a></code></li>
+<li><code><a title="graia.application.message.chain.MessageChain.has" href="#graia.application.message.chain.MessageChain.has">has</a></code></li>
+<li><code><a title="graia.application.message.chain.MessageChain.hasText" href="#graia.application.message.chain.MessageChain.hasText">hasText</a></code></li>
+<li><code><a title="graia.application.message.chain.MessageChain.include" href="#graia.application.message.chain.MessageChain.include">include</a></code></li>
+<li><code><a title="graia.application.message.chain.MessageChain.isImmutable" href="#graia.application.message.chain.MessageChain.isImmutable">isImmutable</a></code></li>
+<li><code><a title="graia.application.message.chain.MessageChain.isSendable" href="#graia.application.message.chain.MessageChain.isSendable">isSendable</a></code></li>
+<li><code><a title="graia.application.message.chain.MessageChain.join" href="#graia.application.message.chain.MessageChain.join">join</a></code></li>
+<li><code><a title="graia.application.message.chain.MessageChain.parse_obj" href="#graia.application.message.chain.MessageChain.parse_obj">parse_obj</a></code></li>
+<li><code><a title="graia.application.message.chain.MessageChain.plus" href="#graia.application.message.chain.MessageChain.plus">plus</a></code></li>
+<li><code><a title="graia.application.message.chain.MessageChain.plusWith" href="#graia.application.message.chain.MessageChain.plusWith">plusWith</a></code></li>
+<li><code><a title="graia.application.message.chain.MessageChain.split" href="#graia.application.message.chain.MessageChain.split">split</a></code></li>
+<li><code><a title="graia.application.message.chain.MessageChain.startswith" href="#graia.application.message.chain.MessageChain.startswith">startswith</a></code></li>
+<li><code><a title="graia.application.message.chain.MessageChain.subchain" href="#graia.application.message.chain.MessageChain.subchain">subchain</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
+</footer>
+</body>
+</html>

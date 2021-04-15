@@ -1,0 +1,1121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.9.2" />
+<title>graia.application.message.parser.kanata API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>graia.application.message.parser.kanata</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">from functools import lru_cache
+import functools
+from types import TracebackType
+from typing import Dict, List, Optional, Tuple, TypeVar, Union
+from graia.broadcast.entities.dispatcher import BaseDispatcher
+from graia.broadcast.entities.signatures import Force
+from graia.broadcast.exceptions import ExecutionStop
+from graia.broadcast.interfaces.dispatcher import DispatcherInterface
+from graia.broadcast.builtin.factory import (
+    AsyncDispatcherContextManager,
+    ResponseCodeEnum,
+    StatusCodeEnum,
+)
+
+from graia.application.exceptions import ConflictItem
+
+from graia.application.message.chain import MessageChain
+from graia.application.message.elements.internal import (
+    At,
+    FlashImage,
+    Plain,
+    Source,
+    Quote,
+    Voice,
+    Xml,
+    Json,
+    App,
+    Poke,
+)
+from .signature import FullMatch, NormalMatch, PatternReceiver
+from .pack import Arguments, merge_signature_chain
+from graia.application.utilles import InsertGenerator
+from .signature import RequireParam, OptionalParam
+import re
+import random
+import copy
+
+BLOCKING_ELEMENTS = (Xml, Json, App, Poke, Voice, FlashImage)
+
+T = Union[NormalMatch, PatternReceiver]
+MessageIndex = Tuple[int, Optional[int]]
+_T = TypeVar(&#34;_T&#34;)
+
+
+def origin_or_zero(origin: Optional[_T]) -&gt; Union[_T, int]:
+    if origin is None:
+        return 0
+    return origin
+
+
+class Kanata(AsyncDispatcherContextManager):
+    &#34;彼方.&#34;
+    signature_list: List[Union[NormalMatch, PatternReceiver]]
+    stop_exec_if_fail: bool = True
+
+    parsed_items: Dict[str, MessageChain]
+
+    allow_quote: bool
+    skip_one_at_in_quote: bool
+
+    args = ()
+    kwargs = {}
+
+    def __init__(
+        self,
+        signature_list: List[Union[NormalMatch, PatternReceiver]],
+        stop_exec_if_fail: bool = True,
+        allow_quote: bool = True,
+        skip_one_at_in_quote: bool = False,
+    ) -&gt; None:
+        &#34;&#34;&#34;该魔法方法用于实例化该参数解析器.
+
+        Args:
+            signature_list (List[Union[NormalMatch, PatternReceiver]]): 匹配标识链
+            stop_exec_if_fail (bool, optional): 是否在无可用匹配时停止监听器执行. Defaults to True.
+            allow_quote (bool, optional): 是否允许 Kanata 处理回复消息中的用户输入部分. Defaults to True.
+            skip_one_at_in_quote (bool, optional): 是否允许 Kanata 在处理回复消息中的用户输入部分时自动删除可能\
+                由 QQ 客户端添加的 At 和一个包含在单独 Plain 元素中的空格. Defaults to False.
+        &#34;&#34;&#34;
+        self.signature_list = signature_list
+        self.stop_exec_if_fail = stop_exec_if_fail
+        self.parsed_items = None
+        self.allow_quote = allow_quote
+        self.skip_one_at_in_quote = skip_one_at_in_quote
+
+    @staticmethod
+    def detect_index(
+        signature_chain: Tuple[Union[NormalMatch, PatternReceiver]],
+        message_chain: MessageChain,
+    ) -&gt; Optional[Dict[str, Tuple[MessageIndex, MessageIndex]]]:
+        merged_chain = merge_signature_chain(signature_chain)
+        message_chain = message_chain.asMerged()
+        element_num = len(message_chain.__root__)
+        end_index: MessageIndex = (
+            element_num - 1,
+            len(message_chain.__root__[-1].text)
+            if element_num != 0 and message_chain.__root__[-1].__class__ is Plain
+            else None,
+        )
+
+        reached_message_index: MessageIndex = (0, None)
+        # [0] =&gt; real_index
+        # [1] =&gt; text_index(optional)
+
+        start_index: MessageIndex = (0, None)
+
+        match_result: Dict[
+            Arguments,
+            Tuple[MessageIndex, MessageIndex],  # start(include)  # stop(exclude)
+        ] = {}
+
+        signature_iterable = InsertGenerator(enumerate(merged_chain))
+        latest_index = None
+        matching_recevier: Optional[Arguments] = None
+
+        for signature_index, signature in signature_iterable:
+            if isinstance(signature, (Arguments, PatternReceiver)):
+                if matching_recevier:  # 已经选中了一个...
+                    if isinstance(signature, Arguments):
+                        if latest_index == signature_index:
+                            matching_recevier.content.extend(signature.content)
+                            continue
+                        else:
+                            raise TypeError(&#34;a unexpected case: match conflict&#34;)
+                    if isinstance(signature, PatternReceiver):
+                        matching_recevier.content.append(signature)
+                        continue
+                else:
+                    if isinstance(signature, PatternReceiver):
+                        signature = Arguments([signature])
+                matching_recevier = signature
+                start_index = reached_message_index
+            elif isinstance(signature, NormalMatch):
+                if not matching_recevier:
+                    # 如果不要求匹配参数, 从当前位置(reached_message_index)开始匹配FullMatch.
+                    current_chain = message_chain.subchain(
+                        slice(reached_message_index, None, None)
+                    )
+                    if not current_chain.__root__:  # index 越界
+                        return
+                    if not isinstance(current_chain.__root__[0], Plain):
+                        # 切片后第一个 **不是** Plain.
+                        return
+                    re_match_result = re.match(
+                        signature.operator(), current_chain.__root__[0].text
+                    )
+                    if not re_match_result:
+                        # 不匹配的
+                        return
+                    # 推进当前进度.
+                    plain_text_length = len(current_chain.__root__[0].text)
+                    pattern_length = re_match_result.end() - re_match_result.start()
+                    if (pattern_length + 1) &gt; plain_text_length:  # 推进后可能造成错误
+                        # 不推进 text_index 进度, 转而推进 element_index 进度
+                        reached_message_index = (reached_message_index[0] + 1, None)
+                    else:
+                        # 推进 element_index 进度至已匹配到的地方后.
+                        reached_message_index = (
+                            reached_message_index[0],
+                            origin_or_zero(reached_message_index[1])
+                            + re_match_result.start()
+                            + pattern_length,
+                        )
+                else:
+                    # 需要匹配参数(是否贪婪模式查找, 即是否从后向前)
+                    greed = matching_recevier.isGreed
+                    for element_index, element in enumerate(
+                        message_chain.subchain(
+                            slice(reached_message_index, None, None)
+                        ).__root__
+                    ):
+                        if isinstance(element, Plain):
+                            current_text: str = element.text
+                            # 完成贪婪判断
+                            text_find_result_list = list(
+                                re.finditer(signature.operator(), current_text)
+                            )
+                            if not text_find_result_list:
+                                continue
+                            text_find_result = text_find_result_list[-int(greed)]
+                            if not text_find_result:
+                                continue
+                            text_find_index = text_find_result.start()
+
+                            # 找到了! 这里不仅要推进进度, 还要把当前匹配的参数记录结束位置并清理.
+                            stop_index = (
+                                reached_message_index[0]
+                                + element_index
+                                + int(element_index == 0),
+                                origin_or_zero(reached_message_index[1])
+                                + text_find_index,
+                            )
+                            match_result[matching_recevier] = (
+                                copy.copy(start_index),
+                                stop_index,
+                            )
+
+                            start_index = (0, None)
+                            matching_recevier = None
+
+                            pattern_length = (
+                                text_find_result.end() - text_find_result.start()
+                            )
+                            if (
+                                current_text
+                                == text_find_result.string[
+                                    slice(*text_find_result.span())
+                                ]
+                            ):
+                                # 此处是如果推进 text_index 就会被爆破....
+                                # 推进 element_index 而不是 text_index
+                                reached_message_index = (
+                                    reached_message_index[0]
+                                    + element_index
+                                    + int(element_index != 0),
+                                    None,
+                                )
+                            else:
+                                reached_message_index = (
+                                    reached_message_index[0] + element_index,
+                                    origin_or_zero(reached_message_index[1])
+                                    + text_find_index
+                                    + pattern_length,
+                                )
+                            break
+                    else:
+                        # 找遍了都没匹配到.
+                        return
+            latest_index = signature_index
+        else:
+            if matching_recevier:  # 到达了终点, 却仍然还要做点事的.
+                # 计算终点坐标.
+                text_index = None
+
+                latest_element = message_chain.__root__[-1]
+                if isinstance(latest_element, Plain):
+                    text_index = len(latest_element.text)
+
+                stop_index = (len(message_chain.__root__), text_index)
+                match_result[matching_recevier] = (start_index, stop_index)
+            else:  # 如果不需要继续捕获消息作为参数, 但 Signature 已经无法指示 Message 的样式时, 判定本次匹配非法.
+                if reached_message_index &lt; end_index:
+                    return
+
+        return match_result
+
+    @staticmethod
+    def detect_and_mapping(
+        signature_chain: Tuple[Union[NormalMatch, PatternReceiver]],
+        message_chain: MessageChain,
+    ) -&gt; Optional[Dict[Arguments, MessageChain]]:
+        match_result = Kanata.detect_index(signature_chain, message_chain)
+        if match_result is not None:
+            return {
+                k: message_chain[
+                    v[0] : (
+                        v[1][0],
+                        (
+                            v[1][1]
+                            - (
+                                origin_or_zero(v[0][1])
+                                if (v[1][0] &lt;= v[0][0] &lt;= v[1][0])
+                                else 0
+                            )
+                        )
+                        if v[1][1] is not None
+                        else None,
+                    )
+                ]
+                for k, v in match_result.items()
+            }
+
+    @staticmethod
+    def allocation(
+        mapping: Dict[Arguments, MessageChain]
+    ) -&gt; Optional[Dict[str, MessageChain]]:
+        if mapping is None:
+            return None
+        result = {}
+        for arguemnt_set, message_chain in mapping.items():
+            length = len(arguemnt_set.content)
+            for index, receiver in enumerate(arguemnt_set.content):
+                if receiver.name in result:
+                    raise ConflictItem(&#34;{0} is defined repeatedly&#34;.format(receiver))
+                if isinstance(receiver, RequireParam):
+                    if not message_chain.__root__:
+                        return
+                    result[receiver.name] = message_chain
+                elif isinstance(receiver, OptionalParam):
+                    if not message_chain.__root__:
+                        result[receiver.name] = None
+                    else:
+                        result[receiver.name] = message_chain
+                break  # 还没来得及做长度匹配...
+        return result
+
+    @lru_cache(None)
+    async def catch_argument_names(self) -&gt; List[str]:
+        return [i.name for i in self.signature_list if isinstance(i, PatternReceiver)]
+
+    async def generator_factory(self):
+        interface: DispatcherInterface = (yield)
+        current_status: StatusCodeEnum = StatusCodeEnum.DISPATCHING  # init stat
+
+        message_chain: MessageChain = (
+            await interface.lookup_param(&#34;__kanata_messagechain__&#34;, MessageChain, None)
+        ).exclude(Source)
+        if set([i.__class__ for i in message_chain.__root__]).intersection(
+            BLOCKING_ELEMENTS
+        ):
+            raise ExecutionStop()
+        if self.allow_quote and message_chain.has(Quote):
+            # 自动忽略自 Quote 后第一个 At
+            # 0: Quote, 1: At, 2: Plain(一个空格, 可能会在以后的 mirai 版本后被其处理, 这里先自动处理这个了.)
+            message_chain = message_chain[(3, None):]
+            if self.skip_one_at_in_quote and message_chain.__root__:
+                if message_chain.__root__[0].__class__ is At:
+                    message_chain = message_chain[(1, 1):]
+
+        mapping_result = self.detect_and_mapping(self.signature_list, message_chain)
+        if mapping_result is not None:
+            parsed_items = self.allocation(mapping_result)
+        else:
+            if self.stop_exec_if_fail:
+                raise ExecutionStop()
+        yield
+        while current_status is StatusCodeEnum.DISPATCHING:
+            result = None
+
+            if interface.name != &#34;__kanata_messagechain__&#34;:
+                random_id = random.random()
+                if parsed_items is not None:
+                    item = parsed_items.get(interface.name, random_id)
+                    result = Force(item) if item is not random_id else None
+                else:
+                    if self.stop_exec_if_fail:
+                        raise ExecutionStop()
+
+            current_status, external = yield (ResponseCodeEnum.VALUE, result)</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="graia.application.message.parser.kanata.origin_or_zero"><code class="name flex">
+<span>def <span class="ident">origin_or_zero</span></span>(<span>origin: Union[~_T, NoneType]) ‑> Union[~_T, int]</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def origin_or_zero(origin: Optional[_T]) -&gt; Union[_T, int]:
+    if origin is None:
+        return 0
+    return origin</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="graia.application.message.parser.kanata.Kanata"><code class="flex name class">
+<span>class <span class="ident">Kanata</span></span>
+<span>(</span><span>signature_list: List[Union[<a title="graia.application.message.parser.signature.NormalMatch" href="signature.html#graia.application.message.parser.signature.NormalMatch">NormalMatch</a>, <a title="graia.application.message.parser.signature.PatternReceiver" href="signature.html#graia.application.message.parser.signature.PatternReceiver">PatternReceiver</a>]], stop_exec_if_fail: bool = True, allow_quote: bool = True, skip_one_at_in_quote: bool = False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>彼方.</p>
+<p>该魔法方法用于实例化该参数解析器.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>signature_list</code></strong> :&ensp;<code>List[Union[NormalMatch, PatternReceiver]]</code></dt>
+<dd>匹配标识链</dd>
+<dt><strong><code>stop_exec_if_fail</code></strong> :&ensp;<code>bool</code>, optional</dt>
+<dd>是否在无可用匹配时停止监听器执行. Defaults to True.</dd>
+<dt><strong><code>allow_quote</code></strong> :&ensp;<code>bool</code>, optional</dt>
+<dd>是否允许 Kanata 处理回复消息中的用户输入部分. Defaults to True.</dd>
+<dt><strong><code>skip_one_at_in_quote</code></strong> :&ensp;<code>bool</code>, optional</dt>
+<dd>是否允许 Kanata 在处理回复消息中的用户输入部分时自动删除可能
+由 QQ 客户端添加的 At 和一个包含在单独 Plain 元素中的空格. Defaults to False.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Kanata(AsyncDispatcherContextManager):
+    &#34;彼方.&#34;
+    signature_list: List[Union[NormalMatch, PatternReceiver]]
+    stop_exec_if_fail: bool = True
+
+    parsed_items: Dict[str, MessageChain]
+
+    allow_quote: bool
+    skip_one_at_in_quote: bool
+
+    args = ()
+    kwargs = {}
+
+    def __init__(
+        self,
+        signature_list: List[Union[NormalMatch, PatternReceiver]],
+        stop_exec_if_fail: bool = True,
+        allow_quote: bool = True,
+        skip_one_at_in_quote: bool = False,
+    ) -&gt; None:
+        &#34;&#34;&#34;该魔法方法用于实例化该参数解析器.
+
+        Args:
+            signature_list (List[Union[NormalMatch, PatternReceiver]]): 匹配标识链
+            stop_exec_if_fail (bool, optional): 是否在无可用匹配时停止监听器执行. Defaults to True.
+            allow_quote (bool, optional): 是否允许 Kanata 处理回复消息中的用户输入部分. Defaults to True.
+            skip_one_at_in_quote (bool, optional): 是否允许 Kanata 在处理回复消息中的用户输入部分时自动删除可能\
+                由 QQ 客户端添加的 At 和一个包含在单独 Plain 元素中的空格. Defaults to False.
+        &#34;&#34;&#34;
+        self.signature_list = signature_list
+        self.stop_exec_if_fail = stop_exec_if_fail
+        self.parsed_items = None
+        self.allow_quote = allow_quote
+        self.skip_one_at_in_quote = skip_one_at_in_quote
+
+    @staticmethod
+    def detect_index(
+        signature_chain: Tuple[Union[NormalMatch, PatternReceiver]],
+        message_chain: MessageChain,
+    ) -&gt; Optional[Dict[str, Tuple[MessageIndex, MessageIndex]]]:
+        merged_chain = merge_signature_chain(signature_chain)
+        message_chain = message_chain.asMerged()
+        element_num = len(message_chain.__root__)
+        end_index: MessageIndex = (
+            element_num - 1,
+            len(message_chain.__root__[-1].text)
+            if element_num != 0 and message_chain.__root__[-1].__class__ is Plain
+            else None,
+        )
+
+        reached_message_index: MessageIndex = (0, None)
+        # [0] =&gt; real_index
+        # [1] =&gt; text_index(optional)
+
+        start_index: MessageIndex = (0, None)
+
+        match_result: Dict[
+            Arguments,
+            Tuple[MessageIndex, MessageIndex],  # start(include)  # stop(exclude)
+        ] = {}
+
+        signature_iterable = InsertGenerator(enumerate(merged_chain))
+        latest_index = None
+        matching_recevier: Optional[Arguments] = None
+
+        for signature_index, signature in signature_iterable:
+            if isinstance(signature, (Arguments, PatternReceiver)):
+                if matching_recevier:  # 已经选中了一个...
+                    if isinstance(signature, Arguments):
+                        if latest_index == signature_index:
+                            matching_recevier.content.extend(signature.content)
+                            continue
+                        else:
+                            raise TypeError(&#34;a unexpected case: match conflict&#34;)
+                    if isinstance(signature, PatternReceiver):
+                        matching_recevier.content.append(signature)
+                        continue
+                else:
+                    if isinstance(signature, PatternReceiver):
+                        signature = Arguments([signature])
+                matching_recevier = signature
+                start_index = reached_message_index
+            elif isinstance(signature, NormalMatch):
+                if not matching_recevier:
+                    # 如果不要求匹配参数, 从当前位置(reached_message_index)开始匹配FullMatch.
+                    current_chain = message_chain.subchain(
+                        slice(reached_message_index, None, None)
+                    )
+                    if not current_chain.__root__:  # index 越界
+                        return
+                    if not isinstance(current_chain.__root__[0], Plain):
+                        # 切片后第一个 **不是** Plain.
+                        return
+                    re_match_result = re.match(
+                        signature.operator(), current_chain.__root__[0].text
+                    )
+                    if not re_match_result:
+                        # 不匹配的
+                        return
+                    # 推进当前进度.
+                    plain_text_length = len(current_chain.__root__[0].text)
+                    pattern_length = re_match_result.end() - re_match_result.start()
+                    if (pattern_length + 1) &gt; plain_text_length:  # 推进后可能造成错误
+                        # 不推进 text_index 进度, 转而推进 element_index 进度
+                        reached_message_index = (reached_message_index[0] + 1, None)
+                    else:
+                        # 推进 element_index 进度至已匹配到的地方后.
+                        reached_message_index = (
+                            reached_message_index[0],
+                            origin_or_zero(reached_message_index[1])
+                            + re_match_result.start()
+                            + pattern_length,
+                        )
+                else:
+                    # 需要匹配参数(是否贪婪模式查找, 即是否从后向前)
+                    greed = matching_recevier.isGreed
+                    for element_index, element in enumerate(
+                        message_chain.subchain(
+                            slice(reached_message_index, None, None)
+                        ).__root__
+                    ):
+                        if isinstance(element, Plain):
+                            current_text: str = element.text
+                            # 完成贪婪判断
+                            text_find_result_list = list(
+                                re.finditer(signature.operator(), current_text)
+                            )
+                            if not text_find_result_list:
+                                continue
+                            text_find_result = text_find_result_list[-int(greed)]
+                            if not text_find_result:
+                                continue
+                            text_find_index = text_find_result.start()
+
+                            # 找到了! 这里不仅要推进进度, 还要把当前匹配的参数记录结束位置并清理.
+                            stop_index = (
+                                reached_message_index[0]
+                                + element_index
+                                + int(element_index == 0),
+                                origin_or_zero(reached_message_index[1])
+                                + text_find_index,
+                            )
+                            match_result[matching_recevier] = (
+                                copy.copy(start_index),
+                                stop_index,
+                            )
+
+                            start_index = (0, None)
+                            matching_recevier = None
+
+                            pattern_length = (
+                                text_find_result.end() - text_find_result.start()
+                            )
+                            if (
+                                current_text
+                                == text_find_result.string[
+                                    slice(*text_find_result.span())
+                                ]
+                            ):
+                                # 此处是如果推进 text_index 就会被爆破....
+                                # 推进 element_index 而不是 text_index
+                                reached_message_index = (
+                                    reached_message_index[0]
+                                    + element_index
+                                    + int(element_index != 0),
+                                    None,
+                                )
+                            else:
+                                reached_message_index = (
+                                    reached_message_index[0] + element_index,
+                                    origin_or_zero(reached_message_index[1])
+                                    + text_find_index
+                                    + pattern_length,
+                                )
+                            break
+                    else:
+                        # 找遍了都没匹配到.
+                        return
+            latest_index = signature_index
+        else:
+            if matching_recevier:  # 到达了终点, 却仍然还要做点事的.
+                # 计算终点坐标.
+                text_index = None
+
+                latest_element = message_chain.__root__[-1]
+                if isinstance(latest_element, Plain):
+                    text_index = len(latest_element.text)
+
+                stop_index = (len(message_chain.__root__), text_index)
+                match_result[matching_recevier] = (start_index, stop_index)
+            else:  # 如果不需要继续捕获消息作为参数, 但 Signature 已经无法指示 Message 的样式时, 判定本次匹配非法.
+                if reached_message_index &lt; end_index:
+                    return
+
+        return match_result
+
+    @staticmethod
+    def detect_and_mapping(
+        signature_chain: Tuple[Union[NormalMatch, PatternReceiver]],
+        message_chain: MessageChain,
+    ) -&gt; Optional[Dict[Arguments, MessageChain]]:
+        match_result = Kanata.detect_index(signature_chain, message_chain)
+        if match_result is not None:
+            return {
+                k: message_chain[
+                    v[0] : (
+                        v[1][0],
+                        (
+                            v[1][1]
+                            - (
+                                origin_or_zero(v[0][1])
+                                if (v[1][0] &lt;= v[0][0] &lt;= v[1][0])
+                                else 0
+                            )
+                        )
+                        if v[1][1] is not None
+                        else None,
+                    )
+                ]
+                for k, v in match_result.items()
+            }
+
+    @staticmethod
+    def allocation(
+        mapping: Dict[Arguments, MessageChain]
+    ) -&gt; Optional[Dict[str, MessageChain]]:
+        if mapping is None:
+            return None
+        result = {}
+        for arguemnt_set, message_chain in mapping.items():
+            length = len(arguemnt_set.content)
+            for index, receiver in enumerate(arguemnt_set.content):
+                if receiver.name in result:
+                    raise ConflictItem(&#34;{0} is defined repeatedly&#34;.format(receiver))
+                if isinstance(receiver, RequireParam):
+                    if not message_chain.__root__:
+                        return
+                    result[receiver.name] = message_chain
+                elif isinstance(receiver, OptionalParam):
+                    if not message_chain.__root__:
+                        result[receiver.name] = None
+                    else:
+                        result[receiver.name] = message_chain
+                break  # 还没来得及做长度匹配...
+        return result
+
+    @lru_cache(None)
+    async def catch_argument_names(self) -&gt; List[str]:
+        return [i.name for i in self.signature_list if isinstance(i, PatternReceiver)]
+
+    async def generator_factory(self):
+        interface: DispatcherInterface = (yield)
+        current_status: StatusCodeEnum = StatusCodeEnum.DISPATCHING  # init stat
+
+        message_chain: MessageChain = (
+            await interface.lookup_param(&#34;__kanata_messagechain__&#34;, MessageChain, None)
+        ).exclude(Source)
+        if set([i.__class__ for i in message_chain.__root__]).intersection(
+            BLOCKING_ELEMENTS
+        ):
+            raise ExecutionStop()
+        if self.allow_quote and message_chain.has(Quote):
+            # 自动忽略自 Quote 后第一个 At
+            # 0: Quote, 1: At, 2: Plain(一个空格, 可能会在以后的 mirai 版本后被其处理, 这里先自动处理这个了.)
+            message_chain = message_chain[(3, None):]
+            if self.skip_one_at_in_quote and message_chain.__root__:
+                if message_chain.__root__[0].__class__ is At:
+                    message_chain = message_chain[(1, 1):]
+
+        mapping_result = self.detect_and_mapping(self.signature_list, message_chain)
+        if mapping_result is not None:
+            parsed_items = self.allocation(mapping_result)
+        else:
+            if self.stop_exec_if_fail:
+                raise ExecutionStop()
+        yield
+        while current_status is StatusCodeEnum.DISPATCHING:
+            result = None
+
+            if interface.name != &#34;__kanata_messagechain__&#34;:
+                random_id = random.random()
+                if parsed_items is not None:
+                    item = parsed_items.get(interface.name, random_id)
+                    result = Force(item) if item is not random_id else None
+                else:
+                    if self.stop_exec_if_fail:
+                        raise ExecutionStop()
+
+            current_status, external = yield (ResponseCodeEnum.VALUE, result)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="graia.broadcast.builtin.factory.AsyncDispatcherContextManager" href="../../../broadcast/builtin/factory.html#graia.broadcast.builtin.factory.AsyncDispatcherContextManager">AsyncDispatcherContextManager</a></li>
+<li><a title="graia.broadcast.entities.dispatcher.BaseDispatcher" href="../../../broadcast/entities/dispatcher.html#graia.broadcast.entities.dispatcher.BaseDispatcher">BaseDispatcher</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="graia.application.message.parser.kanata.Kanata.allow_quote"><code class="name">var <span class="ident">allow_quote</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="graia.application.message.parser.kanata.Kanata.args"><code class="name">var <span class="ident">args</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="graia.application.message.parser.kanata.Kanata.kwargs"><code class="name">var <span class="ident">kwargs</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="graia.application.message.parser.kanata.Kanata.parsed_items"><code class="name">var <span class="ident">parsed_items</span> : Dict[str, <a title="graia.application.message.chain.MessageChain" href="../chain.html#graia.application.message.chain.MessageChain">MessageChain</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="graia.application.message.parser.kanata.Kanata.signature_list"><code class="name">var <span class="ident">signature_list</span> : List[Union[<a title="graia.application.message.parser.signature.NormalMatch" href="signature.html#graia.application.message.parser.signature.NormalMatch">NormalMatch</a>, <a title="graia.application.message.parser.signature.PatternReceiver" href="signature.html#graia.application.message.parser.signature.PatternReceiver">PatternReceiver</a>]]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="graia.application.message.parser.kanata.Kanata.skip_one_at_in_quote"><code class="name">var <span class="ident">skip_one_at_in_quote</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="graia.application.message.parser.kanata.Kanata.stop_exec_if_fail"><code class="name">var <span class="ident">stop_exec_if_fail</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Static methods</h3>
+<dl>
+<dt id="graia.application.message.parser.kanata.Kanata.allocation"><code class="name flex">
+<span>def <span class="ident">allocation</span></span>(<span>mapping: Dict[<a title="graia.application.message.parser.pack.Arguments" href="pack.html#graia.application.message.parser.pack.Arguments">Arguments</a>, <a title="graia.application.message.chain.MessageChain" href="../chain.html#graia.application.message.chain.MessageChain">MessageChain</a>]) ‑> Union[Dict[str, <a title="graia.application.message.chain.MessageChain" href="../chain.html#graia.application.message.chain.MessageChain">MessageChain</a>], NoneType]</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def allocation(
+    mapping: Dict[Arguments, MessageChain]
+) -&gt; Optional[Dict[str, MessageChain]]:
+    if mapping is None:
+        return None
+    result = {}
+    for arguemnt_set, message_chain in mapping.items():
+        length = len(arguemnt_set.content)
+        for index, receiver in enumerate(arguemnt_set.content):
+            if receiver.name in result:
+                raise ConflictItem(&#34;{0} is defined repeatedly&#34;.format(receiver))
+            if isinstance(receiver, RequireParam):
+                if not message_chain.__root__:
+                    return
+                result[receiver.name] = message_chain
+            elif isinstance(receiver, OptionalParam):
+                if not message_chain.__root__:
+                    result[receiver.name] = None
+                else:
+                    result[receiver.name] = message_chain
+            break  # 还没来得及做长度匹配...
+    return result</code></pre>
+</details>
+</dd>
+<dt id="graia.application.message.parser.kanata.Kanata.detect_and_mapping"><code class="name flex">
+<span>def <span class="ident">detect_and_mapping</span></span>(<span>signature_chain: Tuple[Union[<a title="graia.application.message.parser.signature.NormalMatch" href="signature.html#graia.application.message.parser.signature.NormalMatch">NormalMatch</a>, <a title="graia.application.message.parser.signature.PatternReceiver" href="signature.html#graia.application.message.parser.signature.PatternReceiver">PatternReceiver</a>]], message_chain: <a title="graia.application.message.chain.MessageChain" href="../chain.html#graia.application.message.chain.MessageChain">MessageChain</a>) ‑> Union[Dict[<a title="graia.application.message.parser.pack.Arguments" href="pack.html#graia.application.message.parser.pack.Arguments">Arguments</a>, <a title="graia.application.message.chain.MessageChain" href="../chain.html#graia.application.message.chain.MessageChain">MessageChain</a>], NoneType]</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def detect_and_mapping(
+    signature_chain: Tuple[Union[NormalMatch, PatternReceiver]],
+    message_chain: MessageChain,
+) -&gt; Optional[Dict[Arguments, MessageChain]]:
+    match_result = Kanata.detect_index(signature_chain, message_chain)
+    if match_result is not None:
+        return {
+            k: message_chain[
+                v[0] : (
+                    v[1][0],
+                    (
+                        v[1][1]
+                        - (
+                            origin_or_zero(v[0][1])
+                            if (v[1][0] &lt;= v[0][0] &lt;= v[1][0])
+                            else 0
+                        )
+                    )
+                    if v[1][1] is not None
+                    else None,
+                )
+            ]
+            for k, v in match_result.items()
+        }</code></pre>
+</details>
+</dd>
+<dt id="graia.application.message.parser.kanata.Kanata.detect_index"><code class="name flex">
+<span>def <span class="ident">detect_index</span></span>(<span>signature_chain: Tuple[Union[<a title="graia.application.message.parser.signature.NormalMatch" href="signature.html#graia.application.message.parser.signature.NormalMatch">NormalMatch</a>, <a title="graia.application.message.parser.signature.PatternReceiver" href="signature.html#graia.application.message.parser.signature.PatternReceiver">PatternReceiver</a>]], message_chain: <a title="graia.application.message.chain.MessageChain" href="../chain.html#graia.application.message.chain.MessageChain">MessageChain</a>) ‑> Union[Dict[str, Tuple[Tuple[int, Union[int, NoneType]], Tuple[int, Union[int, NoneType]]]], NoneType]</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def detect_index(
+    signature_chain: Tuple[Union[NormalMatch, PatternReceiver]],
+    message_chain: MessageChain,
+) -&gt; Optional[Dict[str, Tuple[MessageIndex, MessageIndex]]]:
+    merged_chain = merge_signature_chain(signature_chain)
+    message_chain = message_chain.asMerged()
+    element_num = len(message_chain.__root__)
+    end_index: MessageIndex = (
+        element_num - 1,
+        len(message_chain.__root__[-1].text)
+        if element_num != 0 and message_chain.__root__[-1].__class__ is Plain
+        else None,
+    )
+
+    reached_message_index: MessageIndex = (0, None)
+    # [0] =&gt; real_index
+    # [1] =&gt; text_index(optional)
+
+    start_index: MessageIndex = (0, None)
+
+    match_result: Dict[
+        Arguments,
+        Tuple[MessageIndex, MessageIndex],  # start(include)  # stop(exclude)
+    ] = {}
+
+    signature_iterable = InsertGenerator(enumerate(merged_chain))
+    latest_index = None
+    matching_recevier: Optional[Arguments] = None
+
+    for signature_index, signature in signature_iterable:
+        if isinstance(signature, (Arguments, PatternReceiver)):
+            if matching_recevier:  # 已经选中了一个...
+                if isinstance(signature, Arguments):
+                    if latest_index == signature_index:
+                        matching_recevier.content.extend(signature.content)
+                        continue
+                    else:
+                        raise TypeError(&#34;a unexpected case: match conflict&#34;)
+                if isinstance(signature, PatternReceiver):
+                    matching_recevier.content.append(signature)
+                    continue
+            else:
+                if isinstance(signature, PatternReceiver):
+                    signature = Arguments([signature])
+            matching_recevier = signature
+            start_index = reached_message_index
+        elif isinstance(signature, NormalMatch):
+            if not matching_recevier:
+                # 如果不要求匹配参数, 从当前位置(reached_message_index)开始匹配FullMatch.
+                current_chain = message_chain.subchain(
+                    slice(reached_message_index, None, None)
+                )
+                if not current_chain.__root__:  # index 越界
+                    return
+                if not isinstance(current_chain.__root__[0], Plain):
+                    # 切片后第一个 **不是** Plain.
+                    return
+                re_match_result = re.match(
+                    signature.operator(), current_chain.__root__[0].text
+                )
+                if not re_match_result:
+                    # 不匹配的
+                    return
+                # 推进当前进度.
+                plain_text_length = len(current_chain.__root__[0].text)
+                pattern_length = re_match_result.end() - re_match_result.start()
+                if (pattern_length + 1) &gt; plain_text_length:  # 推进后可能造成错误
+                    # 不推进 text_index 进度, 转而推进 element_index 进度
+                    reached_message_index = (reached_message_index[0] + 1, None)
+                else:
+                    # 推进 element_index 进度至已匹配到的地方后.
+                    reached_message_index = (
+                        reached_message_index[0],
+                        origin_or_zero(reached_message_index[1])
+                        + re_match_result.start()
+                        + pattern_length,
+                    )
+            else:
+                # 需要匹配参数(是否贪婪模式查找, 即是否从后向前)
+                greed = matching_recevier.isGreed
+                for element_index, element in enumerate(
+                    message_chain.subchain(
+                        slice(reached_message_index, None, None)
+                    ).__root__
+                ):
+                    if isinstance(element, Plain):
+                        current_text: str = element.text
+                        # 完成贪婪判断
+                        text_find_result_list = list(
+                            re.finditer(signature.operator(), current_text)
+                        )
+                        if not text_find_result_list:
+                            continue
+                        text_find_result = text_find_result_list[-int(greed)]
+                        if not text_find_result:
+                            continue
+                        text_find_index = text_find_result.start()
+
+                        # 找到了! 这里不仅要推进进度, 还要把当前匹配的参数记录结束位置并清理.
+                        stop_index = (
+                            reached_message_index[0]
+                            + element_index
+                            + int(element_index == 0),
+                            origin_or_zero(reached_message_index[1])
+                            + text_find_index,
+                        )
+                        match_result[matching_recevier] = (
+                            copy.copy(start_index),
+                            stop_index,
+                        )
+
+                        start_index = (0, None)
+                        matching_recevier = None
+
+                        pattern_length = (
+                            text_find_result.end() - text_find_result.start()
+                        )
+                        if (
+                            current_text
+                            == text_find_result.string[
+                                slice(*text_find_result.span())
+                            ]
+                        ):
+                            # 此处是如果推进 text_index 就会被爆破....
+                            # 推进 element_index 而不是 text_index
+                            reached_message_index = (
+                                reached_message_index[0]
+                                + element_index
+                                + int(element_index != 0),
+                                None,
+                            )
+                        else:
+                            reached_message_index = (
+                                reached_message_index[0] + element_index,
+                                origin_or_zero(reached_message_index[1])
+                                + text_find_index
+                                + pattern_length,
+                            )
+                        break
+                else:
+                    # 找遍了都没匹配到.
+                    return
+        latest_index = signature_index
+    else:
+        if matching_recevier:  # 到达了终点, 却仍然还要做点事的.
+            # 计算终点坐标.
+            text_index = None
+
+            latest_element = message_chain.__root__[-1]
+            if isinstance(latest_element, Plain):
+                text_index = len(latest_element.text)
+
+            stop_index = (len(message_chain.__root__), text_index)
+            match_result[matching_recevier] = (start_index, stop_index)
+        else:  # 如果不需要继续捕获消息作为参数, 但 Signature 已经无法指示 Message 的样式时, 判定本次匹配非法.
+            if reached_message_index &lt; end_index:
+                return
+
+    return match_result</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="graia.application.message.parser.kanata.Kanata.catch_argument_names"><code class="name flex">
+<span>async def <span class="ident">catch_argument_names</span></span>(<span>self) ‑> List[str]</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@lru_cache(None)
+async def catch_argument_names(self) -&gt; List[str]:
+    return [i.name for i in self.signature_list if isinstance(i, PatternReceiver)]</code></pre>
+</details>
+</dd>
+<dt id="graia.application.message.parser.kanata.Kanata.generator_factory"><code class="name flex">
+<span>async def <span class="ident">generator_factory</span></span>(<span>self) ‑> Callable[[Any], AsyncGenerator[Union[NoneType, Tuple[Literal[<ResponseCodeEnum.VALUE: 1>], Any]], Union[NoneType, Tuple[<a title="graia.broadcast.builtin.factory.StatusCodeEnum" href="../../../broadcast/builtin/factory.html#graia.broadcast.builtin.factory.StatusCodeEnum">StatusCodeEnum</a>, <a title="graia.broadcast.builtin.factory.ExcInfo" href="../../../broadcast/builtin/factory.html#graia.broadcast.builtin.factory.ExcInfo">ExcInfo</a>]]]]</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def generator_factory(self):
+    interface: DispatcherInterface = (yield)
+    current_status: StatusCodeEnum = StatusCodeEnum.DISPATCHING  # init stat
+
+    message_chain: MessageChain = (
+        await interface.lookup_param(&#34;__kanata_messagechain__&#34;, MessageChain, None)
+    ).exclude(Source)
+    if set([i.__class__ for i in message_chain.__root__]).intersection(
+        BLOCKING_ELEMENTS
+    ):
+        raise ExecutionStop()
+    if self.allow_quote and message_chain.has(Quote):
+        # 自动忽略自 Quote 后第一个 At
+        # 0: Quote, 1: At, 2: Plain(一个空格, 可能会在以后的 mirai 版本后被其处理, 这里先自动处理这个了.)
+        message_chain = message_chain[(3, None):]
+        if self.skip_one_at_in_quote and message_chain.__root__:
+            if message_chain.__root__[0].__class__ is At:
+                message_chain = message_chain[(1, 1):]
+
+    mapping_result = self.detect_and_mapping(self.signature_list, message_chain)
+    if mapping_result is not None:
+        parsed_items = self.allocation(mapping_result)
+    else:
+        if self.stop_exec_if_fail:
+            raise ExecutionStop()
+    yield
+    while current_status is StatusCodeEnum.DISPATCHING:
+        result = None
+
+        if interface.name != &#34;__kanata_messagechain__&#34;:
+            random_id = random.random()
+            if parsed_items is not None:
+                item = parsed_items.get(interface.name, random_id)
+                result = Force(item) if item is not random_id else None
+            else:
+                if self.stop_exec_if_fail:
+                    raise ExecutionStop()
+
+        current_status, external = yield (ResponseCodeEnum.VALUE, result)</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="graia.broadcast.builtin.factory.AsyncDispatcherContextManager" href="../../../broadcast/builtin/factory.html#graia.broadcast.builtin.factory.AsyncDispatcherContextManager">AsyncDispatcherContextManager</a></b></code>:
+<ul class="hlist">
+<li><code><a title="graia.broadcast.builtin.factory.AsyncDispatcherContextManager.afterDispatch" href="../../../broadcast/entities/dispatcher.html#graia.broadcast.entities.dispatcher.BaseDispatcher.afterDispatch">afterDispatch</a></code></li>
+<li><code><a title="graia.broadcast.builtin.factory.AsyncDispatcherContextManager.afterExecution" href="../../../broadcast/entities/dispatcher.html#graia.broadcast.entities.dispatcher.BaseDispatcher.afterExecution">afterExecution</a></code></li>
+<li><code><a title="graia.broadcast.builtin.factory.AsyncDispatcherContextManager.afterTargetExec" href="../../../broadcast/entities/dispatcher.html#graia.broadcast.entities.dispatcher.BaseDispatcher.afterTargetExec">afterTargetExec</a></code></li>
+<li><code><a title="graia.broadcast.builtin.factory.AsyncDispatcherContextManager.beforeDispatch" href="../../../broadcast/entities/dispatcher.html#graia.broadcast.entities.dispatcher.BaseDispatcher.beforeDispatch">beforeDispatch</a></code></li>
+<li><code><a title="graia.broadcast.builtin.factory.AsyncDispatcherContextManager.beforeExecution" href="../../../broadcast/entities/dispatcher.html#graia.broadcast.entities.dispatcher.BaseDispatcher.beforeExecution">beforeExecution</a></code></li>
+<li><code><a title="graia.broadcast.builtin.factory.AsyncDispatcherContextManager.beforeTargetExec" href="../../../broadcast/entities/dispatcher.html#graia.broadcast.entities.dispatcher.BaseDispatcher.beforeTargetExec">beforeTargetExec</a></code></li>
+<li><code><a title="graia.broadcast.builtin.factory.AsyncDispatcherContextManager.catch" href="../../../broadcast/entities/dispatcher.html#graia.broadcast.entities.dispatcher.BaseDispatcher.catch">catch</a></code></li>
+<li><code><a title="graia.broadcast.builtin.factory.AsyncDispatcherContextManager.mixin" href="../../../broadcast/entities/dispatcher.html#graia.broadcast.entities.dispatcher.BaseDispatcher.mixin">mixin</a></code></li>
+<li><code><a title="graia.broadcast.builtin.factory.AsyncDispatcherContextManager.onActive" href="../../../broadcast/entities/dispatcher.html#graia.broadcast.entities.dispatcher.BaseDispatcher.onActive">onActive</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="graia.application.message.parser" href="index.html">graia.application.message.parser</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="graia.application.message.parser.kanata.origin_or_zero" href="#graia.application.message.parser.kanata.origin_or_zero">origin_or_zero</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="graia.application.message.parser.kanata.Kanata" href="#graia.application.message.parser.kanata.Kanata">Kanata</a></code></h4>
+<ul class="">
+<li><code><a title="graia.application.message.parser.kanata.Kanata.allocation" href="#graia.application.message.parser.kanata.Kanata.allocation">allocation</a></code></li>
+<li><code><a title="graia.application.message.parser.kanata.Kanata.allow_quote" href="#graia.application.message.parser.kanata.Kanata.allow_quote">allow_quote</a></code></li>
+<li><code><a title="graia.application.message.parser.kanata.Kanata.args" href="#graia.application.message.parser.kanata.Kanata.args">args</a></code></li>
+<li><code><a title="graia.application.message.parser.kanata.Kanata.catch_argument_names" href="#graia.application.message.parser.kanata.Kanata.catch_argument_names">catch_argument_names</a></code></li>
+<li><code><a title="graia.application.message.parser.kanata.Kanata.detect_and_mapping" href="#graia.application.message.parser.kanata.Kanata.detect_and_mapping">detect_and_mapping</a></code></li>
+<li><code><a title="graia.application.message.parser.kanata.Kanata.detect_index" href="#graia.application.message.parser.kanata.Kanata.detect_index">detect_index</a></code></li>
+<li><code><a title="graia.application.message.parser.kanata.Kanata.generator_factory" href="#graia.application.message.parser.kanata.Kanata.generator_factory">generator_factory</a></code></li>
+<li><code><a title="graia.application.message.parser.kanata.Kanata.kwargs" href="#graia.application.message.parser.kanata.Kanata.kwargs">kwargs</a></code></li>
+<li><code><a title="graia.application.message.parser.kanata.Kanata.parsed_items" href="#graia.application.message.parser.kanata.Kanata.parsed_items">parsed_items</a></code></li>
+<li><code><a title="graia.application.message.parser.kanata.Kanata.signature_list" href="#graia.application.message.parser.kanata.Kanata.signature_list">signature_list</a></code></li>
+<li><code><a title="graia.application.message.parser.kanata.Kanata.skip_one_at_in_quote" href="#graia.application.message.parser.kanata.Kanata.skip_one_at_in_quote">skip_one_at_in_quote</a></code></li>
+<li><code><a title="graia.application.message.parser.kanata.Kanata.stop_exec_if_fail" href="#graia.application.message.parser.kanata.Kanata.stop_exec_if_fail">stop_exec_if_fail</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
+</footer>
+</body>
+</html>

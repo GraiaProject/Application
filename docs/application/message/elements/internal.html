@@ -1,0 +1,3344 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.9.2" />
+<title>graia.application.message.elements.internal API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>graia.application.message.elements.internal</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import asyncio
+from datetime import datetime
+from enum import Enum
+from pathlib import Path
+from typing import NoReturn, Optional, Union
+import aiohttp
+
+from pydantic.fields import Field
+from graia.application.entities import UploadMethods
+
+from ...exceptions import InvaildArgument
+from pydantic import validator
+
+from ...context import application, image_method
+from . import ExternalElement, InternalElement, ShadowElement
+from graia.application.message.elements import external as External
+from aiohttp import ClientSession
+import json as MJson
+
+
+class Plain(InternalElement, ExternalElement):
+    type: str = &#34;Plain&#34;
+    text: str
+
+    def __init__(self, text: str, *_, **__) -&gt; NoReturn:
+        &#34;&#34;&#34;实例化一个 Plain 消息元素, 用于承载消息中的文字.
+
+        Args:
+            text (str): 元素所包含的文字
+        &#34;&#34;&#34;
+        super().__init__(text=text)
+
+    def toExternal(self) -&gt; &#34;Plain&#34;:
+        return self
+
+    @classmethod
+    def fromExternal(_, external_element) -&gt; &#34;Plain&#34;:
+        return external_element
+
+    def asDisplay(self) -&gt; str:
+        return self.text
+
+    def asSerializationString(self) -&gt; str:
+        return self.text
+
+
+class Source(InternalElement, ExternalElement):
+    &#34;表示消息在一个特定聊天区域内的唯一标识&#34;
+    id: int
+    time: datetime
+
+    @classmethod
+    def fromExternal(_, external_element) -&gt; &#34;Source&#34;:
+        return external_element
+
+    def asSerializationString(self) -&gt; str:
+        return f&#34;[mirai:source:{self.id},{int(self.time.timestamp())}]&#34;
+
+    class Config:
+        json_encoders = {
+            datetime: lambda v: int(v.timestamp()),
+        }
+
+
+class Quote(InternalElement, ExternalElement):
+    &#34;表示消息中回复其他消息/用户的部分, 通常包含一个完整的消息链(`origin` 属性)&#34;
+    id: int
+    groupId: int
+    senderId: int
+    targetId: int
+    origin: &#34;MessageChain&#34;
+
+    @validator(&#34;origin&#34;, pre=True, allow_reuse=True)
+    def _(cls, v):
+        from ..chain import MessageChain
+
+        return MessageChain.parse_obj(v)
+
+    @classmethod
+    def fromExternal(_, external_element) -&gt; &#34;Quote&#34;:
+        return external_element
+
+    def asSerializationString(self) -&gt; str:
+        return f&#34; [mirai:quote:{self.id}]&#34;
+
+
+class At(InternalElement, ExternalElement):
+    &#34;&#34;&#34;该消息元素用于承载消息中用于提醒/呼唤特定用户的部分.&#34;&#34;&#34;
+
+    type: str = &#34;At&#34;
+    target: int
+    display: Optional[str] = None
+
+    def __init__(self, target: int, **kwargs) -&gt; None:
+        &#34;&#34;&#34;实例化一个 At 消息元素, 用于承载消息中用于提醒/呼唤特定用户的部分.
+
+        Args:
+            target (int): 需要提醒/呼唤的特定用户的 QQ 号(或者说 id.)
+        &#34;&#34;&#34;
+        super().__init__(target=target, **kwargs)
+
+    def asDisplay(self) -&gt; str:
+        return str(self.display) if self.display else f&#34;@{self.target}&#34;
+
+    def toExternal(self) -&gt; &#34;At&#34;:
+        try:
+            if image_method.get() != UploadMethods.Group:
+                raise InvaildArgument(
+                    &#34;you cannot use this element in this method: {0}&#34;.format(
+                        image_method.get().value
+                    )
+                )
+        except LookupError:
+            pass
+        return self
+
+    def asSerializationString(self) -&gt; str:
+        return f&#34;[mirai:at:{self.target},{self.display}]&#34;
+
+    @classmethod
+    def fromExternal(cls, external_element) -&gt; &#34;At&#34;:
+        return external_element
+
+
+class AtAll(InternalElement, ExternalElement):
+    &#34;该消息元素用于群组中的管理员提醒群组中的所有成员&#34;
+    type: str = &#34;AtAll&#34;
+
+    def asDisplay(self) -&gt; str:
+        return &#34;@全体成员&#34;
+
+    def toExternal(self) -&gt; &#34;AtAll&#34;:
+        try:
+            if image_method.get() != UploadMethods.Group:
+                raise InvaildArgument(
+                    &#34;you cannot use this element in this method: {0}&#34;.format(
+                        image_method.get().value
+                    )
+                )
+        except LookupError:
+            pass
+        return self
+
+    @classmethod
+    def fromExternal(cls, external_element) -&gt; &#34;AtAll&#34;:
+        return external_element
+
+    def asSerializationString(self) -&gt; str:
+        return &#34;[mirai:atall]&#34;
+
+
+class Face(InternalElement, ExternalElement):
+    &#34;表示消息中所附带的表情, 这些表情大多都是聊天工具内置的.&#34;
+    type: str = &#34;Face&#34;
+    faceId: int
+    name: Optional[str] = None
+
+    def toExternal(self) -&gt; &#34;Face&#34;:
+        return self
+
+    @classmethod
+    def fromExternal(cls, external_element) -&gt; &#34;Face&#34;:
+        return external_element
+
+    def asDisplay(self) -&gt; str:
+        return &#34;[表情]&#34;
+
+    def asSerializationString(self) -&gt; str:
+        return f&#34;[mirai:face:{self.faceId}]&#34;
+
+
+class ImageType(Enum):
+    Friend = &#34;Friend&#34;
+    Group = &#34;Group&#34;
+    Temp = &#34;Temp&#34;
+    Unknown = &#34;Unknown&#34;
+
+
+image_upload_method_type_map = {
+    UploadMethods.Friend: ImageType.Friend,
+    UploadMethods.Group: ImageType.Group,
+    UploadMethods.Temp: ImageType.Temp,
+}
+
+
+class ShadowImage(InternalElement, ExternalElement, ShadowElement):
+    method: Optional[UploadMethods]
+    is_flash: bool = False
+
+    def asFlash(self):
+        self.is_flash = True
+        return self
+
+    def fromExternal(cls, external_element) -&gt; &#34;InternalElement&#34;:
+        return external_element
+
+    class Config:
+        allow_mutation = True
+
+
+class Image_LocalFile(ShadowImage):
+    filepath: Path
+
+    def __init__(self, filepath: Path, method: Optional[UploadMethods] = None) -&gt; None:
+        super().__init__(filepath=filepath, method=method)
+
+    async def toExternal(self):
+        app = application.get()
+        try:
+            methodd = self.method or image_method.get()
+        except LookupError:
+            raise ValueError(
+                &#34;you should give the &#39;method&#39; for upload when you are out of the event receiver.&#34;
+            )
+        if not self.is_flash:
+            return await app.uploadImage(
+                self.filepath.read_bytes(), methodd, return_external=True
+            )
+        else:
+            return FlashImage.fromExternal(
+                await app.uploadImage(
+                    self.filepath.read_bytes(), methodd, return_external=True
+                )
+            ).toExternal()
+
+    async def getReal(self, method: UploadMethods) -&gt; &#34;Image&#34;:
+        &#34;&#34;&#34;从本 Shadow Element 中生成一真正的 Image 对象.
+        Args:
+            method (UploadMethods): 所需求的图片的上传类型, 具体请阅读 UploadMethods 的相关文档.
+        Raises:
+            ClientResponseError: HTTP 网络请求错误
+        Returns:
+            Image: 所生成的, 真正的 Image 对象.
+        &#34;&#34;&#34;
+        app = application.get()
+        return await app.uploadImage(
+            self.filepath.read_bytes(), method, return_external=True
+        )
+
+
+class Image_UnsafeBytes(ShadowImage):
+    image_bytes: bytes
+
+    def __init__(
+        self, image_bytes: bytes, method: Optional[UploadMethods] = None
+    ) -&gt; None:
+        super().__init__(image_bytes=image_bytes, method=method)
+
+    async def toExternal(self):
+        app = application.get()
+        try:
+            methodd = self.method or image_method.get()
+        except LookupError:
+            raise ValueError(
+                &#34;you should give the &#39;method&#39; for upload when you are out of the event receiver.&#34;
+            )
+        if not self.is_flash:
+            return await app.uploadImage(
+                self.image_bytes, methodd, return_external=True
+            )
+        else:
+            return FlashImage.fromExternal(
+                await app.uploadImage(self.image_bytes, methodd, return_external=True)
+            ).toExternal()
+
+    async def getReal(self, method: UploadMethods) -&gt; &#34;Image&#34;:
+        &#34;&#34;&#34;从本 Shadow Element 中生成一真正的 Image 对象.
+        Args:
+            method (UploadMethods): 所需求的图片的上传类型, 具体请阅读 UploadMethods 的相关文档.
+        Raises:
+            ClientResponseError: HTTP 网络请求错误
+        Returns:
+            Image: 所生成的, 真正的 Image 对象.
+        &#34;&#34;&#34;
+        app = application.get()
+        return await app.uploadImage(self.image_bytes, method)
+
+
+class Image_NetworkAddress(ShadowImage):
+    url: str
+
+    def __init__(self, url: str, method: Optional[UploadMethods] = None) -&gt; None:
+        super().__init__(url=url, method=method)
+
+    async def toExternal(self):
+        app = application.get()
+        try:
+            methodd = self.method or image_method.get()
+        except LookupError:
+            raise ValueError(
+                &#34;you should give the &#39;method&#39; for upload when you are out of the event receiver.&#34;
+            )
+
+        async with app.session.get(self.url) as response:
+            response.raise_for_status()
+            if not self.is_flash:
+                return await app.uploadImage(
+                    await response.read(), methodd, return_external=True
+                )
+            else:
+                return FlashImage.fromExternal(
+                    await app.uploadImage(
+                        await response.read(), methodd, return_external=True
+                    )
+                ).toExternal()
+
+    async def getReal(self, method: UploadMethods) -&gt; &#34;Image&#34;:
+        &#34;&#34;&#34;从本 Shadow Element 中生成一真正的 Image 对象.
+        Args:
+            method (UploadMethods): 所需求的图片的上传类型, 具体请阅读 UploadMethods 的相关文档.
+        Raises:
+            ClientResponseError: HTTP 网络请求错误
+        Returns:
+            Image: 所生成的, 真正的 Image 对象.
+        &#34;&#34;&#34;
+        app = application.get()
+        async with aiohttp.ClientSession() as session:
+            async with session.get(self.url) as response:
+                response.raise_for_status()
+                return await app.uploadImage(await response.read(), method)
+
+
+class Image(InternalElement):
+    &#34;该消息元素用于承载消息中所附带的图片.&#34;
+    imageId: Optional[str] = None
+    url: Optional[str] = None
+    path: Optional[str] = None
+    type: Optional[ImageType]
+
+    @validator(&#34;type&#34;, always=True, allow_reuse=True)
+    def _(cls, v, values) -&gt; ImageType:
+        if v:
+            return v
+        if &#34;imageId&#34; not in values:
+            return ImageType.Unknown
+        if not values[&#34;imageId&#34;]:
+            return ImageType.Unknown
+        if values[&#34;imageId&#34;].startswith(&#34;/&#34;):
+            if len(values[&#34;imageId&#34;]) == 37:
+                return ImageType.Friend
+            else:
+                return ImageType.Temp
+        elif values[&#34;imageId&#34;].startswith(&#34;{&#34;) and values[&#34;imageId&#34;].endswith(
+            &#34;}.mirai&#34;
+        ):
+            return ImageType.Group
+        else:
+            return ImageType.Unknown
+
+    async def toExternal(self):
+        try:
+            want_type = image_upload_method_type_map.get(image_method.get())
+            if self.type != want_type and self.url:
+                app = application.get()
+                image_byte = await self.http_to_bytes()
+                return await app.uploadImage(
+                    image_byte, image_method.get(), return_external=True
+                )
+        except LookupError:
+            pass
+        return External.Image(imageId=self.imageId, url=self.url, path=self.path)
+
+    @classmethod
+    def fromExternal(cls, external_element) -&gt; &#34;Image&#34;:
+        return cls(
+            imageId=external_element.imageId,
+            url=external_element.url,
+            path=external_element.path,
+        )
+
+    @classmethod
+    def fromLocalFile(
+        cls, filepath: Union[Path, str], method: Optional[UploadMethods] = None
+    ) -&gt; &#34;Image&#34;:
+        &#34;&#34;&#34;从本地文件中创建一个 Shadow Element, 以此在发送时自动上传图片至服务器, 并借此使包含的图片成功发送.
+
+        Args:
+            filepath (Union[Path, str]): 需要上传的图片路径, 可以是字符串也可以是 pathlib.Path 实例
+            method (Optional[UploadMethods], default = None): 图片上传时使用的方法, 通常可以使程序自行判定.
+
+        Raises:
+            FileNotFoundError: 所描述的图片文件在文件系统中不存在.
+
+        Returns:
+            [Shadow Element]: 返回值为一合法, 但不包括任何 Image 特征属性的叠加态消息元素; 其包含有一 asFlash 方法,
+                可以将当前图片转为闪照形式发送.
+
+        Examples:
+        ``` python
+        await app.sendGroupMessage(group, MessageChain.create([
+            Image.fromLocalFile(&#34;./image.png&#34;)
+            # 发闪照则是 Image.fromLocalFile(&#34;./flashimage.png&#34;).asFlash()
+            # 注意: 闪照是也只能是单独一个消息.
+        ]))
+        ```
+        &#34;&#34;&#34;
+        if isinstance(filepath, str):
+            filepath = Path(filepath)
+        if not filepath.exists():
+            raise FileNotFoundError(&#34;you should give us a existed file&#39;s path&#34;)
+        return Image_LocalFile(filepath, method)
+
+    @classmethod
+    def fromUnsafePath(cls, path: Union[Path, str]) -&gt; &#34;External.Image&#34;:
+        &#34;&#34;&#34;不检查路径安全性, 直接实例化元素, 让 mirai-api-http 自行读取图片文件.
+
+        Args:
+            path (Union[Path, str]): 图片文件路径
+
+        Returns:
+            Image: 作为外部态存在的 Image 消息元素
+        &#34;&#34;&#34;
+        return External.Image(path=str(path))
+
+    @classmethod
+    def fromUnsafeBytes(
+        cls, image_bytes: bytes, method: Optional[UploadMethods] = None
+    ) -&gt; &#34;Image&#34;:
+        &#34;&#34;&#34;从不保证有效性的 bytes 中创建一个 Shadow Element, 以此在发送时自动作为图片上传至服务器, 并借此使其可能包含的图片成功发送.
+
+        Args:
+            image_bytes: (bytes): 任意 bytes, 不保证内部可能的图片的有效性
+            method (Optional[UploadMethods], default = None): 图片上传时使用的方法, 通常可以使程序自行判定.
+
+        Returns:
+            [Shadow Element]: 返回值为一合法, 但不包括任何 Image 特征属性的叠加态消息元素; 其包含有一 asFlash 方法,
+                可以将当前图片转为闪照形式发送.
+        &#34;&#34;&#34;
+        return Image_UnsafeBytes(image_bytes, method)
+
+    @classmethod
+    def fromNetworkAddress(
+        cls, url: str, method: Optional[UploadMethods] = None
+    ) -&gt; &#34;Image&#34;:
+        &#34;&#34;&#34;从不保证有效性的网络位置中创建一个 Shadow Element, 以此在发送时自动从该指定位置获取并作为图片上传至服务器,
+        并借此使其可能包含的图片成功发送.
+
+        Args:
+            url: (str): 可以是任意 http/https 的 url, 不保证其有效性, 且可能抛出任意形式的网络错误
+            method (Optional[UploadMethods], default = None): 图片上传时使用的方法, 通常可以使程序自行判定.
+
+        Raises:
+            ClientResponseError: HTTP 网络请求错误
+
+        Returns:
+            [Shadow Element]: 返回值为一合法, 但不包括任何 Image 特征属性的叠加态消息元素; 其包含有一 asFlash 方法,
+                可以将当前图片转为闪照形式发送.
+        &#34;&#34;&#34;
+        return Image_NetworkAddress(url, method)
+
+    @classmethod
+    def fromUnsafeAddress(cls, url: str) -&gt; &#34;External.Image&#34;:
+        return External.Image(url=url)
+
+    def asDisplay(self) -&gt; str:
+        return &#34;[图片]&#34;
+
+    async def http_to_bytes(self, url: str = None) -&gt; bytes:
+        &#34;&#34;&#34;从远端服务器获取图片的 bytes, 注意, 你无法获取并不包含 url 属性的本元素的 bytes.
+
+        Args:
+            url (str, optional): 如果提供, 则从本参数获取 bytes. 默认为 None.
+
+        Raises:
+            ValueError: 你尝试获取并不包含 url 属性的本元素的 bytes.
+
+        Returns:
+            bytes: 图片原始数据
+        &#34;&#34;&#34;
+        if not (self.url or url):
+            raise ValueError(&#34;you should offer a url.&#34;)
+        async with ClientSession() as session:
+            async with session.get(self.url or url) as response:
+                response.raise_for_status()
+                return await response.read()
+
+    def asFlash(self) -&gt; &#34;FlashImage&#34;:
+        return FlashImage.fromOriginalImage(self)
+
+    def asSerializationString(self) -&gt; str:
+        return f&#34;[mirai:image:{self.imageId}]&#34;
+
+
+class FlashImage(Image, InternalElement):
+    &#34;&#34;&#34;用于承载 QQ 中的特殊消息: 闪照的消息组件.
+
+    通常, 你需要先使用 Image 中提供的各种工厂方法创建一&#34;普通&#34;的 Image 对象, 然后再使用 asFlash 方法将其转换为闪照.
+    &#34;&#34;&#34;
+
+    def toExternal(self):
+        return External.FlashImage(imageId=self.imageId, url=self.url, path=self.path)
+
+    @classmethod
+    def fromExternal(cls, external_element) -&gt; &#34;FlashImage&#34;:
+        return cls(
+            imageId=external_element.imageId,
+            url=external_element.url,
+            path=external_element.path,
+        )
+
+    @classmethod
+    def fromOriginalImage(cls, image_element: Image) -&gt; &#34;FlashImage&#34;:
+        return cls(
+            imageId=image_element.imageId,
+            url=image_element.url,
+            path=image_element.path,
+        )
+
+    def asDisplay(self) -&gt; str:
+        return &#34;[闪照]&#34;
+
+    def asNormal(self) -&gt; &#34;Image&#34;:
+        return Image.fromExternal(self)
+
+    def asSerializationString(self) -&gt; str:
+        return f&#34;[mirai:flash:{self.imageId}]&#34;
+
+
+class VoiceUploadType(Enum):
+    Group = &#34;group&#34;
+    Unknown = &#34;unknown&#34;
+
+
+class Voice_LocalFile(ShadowElement, InternalElement, ExternalElement):
+    filepath: Path
+    method: Optional[UploadMethods]
+
+    def __init__(self, filepath: Path, method: Optional[UploadMethods] = None) -&gt; None:
+        super().__init__(filepath=filepath, method=method)
+
+    def fromExternal(cls, external_element) -&gt; &#34;InternalElement&#34;:
+        return external_element
+
+    async def toExternal(self):
+        app = application.get()
+        try:
+            methodd = self.method or image_method.get()
+        except LookupError:
+            raise ValueError(
+                &#34;you should give the &#39;method&#39; for upload when you are out of the event receiver.&#34;
+            )
+
+        return await app.uploadVoice(
+            self.filepath.read_bytes(), methodd, return_external=True
+        )
+
+    async def getReal(self, method: UploadMethods) -&gt; &#34;Image&#34;:
+        &#34;&#34;&#34;从本 Shadow Element 中生成一真正的 Voice 对象.
+        Args:
+            method (UploadMethods): 所需求的图片的上传类型, 具体请阅读 UploadMethods 的相关文档.
+        Raises:
+            ClientResponseError: HTTP 网络请求错误
+        Returns:
+            Voice: 所生成的, 真正的 Voice 对象.
+        &#34;&#34;&#34;
+        app = application.get()
+        return await app.uploadVoice(
+            self.filepath.read_bytes(), method, return_external=True
+        )
+
+
+class Voice(InternalElement):
+    voiceId: Optional[str] = None
+    url: Optional[str] = None
+    path: Optional[str] = None
+    type: Optional[VoiceUploadType]
+
+    def toExternal(self):
+        return External.Voice(voiceId=self.voiceId, url=self.url, path=self.path)
+
+    @classmethod
+    def fromExternal(cls, external_element) -&gt; &#34;Voice&#34;:
+        return cls(
+            voiceId=external_element.voiceId,
+            url=external_element.url,
+            path=external_element.path,
+        )
+
+    def asSerializationString(self) -&gt; str:
+        return f&#34;[mirai:voice:{self.voiceId}]&#34;
+
+    def asDisplay(self) -&gt; str:
+        return &#34;[语音]&#34;
+
+    @validator(&#34;type&#34;, always=True, allow_reuse=True)
+    def _(cls, v, values) -&gt; VoiceUploadType:
+        if v:
+            return v
+        if &#34;voiceId&#34; not in values:
+            return VoiceUploadType.Unknown
+        if not values[&#34;voiceId&#34;]:
+            return VoiceUploadType.Unknown
+        if values[&#34;voiceId&#34;]:
+            return VoiceUploadType.Group  # mirai 当前版本只支持群语音.
+
+    def fromLocalFile(
+        self, filepath: Union[str, Path], method: Optional[UploadMethods] = None
+    ) -&gt; &#34;Voice&#34;:
+        &#34;&#34;&#34;从本地文件中创建一个 Shadow Element, 以此在发送时自动上传语音至服务器, 并借此使包含的语音成功发送.
+
+        Args:
+            filepath (Union[Path, str]): 需要上传的图片路径, 可以是字符串也可以是 pathlib.Path 实例
+            method (Optional[UploadMethods], default = None): 语音上传时使用的方法, 通常可以使程序自行判定.
+
+        Raises:
+            FileNotFoundError: 所描述的语音文件在文件系统中不存在.
+
+        Returns:
+            [Shadow Element]: 返回值为一合法, 但不包括任何 Voice 特征属性的叠加态消息元素
+        &#34;&#34;&#34;
+        if isinstance(filepath, str):
+            filepath = Path(filepath)
+        if not filepath.exists():
+            raise FileNotFoundError(&#34;you should give us a existed file&#39;s path&#34;)
+        return Voice_LocalFile(filepath, method)
+
+
+class Xml(InternalElement, ExternalElement):
+    type = &#34;Xml&#34;
+    xml: str
+
+    def __init__(self, xml, *_, **__) -&gt; None:
+        super().__init__(xml=xml)
+
+    def toExternal(self):
+        return self
+
+    @classmethod
+    def fromExternal(cls, external_element) -&gt; &#34;Xml&#34;:
+        return external_element
+
+    def asDisplay(self) -&gt; str:
+        return &#34;[XML消息]&#34;
+
+
+class Json(InternalElement, ExternalElement):
+    type = &#34;Json&#34;
+    Json: str = Field(..., alias=&#34;json&#34;)
+
+    def __init__(self, json: Union[dict, str], *_, **__) -&gt; None:
+        if isinstance(json, dict):
+            json = MJson.dumps(json)
+        super().__init__(json=json)
+
+    def dict(self, *args, **kwargs):
+        return super().dict(*args, **({**kwargs, &#34;by_alias&#34;: True}))
+
+    def asDisplay(self) -&gt; str:
+        return &#34;[JSON消息]&#34;
+
+    def toExternal(self) -&gt; &#34;Json&#34;:
+        return self
+
+    @classmethod
+    def fromExternal(_, external_element) -&gt; &#34;Json&#34;:
+        return external_element
+
+
+class App(InternalElement, ExternalElement):
+    type = &#34;App&#34;
+    content: str
+
+    def asDisplay(self) -&gt; str:
+        return &#34;[APP消息]&#34;
+
+    def toExternal(self) -&gt; &#34;App&#34;:
+        return self
+
+    @classmethod
+    def fromExternal(_, external_element) -&gt; &#34;App&#34;:
+        return external_element
+
+
+class PokeMethods(Enum):
+    Poke = &#34;Poke&#34;
+    ShowLove = &#34;ShowLove&#34;
+    Like = &#34;Like&#34;
+    Heartbroken = &#34;Heartbroken&#34;
+    SixSixSix = &#34;SixSixSix&#34;
+    FangDaZhao = &#34;FangDaZhao&#34;
+
+
+class Poke(InternalElement, ExternalElement):
+    type = &#34;Poke&#34;
+    name: PokeMethods
+
+    def asDisplay(self) -&gt; str:
+        return &#34;[戳一戳:{0}]&#34;.format(self.name)
+
+    def toExternal(self) -&gt; &#34;Poke&#34;:
+        return self
+
+    @classmethod
+    def fromExternal(_, external_element) -&gt; &#34;Poke&#34;:
+        return external_element
+
+
+from ..chain import MessageChain
+
+Quote.update_forward_refs(MessageChain=MessageChain)</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="graia.application.message.elements.internal.App"><code class="flex name class">
+<span>class <span class="ident">App</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises ValidationError if the input data cannot be parsed to form a valid model.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class App(InternalElement, ExternalElement):
+    type = &#34;App&#34;
+    content: str
+
+    def asDisplay(self) -&gt; str:
+        return &#34;[APP消息]&#34;
+
+    def toExternal(self) -&gt; &#34;App&#34;:
+        return self
+
+    @classmethod
+    def fromExternal(_, external_element) -&gt; &#34;App&#34;:
+        return external_element</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="graia.application.message.elements.InternalElement" href="index.html#graia.application.message.elements.InternalElement">InternalElement</a></li>
+<li><a title="graia.application.message.elements.ExternalElement" href="index.html#graia.application.message.elements.ExternalElement">ExternalElement</a></li>
+<li><a title="graia.application.message.elements.Element" href="index.html#graia.application.message.elements.Element">Element</a></li>
+<li>pydantic.main.BaseModel</li>
+<li>pydantic.utils.Representation</li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="graia.application.message.elements.internal.App.content"><code class="name">var <span class="ident">content</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="graia.application.message.elements.internal.App.asDisplay"><code class="name flex">
+<span>def <span class="ident">asDisplay</span></span>(<span>self) ‑> str</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def asDisplay(self) -&gt; str:
+    return &#34;[APP消息]&#34;</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="graia.application.message.elements.InternalElement" href="index.html#graia.application.message.elements.InternalElement">InternalElement</a></b></code>:
+<ul class="hlist">
+<li><code><a title="graia.application.message.elements.InternalElement.fromExternal" href="index.html#graia.application.message.elements.InternalElement.fromExternal">fromExternal</a></code></li>
+<li><code><a title="graia.application.message.elements.InternalElement.toExternal" href="index.html#graia.application.message.elements.InternalElement.toExternal">toExternal</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="graia.application.message.elements.internal.At"><code class="flex name class">
+<span>class <span class="ident">At</span></span>
+<span>(</span><span>target: int, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>该消息元素用于承载消息中用于提醒/呼唤特定用户的部分.</p>
+<p>实例化一个 At 消息元素, 用于承载消息中用于提醒/呼唤特定用户的部分.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>target</code></strong> :&ensp;<code>int</code></dt>
+<dd>需要提醒/呼唤的特定用户的 QQ 号(或者说 id.)</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class At(InternalElement, ExternalElement):
+    &#34;&#34;&#34;该消息元素用于承载消息中用于提醒/呼唤特定用户的部分.&#34;&#34;&#34;
+
+    type: str = &#34;At&#34;
+    target: int
+    display: Optional[str] = None
+
+    def __init__(self, target: int, **kwargs) -&gt; None:
+        &#34;&#34;&#34;实例化一个 At 消息元素, 用于承载消息中用于提醒/呼唤特定用户的部分.
+
+        Args:
+            target (int): 需要提醒/呼唤的特定用户的 QQ 号(或者说 id.)
+        &#34;&#34;&#34;
+        super().__init__(target=target, **kwargs)
+
+    def asDisplay(self) -&gt; str:
+        return str(self.display) if self.display else f&#34;@{self.target}&#34;
+
+    def toExternal(self) -&gt; &#34;At&#34;:
+        try:
+            if image_method.get() != UploadMethods.Group:
+                raise InvaildArgument(
+                    &#34;you cannot use this element in this method: {0}&#34;.format(
+                        image_method.get().value
+                    )
+                )
+        except LookupError:
+            pass
+        return self
+
+    def asSerializationString(self) -&gt; str:
+        return f&#34;[mirai:at:{self.target},{self.display}]&#34;
+
+    @classmethod
+    def fromExternal(cls, external_element) -&gt; &#34;At&#34;:
+        return external_element</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="graia.application.message.elements.InternalElement" href="index.html#graia.application.message.elements.InternalElement">InternalElement</a></li>
+<li><a title="graia.application.message.elements.ExternalElement" href="index.html#graia.application.message.elements.ExternalElement">ExternalElement</a></li>
+<li><a title="graia.application.message.elements.Element" href="index.html#graia.application.message.elements.Element">Element</a></li>
+<li>pydantic.main.BaseModel</li>
+<li>pydantic.utils.Representation</li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="graia.application.message.elements.internal.At.display"><code class="name">var <span class="ident">display</span> : Union[str, NoneType]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="graia.application.message.elements.internal.At.target"><code class="name">var <span class="ident">target</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="graia.application.message.elements.internal.At.type"><code class="name">var <span class="ident">type</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="graia.application.message.elements.internal.At.asDisplay"><code class="name flex">
+<span>def <span class="ident">asDisplay</span></span>(<span>self) ‑> str</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def asDisplay(self) -&gt; str:
+    return str(self.display) if self.display else f&#34;@{self.target}&#34;</code></pre>
+</details>
+</dd>
+<dt id="graia.application.message.elements.internal.At.asSerializationString"><code class="name flex">
+<span>def <span class="ident">asSerializationString</span></span>(<span>self) ‑> str</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def asSerializationString(self) -&gt; str:
+    return f&#34;[mirai:at:{self.target},{self.display}]&#34;</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="graia.application.message.elements.InternalElement" href="index.html#graia.application.message.elements.InternalElement">InternalElement</a></b></code>:
+<ul class="hlist">
+<li><code><a title="graia.application.message.elements.InternalElement.fromExternal" href="index.html#graia.application.message.elements.InternalElement.fromExternal">fromExternal</a></code></li>
+<li><code><a title="graia.application.message.elements.InternalElement.toExternal" href="index.html#graia.application.message.elements.InternalElement.toExternal">toExternal</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="graia.application.message.elements.internal.AtAll"><code class="flex name class">
+<span>class <span class="ident">AtAll</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>该消息元素用于群组中的管理员提醒群组中的所有成员</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises ValidationError if the input data cannot be parsed to form a valid model.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class AtAll(InternalElement, ExternalElement):
+    &#34;该消息元素用于群组中的管理员提醒群组中的所有成员&#34;
+    type: str = &#34;AtAll&#34;
+
+    def asDisplay(self) -&gt; str:
+        return &#34;@全体成员&#34;
+
+    def toExternal(self) -&gt; &#34;AtAll&#34;:
+        try:
+            if image_method.get() != UploadMethods.Group:
+                raise InvaildArgument(
+                    &#34;you cannot use this element in this method: {0}&#34;.format(
+                        image_method.get().value
+                    )
+                )
+        except LookupError:
+            pass
+        return self
+
+    @classmethod
+    def fromExternal(cls, external_element) -&gt; &#34;AtAll&#34;:
+        return external_element
+
+    def asSerializationString(self) -&gt; str:
+        return &#34;[mirai:atall]&#34;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="graia.application.message.elements.InternalElement" href="index.html#graia.application.message.elements.InternalElement">InternalElement</a></li>
+<li><a title="graia.application.message.elements.ExternalElement" href="index.html#graia.application.message.elements.ExternalElement">ExternalElement</a></li>
+<li><a title="graia.application.message.elements.Element" href="index.html#graia.application.message.elements.Element">Element</a></li>
+<li>pydantic.main.BaseModel</li>
+<li>pydantic.utils.Representation</li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="graia.application.message.elements.internal.AtAll.type"><code class="name">var <span class="ident">type</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="graia.application.message.elements.internal.AtAll.asDisplay"><code class="name flex">
+<span>def <span class="ident">asDisplay</span></span>(<span>self) ‑> str</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def asDisplay(self) -&gt; str:
+    return &#34;@全体成员&#34;</code></pre>
+</details>
+</dd>
+<dt id="graia.application.message.elements.internal.AtAll.asSerializationString"><code class="name flex">
+<span>def <span class="ident">asSerializationString</span></span>(<span>self) ‑> str</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def asSerializationString(self) -&gt; str:
+    return &#34;[mirai:atall]&#34;</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="graia.application.message.elements.InternalElement" href="index.html#graia.application.message.elements.InternalElement">InternalElement</a></b></code>:
+<ul class="hlist">
+<li><code><a title="graia.application.message.elements.InternalElement.fromExternal" href="index.html#graia.application.message.elements.InternalElement.fromExternal">fromExternal</a></code></li>
+<li><code><a title="graia.application.message.elements.InternalElement.toExternal" href="index.html#graia.application.message.elements.InternalElement.toExternal">toExternal</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="graia.application.message.elements.internal.Face"><code class="flex name class">
+<span>class <span class="ident">Face</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>表示消息中所附带的表情, 这些表情大多都是聊天工具内置的.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises ValidationError if the input data cannot be parsed to form a valid model.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Face(InternalElement, ExternalElement):
+    &#34;表示消息中所附带的表情, 这些表情大多都是聊天工具内置的.&#34;
+    type: str = &#34;Face&#34;
+    faceId: int
+    name: Optional[str] = None
+
+    def toExternal(self) -&gt; &#34;Face&#34;:
+        return self
+
+    @classmethod
+    def fromExternal(cls, external_element) -&gt; &#34;Face&#34;:
+        return external_element
+
+    def asDisplay(self) -&gt; str:
+        return &#34;[表情]&#34;
+
+    def asSerializationString(self) -&gt; str:
+        return f&#34;[mirai:face:{self.faceId}]&#34;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="graia.application.message.elements.InternalElement" href="index.html#graia.application.message.elements.InternalElement">InternalElement</a></li>
+<li><a title="graia.application.message.elements.ExternalElement" href="index.html#graia.application.message.elements.ExternalElement">ExternalElement</a></li>
+<li><a title="graia.application.message.elements.Element" href="index.html#graia.application.message.elements.Element">Element</a></li>
+<li>pydantic.main.BaseModel</li>
+<li>pydantic.utils.Representation</li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="graia.application.message.elements.internal.Face.faceId"><code class="name">var <span class="ident">faceId</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="graia.application.message.elements.internal.Face.name"><code class="name">var <span class="ident">name</span> : Union[str, NoneType]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="graia.application.message.elements.internal.Face.type"><code class="name">var <span class="ident">type</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="graia.application.message.elements.internal.Face.asDisplay"><code class="name flex">
+<span>def <span class="ident">asDisplay</span></span>(<span>self) ‑> str</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def asDisplay(self) -&gt; str:
+    return &#34;[表情]&#34;</code></pre>
+</details>
+</dd>
+<dt id="graia.application.message.elements.internal.Face.asSerializationString"><code class="name flex">
+<span>def <span class="ident">asSerializationString</span></span>(<span>self) ‑> str</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def asSerializationString(self) -&gt; str:
+    return f&#34;[mirai:face:{self.faceId}]&#34;</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="graia.application.message.elements.InternalElement" href="index.html#graia.application.message.elements.InternalElement">InternalElement</a></b></code>:
+<ul class="hlist">
+<li><code><a title="graia.application.message.elements.InternalElement.fromExternal" href="index.html#graia.application.message.elements.InternalElement.fromExternal">fromExternal</a></code></li>
+<li><code><a title="graia.application.message.elements.InternalElement.toExternal" href="index.html#graia.application.message.elements.InternalElement.toExternal">toExternal</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="graia.application.message.elements.internal.FlashImage"><code class="flex name class">
+<span>class <span class="ident">FlashImage</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>用于承载 QQ 中的特殊消息: 闪照的消息组件.</p>
+<p>通常, 你需要先使用 Image 中提供的各种工厂方法创建一"普通"的 Image 对象, 然后再使用 asFlash 方法将其转换为闪照.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises ValidationError if the input data cannot be parsed to form a valid model.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class FlashImage(Image, InternalElement):
+    &#34;&#34;&#34;用于承载 QQ 中的特殊消息: 闪照的消息组件.
+
+    通常, 你需要先使用 Image 中提供的各种工厂方法创建一&#34;普通&#34;的 Image 对象, 然后再使用 asFlash 方法将其转换为闪照.
+    &#34;&#34;&#34;
+
+    def toExternal(self):
+        return External.FlashImage(imageId=self.imageId, url=self.url, path=self.path)
+
+    @classmethod
+    def fromExternal(cls, external_element) -&gt; &#34;FlashImage&#34;:
+        return cls(
+            imageId=external_element.imageId,
+            url=external_element.url,
+            path=external_element.path,
+        )
+
+    @classmethod
+    def fromOriginalImage(cls, image_element: Image) -&gt; &#34;FlashImage&#34;:
+        return cls(
+            imageId=image_element.imageId,
+            url=image_element.url,
+            path=image_element.path,
+        )
+
+    def asDisplay(self) -&gt; str:
+        return &#34;[闪照]&#34;
+
+    def asNormal(self) -&gt; &#34;Image&#34;:
+        return Image.fromExternal(self)
+
+    def asSerializationString(self) -&gt; str:
+        return f&#34;[mirai:flash:{self.imageId}]&#34;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="graia.application.message.elements.internal.Image" href="#graia.application.message.elements.internal.Image">Image</a></li>
+<li><a title="graia.application.message.elements.InternalElement" href="index.html#graia.application.message.elements.InternalElement">InternalElement</a></li>
+<li><a title="graia.application.message.elements.Element" href="index.html#graia.application.message.elements.Element">Element</a></li>
+<li>pydantic.main.BaseModel</li>
+<li>pydantic.utils.Representation</li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="graia.application.message.elements.internal.FlashImage.imageId"><code class="name">var <span class="ident">imageId</span> : Union[str, NoneType]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="graia.application.message.elements.internal.FlashImage.path"><code class="name">var <span class="ident">path</span> : Union[str, NoneType]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="graia.application.message.elements.internal.FlashImage.type"><code class="name">var <span class="ident">type</span> : Union[<a title="graia.application.message.elements.internal.ImageType" href="#graia.application.message.elements.internal.ImageType">ImageType</a>, NoneType]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="graia.application.message.elements.internal.FlashImage.url"><code class="name">var <span class="ident">url</span> : Union[str, NoneType]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Static methods</h3>
+<dl>
+<dt id="graia.application.message.elements.internal.FlashImage.fromOriginalImage"><code class="name flex">
+<span>def <span class="ident">fromOriginalImage</span></span>(<span>image_element: <a title="graia.application.message.elements.internal.Image" href="#graia.application.message.elements.internal.Image">Image</a>) ‑> <a title="graia.application.message.elements.internal.FlashImage" href="#graia.application.message.elements.internal.FlashImage">FlashImage</a></span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@classmethod
+def fromOriginalImage(cls, image_element: Image) -&gt; &#34;FlashImage&#34;:
+    return cls(
+        imageId=image_element.imageId,
+        url=image_element.url,
+        path=image_element.path,
+    )</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="graia.application.message.elements.internal.FlashImage.asDisplay"><code class="name flex">
+<span>def <span class="ident">asDisplay</span></span>(<span>self) ‑> str</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def asDisplay(self) -&gt; str:
+    return &#34;[闪照]&#34;</code></pre>
+</details>
+</dd>
+<dt id="graia.application.message.elements.internal.FlashImage.asNormal"><code class="name flex">
+<span>def <span class="ident">asNormal</span></span>(<span>self) ‑> <a title="graia.application.message.elements.internal.Image" href="#graia.application.message.elements.internal.Image">Image</a></span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def asNormal(self) -&gt; &#34;Image&#34;:
+    return Image.fromExternal(self)</code></pre>
+</details>
+</dd>
+<dt id="graia.application.message.elements.internal.FlashImage.asSerializationString"><code class="name flex">
+<span>def <span class="ident">asSerializationString</span></span>(<span>self) ‑> str</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def asSerializationString(self) -&gt; str:
+    return f&#34;[mirai:flash:{self.imageId}]&#34;</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="graia.application.message.elements.internal.Image" href="#graia.application.message.elements.internal.Image">Image</a></b></code>:
+<ul class="hlist">
+<li><code><a title="graia.application.message.elements.internal.Image.fromExternal" href="index.html#graia.application.message.elements.InternalElement.fromExternal">fromExternal</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.Image.fromLocalFile" href="#graia.application.message.elements.internal.Image.fromLocalFile">fromLocalFile</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.Image.fromNetworkAddress" href="#graia.application.message.elements.internal.Image.fromNetworkAddress">fromNetworkAddress</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.Image.fromUnsafeBytes" href="#graia.application.message.elements.internal.Image.fromUnsafeBytes">fromUnsafeBytes</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.Image.fromUnsafePath" href="#graia.application.message.elements.internal.Image.fromUnsafePath">fromUnsafePath</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.Image.http_to_bytes" href="#graia.application.message.elements.internal.Image.http_to_bytes">http_to_bytes</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.Image.toExternal" href="index.html#graia.application.message.elements.InternalElement.toExternal">toExternal</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="graia.application.message.elements.internal.Image"><code class="flex name class">
+<span>class <span class="ident">Image</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>该消息元素用于承载消息中所附带的图片.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises ValidationError if the input data cannot be parsed to form a valid model.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Image(InternalElement):
+    &#34;该消息元素用于承载消息中所附带的图片.&#34;
+    imageId: Optional[str] = None
+    url: Optional[str] = None
+    path: Optional[str] = None
+    type: Optional[ImageType]
+
+    @validator(&#34;type&#34;, always=True, allow_reuse=True)
+    def _(cls, v, values) -&gt; ImageType:
+        if v:
+            return v
+        if &#34;imageId&#34; not in values:
+            return ImageType.Unknown
+        if not values[&#34;imageId&#34;]:
+            return ImageType.Unknown
+        if values[&#34;imageId&#34;].startswith(&#34;/&#34;):
+            if len(values[&#34;imageId&#34;]) == 37:
+                return ImageType.Friend
+            else:
+                return ImageType.Temp
+        elif values[&#34;imageId&#34;].startswith(&#34;{&#34;) and values[&#34;imageId&#34;].endswith(
+            &#34;}.mirai&#34;
+        ):
+            return ImageType.Group
+        else:
+            return ImageType.Unknown
+
+    async def toExternal(self):
+        try:
+            want_type = image_upload_method_type_map.get(image_method.get())
+            if self.type != want_type and self.url:
+                app = application.get()
+                image_byte = await self.http_to_bytes()
+                return await app.uploadImage(
+                    image_byte, image_method.get(), return_external=True
+                )
+        except LookupError:
+            pass
+        return External.Image(imageId=self.imageId, url=self.url, path=self.path)
+
+    @classmethod
+    def fromExternal(cls, external_element) -&gt; &#34;Image&#34;:
+        return cls(
+            imageId=external_element.imageId,
+            url=external_element.url,
+            path=external_element.path,
+        )
+
+    @classmethod
+    def fromLocalFile(
+        cls, filepath: Union[Path, str], method: Optional[UploadMethods] = None
+    ) -&gt; &#34;Image&#34;:
+        &#34;&#34;&#34;从本地文件中创建一个 Shadow Element, 以此在发送时自动上传图片至服务器, 并借此使包含的图片成功发送.
+
+        Args:
+            filepath (Union[Path, str]): 需要上传的图片路径, 可以是字符串也可以是 pathlib.Path 实例
+            method (Optional[UploadMethods], default = None): 图片上传时使用的方法, 通常可以使程序自行判定.
+
+        Raises:
+            FileNotFoundError: 所描述的图片文件在文件系统中不存在.
+
+        Returns:
+            [Shadow Element]: 返回值为一合法, 但不包括任何 Image 特征属性的叠加态消息元素; 其包含有一 asFlash 方法,
+                可以将当前图片转为闪照形式发送.
+
+        Examples:
+        ``` python
+        await app.sendGroupMessage(group, MessageChain.create([
+            Image.fromLocalFile(&#34;./image.png&#34;)
+            # 发闪照则是 Image.fromLocalFile(&#34;./flashimage.png&#34;).asFlash()
+            # 注意: 闪照是也只能是单独一个消息.
+        ]))
+        ```
+        &#34;&#34;&#34;
+        if isinstance(filepath, str):
+            filepath = Path(filepath)
+        if not filepath.exists():
+            raise FileNotFoundError(&#34;you should give us a existed file&#39;s path&#34;)
+        return Image_LocalFile(filepath, method)
+
+    @classmethod
+    def fromUnsafePath(cls, path: Union[Path, str]) -&gt; &#34;External.Image&#34;:
+        &#34;&#34;&#34;不检查路径安全性, 直接实例化元素, 让 mirai-api-http 自行读取图片文件.
+
+        Args:
+            path (Union[Path, str]): 图片文件路径
+
+        Returns:
+            Image: 作为外部态存在的 Image 消息元素
+        &#34;&#34;&#34;
+        return External.Image(path=str(path))
+
+    @classmethod
+    def fromUnsafeBytes(
+        cls, image_bytes: bytes, method: Optional[UploadMethods] = None
+    ) -&gt; &#34;Image&#34;:
+        &#34;&#34;&#34;从不保证有效性的 bytes 中创建一个 Shadow Element, 以此在发送时自动作为图片上传至服务器, 并借此使其可能包含的图片成功发送.
+
+        Args:
+            image_bytes: (bytes): 任意 bytes, 不保证内部可能的图片的有效性
+            method (Optional[UploadMethods], default = None): 图片上传时使用的方法, 通常可以使程序自行判定.
+
+        Returns:
+            [Shadow Element]: 返回值为一合法, 但不包括任何 Image 特征属性的叠加态消息元素; 其包含有一 asFlash 方法,
+                可以将当前图片转为闪照形式发送.
+        &#34;&#34;&#34;
+        return Image_UnsafeBytes(image_bytes, method)
+
+    @classmethod
+    def fromNetworkAddress(
+        cls, url: str, method: Optional[UploadMethods] = None
+    ) -&gt; &#34;Image&#34;:
+        &#34;&#34;&#34;从不保证有效性的网络位置中创建一个 Shadow Element, 以此在发送时自动从该指定位置获取并作为图片上传至服务器,
+        并借此使其可能包含的图片成功发送.
+
+        Args:
+            url: (str): 可以是任意 http/https 的 url, 不保证其有效性, 且可能抛出任意形式的网络错误
+            method (Optional[UploadMethods], default = None): 图片上传时使用的方法, 通常可以使程序自行判定.
+
+        Raises:
+            ClientResponseError: HTTP 网络请求错误
+
+        Returns:
+            [Shadow Element]: 返回值为一合法, 但不包括任何 Image 特征属性的叠加态消息元素; 其包含有一 asFlash 方法,
+                可以将当前图片转为闪照形式发送.
+        &#34;&#34;&#34;
+        return Image_NetworkAddress(url, method)
+
+    @classmethod
+    def fromUnsafeAddress(cls, url: str) -&gt; &#34;External.Image&#34;:
+        return External.Image(url=url)
+
+    def asDisplay(self) -&gt; str:
+        return &#34;[图片]&#34;
+
+    async def http_to_bytes(self, url: str = None) -&gt; bytes:
+        &#34;&#34;&#34;从远端服务器获取图片的 bytes, 注意, 你无法获取并不包含 url 属性的本元素的 bytes.
+
+        Args:
+            url (str, optional): 如果提供, 则从本参数获取 bytes. 默认为 None.
+
+        Raises:
+            ValueError: 你尝试获取并不包含 url 属性的本元素的 bytes.
+
+        Returns:
+            bytes: 图片原始数据
+        &#34;&#34;&#34;
+        if not (self.url or url):
+            raise ValueError(&#34;you should offer a url.&#34;)
+        async with ClientSession() as session:
+            async with session.get(self.url or url) as response:
+                response.raise_for_status()
+                return await response.read()
+
+    def asFlash(self) -&gt; &#34;FlashImage&#34;:
+        return FlashImage.fromOriginalImage(self)
+
+    def asSerializationString(self) -&gt; str:
+        return f&#34;[mirai:image:{self.imageId}]&#34;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="graia.application.message.elements.InternalElement" href="index.html#graia.application.message.elements.InternalElement">InternalElement</a></li>
+<li><a title="graia.application.message.elements.Element" href="index.html#graia.application.message.elements.Element">Element</a></li>
+<li>pydantic.main.BaseModel</li>
+<li>pydantic.utils.Representation</li>
+<li>abc.ABC</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="graia.application.message.elements.internal.FlashImage" href="#graia.application.message.elements.internal.FlashImage">FlashImage</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="graia.application.message.elements.internal.Image.imageId"><code class="name">var <span class="ident">imageId</span> : Union[str, NoneType]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="graia.application.message.elements.internal.Image.path"><code class="name">var <span class="ident">path</span> : Union[str, NoneType]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="graia.application.message.elements.internal.Image.type"><code class="name">var <span class="ident">type</span> : Union[<a title="graia.application.message.elements.internal.ImageType" href="#graia.application.message.elements.internal.ImageType">ImageType</a>, NoneType]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="graia.application.message.elements.internal.Image.url"><code class="name">var <span class="ident">url</span> : Union[str, NoneType]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Static methods</h3>
+<dl>
+<dt id="graia.application.message.elements.internal.Image.fromLocalFile"><code class="name flex">
+<span>def <span class="ident">fromLocalFile</span></span>(<span>filepath: Union[pathlib.Path, str], method: Union[<a title="graia.application.entities.UploadMethods" href="../../entities.html#graia.application.entities.UploadMethods">UploadMethods</a>, NoneType] = None) ‑> <a title="graia.application.message.elements.internal.Image" href="#graia.application.message.elements.internal.Image">Image</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>从本地文件中创建一个 Shadow Element, 以此在发送时自动上传图片至服务器, 并借此使包含的图片成功发送.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>filepath</code></strong> :&ensp;<code>Union[Path, str]</code></dt>
+<dd>需要上传的图片路径, 可以是字符串也可以是 pathlib.Path 实例</dd>
+<dt><strong><code>method</code></strong> :&ensp;<code>Optional[UploadMethods]</code>, default <code>= None</code></dt>
+<dd>图片上传时使用的方法, 通常可以使程序自行判定.</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>FileNotFoundError</code></dt>
+<dd>所描述的图片文件在文件系统中不存在.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>[Shadow Element]</code></dt>
+<dd>返回值为一合法, 但不包括任何 Image 特征属性的叠加态消息元素; 其包含有一 asFlash 方法,
+可以将当前图片转为闪照形式发送.</dd>
+</dl>
+<p>Examples:</p>
+<pre><code class="language-python">await app.sendGroupMessage(group, MessageChain.create([
+    Image.fromLocalFile(&quot;./image.png&quot;)
+    # 发闪照则是 Image.fromLocalFile(&quot;./flashimage.png&quot;).asFlash()
+    # 注意: 闪照是也只能是单独一个消息.
+]))
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@classmethod
+def fromLocalFile(
+    cls, filepath: Union[Path, str], method: Optional[UploadMethods] = None
+) -&gt; &#34;Image&#34;:
+    &#34;&#34;&#34;从本地文件中创建一个 Shadow Element, 以此在发送时自动上传图片至服务器, 并借此使包含的图片成功发送.
+
+    Args:
+        filepath (Union[Path, str]): 需要上传的图片路径, 可以是字符串也可以是 pathlib.Path 实例
+        method (Optional[UploadMethods], default = None): 图片上传时使用的方法, 通常可以使程序自行判定.
+
+    Raises:
+        FileNotFoundError: 所描述的图片文件在文件系统中不存在.
+
+    Returns:
+        [Shadow Element]: 返回值为一合法, 但不包括任何 Image 特征属性的叠加态消息元素; 其包含有一 asFlash 方法,
+            可以将当前图片转为闪照形式发送.
+
+    Examples:
+    ``` python
+    await app.sendGroupMessage(group, MessageChain.create([
+        Image.fromLocalFile(&#34;./image.png&#34;)
+        # 发闪照则是 Image.fromLocalFile(&#34;./flashimage.png&#34;).asFlash()
+        # 注意: 闪照是也只能是单独一个消息.
+    ]))
+    ```
+    &#34;&#34;&#34;
+    if isinstance(filepath, str):
+        filepath = Path(filepath)
+    if not filepath.exists():
+        raise FileNotFoundError(&#34;you should give us a existed file&#39;s path&#34;)
+    return Image_LocalFile(filepath, method)</code></pre>
+</details>
+</dd>
+<dt id="graia.application.message.elements.internal.Image.fromNetworkAddress"><code class="name flex">
+<span>def <span class="ident">fromNetworkAddress</span></span>(<span>url: str, method: Union[<a title="graia.application.entities.UploadMethods" href="../../entities.html#graia.application.entities.UploadMethods">UploadMethods</a>, NoneType] = None) ‑> <a title="graia.application.message.elements.internal.Image" href="#graia.application.message.elements.internal.Image">Image</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>从不保证有效性的网络位置中创建一个 Shadow Element, 以此在发送时自动从该指定位置获取并作为图片上传至服务器,
+并借此使其可能包含的图片成功发送.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>url</code></strong></dt>
+<dd>(str): 可以是任意 http/https 的 url, 不保证其有效性, 且可能抛出任意形式的网络错误</dd>
+<dt><strong><code>method</code></strong> :&ensp;<code>Optional[UploadMethods]</code>, default <code>= None</code></dt>
+<dd>图片上传时使用的方法, 通常可以使程序自行判定.</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>ClientResponseError</code></dt>
+<dd>HTTP 网络请求错误</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>[Shadow Element]</code></dt>
+<dd>返回值为一合法, 但不包括任何 Image 特征属性的叠加态消息元素; 其包含有一 asFlash 方法,
+可以将当前图片转为闪照形式发送.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@classmethod
+def fromNetworkAddress(
+    cls, url: str, method: Optional[UploadMethods] = None
+) -&gt; &#34;Image&#34;:
+    &#34;&#34;&#34;从不保证有效性的网络位置中创建一个 Shadow Element, 以此在发送时自动从该指定位置获取并作为图片上传至服务器,
+    并借此使其可能包含的图片成功发送.
+
+    Args:
+        url: (str): 可以是任意 http/https 的 url, 不保证其有效性, 且可能抛出任意形式的网络错误
+        method (Optional[UploadMethods], default = None): 图片上传时使用的方法, 通常可以使程序自行判定.
+
+    Raises:
+        ClientResponseError: HTTP 网络请求错误
+
+    Returns:
+        [Shadow Element]: 返回值为一合法, 但不包括任何 Image 特征属性的叠加态消息元素; 其包含有一 asFlash 方法,
+            可以将当前图片转为闪照形式发送.
+    &#34;&#34;&#34;
+    return Image_NetworkAddress(url, method)</code></pre>
+</details>
+</dd>
+<dt id="graia.application.message.elements.internal.Image.fromUnsafeAddress"><code class="name flex">
+<span>def <span class="ident">fromUnsafeAddress</span></span>(<span>url: str) ‑> <a title="graia.application.message.elements.external.Image" href="external.html#graia.application.message.elements.external.Image">Image</a></span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@classmethod
+def fromUnsafeAddress(cls, url: str) -&gt; &#34;External.Image&#34;:
+    return External.Image(url=url)</code></pre>
+</details>
+</dd>
+<dt id="graia.application.message.elements.internal.Image.fromUnsafeBytes"><code class="name flex">
+<span>def <span class="ident">fromUnsafeBytes</span></span>(<span>image_bytes: bytes, method: Union[<a title="graia.application.entities.UploadMethods" href="../../entities.html#graia.application.entities.UploadMethods">UploadMethods</a>, NoneType] = None) ‑> <a title="graia.application.message.elements.internal.Image" href="#graia.application.message.elements.internal.Image">Image</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>从不保证有效性的 bytes 中创建一个 Shadow Element, 以此在发送时自动作为图片上传至服务器, 并借此使其可能包含的图片成功发送.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>image_bytes</code></strong></dt>
+<dd>(bytes): 任意 bytes, 不保证内部可能的图片的有效性</dd>
+<dt><strong><code>method</code></strong> :&ensp;<code>Optional[UploadMethods]</code>, default <code>= None</code></dt>
+<dd>图片上传时使用的方法, 通常可以使程序自行判定.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>[Shadow Element]</code></dt>
+<dd>返回值为一合法, 但不包括任何 Image 特征属性的叠加态消息元素; 其包含有一 asFlash 方法,
+可以将当前图片转为闪照形式发送.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@classmethod
+def fromUnsafeBytes(
+    cls, image_bytes: bytes, method: Optional[UploadMethods] = None
+) -&gt; &#34;Image&#34;:
+    &#34;&#34;&#34;从不保证有效性的 bytes 中创建一个 Shadow Element, 以此在发送时自动作为图片上传至服务器, 并借此使其可能包含的图片成功发送.
+
+    Args:
+        image_bytes: (bytes): 任意 bytes, 不保证内部可能的图片的有效性
+        method (Optional[UploadMethods], default = None): 图片上传时使用的方法, 通常可以使程序自行判定.
+
+    Returns:
+        [Shadow Element]: 返回值为一合法, 但不包括任何 Image 特征属性的叠加态消息元素; 其包含有一 asFlash 方法,
+            可以将当前图片转为闪照形式发送.
+    &#34;&#34;&#34;
+    return Image_UnsafeBytes(image_bytes, method)</code></pre>
+</details>
+</dd>
+<dt id="graia.application.message.elements.internal.Image.fromUnsafePath"><code class="name flex">
+<span>def <span class="ident">fromUnsafePath</span></span>(<span>path: Union[pathlib.Path, str]) ‑> <a title="graia.application.message.elements.external.Image" href="external.html#graia.application.message.elements.external.Image">Image</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>不检查路径安全性, 直接实例化元素, 让 mirai-api-http 自行读取图片文件.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>path</code></strong> :&ensp;<code>Union[Path, str]</code></dt>
+<dd>图片文件路径</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code><a title="graia.application.message.elements.internal.Image" href="#graia.application.message.elements.internal.Image">Image</a></code></dt>
+<dd>作为外部态存在的 Image 消息元素</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@classmethod
+def fromUnsafePath(cls, path: Union[Path, str]) -&gt; &#34;External.Image&#34;:
+    &#34;&#34;&#34;不检查路径安全性, 直接实例化元素, 让 mirai-api-http 自行读取图片文件.
+
+    Args:
+        path (Union[Path, str]): 图片文件路径
+
+    Returns:
+        Image: 作为外部态存在的 Image 消息元素
+    &#34;&#34;&#34;
+    return External.Image(path=str(path))</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="graia.application.message.elements.internal.Image.asDisplay"><code class="name flex">
+<span>def <span class="ident">asDisplay</span></span>(<span>self) ‑> str</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def asDisplay(self) -&gt; str:
+    return &#34;[图片]&#34;</code></pre>
+</details>
+</dd>
+<dt id="graia.application.message.elements.internal.Image.asFlash"><code class="name flex">
+<span>def <span class="ident">asFlash</span></span>(<span>self) ‑> <a title="graia.application.message.elements.internal.FlashImage" href="#graia.application.message.elements.internal.FlashImage">FlashImage</a></span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def asFlash(self) -&gt; &#34;FlashImage&#34;:
+    return FlashImage.fromOriginalImage(self)</code></pre>
+</details>
+</dd>
+<dt id="graia.application.message.elements.internal.Image.asSerializationString"><code class="name flex">
+<span>def <span class="ident">asSerializationString</span></span>(<span>self) ‑> str</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def asSerializationString(self) -&gt; str:
+    return f&#34;[mirai:image:{self.imageId}]&#34;</code></pre>
+</details>
+</dd>
+<dt id="graia.application.message.elements.internal.Image.http_to_bytes"><code class="name flex">
+<span>async def <span class="ident">http_to_bytes</span></span>(<span>self, url: str = None) ‑> bytes</span>
+</code></dt>
+<dd>
+<div class="desc"><p>从远端服务器获取图片的 bytes, 注意, 你无法获取并不包含 url 属性的本元素的 bytes.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>url</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>如果提供, 则从本参数获取 bytes. 默认为 None.</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>ValueError</code></dt>
+<dd>你尝试获取并不包含 url 属性的本元素的 bytes.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>bytes</code></dt>
+<dd>图片原始数据</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def http_to_bytes(self, url: str = None) -&gt; bytes:
+    &#34;&#34;&#34;从远端服务器获取图片的 bytes, 注意, 你无法获取并不包含 url 属性的本元素的 bytes.
+
+    Args:
+        url (str, optional): 如果提供, 则从本参数获取 bytes. 默认为 None.
+
+    Raises:
+        ValueError: 你尝试获取并不包含 url 属性的本元素的 bytes.
+
+    Returns:
+        bytes: 图片原始数据
+    &#34;&#34;&#34;
+    if not (self.url or url):
+        raise ValueError(&#34;you should offer a url.&#34;)
+    async with ClientSession() as session:
+        async with session.get(self.url or url) as response:
+            response.raise_for_status()
+            return await response.read()</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="graia.application.message.elements.InternalElement" href="index.html#graia.application.message.elements.InternalElement">InternalElement</a></b></code>:
+<ul class="hlist">
+<li><code><a title="graia.application.message.elements.InternalElement.fromExternal" href="index.html#graia.application.message.elements.InternalElement.fromExternal">fromExternal</a></code></li>
+<li><code><a title="graia.application.message.elements.InternalElement.toExternal" href="index.html#graia.application.message.elements.InternalElement.toExternal">toExternal</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="graia.application.message.elements.internal.ImageType"><code class="flex name class">
+<span>class <span class="ident">ImageType</span></span>
+<span>(</span><span>value, names=None, *, module=None, qualname=None, type=None, start=1)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>An enumeration.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ImageType(Enum):
+    Friend = &#34;Friend&#34;
+    Group = &#34;Group&#34;
+    Temp = &#34;Temp&#34;
+    Unknown = &#34;Unknown&#34;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="graia.application.message.elements.internal.ImageType.Friend"><code class="name">var <span class="ident">Friend</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="graia.application.message.elements.internal.ImageType.Group"><code class="name">var <span class="ident">Group</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="graia.application.message.elements.internal.ImageType.Temp"><code class="name">var <span class="ident">Temp</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="graia.application.message.elements.internal.ImageType.Unknown"><code class="name">var <span class="ident">Unknown</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="graia.application.message.elements.internal.Image_LocalFile"><code class="flex name class">
+<span>class <span class="ident">Image_LocalFile</span></span>
+<span>(</span><span>filepath: pathlib.Path, method: Union[<a title="graia.application.entities.UploadMethods" href="../../entities.html#graia.application.entities.UploadMethods">UploadMethods</a>, NoneType] = None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises ValidationError if the input data cannot be parsed to form a valid model.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Image_LocalFile(ShadowImage):
+    filepath: Path
+
+    def __init__(self, filepath: Path, method: Optional[UploadMethods] = None) -&gt; None:
+        super().__init__(filepath=filepath, method=method)
+
+    async def toExternal(self):
+        app = application.get()
+        try:
+            methodd = self.method or image_method.get()
+        except LookupError:
+            raise ValueError(
+                &#34;you should give the &#39;method&#39; for upload when you are out of the event receiver.&#34;
+            )
+        if not self.is_flash:
+            return await app.uploadImage(
+                self.filepath.read_bytes(), methodd, return_external=True
+            )
+        else:
+            return FlashImage.fromExternal(
+                await app.uploadImage(
+                    self.filepath.read_bytes(), methodd, return_external=True
+                )
+            ).toExternal()
+
+    async def getReal(self, method: UploadMethods) -&gt; &#34;Image&#34;:
+        &#34;&#34;&#34;从本 Shadow Element 中生成一真正的 Image 对象.
+        Args:
+            method (UploadMethods): 所需求的图片的上传类型, 具体请阅读 UploadMethods 的相关文档.
+        Raises:
+            ClientResponseError: HTTP 网络请求错误
+        Returns:
+            Image: 所生成的, 真正的 Image 对象.
+        &#34;&#34;&#34;
+        app = application.get()
+        return await app.uploadImage(
+            self.filepath.read_bytes(), method, return_external=True
+        )</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="graia.application.message.elements.internal.ShadowImage" href="#graia.application.message.elements.internal.ShadowImage">ShadowImage</a></li>
+<li><a title="graia.application.message.elements.InternalElement" href="index.html#graia.application.message.elements.InternalElement">InternalElement</a></li>
+<li><a title="graia.application.message.elements.ExternalElement" href="index.html#graia.application.message.elements.ExternalElement">ExternalElement</a></li>
+<li><a title="graia.application.message.elements.ShadowElement" href="index.html#graia.application.message.elements.ShadowElement">ShadowElement</a></li>
+<li><a title="graia.application.message.elements.Element" href="index.html#graia.application.message.elements.Element">Element</a></li>
+<li>pydantic.main.BaseModel</li>
+<li>pydantic.utils.Representation</li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="graia.application.message.elements.internal.Image_LocalFile.filepath"><code class="name">var <span class="ident">filepath</span> : pathlib.Path</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="graia.application.message.elements.internal.Image_LocalFile.getReal"><code class="name flex">
+<span>async def <span class="ident">getReal</span></span>(<span>self, method: <a title="graia.application.entities.UploadMethods" href="../../entities.html#graia.application.entities.UploadMethods">UploadMethods</a>) ‑> <a title="graia.application.message.elements.internal.Image" href="#graia.application.message.elements.internal.Image">Image</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>从本 Shadow Element 中生成一真正的 Image 对象.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>method</code></strong> :&ensp;<code>UploadMethods</code></dt>
+<dd>所需求的图片的上传类型, 具体请阅读 UploadMethods 的相关文档.</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>ClientResponseError</code></dt>
+<dd>HTTP 网络请求错误</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code><a title="graia.application.message.elements.internal.Image" href="#graia.application.message.elements.internal.Image">Image</a></code></dt>
+<dd>所生成的, 真正的 Image 对象.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def getReal(self, method: UploadMethods) -&gt; &#34;Image&#34;:
+    &#34;&#34;&#34;从本 Shadow Element 中生成一真正的 Image 对象.
+    Args:
+        method (UploadMethods): 所需求的图片的上传类型, 具体请阅读 UploadMethods 的相关文档.
+    Raises:
+        ClientResponseError: HTTP 网络请求错误
+    Returns:
+        Image: 所生成的, 真正的 Image 对象.
+    &#34;&#34;&#34;
+    app = application.get()
+    return await app.uploadImage(
+        self.filepath.read_bytes(), method, return_external=True
+    )</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="graia.application.message.elements.internal.ShadowImage" href="#graia.application.message.elements.internal.ShadowImage">ShadowImage</a></b></code>:
+<ul class="hlist">
+<li><code><a title="graia.application.message.elements.internal.ShadowImage.fromExternal" href="index.html#graia.application.message.elements.InternalElement.fromExternal">fromExternal</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.ShadowImage.toExternal" href="index.html#graia.application.message.elements.InternalElement.toExternal">toExternal</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="graia.application.message.elements.internal.Image_NetworkAddress"><code class="flex name class">
+<span>class <span class="ident">Image_NetworkAddress</span></span>
+<span>(</span><span>url: str, method: Union[<a title="graia.application.entities.UploadMethods" href="../../entities.html#graia.application.entities.UploadMethods">UploadMethods</a>, NoneType] = None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises ValidationError if the input data cannot be parsed to form a valid model.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Image_NetworkAddress(ShadowImage):
+    url: str
+
+    def __init__(self, url: str, method: Optional[UploadMethods] = None) -&gt; None:
+        super().__init__(url=url, method=method)
+
+    async def toExternal(self):
+        app = application.get()
+        try:
+            methodd = self.method or image_method.get()
+        except LookupError:
+            raise ValueError(
+                &#34;you should give the &#39;method&#39; for upload when you are out of the event receiver.&#34;
+            )
+
+        async with app.session.get(self.url) as response:
+            response.raise_for_status()
+            if not self.is_flash:
+                return await app.uploadImage(
+                    await response.read(), methodd, return_external=True
+                )
+            else:
+                return FlashImage.fromExternal(
+                    await app.uploadImage(
+                        await response.read(), methodd, return_external=True
+                    )
+                ).toExternal()
+
+    async def getReal(self, method: UploadMethods) -&gt; &#34;Image&#34;:
+        &#34;&#34;&#34;从本 Shadow Element 中生成一真正的 Image 对象.
+        Args:
+            method (UploadMethods): 所需求的图片的上传类型, 具体请阅读 UploadMethods 的相关文档.
+        Raises:
+            ClientResponseError: HTTP 网络请求错误
+        Returns:
+            Image: 所生成的, 真正的 Image 对象.
+        &#34;&#34;&#34;
+        app = application.get()
+        async with aiohttp.ClientSession() as session:
+            async with session.get(self.url) as response:
+                response.raise_for_status()
+                return await app.uploadImage(await response.read(), method)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="graia.application.message.elements.internal.ShadowImage" href="#graia.application.message.elements.internal.ShadowImage">ShadowImage</a></li>
+<li><a title="graia.application.message.elements.InternalElement" href="index.html#graia.application.message.elements.InternalElement">InternalElement</a></li>
+<li><a title="graia.application.message.elements.ExternalElement" href="index.html#graia.application.message.elements.ExternalElement">ExternalElement</a></li>
+<li><a title="graia.application.message.elements.ShadowElement" href="index.html#graia.application.message.elements.ShadowElement">ShadowElement</a></li>
+<li><a title="graia.application.message.elements.Element" href="index.html#graia.application.message.elements.Element">Element</a></li>
+<li>pydantic.main.BaseModel</li>
+<li>pydantic.utils.Representation</li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="graia.application.message.elements.internal.Image_NetworkAddress.url"><code class="name">var <span class="ident">url</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="graia.application.message.elements.internal.Image_NetworkAddress.getReal"><code class="name flex">
+<span>async def <span class="ident">getReal</span></span>(<span>self, method: <a title="graia.application.entities.UploadMethods" href="../../entities.html#graia.application.entities.UploadMethods">UploadMethods</a>) ‑> <a title="graia.application.message.elements.internal.Image" href="#graia.application.message.elements.internal.Image">Image</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>从本 Shadow Element 中生成一真正的 Image 对象.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>method</code></strong> :&ensp;<code>UploadMethods</code></dt>
+<dd>所需求的图片的上传类型, 具体请阅读 UploadMethods 的相关文档.</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>ClientResponseError</code></dt>
+<dd>HTTP 网络请求错误</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code><a title="graia.application.message.elements.internal.Image" href="#graia.application.message.elements.internal.Image">Image</a></code></dt>
+<dd>所生成的, 真正的 Image 对象.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def getReal(self, method: UploadMethods) -&gt; &#34;Image&#34;:
+    &#34;&#34;&#34;从本 Shadow Element 中生成一真正的 Image 对象.
+    Args:
+        method (UploadMethods): 所需求的图片的上传类型, 具体请阅读 UploadMethods 的相关文档.
+    Raises:
+        ClientResponseError: HTTP 网络请求错误
+    Returns:
+        Image: 所生成的, 真正的 Image 对象.
+    &#34;&#34;&#34;
+    app = application.get()
+    async with aiohttp.ClientSession() as session:
+        async with session.get(self.url) as response:
+            response.raise_for_status()
+            return await app.uploadImage(await response.read(), method)</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="graia.application.message.elements.internal.ShadowImage" href="#graia.application.message.elements.internal.ShadowImage">ShadowImage</a></b></code>:
+<ul class="hlist">
+<li><code><a title="graia.application.message.elements.internal.ShadowImage.fromExternal" href="index.html#graia.application.message.elements.InternalElement.fromExternal">fromExternal</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.ShadowImage.toExternal" href="index.html#graia.application.message.elements.InternalElement.toExternal">toExternal</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="graia.application.message.elements.internal.Image_UnsafeBytes"><code class="flex name class">
+<span>class <span class="ident">Image_UnsafeBytes</span></span>
+<span>(</span><span>image_bytes: bytes, method: Union[<a title="graia.application.entities.UploadMethods" href="../../entities.html#graia.application.entities.UploadMethods">UploadMethods</a>, NoneType] = None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises ValidationError if the input data cannot be parsed to form a valid model.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Image_UnsafeBytes(ShadowImage):
+    image_bytes: bytes
+
+    def __init__(
+        self, image_bytes: bytes, method: Optional[UploadMethods] = None
+    ) -&gt; None:
+        super().__init__(image_bytes=image_bytes, method=method)
+
+    async def toExternal(self):
+        app = application.get()
+        try:
+            methodd = self.method or image_method.get()
+        except LookupError:
+            raise ValueError(
+                &#34;you should give the &#39;method&#39; for upload when you are out of the event receiver.&#34;
+            )
+        if not self.is_flash:
+            return await app.uploadImage(
+                self.image_bytes, methodd, return_external=True
+            )
+        else:
+            return FlashImage.fromExternal(
+                await app.uploadImage(self.image_bytes, methodd, return_external=True)
+            ).toExternal()
+
+    async def getReal(self, method: UploadMethods) -&gt; &#34;Image&#34;:
+        &#34;&#34;&#34;从本 Shadow Element 中生成一真正的 Image 对象.
+        Args:
+            method (UploadMethods): 所需求的图片的上传类型, 具体请阅读 UploadMethods 的相关文档.
+        Raises:
+            ClientResponseError: HTTP 网络请求错误
+        Returns:
+            Image: 所生成的, 真正的 Image 对象.
+        &#34;&#34;&#34;
+        app = application.get()
+        return await app.uploadImage(self.image_bytes, method)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="graia.application.message.elements.internal.ShadowImage" href="#graia.application.message.elements.internal.ShadowImage">ShadowImage</a></li>
+<li><a title="graia.application.message.elements.InternalElement" href="index.html#graia.application.message.elements.InternalElement">InternalElement</a></li>
+<li><a title="graia.application.message.elements.ExternalElement" href="index.html#graia.application.message.elements.ExternalElement">ExternalElement</a></li>
+<li><a title="graia.application.message.elements.ShadowElement" href="index.html#graia.application.message.elements.ShadowElement">ShadowElement</a></li>
+<li><a title="graia.application.message.elements.Element" href="index.html#graia.application.message.elements.Element">Element</a></li>
+<li>pydantic.main.BaseModel</li>
+<li>pydantic.utils.Representation</li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="graia.application.message.elements.internal.Image_UnsafeBytes.image_bytes"><code class="name">var <span class="ident">image_bytes</span> : bytes</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="graia.application.message.elements.internal.Image_UnsafeBytes.getReal"><code class="name flex">
+<span>async def <span class="ident">getReal</span></span>(<span>self, method: <a title="graia.application.entities.UploadMethods" href="../../entities.html#graia.application.entities.UploadMethods">UploadMethods</a>) ‑> <a title="graia.application.message.elements.internal.Image" href="#graia.application.message.elements.internal.Image">Image</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>从本 Shadow Element 中生成一真正的 Image 对象.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>method</code></strong> :&ensp;<code>UploadMethods</code></dt>
+<dd>所需求的图片的上传类型, 具体请阅读 UploadMethods 的相关文档.</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>ClientResponseError</code></dt>
+<dd>HTTP 网络请求错误</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code><a title="graia.application.message.elements.internal.Image" href="#graia.application.message.elements.internal.Image">Image</a></code></dt>
+<dd>所生成的, 真正的 Image 对象.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def getReal(self, method: UploadMethods) -&gt; &#34;Image&#34;:
+    &#34;&#34;&#34;从本 Shadow Element 中生成一真正的 Image 对象.
+    Args:
+        method (UploadMethods): 所需求的图片的上传类型, 具体请阅读 UploadMethods 的相关文档.
+    Raises:
+        ClientResponseError: HTTP 网络请求错误
+    Returns:
+        Image: 所生成的, 真正的 Image 对象.
+    &#34;&#34;&#34;
+    app = application.get()
+    return await app.uploadImage(self.image_bytes, method)</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="graia.application.message.elements.internal.ShadowImage" href="#graia.application.message.elements.internal.ShadowImage">ShadowImage</a></b></code>:
+<ul class="hlist">
+<li><code><a title="graia.application.message.elements.internal.ShadowImage.fromExternal" href="index.html#graia.application.message.elements.InternalElement.fromExternal">fromExternal</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.ShadowImage.toExternal" href="index.html#graia.application.message.elements.InternalElement.toExternal">toExternal</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="graia.application.message.elements.internal.Json"><code class="flex name class">
+<span>class <span class="ident">Json</span></span>
+<span>(</span><span>json: Union[dict, str], *_, **__)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises ValidationError if the input data cannot be parsed to form a valid model.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Json(InternalElement, ExternalElement):
+    type = &#34;Json&#34;
+    Json: str = Field(..., alias=&#34;json&#34;)
+
+    def __init__(self, json: Union[dict, str], *_, **__) -&gt; None:
+        if isinstance(json, dict):
+            json = MJson.dumps(json)
+        super().__init__(json=json)
+
+    def dict(self, *args, **kwargs):
+        return super().dict(*args, **({**kwargs, &#34;by_alias&#34;: True}))
+
+    def asDisplay(self) -&gt; str:
+        return &#34;[JSON消息]&#34;
+
+    def toExternal(self) -&gt; &#34;Json&#34;:
+        return self
+
+    @classmethod
+    def fromExternal(_, external_element) -&gt; &#34;Json&#34;:
+        return external_element</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="graia.application.message.elements.InternalElement" href="index.html#graia.application.message.elements.InternalElement">InternalElement</a></li>
+<li><a title="graia.application.message.elements.ExternalElement" href="index.html#graia.application.message.elements.ExternalElement">ExternalElement</a></li>
+<li><a title="graia.application.message.elements.Element" href="index.html#graia.application.message.elements.Element">Element</a></li>
+<li>pydantic.main.BaseModel</li>
+<li>pydantic.utils.Representation</li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="graia.application.message.elements.internal.Json.Json"><code class="name">var <span class="ident">Json</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="graia.application.message.elements.internal.Json.asDisplay"><code class="name flex">
+<span>def <span class="ident">asDisplay</span></span>(<span>self) ‑> str</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def asDisplay(self) -&gt; str:
+    return &#34;[JSON消息]&#34;</code></pre>
+</details>
+</dd>
+<dt id="graia.application.message.elements.internal.Json.dict"><code class="name flex">
+<span>def <span class="ident">dict</span></span>(<span>self, *args, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Generate a dictionary representation of the model, optionally specifying which fields to include or exclude.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def dict(self, *args, **kwargs):
+    return super().dict(*args, **({**kwargs, &#34;by_alias&#34;: True}))</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="graia.application.message.elements.InternalElement" href="index.html#graia.application.message.elements.InternalElement">InternalElement</a></b></code>:
+<ul class="hlist">
+<li><code><a title="graia.application.message.elements.InternalElement.fromExternal" href="index.html#graia.application.message.elements.InternalElement.fromExternal">fromExternal</a></code></li>
+<li><code><a title="graia.application.message.elements.InternalElement.toExternal" href="index.html#graia.application.message.elements.InternalElement.toExternal">toExternal</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="graia.application.message.elements.internal.Plain"><code class="flex name class">
+<span>class <span class="ident">Plain</span></span>
+<span>(</span><span>text: str, *_, **__)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>实例化一个 Plain 消息元素, 用于承载消息中的文字.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>text</code></strong> :&ensp;<code>str</code></dt>
+<dd>元素所包含的文字</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Plain(InternalElement, ExternalElement):
+    type: str = &#34;Plain&#34;
+    text: str
+
+    def __init__(self, text: str, *_, **__) -&gt; NoReturn:
+        &#34;&#34;&#34;实例化一个 Plain 消息元素, 用于承载消息中的文字.
+
+        Args:
+            text (str): 元素所包含的文字
+        &#34;&#34;&#34;
+        super().__init__(text=text)
+
+    def toExternal(self) -&gt; &#34;Plain&#34;:
+        return self
+
+    @classmethod
+    def fromExternal(_, external_element) -&gt; &#34;Plain&#34;:
+        return external_element
+
+    def asDisplay(self) -&gt; str:
+        return self.text
+
+    def asSerializationString(self) -&gt; str:
+        return self.text</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="graia.application.message.elements.InternalElement" href="index.html#graia.application.message.elements.InternalElement">InternalElement</a></li>
+<li><a title="graia.application.message.elements.ExternalElement" href="index.html#graia.application.message.elements.ExternalElement">ExternalElement</a></li>
+<li><a title="graia.application.message.elements.Element" href="index.html#graia.application.message.elements.Element">Element</a></li>
+<li>pydantic.main.BaseModel</li>
+<li>pydantic.utils.Representation</li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="graia.application.message.elements.internal.Plain.text"><code class="name">var <span class="ident">text</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="graia.application.message.elements.internal.Plain.type"><code class="name">var <span class="ident">type</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="graia.application.message.elements.internal.Plain.asDisplay"><code class="name flex">
+<span>def <span class="ident">asDisplay</span></span>(<span>self) ‑> str</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def asDisplay(self) -&gt; str:
+    return self.text</code></pre>
+</details>
+</dd>
+<dt id="graia.application.message.elements.internal.Plain.asSerializationString"><code class="name flex">
+<span>def <span class="ident">asSerializationString</span></span>(<span>self) ‑> str</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def asSerializationString(self) -&gt; str:
+    return self.text</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="graia.application.message.elements.InternalElement" href="index.html#graia.application.message.elements.InternalElement">InternalElement</a></b></code>:
+<ul class="hlist">
+<li><code><a title="graia.application.message.elements.InternalElement.fromExternal" href="index.html#graia.application.message.elements.InternalElement.fromExternal">fromExternal</a></code></li>
+<li><code><a title="graia.application.message.elements.InternalElement.toExternal" href="index.html#graia.application.message.elements.InternalElement.toExternal">toExternal</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="graia.application.message.elements.internal.Poke"><code class="flex name class">
+<span>class <span class="ident">Poke</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises ValidationError if the input data cannot be parsed to form a valid model.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Poke(InternalElement, ExternalElement):
+    type = &#34;Poke&#34;
+    name: PokeMethods
+
+    def asDisplay(self) -&gt; str:
+        return &#34;[戳一戳:{0}]&#34;.format(self.name)
+
+    def toExternal(self) -&gt; &#34;Poke&#34;:
+        return self
+
+    @classmethod
+    def fromExternal(_, external_element) -&gt; &#34;Poke&#34;:
+        return external_element</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="graia.application.message.elements.InternalElement" href="index.html#graia.application.message.elements.InternalElement">InternalElement</a></li>
+<li><a title="graia.application.message.elements.ExternalElement" href="index.html#graia.application.message.elements.ExternalElement">ExternalElement</a></li>
+<li><a title="graia.application.message.elements.Element" href="index.html#graia.application.message.elements.Element">Element</a></li>
+<li>pydantic.main.BaseModel</li>
+<li>pydantic.utils.Representation</li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="graia.application.message.elements.internal.Poke.name"><code class="name">var <span class="ident">name</span> : <a title="graia.application.message.elements.internal.PokeMethods" href="#graia.application.message.elements.internal.PokeMethods">PokeMethods</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="graia.application.message.elements.internal.Poke.asDisplay"><code class="name flex">
+<span>def <span class="ident">asDisplay</span></span>(<span>self) ‑> str</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def asDisplay(self) -&gt; str:
+    return &#34;[戳一戳:{0}]&#34;.format(self.name)</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="graia.application.message.elements.InternalElement" href="index.html#graia.application.message.elements.InternalElement">InternalElement</a></b></code>:
+<ul class="hlist">
+<li><code><a title="graia.application.message.elements.InternalElement.fromExternal" href="index.html#graia.application.message.elements.InternalElement.fromExternal">fromExternal</a></code></li>
+<li><code><a title="graia.application.message.elements.InternalElement.toExternal" href="index.html#graia.application.message.elements.InternalElement.toExternal">toExternal</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="graia.application.message.elements.internal.PokeMethods"><code class="flex name class">
+<span>class <span class="ident">PokeMethods</span></span>
+<span>(</span><span>value, names=None, *, module=None, qualname=None, type=None, start=1)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>An enumeration.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class PokeMethods(Enum):
+    Poke = &#34;Poke&#34;
+    ShowLove = &#34;ShowLove&#34;
+    Like = &#34;Like&#34;
+    Heartbroken = &#34;Heartbroken&#34;
+    SixSixSix = &#34;SixSixSix&#34;
+    FangDaZhao = &#34;FangDaZhao&#34;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="graia.application.message.elements.internal.PokeMethods.FangDaZhao"><code class="name">var <span class="ident">FangDaZhao</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="graia.application.message.elements.internal.PokeMethods.Heartbroken"><code class="name">var <span class="ident">Heartbroken</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="graia.application.message.elements.internal.PokeMethods.Like"><code class="name">var <span class="ident">Like</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="graia.application.message.elements.internal.PokeMethods.Poke"><code class="name">var <span class="ident">Poke</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="graia.application.message.elements.internal.PokeMethods.ShowLove"><code class="name">var <span class="ident">ShowLove</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="graia.application.message.elements.internal.PokeMethods.SixSixSix"><code class="name">var <span class="ident">SixSixSix</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="graia.application.message.elements.internal.Quote"><code class="flex name class">
+<span>class <span class="ident">Quote</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>表示消息中回复其他消息/用户的部分, 通常包含一个完整的消息链(<code>origin</code> 属性)</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises ValidationError if the input data cannot be parsed to form a valid model.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Quote(InternalElement, ExternalElement):
+    &#34;表示消息中回复其他消息/用户的部分, 通常包含一个完整的消息链(`origin` 属性)&#34;
+    id: int
+    groupId: int
+    senderId: int
+    targetId: int
+    origin: &#34;MessageChain&#34;
+
+    @validator(&#34;origin&#34;, pre=True, allow_reuse=True)
+    def _(cls, v):
+        from ..chain import MessageChain
+
+        return MessageChain.parse_obj(v)
+
+    @classmethod
+    def fromExternal(_, external_element) -&gt; &#34;Quote&#34;:
+        return external_element
+
+    def asSerializationString(self) -&gt; str:
+        return f&#34; [mirai:quote:{self.id}]&#34;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="graia.application.message.elements.InternalElement" href="index.html#graia.application.message.elements.InternalElement">InternalElement</a></li>
+<li><a title="graia.application.message.elements.ExternalElement" href="index.html#graia.application.message.elements.ExternalElement">ExternalElement</a></li>
+<li><a title="graia.application.message.elements.Element" href="index.html#graia.application.message.elements.Element">Element</a></li>
+<li>pydantic.main.BaseModel</li>
+<li>pydantic.utils.Representation</li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="graia.application.message.elements.internal.Quote.groupId"><code class="name">var <span class="ident">groupId</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="graia.application.message.elements.internal.Quote.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="graia.application.message.elements.internal.Quote.origin"><code class="name">var <span class="ident">origin</span> : <a title="graia.application.message.chain.MessageChain" href="../chain.html#graia.application.message.chain.MessageChain">MessageChain</a></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="graia.application.message.elements.internal.Quote.senderId"><code class="name">var <span class="ident">senderId</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="graia.application.message.elements.internal.Quote.targetId"><code class="name">var <span class="ident">targetId</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="graia.application.message.elements.internal.Quote.asSerializationString"><code class="name flex">
+<span>def <span class="ident">asSerializationString</span></span>(<span>self) ‑> str</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def asSerializationString(self) -&gt; str:
+    return f&#34; [mirai:quote:{self.id}]&#34;</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="graia.application.message.elements.InternalElement" href="index.html#graia.application.message.elements.InternalElement">InternalElement</a></b></code>:
+<ul class="hlist">
+<li><code><a title="graia.application.message.elements.InternalElement.fromExternal" href="index.html#graia.application.message.elements.InternalElement.fromExternal">fromExternal</a></code></li>
+<li><code><a title="graia.application.message.elements.InternalElement.toExternal" href="index.html#graia.application.message.elements.InternalElement.toExternal">toExternal</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="graia.application.message.elements.internal.ShadowImage"><code class="flex name class">
+<span>class <span class="ident">ShadowImage</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises ValidationError if the input data cannot be parsed to form a valid model.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class ShadowImage(InternalElement, ExternalElement, ShadowElement):
+    method: Optional[UploadMethods]
+    is_flash: bool = False
+
+    def asFlash(self):
+        self.is_flash = True
+        return self
+
+    def fromExternal(cls, external_element) -&gt; &#34;InternalElement&#34;:
+        return external_element
+
+    class Config:
+        allow_mutation = True</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="graia.application.message.elements.InternalElement" href="index.html#graia.application.message.elements.InternalElement">InternalElement</a></li>
+<li><a title="graia.application.message.elements.ExternalElement" href="index.html#graia.application.message.elements.ExternalElement">ExternalElement</a></li>
+<li><a title="graia.application.message.elements.ShadowElement" href="index.html#graia.application.message.elements.ShadowElement">ShadowElement</a></li>
+<li><a title="graia.application.message.elements.Element" href="index.html#graia.application.message.elements.Element">Element</a></li>
+<li>pydantic.main.BaseModel</li>
+<li>pydantic.utils.Representation</li>
+<li>abc.ABC</li>
+</ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="graia.application.message.elements.internal.Image_LocalFile" href="#graia.application.message.elements.internal.Image_LocalFile">Image_LocalFile</a></li>
+<li><a title="graia.application.message.elements.internal.Image_NetworkAddress" href="#graia.application.message.elements.internal.Image_NetworkAddress">Image_NetworkAddress</a></li>
+<li><a title="graia.application.message.elements.internal.Image_UnsafeBytes" href="#graia.application.message.elements.internal.Image_UnsafeBytes">Image_UnsafeBytes</a></li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="graia.application.message.elements.internal.ShadowImage.Config"><code class="name">var <span class="ident">Config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="graia.application.message.elements.internal.ShadowImage.is_flash"><code class="name">var <span class="ident">is_flash</span> : bool</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="graia.application.message.elements.internal.ShadowImage.method"><code class="name">var <span class="ident">method</span> : Union[<a title="graia.application.entities.UploadMethods" href="../../entities.html#graia.application.entities.UploadMethods">UploadMethods</a>, NoneType]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="graia.application.message.elements.internal.ShadowImage.asFlash"><code class="name flex">
+<span>def <span class="ident">asFlash</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def asFlash(self):
+    self.is_flash = True
+    return self</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="graia.application.message.elements.InternalElement" href="index.html#graia.application.message.elements.InternalElement">InternalElement</a></b></code>:
+<ul class="hlist">
+<li><code><a title="graia.application.message.elements.InternalElement.fromExternal" href="index.html#graia.application.message.elements.InternalElement.fromExternal">fromExternal</a></code></li>
+<li><code><a title="graia.application.message.elements.InternalElement.toExternal" href="index.html#graia.application.message.elements.InternalElement.toExternal">toExternal</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="graia.application.message.elements.internal.Source"><code class="flex name class">
+<span>class <span class="ident">Source</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>表示消息在一个特定聊天区域内的唯一标识</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises ValidationError if the input data cannot be parsed to form a valid model.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Source(InternalElement, ExternalElement):
+    &#34;表示消息在一个特定聊天区域内的唯一标识&#34;
+    id: int
+    time: datetime
+
+    @classmethod
+    def fromExternal(_, external_element) -&gt; &#34;Source&#34;:
+        return external_element
+
+    def asSerializationString(self) -&gt; str:
+        return f&#34;[mirai:source:{self.id},{int(self.time.timestamp())}]&#34;
+
+    class Config:
+        json_encoders = {
+            datetime: lambda v: int(v.timestamp()),
+        }</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="graia.application.message.elements.InternalElement" href="index.html#graia.application.message.elements.InternalElement">InternalElement</a></li>
+<li><a title="graia.application.message.elements.ExternalElement" href="index.html#graia.application.message.elements.ExternalElement">ExternalElement</a></li>
+<li><a title="graia.application.message.elements.Element" href="index.html#graia.application.message.elements.Element">Element</a></li>
+<li>pydantic.main.BaseModel</li>
+<li>pydantic.utils.Representation</li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="graia.application.message.elements.internal.Source.Config"><code class="name">var <span class="ident">Config</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="graia.application.message.elements.internal.Source.id"><code class="name">var <span class="ident">id</span> : int</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="graia.application.message.elements.internal.Source.time"><code class="name">var <span class="ident">time</span> : datetime.datetime</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="graia.application.message.elements.internal.Source.asSerializationString"><code class="name flex">
+<span>def <span class="ident">asSerializationString</span></span>(<span>self) ‑> str</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def asSerializationString(self) -&gt; str:
+    return f&#34;[mirai:source:{self.id},{int(self.time.timestamp())}]&#34;</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="graia.application.message.elements.InternalElement" href="index.html#graia.application.message.elements.InternalElement">InternalElement</a></b></code>:
+<ul class="hlist">
+<li><code><a title="graia.application.message.elements.InternalElement.fromExternal" href="index.html#graia.application.message.elements.InternalElement.fromExternal">fromExternal</a></code></li>
+<li><code><a title="graia.application.message.elements.InternalElement.toExternal" href="index.html#graia.application.message.elements.InternalElement.toExternal">toExternal</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="graia.application.message.elements.internal.Voice"><code class="flex name class">
+<span>class <span class="ident">Voice</span></span>
+<span>(</span><span>**data: Any)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises ValidationError if the input data cannot be parsed to form a valid model.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Voice(InternalElement):
+    voiceId: Optional[str] = None
+    url: Optional[str] = None
+    path: Optional[str] = None
+    type: Optional[VoiceUploadType]
+
+    def toExternal(self):
+        return External.Voice(voiceId=self.voiceId, url=self.url, path=self.path)
+
+    @classmethod
+    def fromExternal(cls, external_element) -&gt; &#34;Voice&#34;:
+        return cls(
+            voiceId=external_element.voiceId,
+            url=external_element.url,
+            path=external_element.path,
+        )
+
+    def asSerializationString(self) -&gt; str:
+        return f&#34;[mirai:voice:{self.voiceId}]&#34;
+
+    def asDisplay(self) -&gt; str:
+        return &#34;[语音]&#34;
+
+    @validator(&#34;type&#34;, always=True, allow_reuse=True)
+    def _(cls, v, values) -&gt; VoiceUploadType:
+        if v:
+            return v
+        if &#34;voiceId&#34; not in values:
+            return VoiceUploadType.Unknown
+        if not values[&#34;voiceId&#34;]:
+            return VoiceUploadType.Unknown
+        if values[&#34;voiceId&#34;]:
+            return VoiceUploadType.Group  # mirai 当前版本只支持群语音.
+
+    def fromLocalFile(
+        self, filepath: Union[str, Path], method: Optional[UploadMethods] = None
+    ) -&gt; &#34;Voice&#34;:
+        &#34;&#34;&#34;从本地文件中创建一个 Shadow Element, 以此在发送时自动上传语音至服务器, 并借此使包含的语音成功发送.
+
+        Args:
+            filepath (Union[Path, str]): 需要上传的图片路径, 可以是字符串也可以是 pathlib.Path 实例
+            method (Optional[UploadMethods], default = None): 语音上传时使用的方法, 通常可以使程序自行判定.
+
+        Raises:
+            FileNotFoundError: 所描述的语音文件在文件系统中不存在.
+
+        Returns:
+            [Shadow Element]: 返回值为一合法, 但不包括任何 Voice 特征属性的叠加态消息元素
+        &#34;&#34;&#34;
+        if isinstance(filepath, str):
+            filepath = Path(filepath)
+        if not filepath.exists():
+            raise FileNotFoundError(&#34;you should give us a existed file&#39;s path&#34;)
+        return Voice_LocalFile(filepath, method)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="graia.application.message.elements.InternalElement" href="index.html#graia.application.message.elements.InternalElement">InternalElement</a></li>
+<li><a title="graia.application.message.elements.Element" href="index.html#graia.application.message.elements.Element">Element</a></li>
+<li>pydantic.main.BaseModel</li>
+<li>pydantic.utils.Representation</li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="graia.application.message.elements.internal.Voice.path"><code class="name">var <span class="ident">path</span> : Union[str, NoneType]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="graia.application.message.elements.internal.Voice.type"><code class="name">var <span class="ident">type</span> : Union[<a title="graia.application.message.elements.internal.VoiceUploadType" href="#graia.application.message.elements.internal.VoiceUploadType">VoiceUploadType</a>, NoneType]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="graia.application.message.elements.internal.Voice.url"><code class="name">var <span class="ident">url</span> : Union[str, NoneType]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="graia.application.message.elements.internal.Voice.voiceId"><code class="name">var <span class="ident">voiceId</span> : Union[str, NoneType]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="graia.application.message.elements.internal.Voice.asDisplay"><code class="name flex">
+<span>def <span class="ident">asDisplay</span></span>(<span>self) ‑> str</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def asDisplay(self) -&gt; str:
+    return &#34;[语音]&#34;</code></pre>
+</details>
+</dd>
+<dt id="graia.application.message.elements.internal.Voice.asSerializationString"><code class="name flex">
+<span>def <span class="ident">asSerializationString</span></span>(<span>self) ‑> str</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def asSerializationString(self) -&gt; str:
+    return f&#34;[mirai:voice:{self.voiceId}]&#34;</code></pre>
+</details>
+</dd>
+<dt id="graia.application.message.elements.internal.Voice.fromLocalFile"><code class="name flex">
+<span>def <span class="ident">fromLocalFile</span></span>(<span>self, filepath: Union[str, pathlib.Path], method: Union[<a title="graia.application.entities.UploadMethods" href="../../entities.html#graia.application.entities.UploadMethods">UploadMethods</a>, NoneType] = None) ‑> <a title="graia.application.message.elements.internal.Voice" href="#graia.application.message.elements.internal.Voice">Voice</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>从本地文件中创建一个 Shadow Element, 以此在发送时自动上传语音至服务器, 并借此使包含的语音成功发送.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>filepath</code></strong> :&ensp;<code>Union[Path, str]</code></dt>
+<dd>需要上传的图片路径, 可以是字符串也可以是 pathlib.Path 实例</dd>
+<dt><strong><code>method</code></strong> :&ensp;<code>Optional[UploadMethods]</code>, default <code>= None</code></dt>
+<dd>语音上传时使用的方法, 通常可以使程序自行判定.</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>FileNotFoundError</code></dt>
+<dd>所描述的语音文件在文件系统中不存在.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>[Shadow Element]</code></dt>
+<dd>返回值为一合法, 但不包括任何 Voice 特征属性的叠加态消息元素</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def fromLocalFile(
+    self, filepath: Union[str, Path], method: Optional[UploadMethods] = None
+) -&gt; &#34;Voice&#34;:
+    &#34;&#34;&#34;从本地文件中创建一个 Shadow Element, 以此在发送时自动上传语音至服务器, 并借此使包含的语音成功发送.
+
+    Args:
+        filepath (Union[Path, str]): 需要上传的图片路径, 可以是字符串也可以是 pathlib.Path 实例
+        method (Optional[UploadMethods], default = None): 语音上传时使用的方法, 通常可以使程序自行判定.
+
+    Raises:
+        FileNotFoundError: 所描述的语音文件在文件系统中不存在.
+
+    Returns:
+        [Shadow Element]: 返回值为一合法, 但不包括任何 Voice 特征属性的叠加态消息元素
+    &#34;&#34;&#34;
+    if isinstance(filepath, str):
+        filepath = Path(filepath)
+    if not filepath.exists():
+        raise FileNotFoundError(&#34;you should give us a existed file&#39;s path&#34;)
+    return Voice_LocalFile(filepath, method)</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="graia.application.message.elements.InternalElement" href="index.html#graia.application.message.elements.InternalElement">InternalElement</a></b></code>:
+<ul class="hlist">
+<li><code><a title="graia.application.message.elements.InternalElement.fromExternal" href="index.html#graia.application.message.elements.InternalElement.fromExternal">fromExternal</a></code></li>
+<li><code><a title="graia.application.message.elements.InternalElement.toExternal" href="index.html#graia.application.message.elements.InternalElement.toExternal">toExternal</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="graia.application.message.elements.internal.VoiceUploadType"><code class="flex name class">
+<span>class <span class="ident">VoiceUploadType</span></span>
+<span>(</span><span>value, names=None, *, module=None, qualname=None, type=None, start=1)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>An enumeration.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class VoiceUploadType(Enum):
+    Group = &#34;group&#34;
+    Unknown = &#34;unknown&#34;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>enum.Enum</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="graia.application.message.elements.internal.VoiceUploadType.Group"><code class="name">var <span class="ident">Group</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="graia.application.message.elements.internal.VoiceUploadType.Unknown"><code class="name">var <span class="ident">Unknown</span></code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+</dd>
+<dt id="graia.application.message.elements.internal.Voice_LocalFile"><code class="flex name class">
+<span>class <span class="ident">Voice_LocalFile</span></span>
+<span>(</span><span>filepath: pathlib.Path, method: Union[<a title="graia.application.entities.UploadMethods" href="../../entities.html#graia.application.entities.UploadMethods">UploadMethods</a>, NoneType] = None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises ValidationError if the input data cannot be parsed to form a valid model.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Voice_LocalFile(ShadowElement, InternalElement, ExternalElement):
+    filepath: Path
+    method: Optional[UploadMethods]
+
+    def __init__(self, filepath: Path, method: Optional[UploadMethods] = None) -&gt; None:
+        super().__init__(filepath=filepath, method=method)
+
+    def fromExternal(cls, external_element) -&gt; &#34;InternalElement&#34;:
+        return external_element
+
+    async def toExternal(self):
+        app = application.get()
+        try:
+            methodd = self.method or image_method.get()
+        except LookupError:
+            raise ValueError(
+                &#34;you should give the &#39;method&#39; for upload when you are out of the event receiver.&#34;
+            )
+
+        return await app.uploadVoice(
+            self.filepath.read_bytes(), methodd, return_external=True
+        )
+
+    async def getReal(self, method: UploadMethods) -&gt; &#34;Image&#34;:
+        &#34;&#34;&#34;从本 Shadow Element 中生成一真正的 Voice 对象.
+        Args:
+            method (UploadMethods): 所需求的图片的上传类型, 具体请阅读 UploadMethods 的相关文档.
+        Raises:
+            ClientResponseError: HTTP 网络请求错误
+        Returns:
+            Voice: 所生成的, 真正的 Voice 对象.
+        &#34;&#34;&#34;
+        app = application.get()
+        return await app.uploadVoice(
+            self.filepath.read_bytes(), method, return_external=True
+        )</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="graia.application.message.elements.ShadowElement" href="index.html#graia.application.message.elements.ShadowElement">ShadowElement</a></li>
+<li><a title="graia.application.message.elements.InternalElement" href="index.html#graia.application.message.elements.InternalElement">InternalElement</a></li>
+<li><a title="graia.application.message.elements.ExternalElement" href="index.html#graia.application.message.elements.ExternalElement">ExternalElement</a></li>
+<li><a title="graia.application.message.elements.Element" href="index.html#graia.application.message.elements.Element">Element</a></li>
+<li>pydantic.main.BaseModel</li>
+<li>pydantic.utils.Representation</li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="graia.application.message.elements.internal.Voice_LocalFile.filepath"><code class="name">var <span class="ident">filepath</span> : pathlib.Path</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="graia.application.message.elements.internal.Voice_LocalFile.method"><code class="name">var <span class="ident">method</span> : Union[<a title="graia.application.entities.UploadMethods" href="../../entities.html#graia.application.entities.UploadMethods">UploadMethods</a>, NoneType]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="graia.application.message.elements.internal.Voice_LocalFile.getReal"><code class="name flex">
+<span>async def <span class="ident">getReal</span></span>(<span>self, method: <a title="graia.application.entities.UploadMethods" href="../../entities.html#graia.application.entities.UploadMethods">UploadMethods</a>) ‑> <a title="graia.application.message.elements.internal.Image" href="#graia.application.message.elements.internal.Image">Image</a></span>
+</code></dt>
+<dd>
+<div class="desc"><p>从本 Shadow Element 中生成一真正的 Voice 对象.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>method</code></strong> :&ensp;<code>UploadMethods</code></dt>
+<dd>所需求的图片的上传类型, 具体请阅读 UploadMethods 的相关文档.</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>ClientResponseError</code></dt>
+<dd>HTTP 网络请求错误</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code><a title="graia.application.message.elements.internal.Voice" href="#graia.application.message.elements.internal.Voice">Voice</a></code></dt>
+<dd>所生成的, 真正的 Voice 对象.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def getReal(self, method: UploadMethods) -&gt; &#34;Image&#34;:
+    &#34;&#34;&#34;从本 Shadow Element 中生成一真正的 Voice 对象.
+    Args:
+        method (UploadMethods): 所需求的图片的上传类型, 具体请阅读 UploadMethods 的相关文档.
+    Raises:
+        ClientResponseError: HTTP 网络请求错误
+    Returns:
+        Voice: 所生成的, 真正的 Voice 对象.
+    &#34;&#34;&#34;
+    app = application.get()
+    return await app.uploadVoice(
+        self.filepath.read_bytes(), method, return_external=True
+    )</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="graia.application.message.elements.InternalElement" href="index.html#graia.application.message.elements.InternalElement">InternalElement</a></b></code>:
+<ul class="hlist">
+<li><code><a title="graia.application.message.elements.InternalElement.fromExternal" href="index.html#graia.application.message.elements.InternalElement.fromExternal">fromExternal</a></code></li>
+<li><code><a title="graia.application.message.elements.InternalElement.toExternal" href="index.html#graia.application.message.elements.InternalElement.toExternal">toExternal</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="graia.application.message.elements.internal.Xml"><code class="flex name class">
+<span>class <span class="ident">Xml</span></span>
+<span>(</span><span>xml, *_, **__)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<p>Raises ValidationError if the input data cannot be parsed to form a valid model.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Xml(InternalElement, ExternalElement):
+    type = &#34;Xml&#34;
+    xml: str
+
+    def __init__(self, xml, *_, **__) -&gt; None:
+        super().__init__(xml=xml)
+
+    def toExternal(self):
+        return self
+
+    @classmethod
+    def fromExternal(cls, external_element) -&gt; &#34;Xml&#34;:
+        return external_element
+
+    def asDisplay(self) -&gt; str:
+        return &#34;[XML消息]&#34;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="graia.application.message.elements.InternalElement" href="index.html#graia.application.message.elements.InternalElement">InternalElement</a></li>
+<li><a title="graia.application.message.elements.ExternalElement" href="index.html#graia.application.message.elements.ExternalElement">ExternalElement</a></li>
+<li><a title="graia.application.message.elements.Element" href="index.html#graia.application.message.elements.Element">Element</a></li>
+<li>pydantic.main.BaseModel</li>
+<li>pydantic.utils.Representation</li>
+<li>abc.ABC</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="graia.application.message.elements.internal.Xml.xml"><code class="name">var <span class="ident">xml</span> : str</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="graia.application.message.elements.internal.Xml.asDisplay"><code class="name flex">
+<span>def <span class="ident">asDisplay</span></span>(<span>self) ‑> str</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def asDisplay(self) -&gt; str:
+    return &#34;[XML消息]&#34;</code></pre>
+</details>
+</dd>
+</dl>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="graia.application.message.elements.InternalElement" href="index.html#graia.application.message.elements.InternalElement">InternalElement</a></b></code>:
+<ul class="hlist">
+<li><code><a title="graia.application.message.elements.InternalElement.fromExternal" href="index.html#graia.application.message.elements.InternalElement.fromExternal">fromExternal</a></code></li>
+<li><code><a title="graia.application.message.elements.InternalElement.toExternal" href="index.html#graia.application.message.elements.InternalElement.toExternal">toExternal</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="graia.application.message.elements" href="index.html">graia.application.message.elements</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="graia.application.message.elements.internal.App" href="#graia.application.message.elements.internal.App">App</a></code></h4>
+<ul class="">
+<li><code><a title="graia.application.message.elements.internal.App.asDisplay" href="#graia.application.message.elements.internal.App.asDisplay">asDisplay</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.App.content" href="#graia.application.message.elements.internal.App.content">content</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="graia.application.message.elements.internal.At" href="#graia.application.message.elements.internal.At">At</a></code></h4>
+<ul class="">
+<li><code><a title="graia.application.message.elements.internal.At.asDisplay" href="#graia.application.message.elements.internal.At.asDisplay">asDisplay</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.At.asSerializationString" href="#graia.application.message.elements.internal.At.asSerializationString">asSerializationString</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.At.display" href="#graia.application.message.elements.internal.At.display">display</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.At.target" href="#graia.application.message.elements.internal.At.target">target</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.At.type" href="#graia.application.message.elements.internal.At.type">type</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="graia.application.message.elements.internal.AtAll" href="#graia.application.message.elements.internal.AtAll">AtAll</a></code></h4>
+<ul class="">
+<li><code><a title="graia.application.message.elements.internal.AtAll.asDisplay" href="#graia.application.message.elements.internal.AtAll.asDisplay">asDisplay</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.AtAll.asSerializationString" href="#graia.application.message.elements.internal.AtAll.asSerializationString">asSerializationString</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.AtAll.type" href="#graia.application.message.elements.internal.AtAll.type">type</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="graia.application.message.elements.internal.Face" href="#graia.application.message.elements.internal.Face">Face</a></code></h4>
+<ul class="">
+<li><code><a title="graia.application.message.elements.internal.Face.asDisplay" href="#graia.application.message.elements.internal.Face.asDisplay">asDisplay</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.Face.asSerializationString" href="#graia.application.message.elements.internal.Face.asSerializationString">asSerializationString</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.Face.faceId" href="#graia.application.message.elements.internal.Face.faceId">faceId</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.Face.name" href="#graia.application.message.elements.internal.Face.name">name</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.Face.type" href="#graia.application.message.elements.internal.Face.type">type</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="graia.application.message.elements.internal.FlashImage" href="#graia.application.message.elements.internal.FlashImage">FlashImage</a></code></h4>
+<ul class="">
+<li><code><a title="graia.application.message.elements.internal.FlashImage.asDisplay" href="#graia.application.message.elements.internal.FlashImage.asDisplay">asDisplay</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.FlashImage.asNormal" href="#graia.application.message.elements.internal.FlashImage.asNormal">asNormal</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.FlashImage.asSerializationString" href="#graia.application.message.elements.internal.FlashImage.asSerializationString">asSerializationString</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.FlashImage.fromOriginalImage" href="#graia.application.message.elements.internal.FlashImage.fromOriginalImage">fromOriginalImage</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.FlashImage.imageId" href="#graia.application.message.elements.internal.FlashImage.imageId">imageId</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.FlashImage.path" href="#graia.application.message.elements.internal.FlashImage.path">path</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.FlashImage.type" href="#graia.application.message.elements.internal.FlashImage.type">type</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.FlashImage.url" href="#graia.application.message.elements.internal.FlashImage.url">url</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="graia.application.message.elements.internal.Image" href="#graia.application.message.elements.internal.Image">Image</a></code></h4>
+<ul class="">
+<li><code><a title="graia.application.message.elements.internal.Image.asDisplay" href="#graia.application.message.elements.internal.Image.asDisplay">asDisplay</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.Image.asFlash" href="#graia.application.message.elements.internal.Image.asFlash">asFlash</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.Image.asSerializationString" href="#graia.application.message.elements.internal.Image.asSerializationString">asSerializationString</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.Image.fromLocalFile" href="#graia.application.message.elements.internal.Image.fromLocalFile">fromLocalFile</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.Image.fromNetworkAddress" href="#graia.application.message.elements.internal.Image.fromNetworkAddress">fromNetworkAddress</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.Image.fromUnsafeAddress" href="#graia.application.message.elements.internal.Image.fromUnsafeAddress">fromUnsafeAddress</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.Image.fromUnsafeBytes" href="#graia.application.message.elements.internal.Image.fromUnsafeBytes">fromUnsafeBytes</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.Image.fromUnsafePath" href="#graia.application.message.elements.internal.Image.fromUnsafePath">fromUnsafePath</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.Image.http_to_bytes" href="#graia.application.message.elements.internal.Image.http_to_bytes">http_to_bytes</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.Image.imageId" href="#graia.application.message.elements.internal.Image.imageId">imageId</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.Image.path" href="#graia.application.message.elements.internal.Image.path">path</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.Image.type" href="#graia.application.message.elements.internal.Image.type">type</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.Image.url" href="#graia.application.message.elements.internal.Image.url">url</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="graia.application.message.elements.internal.ImageType" href="#graia.application.message.elements.internal.ImageType">ImageType</a></code></h4>
+<ul class="">
+<li><code><a title="graia.application.message.elements.internal.ImageType.Friend" href="#graia.application.message.elements.internal.ImageType.Friend">Friend</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.ImageType.Group" href="#graia.application.message.elements.internal.ImageType.Group">Group</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.ImageType.Temp" href="#graia.application.message.elements.internal.ImageType.Temp">Temp</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.ImageType.Unknown" href="#graia.application.message.elements.internal.ImageType.Unknown">Unknown</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="graia.application.message.elements.internal.Image_LocalFile" href="#graia.application.message.elements.internal.Image_LocalFile">Image_LocalFile</a></code></h4>
+<ul class="">
+<li><code><a title="graia.application.message.elements.internal.Image_LocalFile.filepath" href="#graia.application.message.elements.internal.Image_LocalFile.filepath">filepath</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.Image_LocalFile.getReal" href="#graia.application.message.elements.internal.Image_LocalFile.getReal">getReal</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="graia.application.message.elements.internal.Image_NetworkAddress" href="#graia.application.message.elements.internal.Image_NetworkAddress">Image_NetworkAddress</a></code></h4>
+<ul class="">
+<li><code><a title="graia.application.message.elements.internal.Image_NetworkAddress.getReal" href="#graia.application.message.elements.internal.Image_NetworkAddress.getReal">getReal</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.Image_NetworkAddress.url" href="#graia.application.message.elements.internal.Image_NetworkAddress.url">url</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="graia.application.message.elements.internal.Image_UnsafeBytes" href="#graia.application.message.elements.internal.Image_UnsafeBytes">Image_UnsafeBytes</a></code></h4>
+<ul class="">
+<li><code><a title="graia.application.message.elements.internal.Image_UnsafeBytes.getReal" href="#graia.application.message.elements.internal.Image_UnsafeBytes.getReal">getReal</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.Image_UnsafeBytes.image_bytes" href="#graia.application.message.elements.internal.Image_UnsafeBytes.image_bytes">image_bytes</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="graia.application.message.elements.internal.Json" href="#graia.application.message.elements.internal.Json">Json</a></code></h4>
+<ul class="">
+<li><code><a title="graia.application.message.elements.internal.Json.Json" href="#graia.application.message.elements.internal.Json.Json">Json</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.Json.asDisplay" href="#graia.application.message.elements.internal.Json.asDisplay">asDisplay</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.Json.dict" href="#graia.application.message.elements.internal.Json.dict">dict</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="graia.application.message.elements.internal.Plain" href="#graia.application.message.elements.internal.Plain">Plain</a></code></h4>
+<ul class="">
+<li><code><a title="graia.application.message.elements.internal.Plain.asDisplay" href="#graia.application.message.elements.internal.Plain.asDisplay">asDisplay</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.Plain.asSerializationString" href="#graia.application.message.elements.internal.Plain.asSerializationString">asSerializationString</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.Plain.text" href="#graia.application.message.elements.internal.Plain.text">text</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.Plain.type" href="#graia.application.message.elements.internal.Plain.type">type</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="graia.application.message.elements.internal.Poke" href="#graia.application.message.elements.internal.Poke">Poke</a></code></h4>
+<ul class="">
+<li><code><a title="graia.application.message.elements.internal.Poke.asDisplay" href="#graia.application.message.elements.internal.Poke.asDisplay">asDisplay</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.Poke.name" href="#graia.application.message.elements.internal.Poke.name">name</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="graia.application.message.elements.internal.PokeMethods" href="#graia.application.message.elements.internal.PokeMethods">PokeMethods</a></code></h4>
+<ul class="two-column">
+<li><code><a title="graia.application.message.elements.internal.PokeMethods.FangDaZhao" href="#graia.application.message.elements.internal.PokeMethods.FangDaZhao">FangDaZhao</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.PokeMethods.Heartbroken" href="#graia.application.message.elements.internal.PokeMethods.Heartbroken">Heartbroken</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.PokeMethods.Like" href="#graia.application.message.elements.internal.PokeMethods.Like">Like</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.PokeMethods.Poke" href="#graia.application.message.elements.internal.PokeMethods.Poke">Poke</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.PokeMethods.ShowLove" href="#graia.application.message.elements.internal.PokeMethods.ShowLove">ShowLove</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.PokeMethods.SixSixSix" href="#graia.application.message.elements.internal.PokeMethods.SixSixSix">SixSixSix</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="graia.application.message.elements.internal.Quote" href="#graia.application.message.elements.internal.Quote">Quote</a></code></h4>
+<ul class="">
+<li><code><a title="graia.application.message.elements.internal.Quote.asSerializationString" href="#graia.application.message.elements.internal.Quote.asSerializationString">asSerializationString</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.Quote.groupId" href="#graia.application.message.elements.internal.Quote.groupId">groupId</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.Quote.id" href="#graia.application.message.elements.internal.Quote.id">id</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.Quote.origin" href="#graia.application.message.elements.internal.Quote.origin">origin</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.Quote.senderId" href="#graia.application.message.elements.internal.Quote.senderId">senderId</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.Quote.targetId" href="#graia.application.message.elements.internal.Quote.targetId">targetId</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="graia.application.message.elements.internal.ShadowImage" href="#graia.application.message.elements.internal.ShadowImage">ShadowImage</a></code></h4>
+<ul class="">
+<li><code><a title="graia.application.message.elements.internal.ShadowImage.Config" href="#graia.application.message.elements.internal.ShadowImage.Config">Config</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.ShadowImage.asFlash" href="#graia.application.message.elements.internal.ShadowImage.asFlash">asFlash</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.ShadowImage.is_flash" href="#graia.application.message.elements.internal.ShadowImage.is_flash">is_flash</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.ShadowImage.method" href="#graia.application.message.elements.internal.ShadowImage.method">method</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="graia.application.message.elements.internal.Source" href="#graia.application.message.elements.internal.Source">Source</a></code></h4>
+<ul class="">
+<li><code><a title="graia.application.message.elements.internal.Source.Config" href="#graia.application.message.elements.internal.Source.Config">Config</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.Source.asSerializationString" href="#graia.application.message.elements.internal.Source.asSerializationString">asSerializationString</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.Source.id" href="#graia.application.message.elements.internal.Source.id">id</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.Source.time" href="#graia.application.message.elements.internal.Source.time">time</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="graia.application.message.elements.internal.Voice" href="#graia.application.message.elements.internal.Voice">Voice</a></code></h4>
+<ul class="">
+<li><code><a title="graia.application.message.elements.internal.Voice.asDisplay" href="#graia.application.message.elements.internal.Voice.asDisplay">asDisplay</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.Voice.asSerializationString" href="#graia.application.message.elements.internal.Voice.asSerializationString">asSerializationString</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.Voice.fromLocalFile" href="#graia.application.message.elements.internal.Voice.fromLocalFile">fromLocalFile</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.Voice.path" href="#graia.application.message.elements.internal.Voice.path">path</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.Voice.type" href="#graia.application.message.elements.internal.Voice.type">type</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.Voice.url" href="#graia.application.message.elements.internal.Voice.url">url</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.Voice.voiceId" href="#graia.application.message.elements.internal.Voice.voiceId">voiceId</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="graia.application.message.elements.internal.VoiceUploadType" href="#graia.application.message.elements.internal.VoiceUploadType">VoiceUploadType</a></code></h4>
+<ul class="">
+<li><code><a title="graia.application.message.elements.internal.VoiceUploadType.Group" href="#graia.application.message.elements.internal.VoiceUploadType.Group">Group</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.VoiceUploadType.Unknown" href="#graia.application.message.elements.internal.VoiceUploadType.Unknown">Unknown</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="graia.application.message.elements.internal.Voice_LocalFile" href="#graia.application.message.elements.internal.Voice_LocalFile">Voice_LocalFile</a></code></h4>
+<ul class="">
+<li><code><a title="graia.application.message.elements.internal.Voice_LocalFile.filepath" href="#graia.application.message.elements.internal.Voice_LocalFile.filepath">filepath</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.Voice_LocalFile.getReal" href="#graia.application.message.elements.internal.Voice_LocalFile.getReal">getReal</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.Voice_LocalFile.method" href="#graia.application.message.elements.internal.Voice_LocalFile.method">method</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="graia.application.message.elements.internal.Xml" href="#graia.application.message.elements.internal.Xml">Xml</a></code></h4>
+<ul class="">
+<li><code><a title="graia.application.message.elements.internal.Xml.asDisplay" href="#graia.application.message.elements.internal.Xml.asDisplay">asDisplay</a></code></li>
+<li><code><a title="graia.application.message.elements.internal.Xml.xml" href="#graia.application.message.elements.internal.Xml.xml">xml</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
+</footer>
+</body>
+</html>

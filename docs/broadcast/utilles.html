@@ -1,0 +1,612 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.9.2" />
+<title>graia.broadcast.utilles API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>graia.broadcast.utilles</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import inspect
+import itertools
+from functools import lru_cache
+from typing import (
+    Any,
+    Callable,
+    Generator,
+    Generic,
+    Iterable,
+    List,
+    Tuple,
+    TypeVar,
+    Union,
+)
+
+from iterwrapper import IterWrapper
+
+from .entities.dispatcher import BaseDispatcher
+
+
+async def run_always_await(any_callable):
+    if inspect.iscoroutine(any_callable):
+        return await any_callable
+    else:
+        return any_callable
+
+
+async def run_always_await_safely(callable, *args, **kwargs):
+    if iscoroutinefunction(callable):
+        return await callable(*args, **kwargs)
+    return callable(*args, **kwargs)
+
+
+def printer(value):
+    print(value)
+    return value
+
+
+def group_dict(iw: IterWrapper, key: Callable[[Any], Any]):
+    temp = {}
+    for i in iw:
+        k = key(i)
+        temp.setdefault(k, [])
+        temp[k].append(i)
+    return temp
+
+
+cache_size = 4096
+
+origin_isinstance = isinstance
+
+cached_isinstance = lru_cache(1024)(isinstance)
+cached_getattr = lru_cache(cache_size)(getattr)
+
+
+@lru_cache(cache_size)
+def argument_signature(callable_target):
+    return [
+        (
+            name,
+            param.annotation if param.annotation != inspect._empty else None,
+            param.default if param.default != inspect._empty else None,
+        )
+        for name, param in dict(inspect.signature(callable_target).parameters).items()
+    ]
+
+
+@lru_cache(cache_size)
+def is_asyncgener(o):
+    return inspect.isasyncgenfunction(o)
+
+
+@lru_cache(cache_size)
+def iscoroutinefunction(o):
+    return inspect.iscoroutinefunction(o)
+
+
+@lru_cache(cache_size)
+def isasyncgen(o):
+    return inspect.isasyncgen(o)
+
+
+def flat_yield_from(l):
+    for i in l:
+        if type(i) == list:
+            yield from i
+
+
+@lru_cache(None)
+def dispatcher_mixin_handler(dispatcher: BaseDispatcher) -&gt; List[BaseDispatcher]:
+    unbound_mixin = getattr(dispatcher, &#34;mixin&#34;, [])
+    result = [dispatcher]
+
+    for i in unbound_mixin:
+        if issubclass(i, BaseDispatcher):
+            result.extend(dispatcher_mixin_handler(i))
+        else:
+            result.append(i)
+    return result
+
+
+class as_sliceable:
+    def __init__(self, iterable) -&gt; None:
+        self.iterable = iterable
+
+    def __getitem__(self, item: Union[slice, int]) -&gt; Any:
+        if isinstance(item, slice):
+            return itertools.islice(self.iterable, item.start, item.stop, item.step)
+        else:
+            return list(itertools.islice(self.iterable, item, item + 1, None))[0]
+
+    def __iter__(self):
+        return self.iterable
+
+
+T = TypeVar(&#34;T&#34;)
+
+&#34;&#34;&#34;
+class NestableIterable(Iterable[T]):
+    index_stack: list
+    iterable: Iterable[T]
+
+    def __init__(self, iterable: Iterable[T]) -&gt; None:
+        self.iterable = iterable
+        self.index_stack = [0]
+
+    def __iter__(self):
+        index = self.index_stack[-1]
+        self.index_stack.append(self.index_stack[-1])
+
+        start_offset = index + int(bool(index))
+        try:
+            for self.index_stack[-1], content in enumerate(
+                itertools.islice(self.iterable, start_offset, None, None),
+                start=start_offset,
+            ):
+                yield content
+        finally:
+            self.index_stack.pop()
+
+    def with_new(self, target):
+        self.iterable = target
+        return self
+&#34;&#34;&#34;
+
+I = TypeVar(&#34;I&#34;)
+
+
+class NestableIterable(Generic[I, T]):
+    iterable: Iterable[T]
+    indexes: List[I]
+
+    generator_with_index_factory: Callable[
+        [Iterable[T], I], Generator[None, None, Tuple[I, T]]
+    ]
+    index_increase_func: Callable[[I, Iterable[T]], I]
+    is_index_origin: Callable[[I], bool]
+
+    @staticmethod
+    def default_generator_factory(iterable: Iterable[T], start: I):
+        return enumerate(iterable[start:], start=start)
+
+    def __init__(
+        self,
+        iterable: Iterable[T],
+        generator_with_index_factory: Callable[
+            [Iterable[T], I], Generator[None, None, Tuple[I, T]]
+        ] = None,
+        index_increase_func: Callable[[I, Iterable[T]], I] = lambda x, _: x + 1,
+        initial_index_value_factory: Callable[[], I] = lambda: 0,
+        is_index_origin: Callable[[I], bool] = lambda x: x == 0,
+    ) -&gt; None:
+        self.iterable = iterable
+        self.indexes = [initial_index_value_factory()]
+
+        self.generator_with_index_factory = (
+            generator_with_index_factory or self.default_generator_factory
+        )
+        self.index_increase_func = index_increase_func
+        self.is_index_origin = is_index_origin
+
+    def __iter__(self):
+        current_index = self.indexes[-1]
+        self.indexes.append(current_index)
+
+        if self.is_index_origin(current_index):
+            start_offset = current_index
+        else:
+            start_offset = self.index_increase_func(current_index, self.iterable)
+        # 0 = 0
+        # &lt;except 0&gt; = index + 1
+        try:
+            for self.indexes[-1], content in self.generator_with_index_factory(
+                self.iterable,
+                start=start_offset,
+            ):
+                yield content
+        finally:
+            self.indexes.pop()</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-variables">Global variables</h2>
+<dl>
+<dt id="graia.broadcast.utilles.T"><code class="name">var <span class="ident">T</span></code></dt>
+<dd>
+<div class="desc"><p>class NestableIterable(Iterable[T]):
+index_stack: list
+iterable: Iterable[T]</p>
+<pre><code>def __init__(self, iterable: Iterable[T]) -&gt; None:
+    self.iterable = iterable
+    self.index_stack = [0]
+
+def __iter__(self):
+    index = self.index_stack[-1]
+    self.index_stack.append(self.index_stack[-1])
+
+    start_offset = index + int(bool(index))
+    try:
+        for self.index_stack[-1], content in enumerate(
+            itertools.islice(self.iterable, start_offset, None, None),
+            start=start_offset,
+        ):
+            yield content
+    finally:
+        self.index_stack.pop()
+
+def with_new(self, target):
+    self.iterable = target
+    return self
+</code></pre></div>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="graia.broadcast.utilles.argument_signature"><code class="name flex">
+<span>def <span class="ident">argument_signature</span></span>(<span>callable_target)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@lru_cache(cache_size)
+def argument_signature(callable_target):
+    return [
+        (
+            name,
+            param.annotation if param.annotation != inspect._empty else None,
+            param.default if param.default != inspect._empty else None,
+        )
+        for name, param in dict(inspect.signature(callable_target).parameters).items()
+    ]</code></pre>
+</details>
+</dd>
+<dt id="graia.broadcast.utilles.dispatcher_mixin_handler"><code class="name flex">
+<span>def <span class="ident">dispatcher_mixin_handler</span></span>(<span>dispatcher: <a title="graia.broadcast.entities.dispatcher.BaseDispatcher" href="entities/dispatcher.html#graia.broadcast.entities.dispatcher.BaseDispatcher">BaseDispatcher</a>) ‑> List[<a title="graia.broadcast.entities.dispatcher.BaseDispatcher" href="entities/dispatcher.html#graia.broadcast.entities.dispatcher.BaseDispatcher">BaseDispatcher</a>]</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@lru_cache(None)
+def dispatcher_mixin_handler(dispatcher: BaseDispatcher) -&gt; List[BaseDispatcher]:
+    unbound_mixin = getattr(dispatcher, &#34;mixin&#34;, [])
+    result = [dispatcher]
+
+    for i in unbound_mixin:
+        if issubclass(i, BaseDispatcher):
+            result.extend(dispatcher_mixin_handler(i))
+        else:
+            result.append(i)
+    return result</code></pre>
+</details>
+</dd>
+<dt id="graia.broadcast.utilles.flat_yield_from"><code class="name flex">
+<span>def <span class="ident">flat_yield_from</span></span>(<span>l)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def flat_yield_from(l):
+    for i in l:
+        if type(i) == list:
+            yield from i</code></pre>
+</details>
+</dd>
+<dt id="graia.broadcast.utilles.group_dict"><code class="name flex">
+<span>def <span class="ident">group_dict</span></span>(<span>iw: iterwrapper.wrapper.IterWrapper, key: Callable[[Any], Any])</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def group_dict(iw: IterWrapper, key: Callable[[Any], Any]):
+    temp = {}
+    for i in iw:
+        k = key(i)
+        temp.setdefault(k, [])
+        temp[k].append(i)
+    return temp</code></pre>
+</details>
+</dd>
+<dt id="graia.broadcast.utilles.is_asyncgener"><code class="name flex">
+<span>def <span class="ident">is_asyncgener</span></span>(<span>o)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@lru_cache(cache_size)
+def is_asyncgener(o):
+    return inspect.isasyncgenfunction(o)</code></pre>
+</details>
+</dd>
+<dt id="graia.broadcast.utilles.isasyncgen"><code class="name flex">
+<span>def <span class="ident">isasyncgen</span></span>(<span>o)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@lru_cache(cache_size)
+def isasyncgen(o):
+    return inspect.isasyncgen(o)</code></pre>
+</details>
+</dd>
+<dt id="graia.broadcast.utilles.iscoroutinefunction"><code class="name flex">
+<span>def <span class="ident">iscoroutinefunction</span></span>(<span>o)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@lru_cache(cache_size)
+def iscoroutinefunction(o):
+    return inspect.iscoroutinefunction(o)</code></pre>
+</details>
+</dd>
+<dt id="graia.broadcast.utilles.printer"><code class="name flex">
+<span>def <span class="ident">printer</span></span>(<span>value)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def printer(value):
+    print(value)
+    return value</code></pre>
+</details>
+</dd>
+<dt id="graia.broadcast.utilles.run_always_await"><code class="name flex">
+<span>async def <span class="ident">run_always_await</span></span>(<span>any_callable)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def run_always_await(any_callable):
+    if inspect.iscoroutine(any_callable):
+        return await any_callable
+    else:
+        return any_callable</code></pre>
+</details>
+</dd>
+<dt id="graia.broadcast.utilles.run_always_await_safely"><code class="name flex">
+<span>async def <span class="ident">run_always_await_safely</span></span>(<span>callable, *args, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">async def run_always_await_safely(callable, *args, **kwargs):
+    if iscoroutinefunction(callable):
+        return await callable(*args, **kwargs)
+    return callable(*args, **kwargs)</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="graia.broadcast.utilles.NestableIterable"><code class="flex name class">
+<span>class <span class="ident">NestableIterable</span></span>
+<span>(</span><span>iterable: Iterable[~<a title="graia.broadcast.utilles.T" href="#graia.broadcast.utilles.T">T</a>], generator_with_index_factory: Callable[[Iterable[~<a title="graia.broadcast.utilles.T" href="#graia.broadcast.utilles.T">T</a>], ~I], Generator[NoneType, NoneType, Tuple[~I, ~<a title="graia.broadcast.utilles.T" href="#graia.broadcast.utilles.T">T</a>]]] = None, index_increase_func: Callable[[~I, Iterable[~<a title="graia.broadcast.utilles.T" href="#graia.broadcast.utilles.T">T</a>]], ~I] = &lt;function NestableIterable.&lt;lambda&gt;&gt;, initial_index_value_factory: Callable[[], ~I] = &lt;function NestableIterable.&lt;lambda&gt;&gt;, is_index_origin: Callable[[~I], bool] = &lt;function NestableIterable.&lt;lambda&gt;&gt;)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Abstract base class for generic types.</p>
+<p>A generic type is typically declared by inheriting from
+this class parameterized with one or more type variables.
+For example, a generic mapping type might be defined as::</p>
+<p>class Mapping(Generic[KT, VT]):
+def <strong>getitem</strong>(self, key: KT) -&gt; VT:
+&hellip;
+# Etc.</p>
+<p>This class can then be used as follows::</p>
+<p>def lookup_name(mapping: Mapping[KT, VT], key: KT, default: VT) -&gt; VT:
+try:
+return mapping[key]
+except KeyError:
+return default</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class NestableIterable(Iterable[T]):
+    index_stack: list
+    iterable: Iterable[T]
+
+    def __init__(self, iterable: Iterable[T]) -&gt; None:
+        self.iterable = iterable
+        self.index_stack = [0]
+
+    def __iter__(self):
+        index = self.index_stack[-1]
+        self.index_stack.append(self.index_stack[-1])
+
+        start_offset = index + int(bool(index))
+        try:
+            for self.index_stack[-1], content in enumerate(
+                itertools.islice(self.iterable, start_offset, None, None),
+                start=start_offset,
+            ):
+                yield content
+        finally:
+            self.index_stack.pop()
+
+    def with_new(self, target):
+        self.iterable = target
+        return self</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>typing.Generic</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="graia.broadcast.utilles.NestableIterable.generator_with_index_factory"><code class="name">var <span class="ident">generator_with_index_factory</span> : Callable[[Iterable[~<a title="graia.broadcast.utilles.T" href="#graia.broadcast.utilles.T">T</a>], ~I], Generator[NoneType, NoneType, Tuple[~I, ~<a title="graia.broadcast.utilles.T" href="#graia.broadcast.utilles.T">T</a>]]]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="graia.broadcast.utilles.NestableIterable.index_increase_func"><code class="name">var <span class="ident">index_increase_func</span> : Callable[[~I, Iterable[~<a title="graia.broadcast.utilles.T" href="#graia.broadcast.utilles.T">T</a>]], ~I]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="graia.broadcast.utilles.NestableIterable.indexes"><code class="name">var <span class="ident">indexes</span> : List[~I]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="graia.broadcast.utilles.NestableIterable.is_index_origin"><code class="name">var <span class="ident">is_index_origin</span> : Callable[[~I], bool]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="graia.broadcast.utilles.NestableIterable.iterable"><code class="name">var <span class="ident">iterable</span> : Iterable[~<a title="graia.broadcast.utilles.T" href="#graia.broadcast.utilles.T">T</a>]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Static methods</h3>
+<dl>
+<dt id="graia.broadcast.utilles.NestableIterable.default_generator_factory"><code class="name flex">
+<span>def <span class="ident">default_generator_factory</span></span>(<span>iterable: Iterable[~<a title="graia.broadcast.utilles.T" href="#graia.broadcast.utilles.T">T</a>], start: ~I)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@staticmethod
+def default_generator_factory(iterable: Iterable[T], start: I):
+    return enumerate(iterable[start:], start=start)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="graia.broadcast.utilles.as_sliceable"><code class="flex name class">
+<span>class <span class="ident">as_sliceable</span></span>
+<span>(</span><span>iterable)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class as_sliceable:
+    def __init__(self, iterable) -&gt; None:
+        self.iterable = iterable
+
+    def __getitem__(self, item: Union[slice, int]) -&gt; Any:
+        if isinstance(item, slice):
+            return itertools.islice(self.iterable, item.start, item.stop, item.step)
+        else:
+            return list(itertools.islice(self.iterable, item, item + 1, None))[0]
+
+    def __iter__(self):
+        return self.iterable</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="graia.broadcast" href="index.html">graia.broadcast</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-variables">Global variables</a></h3>
+<ul class="">
+<li><code><a title="graia.broadcast.utilles.T" href="#graia.broadcast.utilles.T">T</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="graia.broadcast.utilles.argument_signature" href="#graia.broadcast.utilles.argument_signature">argument_signature</a></code></li>
+<li><code><a title="graia.broadcast.utilles.dispatcher_mixin_handler" href="#graia.broadcast.utilles.dispatcher_mixin_handler">dispatcher_mixin_handler</a></code></li>
+<li><code><a title="graia.broadcast.utilles.flat_yield_from" href="#graia.broadcast.utilles.flat_yield_from">flat_yield_from</a></code></li>
+<li><code><a title="graia.broadcast.utilles.group_dict" href="#graia.broadcast.utilles.group_dict">group_dict</a></code></li>
+<li><code><a title="graia.broadcast.utilles.is_asyncgener" href="#graia.broadcast.utilles.is_asyncgener">is_asyncgener</a></code></li>
+<li><code><a title="graia.broadcast.utilles.isasyncgen" href="#graia.broadcast.utilles.isasyncgen">isasyncgen</a></code></li>
+<li><code><a title="graia.broadcast.utilles.iscoroutinefunction" href="#graia.broadcast.utilles.iscoroutinefunction">iscoroutinefunction</a></code></li>
+<li><code><a title="graia.broadcast.utilles.printer" href="#graia.broadcast.utilles.printer">printer</a></code></li>
+<li><code><a title="graia.broadcast.utilles.run_always_await" href="#graia.broadcast.utilles.run_always_await">run_always_await</a></code></li>
+<li><code><a title="graia.broadcast.utilles.run_always_await_safely" href="#graia.broadcast.utilles.run_always_await_safely">run_always_await_safely</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="graia.broadcast.utilles.NestableIterable" href="#graia.broadcast.utilles.NestableIterable">NestableIterable</a></code></h4>
+<ul class="">
+<li><code><a title="graia.broadcast.utilles.NestableIterable.default_generator_factory" href="#graia.broadcast.utilles.NestableIterable.default_generator_factory">default_generator_factory</a></code></li>
+<li><code><a title="graia.broadcast.utilles.NestableIterable.generator_with_index_factory" href="#graia.broadcast.utilles.NestableIterable.generator_with_index_factory">generator_with_index_factory</a></code></li>
+<li><code><a title="graia.broadcast.utilles.NestableIterable.index_increase_func" href="#graia.broadcast.utilles.NestableIterable.index_increase_func">index_increase_func</a></code></li>
+<li><code><a title="graia.broadcast.utilles.NestableIterable.indexes" href="#graia.broadcast.utilles.NestableIterable.indexes">indexes</a></code></li>
+<li><code><a title="graia.broadcast.utilles.NestableIterable.is_index_origin" href="#graia.broadcast.utilles.NestableIterable.is_index_origin">is_index_origin</a></code></li>
+<li><code><a title="graia.broadcast.utilles.NestableIterable.iterable" href="#graia.broadcast.utilles.NestableIterable.iterable">iterable</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="graia.broadcast.utilles.as_sliceable" href="#graia.broadcast.utilles.as_sliceable">as_sliceable</a></code></h4>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
+</footer>
+</body>
+</html>
