@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.9.2" />
-<title>graia.application.event.lifecycle API documentation</title>
+<title>graia.broadcast.entities.signatures API documentation</title>
 <meta name="description" content="" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
@@ -19,7 +19,7 @@
 <main>
 <article id="content">
 <header>
-<h1 class="title">Module <code>graia.application.event.lifecycle</code></h1>
+<h1 class="title">Module <code>graia.broadcast.entities.signatures</code></h1>
 </header>
 <section id="section-intro">
 <details class="source">
@@ -27,54 +27,33 @@
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">from typing import Any
-from graia.broadcast.entities.event import BaseEvent, BaseDispatcher
-from graia.broadcast.interfaces.dispatcher import DispatcherInterface
-from pydantic.main import BaseModel
+
+from pydantic import BaseModel  # pylint: disable=no-name-in-module
 
 
-class ApplicationLaunched(BaseEvent):
-    app: Any
+class ObjectContainer(BaseModel):
+    target: Any
 
-    def __init__(self, app) -&gt; None:
-        super().__init__(app=app)
-
-    class Dispatcher(BaseDispatcher):
-        @staticmethod
-        async def catch(interface: &#34;DispatcherInterface&#34;):
-            from .. import GraiaMiraiApplication
-
-            if interface.annotation is GraiaMiraiApplication:
-                return interface.event.app
+    def __init__(self, content: Any = None):
+        if content.__class__ is self.__class__:
+            content = content.target
+        super().__init__(target=content)
 
 
-class ApplicationLaunchedBlocking(BaseEvent):
-    app: Any
+class Force(ObjectContainer):
+    &#34;&#34;&#34;用于转义在本框架中特殊部分的特殊值
 
-    def __init__(self, app) -&gt; None:
-        super().__init__(app=app)
-
-    class Dispatcher(BaseDispatcher):
-        @staticmethod
-        async def catch(interface: &#34;DispatcherInterface&#34;):
-            from .. import GraiaMiraiApplication
-
-            if interface.annotation is GraiaMiraiApplication:
-                return interface.event.app
+    例如：Dispatcher 返回时 None 表示本级 dispatcher 无法满足需求,
+    DispatcherInterface 会继续向下查询,
+    而某些时候我们确实是需要传递 None 的，
+    这时候可以用本标识来保证 None 被顺利作为一个参数传入。
+    &#34;&#34;&#34;
 
 
-class ApplicationShutdowned(BaseEvent):
-    app: Any
-
-    def __init__(self, app) -&gt; None:
-        super().__init__(app=app)
-
-    class Dispatcher(BaseDispatcher):
-        @staticmethod
-        async def catch(interface: &#34;DispatcherInterface&#34;):
-            from .. import GraiaMiraiApplication
-
-            if interface.annotation is GraiaMiraiApplication:
-                return interface.event.app</code></pre>
+class RemoveMe(ObjectContainer):
+    &#34;&#34;&#34;当本标识的实例为一受 Executor 影响的 Listener 返回值时,
+    Executor 会尝试在当前 Broadcast 实例中找出并删除本 Listener 实例.
+    &#34;&#34;&#34;</code></pre>
 </details>
 </section>
 <section>
@@ -86,52 +65,48 @@ class ApplicationShutdowned(BaseEvent):
 <section>
 <h2 class="section-title" id="header-classes">Classes</h2>
 <dl>
-<dt id="graia.application.event.lifecycle.ApplicationLaunched"><code class="flex name class">
-<span>class <span class="ident">ApplicationLaunched</span></span>
-<span>(</span><span>app)</span>
+<dt id="graia.broadcast.entities.signatures.Force"><code class="flex name class">
+<span>class <span class="ident">Force</span></span>
+<span>(</span><span>content: Any = None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<div class="desc"><p>用于转义在本框架中特殊部分的特殊值</p>
+<p>例如：Dispatcher 返回时 None 表示本级 dispatcher 无法满足需求,
+DispatcherInterface 会继续向下查询,
+而某些时候我们确实是需要传递 None 的，
+这时候可以用本标识来保证 None 被顺利作为一个参数传入。</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
 <p>Raises ValidationError if the input data cannot be parsed to form a valid model.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">class ApplicationLaunched(BaseEvent):
-    app: Any
+<pre><code class="python">class Force(ObjectContainer):
+    &#34;&#34;&#34;用于转义在本框架中特殊部分的特殊值
 
-    def __init__(self, app) -&gt; None:
-        super().__init__(app=app)
-
-    class Dispatcher(BaseDispatcher):
-        @staticmethod
-        async def catch(interface: &#34;DispatcherInterface&#34;):
-            from .. import GraiaMiraiApplication
-
-            if interface.annotation is GraiaMiraiApplication:
-                return interface.event.app</code></pre>
+    例如：Dispatcher 返回时 None 表示本级 dispatcher 无法满足需求,
+    DispatcherInterface 会继续向下查询,
+    而某些时候我们确实是需要传递 None 的，
+    这时候可以用本标识来保证 None 被顺利作为一个参数传入。
+    &#34;&#34;&#34;</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
-<li><a title="graia.broadcast.entities.event.BaseEvent" href="../../broadcast/entities/event.html#graia.broadcast.entities.event.BaseEvent">BaseEvent</a></li>
+<li><a title="graia.broadcast.entities.signatures.ObjectContainer" href="#graia.broadcast.entities.signatures.ObjectContainer">ObjectContainer</a></li>
 <li>pydantic.main.BaseModel</li>
 <li>pydantic.utils.Representation</li>
 </ul>
 <h3>Class variables</h3>
 <dl>
-<dt id="graia.application.event.lifecycle.ApplicationLaunched.Dispatcher"><code class="name">var <span class="ident">Dispatcher</span></code></dt>
-<dd>
-<div class="desc"><p>所有非单函数型 Dispatcher 的基类, 用于为参数解析提供可扩展的支持.</p></div>
-</dd>
-<dt id="graia.application.event.lifecycle.ApplicationLaunched.app"><code class="name">var <span class="ident">app</span> : Any</code></dt>
+<dt id="graia.broadcast.entities.signatures.Force.target"><code class="name">var <span class="ident">target</span> : Any</code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
 </dl>
 </dd>
-<dt id="graia.application.event.lifecycle.ApplicationLaunchedBlocking"><code class="flex name class">
-<span>class <span class="ident">ApplicationLaunchedBlocking</span></span>
-<span>(</span><span>app)</span>
+<dt id="graia.broadcast.entities.signatures.ObjectContainer"><code class="flex name class">
+<span>class <span class="ident">ObjectContainer</span></span>
+<span>(</span><span>content: Any = None)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Create a new model by parsing and validating input data from keyword arguments.</p>
@@ -140,76 +115,59 @@ class ApplicationShutdowned(BaseEvent):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">class ApplicationLaunchedBlocking(BaseEvent):
-    app: Any
+<pre><code class="python">class ObjectContainer(BaseModel):
+    target: Any
 
-    def __init__(self, app) -&gt; None:
-        super().__init__(app=app)
-
-    class Dispatcher(BaseDispatcher):
-        @staticmethod
-        async def catch(interface: &#34;DispatcherInterface&#34;):
-            from .. import GraiaMiraiApplication
-
-            if interface.annotation is GraiaMiraiApplication:
-                return interface.event.app</code></pre>
+    def __init__(self, content: Any = None):
+        if content.__class__ is self.__class__:
+            content = content.target
+        super().__init__(target=content)</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
-<li><a title="graia.broadcast.entities.event.BaseEvent" href="../../broadcast/entities/event.html#graia.broadcast.entities.event.BaseEvent">BaseEvent</a></li>
 <li>pydantic.main.BaseModel</li>
 <li>pydantic.utils.Representation</li>
 </ul>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="graia.broadcast.entities.signatures.Force" href="#graia.broadcast.entities.signatures.Force">Force</a></li>
+<li><a title="graia.broadcast.entities.signatures.RemoveMe" href="#graia.broadcast.entities.signatures.RemoveMe">RemoveMe</a></li>
+</ul>
 <h3>Class variables</h3>
 <dl>
-<dt id="graia.application.event.lifecycle.ApplicationLaunchedBlocking.Dispatcher"><code class="name">var <span class="ident">Dispatcher</span></code></dt>
-<dd>
-<div class="desc"><p>所有非单函数型 Dispatcher 的基类, 用于为参数解析提供可扩展的支持.</p></div>
-</dd>
-<dt id="graia.application.event.lifecycle.ApplicationLaunchedBlocking.app"><code class="name">var <span class="ident">app</span> : Any</code></dt>
+<dt id="graia.broadcast.entities.signatures.ObjectContainer.target"><code class="name">var <span class="ident">target</span> : Any</code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
 </dl>
 </dd>
-<dt id="graia.application.event.lifecycle.ApplicationShutdowned"><code class="flex name class">
-<span>class <span class="ident">ApplicationShutdowned</span></span>
-<span>(</span><span>app)</span>
+<dt id="graia.broadcast.entities.signatures.RemoveMe"><code class="flex name class">
+<span>class <span class="ident">RemoveMe</span></span>
+<span>(</span><span>content: Any = None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Create a new model by parsing and validating input data from keyword arguments.</p>
+<div class="desc"><p>当本标识的实例为一受 Executor 影响的 Listener 返回值时,
+Executor 会尝试在当前 Broadcast 实例中找出并删除本 Listener 实例.</p>
+<p>Create a new model by parsing and validating input data from keyword arguments.</p>
 <p>Raises ValidationError if the input data cannot be parsed to form a valid model.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">class ApplicationShutdowned(BaseEvent):
-    app: Any
-
-    def __init__(self, app) -&gt; None:
-        super().__init__(app=app)
-
-    class Dispatcher(BaseDispatcher):
-        @staticmethod
-        async def catch(interface: &#34;DispatcherInterface&#34;):
-            from .. import GraiaMiraiApplication
-
-            if interface.annotation is GraiaMiraiApplication:
-                return interface.event.app</code></pre>
+<pre><code class="python">class RemoveMe(ObjectContainer):
+    &#34;&#34;&#34;当本标识的实例为一受 Executor 影响的 Listener 返回值时,
+    Executor 会尝试在当前 Broadcast 实例中找出并删除本 Listener 实例.
+    &#34;&#34;&#34;</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
-<li><a title="graia.broadcast.entities.event.BaseEvent" href="../../broadcast/entities/event.html#graia.broadcast.entities.event.BaseEvent">BaseEvent</a></li>
+<li><a title="graia.broadcast.entities.signatures.ObjectContainer" href="#graia.broadcast.entities.signatures.ObjectContainer">ObjectContainer</a></li>
 <li>pydantic.main.BaseModel</li>
 <li>pydantic.utils.Representation</li>
 </ul>
 <h3>Class variables</h3>
 <dl>
-<dt id="graia.application.event.lifecycle.ApplicationShutdowned.Dispatcher"><code class="name">var <span class="ident">Dispatcher</span></code></dt>
-<dd>
-<div class="desc"><p>所有非单函数型 Dispatcher 的基类, 用于为参数解析提供可扩展的支持.</p></div>
-</dd>
-<dt id="graia.application.event.lifecycle.ApplicationShutdowned.app"><code class="name">var <span class="ident">app</span> : Any</code></dt>
+<dt id="graia.broadcast.entities.signatures.RemoveMe.target"><code class="name">var <span class="ident">target</span> : Any</code></dt>
 <dd>
 <div class="desc"></div>
 </dd>
@@ -226,30 +184,27 @@ class ApplicationShutdowned(BaseEvent):
 <ul id="index">
 <li><h3>Super-module</h3>
 <ul>
-<li><code><a title="graia.application.event" href="index.html">graia.application.event</a></code></li>
+<li><code><a title="graia.broadcast.entities" href="../index.html">graia.broadcast.entities</a></code></li>
 </ul>
 </li>
 <li><h3><a href="#header-classes">Classes</a></h3>
 <ul>
 <li>
-<h4><code><a title="graia.application.event.lifecycle.ApplicationLaunched" href="#graia.application.event.lifecycle.ApplicationLaunched">ApplicationLaunched</a></code></h4>
+<h4><code><a title="graia.broadcast.entities.signatures.Force" href="#graia.broadcast.entities.signatures.Force">Force</a></code></h4>
 <ul class="">
-<li><code><a title="graia.application.event.lifecycle.ApplicationLaunched.Dispatcher" href="#graia.application.event.lifecycle.ApplicationLaunched.Dispatcher">Dispatcher</a></code></li>
-<li><code><a title="graia.application.event.lifecycle.ApplicationLaunched.app" href="#graia.application.event.lifecycle.ApplicationLaunched.app">app</a></code></li>
+<li><code><a title="graia.broadcast.entities.signatures.Force.target" href="#graia.broadcast.entities.signatures.Force.target">target</a></code></li>
 </ul>
 </li>
 <li>
-<h4><code><a title="graia.application.event.lifecycle.ApplicationLaunchedBlocking" href="#graia.application.event.lifecycle.ApplicationLaunchedBlocking">ApplicationLaunchedBlocking</a></code></h4>
+<h4><code><a title="graia.broadcast.entities.signatures.ObjectContainer" href="#graia.broadcast.entities.signatures.ObjectContainer">ObjectContainer</a></code></h4>
 <ul class="">
-<li><code><a title="graia.application.event.lifecycle.ApplicationLaunchedBlocking.Dispatcher" href="#graia.application.event.lifecycle.ApplicationLaunchedBlocking.Dispatcher">Dispatcher</a></code></li>
-<li><code><a title="graia.application.event.lifecycle.ApplicationLaunchedBlocking.app" href="#graia.application.event.lifecycle.ApplicationLaunchedBlocking.app">app</a></code></li>
+<li><code><a title="graia.broadcast.entities.signatures.ObjectContainer.target" href="#graia.broadcast.entities.signatures.ObjectContainer.target">target</a></code></li>
 </ul>
 </li>
 <li>
-<h4><code><a title="graia.application.event.lifecycle.ApplicationShutdowned" href="#graia.application.event.lifecycle.ApplicationShutdowned">ApplicationShutdowned</a></code></h4>
+<h4><code><a title="graia.broadcast.entities.signatures.RemoveMe" href="#graia.broadcast.entities.signatures.RemoveMe">RemoveMe</a></code></h4>
 <ul class="">
-<li><code><a title="graia.application.event.lifecycle.ApplicationShutdowned.Dispatcher" href="#graia.application.event.lifecycle.ApplicationShutdowned.Dispatcher">Dispatcher</a></code></li>
-<li><code><a title="graia.application.event.lifecycle.ApplicationShutdowned.app" href="#graia.application.event.lifecycle.ApplicationShutdowned.app">app</a></code></li>
+<li><code><a title="graia.broadcast.entities.signatures.RemoveMe.target" href="#graia.broadcast.entities.signatures.RemoveMe.target">target</a></code></li>
 </ul>
 </li>
 </ul>
