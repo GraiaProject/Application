@@ -1081,7 +1081,7 @@ class BotInvitedJoinGroupRequestEvent(MiraiEvent):
 class NudgeEvent(MiraiEvent):
     """当该事件发生时, 应用实例所辖账号被某个账号在相应上下文区域进行 "戳一戳"(Nudge) 的行为.
 
-    ~~Graia Project 不是医学机构, 不负责关于性骚扰等方面的咨询, 请前往权威医学有关设施进行相应操作.~~
+    Graia Project 及 NatriumLab 都不是医学机构, 不负责关于性骚扰等方面的咨询, 请前往权威医学有关设施进行相应操作.
 
     ** 注意: 当监听该事件时, 请使用原始事件类作为类型注解, 以此获得事件类实例, 并执行相关操作. **
 
