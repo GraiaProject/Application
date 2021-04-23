@@ -1314,6 +1314,45 @@ class GraiaMiraiApplication:
                 data = await response.json()
                 raise_for_return_code(data)
 
+    @error_wrapper
+    @requireAuthenticated
+    @applicationContextManager
+    async def setEssence(self, target: Union[BotMessage, Source, int]):
+        """设置群精华消息, 需要机器人账号具有管理员及以上权限
+
+        Args:
+            target (Union[BotMessage, Source, int]): 将被设置为群精华消息的消息 Id (Message ID)
+        """
+        async with self.session.post(
+            self.url_gen("setEssence"),
+            json={
+                "sessionKey": self.connect_info.sessionKey,
+                "target": target.id
+                if isinstance(target, (BotMessage, Source))
+                else target,
+            },
+        ) as response:
+            response.raise_for_status()
+            data = await response.json()
+            raise_for_return_code(data)
+
+    @error_wrapper
+    @requireAuthenticated
+    @applicationContextManager
+    async def nudge(self, target: Union[Member, Friend]):
+        async with self.session.post(
+            self.url_gen("sendNudge"),
+            json={
+                "sessionKey": self.connect_info.sessionKey,
+                "target": target.id,
+                "subject": target.group.id if isinstance(target, Member) else target.id,
+                "kind": {Member: "Group", Friend: "Friend"}[target.__class__],
+            },
+        ) as response:
+            response.raise_for_status()
+            data = await response.json()
+            raise_for_return_code(data)
+
     @staticmethod
     async def auto_parse_by_type(original_dict: dict) -> BaseEvent:
         """从尚未明确指定事件类型的对象中获取事件的定义, 并进行解析

@@ -1,6 +1,7 @@
-from typing import NoReturn, Optional
+from typing import Any, Dict, Literal, NoReturn, Optional
 
 from pydantic import Field
+from pydantic.class_validators import validator
 from graia.application.context import application
 from graia.application.group import Group, Member, MemberPerm
 from graia.application.exceptions import InvaildArgument, InvaildSession
@@ -1075,3 +1076,44 @@ class BotInvitedJoinGroupRequestEvent(MiraiEvent):
             response.raise_for_status()
             data = await response.json()
             raise_for_return_code(data)
+
+
+class NudgeEvent(MiraiEvent):
+    """当该事件发生时, 应用实例所辖账号被某个账号在相应上下文区域进行 "戳一戳"(Nudge) 的行为.
+
+    ~~Graia Project 不是医学机构, 不负责关于性骚扰等方面的咨询, 请前往权威医学有关设施进行相应操作.~~
+
+    ** 注意: 当监听该事件时, 请使用原始事件类作为类型注解, 以此获得事件类实例, 并执行相关操作. **
+
+    Allowed Extra Parameters(提供的额外注解支持):
+        GraiaMiraiApplication (annotation): 发布事件的应用实例
+    """
+
+    type: str = "NudgeEvent"
+    supplicant: int = Field(..., alias="fromId")  # 即请求方 QQ
+    target: int
+
+    msg_action: str = Field(..., alias="action")
+    msg_suffix: str = Field(..., alias="suffix")
+    origin_subject_info: Dict[str, Any] = Field(..., alias="subject")
+
+    friend_id: Optional[int] = None
+    group_id: Optional[int] = None
+
+    context_type: Literal["friend", "group"] = None
+
+    @validator("friend_id", pre=True, always=True)
+    def subject_handle_friend_id(cls, v, values, **kwargs):
+        if values["origin_subject_info"]["kind"] == "Friend":
+            return values["origin_subject_info"]["id"]
+
+    @validator("group_id", pre=True, always=True)
+    def subject_handle_group_id(cls, v, values):
+        if values["origin_subject_info"]["kind"] == "Group":
+            return values["origin_subject_info"]["id"]
+
+    @validator("context_type", pre=True, always=True)
+    def subject_handle_context_type(cls, v, values):
+        return str.lower(values["origin_subject_info"]["kind"])
+
+    Dispatcher = EmptyDispatcher

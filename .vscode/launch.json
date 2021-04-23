@@ -5,6 +5,14 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Graia: Event Model Test",
+            "type": "python",
+            "request": "launch",
+            "module": "graia.application.event.mirai",
+            "cwd": "${workspaceFolder}/src",
+            "justMyCode": false
+        },
+        {
             "name": "Graia: Literature Test",
             "type": "python",
             "request": "launch",
