@@ -37,7 +37,7 @@ from .entities import MiraiConfig, UploadMethods
 from .event.messages import FriendMessage, GroupMessage, TempMessage
 from .exceptions import InvaildArgument, InvaildSession, NotSupportedVersion
 from .friend import Friend
-from .group import Group, GroupConfig, Member, MemberInfo
+from .group import Group, GroupConfig, Member, MemberInfo, FileList  # 新增 for kamael
 from .logger import AbstractLogger, LoggingLogger
 from .message import BotMessage
 from .message.chain import MessageChain
@@ -364,7 +364,7 @@ class GraiaMiraiApplication:
     @error_wrapper
     @requireAuthenticated
     @applicationContextManager
-    async def getGroup(self, group_id: int) -> Optional[Group]:
+    async def getGroup(self) -> List[Group]:
         """尝试从已知的群组唯一ID, 获取对应群组的信息; 可能返回 None.
 
         Args:
@@ -605,6 +605,8 @@ class GraiaMiraiApplication:
                     )
                 )
                 return BotMessage(messageId=data["messageId"])
+
+
 
     @error_wrapper
     @requireAuthenticated
@@ -1313,7 +1315,7 @@ class GraiaMiraiApplication:
                 response.raise_for_status()
                 data = await response.json()
                 raise_for_return_code(data)
-
+    
     @error_wrapper
     @requireAuthenticated
     @applicationContextManager
@@ -1327,15 +1329,13 @@ class GraiaMiraiApplication:
             self.url_gen("setEssence"),
             json={
                 "sessionKey": self.connect_info.sessionKey,
-                "target": target.id
-                if isinstance(target, (BotMessage, Source))
-                else target,
+                "target": target.id if isinstance(target, (BotMessage, Source)) else target
             },
         ) as response:
             response.raise_for_status()
             data = await response.json()
             raise_for_return_code(data)
-
+    
     @error_wrapper
     @requireAuthenticated
     @applicationContextManager
@@ -1346,7 +1346,9 @@ class GraiaMiraiApplication:
                 "sessionKey": self.connect_info.sessionKey,
                 "target": target.id,
                 "subject": target.group.id if isinstance(target, Member) else target.id,
-                "kind": {Member: "Group", Friend: "Friend"}[target.__class__],
+                "kind": {
+                    Member: "Group", Friend: "Friend"
+                }[target.__class__]
             },
         ) as response:
             response.raise_for_status()
@@ -1639,3 +1641,103 @@ class GraiaMiraiApplication:
 
         if tb is not None:
             raise exc
+
+    """新增 for kamael"""
+    @error_wrapper
+    @requireAuthenticated
+    @applicationContextManager
+    async def groupFileList(self, group: Union[Group, int], dir: str = '') -> List[FileList]:
+        """获取群组中文件列表
+
+        Args:
+            group (Union[Group, int]): 群组/群组ID
+            dir (str): 文件目录， 默认为空
+
+        Returns:
+            List[FileList]: 获得的文件列表.
+        """
+        async with self.session.get(
+            str(
+                URL(self.url_gen("groupFileList")).with_query(
+                    {
+                        "sessionKey": self.connect_info.sessionKey,
+                        "target": group.id if isinstance(group, Group) else group,
+                        "dir": dir
+                    }
+                )
+            )
+        ) as response:
+            response.raise_for_status()
+            data = await response.json()
+            raise_for_return_code(data)
+            return [FileList.parse_obj(i) for i in data]
+
+    @error_wrapper
+    @requireAuthenticated
+    @applicationContextManager
+    async def groupFileRename(self, group: Union[Group, int], id: str, rename: str) -> NoReturn:
+        """更名某一群文件
+
+        Args:
+            group (Union[Group, int]): 群组/群组ID
+            id (str): 更名文件的唯一标识符， 从 groupFileList 方法获得
+            rename (str): 更名后的名字
+        """
+        async with self.session.post(
+                self.url_gen("groupFileRename"),
+                json={
+                    "sessionKey": self.connect_info.sessionKey,
+                    "target": group.id if isinstance(group, Group) else group,
+                    "id": id,
+                    "rename": rename
+                }
+        ) as response:
+            response.raise_for_status()
+            data = await response.json()
+            raise_for_return_code(data)
+
+    @error_wrapper
+    @requireAuthenticated
+    @applicationContextManager
+    async def groupFileMove(self, group: Union[Group, int], id: str, movePath: str) -> NoReturn:
+        """移动群文件
+
+        Args:
+            group (Union[Group, int]): 群组/群组ID
+            id (str): 更名文件的唯一标识符， 从 groupFileList 方法获得
+            movePath (str): 移动到的目录， 根目录为/, 目录不存在则自动创建
+        """
+        async with self.session.post(
+                self.url_gen("groupFileMove"),
+                json={
+                    "sessionKey": self.connect_info.sessionKey,
+                    "target": group.id if isinstance(group, Group) else group,
+                    "id": id,
+                    "movePath": movePath
+                }
+        ) as response:
+            response.raise_for_status()
+            data = await response.json()
+            raise_for_return_code(data)
+
+    @error_wrapper
+    @requireAuthenticated
+    @applicationContextManager
+    async def groupFileDelete(self, group: Union[Group, int], id: str) -> NoReturn:
+        """更名某一群文件
+
+        Args:
+            group (Union[Group, int]): 群组/群组ID
+            id (str): 更名文件的唯一标识符， 从 groupFileList 方法获得
+        """
+        async with self.session.post(
+                self.url_gen("groupFileDelete"),
+                json={
+                    "sessionKey": self.connect_info.sessionKey,
+                    "target": group.id if isinstance(group, Group) else group,
+                    "id": id
+                }
+        ) as response:
+            response.raise_for_status()
+            data = await response.json()
+            raise_for_return_code(data)
