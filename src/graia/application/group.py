@@ -56,7 +56,6 @@ class MemberInfo(BaseModel):
     class Config:
         allow_mutation = True
 
-"""新增 for kamael"""
 class FileList(BaseModel):
     "描述群组文件的有关状态"
 
