@@ -55,3 +55,12 @@ class MemberInfo(BaseModel):
 
     class Config:
         allow_mutation = True
+
+"""新增 for kamael"""
+class FileList(BaseModel):
+    "描述群组文件的有关状态"
+
+    name: Optional[str] = None
+    id: Optional[str] = None
+    path: Optional[str] = None
+    isFile: Optional[bool] = None
