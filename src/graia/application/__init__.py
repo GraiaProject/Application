@@ -37,7 +37,7 @@ from .entities import MiraiConfig, UploadMethods
 from .event.messages import FriendMessage, GroupMessage, TempMessage
 from .exceptions import InvaildArgument, InvaildSession, NotSupportedVersion
 from .friend import Friend
-from .group import Group, GroupConfig, Member, MemberInfo, FileList  # 新增 for kamael
+from .group import Group, GroupConfig, Member, MemberInfo, FileList
 from .logger import AbstractLogger, LoggingLogger
 from .message import BotMessage
 from .message.chain import MessageChain
@@ -1642,7 +1642,6 @@ class GraiaMiraiApplication:
         if tb is not None:
             raise exc
 
-    """新增 for kamael"""
     @error_wrapper
     @requireAuthenticated
     @applicationContextManager
