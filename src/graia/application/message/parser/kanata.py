@@ -311,8 +311,8 @@ class Kanata(AsyncDispatcherContextManager):
             raise ExecutionStop()
         if self.allow_quote and message_chain.has(Quote):
             # 自动忽略自 Quote 后第一个 At
-            # 0: Quote, 1: At, 2: Plain(一个空格, 可能会在以后的 mirai 版本后被其处理, 这里先自动处理这个了.)
-            message_chain = message_chain[(3, None):]
+            # 0: Quote
+            message_chain = message_chain[(1, None):]
             if self.skip_one_at_in_quote and message_chain.__root__:
                 if message_chain.__root__[0].__class__ is At:
                     message_chain = message_chain[(1, 1):]
