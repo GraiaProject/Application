@@ -1643,12 +1643,12 @@ class GraiaMiraiApplication:
     @error_wrapper
     @requireAuthenticated
     @applicationContextManager
-    async def groupFileList(self, group: Union[Group, int], dir: str = '') -> List[FileList]:
-        """获取群组中文件列表
+    sync def getGroupFileList(self, group: Union[Group, int], path: Optional[str] = None) -> List[FileList]:
+        """获取指定群组中文件列表
 
         Args:
-            group (Union[Group, int]): 群组/群组ID
-            dir (str): 文件目录，不填为根目录，默认为空
+            group (Union[Group, int]): 需要获取的指定群组
+            path (str): 指定文件目录，如果寻找根目录则不需要提供本项，默认为 None
 
         Returns:
             List[FileList]: 获得的文件列表.
@@ -1659,7 +1659,7 @@ class GraiaMiraiApplication:
                     {
                         "sessionKey": self.connect_info.sessionKey,
                         "target": group.id if isinstance(group, Group) else group,
-                        "dir": dir
+                        "dir": path or ''
                     }
                 )
             )
@@ -1672,44 +1672,15 @@ class GraiaMiraiApplication:
     @error_wrapper
     @requireAuthenticated
     @applicationContextManager
-    async def groupFileList(self, group: Union[Group, int], dir: str = '') -> List[FileList]:
-        """获取群组中文件列表
+    async def getGroupFileInfo(self, group: Union[Group, int], file_id: str) -> FileInfo:
+        """获取指定群文件详细信息
 
         Args:
-            group (Union[Group, int]): 群组/群组ID
-            dir (str): 文件目录，不填为根目录，默认为空
+            group (Union[Group, int]): 需要获取的指定群组
+            file_id (str): 指定文件的唯一标识符，从 getGroupFileList 方法获得
 
         Returns:
-            List[FileList]: 获得的文件列表.
-        """
-        async with self.session.get(
-            str(
-                URL(self.url_gen("groupFileList")).with_query(
-                    {
-                        "sessionKey": self.connect_info.sessionKey,
-                        "target": group.id if isinstance(group, Group) else group,
-                        "dir": dir
-                    }
-                )
-            )
-        ) as response:
-            response.raise_for_status()
-            data = await response.json()
-            raise_for_return_code(data)
-            return [FileList.parse_obj(i) for i in data]
-
-    @error_wrapper
-    @requireAuthenticated
-    @applicationContextManager
-    async def groupFileInfo(self, group: Union[Group, int], id: str) -> FileConfig:
-        """获取群文件详细信息
-
-        Args:
-            group (Union[Group, int]): 群组/群组ID
-            id (str): 文件唯一ID
-
-        Returns:
-            FileConfig: 获得的文件详情.
+            FileInfo: 获得的文件详情.
         """
         async with self.session.get(
                 str(
@@ -1717,7 +1688,7 @@ class GraiaMiraiApplication:
                         {
                             "sessionKey": self.connect_info.sessionKey,
                             "target": group.id if isinstance(group, Group) else group,
-                            "id": id
+                            "id": file_id
                         }
                     )
                 )
@@ -1725,25 +1696,25 @@ class GraiaMiraiApplication:
             response.raise_for_status()
             data = await response.json()
             raise_for_return_code(data)
-            return FileConfig.parse_obj(data)
+            return FileInfo.parse_obj(data)
 
     @error_wrapper
     @requireAuthenticated
     @applicationContextManager
-    async def groupFileRename(self, group: Union[Group, int], id: str, rename: str) -> NoReturn:
-        """重命名群文件/目录
+    async def renameGroupFile(self, group: Union[Group, int], file_id: str, rename: str) -> NoReturn:
+        """重命名群文件或目录
 
         Args:
-            group (Union[Group, int]): 群组/群组ID
-            id (str): 更名文件的唯一标识符， 从 groupFileList 方法获得
-            rename (str): 更名后的名字
+            group (Union[Group, int]): 需要获取的指定群组
+            file_id (str): 指定文件的唯一标识符，从 getGroupFileList 方法获得
+            rename (str): 指定文件更名后的名称，需要加上文件后缀
         """
         async with self.session.post(
                 self.url_gen("groupFileRename"),
                 json={
                     "sessionKey": self.connect_info.sessionKey,
                     "target": group.id if isinstance(group, Group) else group,
-                    "id": id,
+                    "id": file_id,
                     "rename": rename
                 }
         ) as response:
@@ -1754,44 +1725,43 @@ class GraiaMiraiApplication:
     @error_wrapper
     @requireAuthenticated
     @applicationContextManager
-    async def groupFileMove(self, group: Union[Group, int], id: str, movePath: str) -> NoReturn:
-        """移动群文件(目前疑似存在bug，使用版本mah1.11.0 返回状态码200但文件未能移动)
+    async def moveGroupFile(self, group: Union[Group, int], file_id: str, move_to: str) -> NoReturn:
+        """移动群文件(目前疑似 Mirai-Api—Http 1.11.0 存在 bug，返回状态码 200 但文件未能移动)
 
         Args:
-            group (Union[Group, int]): 群组/群组ID
-            id (str): 更名文件的唯一标识符，从 groupFileList 方法获得
-            movePath (str): 移动到的目录即'/movePath'，根目录为/ , 目录不存在则自动创建
+            group (Union[Group, int]): 需要获取的指定群组
+            file_id (str): 指定文件的唯一标识符，从 getGroupFileList 方法获得
+            move_to (str): 指定文件需要移动到的目录即 '/move_to', 目录不存在则自动创建
         """
         async with self.session.post(
                 self.url_gen("groupFileMove"),
                 json={
                     "sessionKey": self.connect_info.sessionKey,
                     "target": group.id if isinstance(group, Group) else group,
-                    "id": id,
-                    "movePath": movePath
+                    "id": file_id,
+                    "movePath": move_to
                 }
         ) as response:
             response.raise_for_status()
             data = await response.json()
             raise_for_return_code(data)
-            print(data)
 
     @error_wrapper
     @requireAuthenticated
     @applicationContextManager
-    async def groupFileDelete(self, group: Union[Group, int], id: str) -> NoReturn:
-        """删除群文件/目录
+    async def removeGroupFile(self, group: Union[Group, int], file_id: str) -> NoReturn:
+        """删除群文件或目录
 
         Args:
-            group (Union[Group, int]): 群组/群组ID
-            id (str): 更名文件的唯一标识符， 从 groupFileList 方法获得
+            group (Union[Group, int]): 需要获取的指定群组
+            file_id (str): 指定文件的唯一标识符，从 getGroupFileList 方法获得
         """
         async with self.session.post(
                 self.url_gen("groupFileDelete"),
                 json={
                     "sessionKey": self.connect_info.sessionKey,
                     "target": group.id if isinstance(group, Group) else group,
-                    "id": id
+                    "id": file_id
                 }
         ) as response:
             response.raise_for_status()
