@@ -310,7 +310,6 @@ class Kanata(AsyncDispatcherContextManager):
         ):
             raise ExecutionStop()
         if self.allow_quote and message_chain.has(Quote):
-            # 自动忽略自 Quote 后第一个 At
             # 0: Quote
             message_chain = message_chain[(1, None):]
             if self.skip_one_at_in_quote and message_chain.__root__:
