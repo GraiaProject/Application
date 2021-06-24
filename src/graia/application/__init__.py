@@ -37,7 +37,7 @@ from .entities import MiraiConfig, UploadMethods
 from .event.messages import FriendMessage, GroupMessage, TempMessage
 from .exceptions import InvaildArgument, InvaildSession, NotSupportedVersion
 from .friend import Friend
-from .group import Group, GroupConfig, Member, MemberInfo, FileList, FileConfig
+from .group import Group, GroupConfig, Member, MemberInfo, FileList, FileInfo
 from .logger import AbstractLogger, LoggingLogger
 from .message import BotMessage
 from .message.chain import MessageChain
