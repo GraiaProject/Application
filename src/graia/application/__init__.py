@@ -1643,7 +1643,7 @@ class GraiaMiraiApplication:
     @error_wrapper
     @requireAuthenticated
     @applicationContextManager
-    sync def getGroupFileList(self, group: Union[Group, int], path: Optional[str] = None) -> List[FileList]:
+    async def getGroupFileList(self, group: Union[Group, int], path: Optional[str] = None) -> List[FileList]:
         """获取指定群组中文件列表
 
         Args:
