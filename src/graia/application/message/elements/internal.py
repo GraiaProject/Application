@@ -324,7 +324,6 @@ class Image(InternalElement):
     "该消息元素用于承载消息中所附带的图片."
     imageId: Optional[str] = None
     url: Optional[str] = None
-    path: Optional[str] = None
     type: Optional[ImageType]
 
     @validator("type", always=True, allow_reuse=True)
@@ -358,14 +357,13 @@ class Image(InternalElement):
                 )
         except LookupError:
             pass
-        return External.Image(imageId=self.imageId, url=self.url, path=self.path)
+        return External.Image(imageId=self.imageId, url=self.url)
 
     @classmethod
     def fromExternal(cls, external_element) -> "Image":
         return cls(
             imageId=external_element.imageId,
             url=external_element.url,
-            path=external_element.path,
         )
 
     @classmethod
@@ -399,18 +397,6 @@ class Image(InternalElement):
         if not filepath.exists():
             raise FileNotFoundError("you should give us a existed file's path")
         return Image_LocalFile(filepath, method)
-
-    @classmethod
-    def fromUnsafePath(cls, path: Union[Path, str]) -> "External.Image":
-        """不检查路径安全性, 直接实例化元素, 让 mirai-api-http 自行读取图片文件.
-
-        Args:
-            path (Union[Path, str]): 图片文件路径
-
-        Returns:
-            Image: 作为外部态存在的 Image 消息元素
-        """
-        return External.Image(path=str(path))
 
     @classmethod
     def fromUnsafeBytes(
@@ -488,14 +474,13 @@ class FlashImage(Image, InternalElement):
     """
 
     def toExternal(self):
-        return External.FlashImage(imageId=self.imageId, url=self.url, path=self.path)
+        return External.FlashImage(imageId=self.imageId, url=self.url)
 
     @classmethod
     def fromExternal(cls, external_element) -> "FlashImage":
         return cls(
             imageId=external_element.imageId,
             url=external_element.url,
-            path=external_element.path,
         )
 
     @classmethod
@@ -503,7 +488,6 @@ class FlashImage(Image, InternalElement):
         return cls(
             imageId=image_element.imageId,
             url=image_element.url,
-            path=image_element.path,
         )
 
     def asDisplay(self) -> str:
@@ -562,18 +546,16 @@ class Voice_LocalFile(ShadowElement, InternalElement, ExternalElement):
 class Voice(InternalElement):
     voiceId: Optional[str] = None
     url: Optional[str] = None
-    path: Optional[str] = None
     type: Optional[VoiceUploadType]
 
     def toExternal(self):
-        return External.Voice(voiceId=self.voiceId, url=self.url, path=self.path)
+        return External.Voice(voiceId=self.voiceId, url=self.url)
 
     @classmethod
     def fromExternal(cls, external_element) -> "Voice":
         return cls(
             voiceId=external_element.voiceId,
             url=external_element.url,
-            path=external_element.path,
         )
 
     def asSerializationString(self) -> str:
