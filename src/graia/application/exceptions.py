@@ -3,8 +3,8 @@ class InvalidEventTypeDefinition(Exception):
     pass
 
 
-class InvaildAuthkey(Exception):
-    "无效的 authKey 或其配置."
+class InvaildVerifyKey(Exception):
+    "无效的 VerifyKey 或其配置."
     pass
 
 

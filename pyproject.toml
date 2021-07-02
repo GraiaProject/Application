@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "graia-application-mirai"
-version = "0.19.2"
+version = "0.20.0"
 description = ""
 authors = ["GreyElaina <GreyElaina@outlook.com>"]
 license = "AGPL-3.0"
@@ -15,8 +15,8 @@ url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple/"
 
 [tool.poetry.dependencies]
 python = "^3.6"
-pydantic = "^1.6.1"
-graia-broadcast = ">=0.11.0"
+pydantic = "^1.8.2"
+graia-broadcast = "^0.11.0"
 aiohttp = "^3.6.2"
 yarl = "^1.4.2"
 contextvars = {version = "^2.4", python = "<3.7"}

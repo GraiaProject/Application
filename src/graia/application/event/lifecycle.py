@@ -1,14 +1,16 @@
 from typing import Any
-from graia.broadcast.entities.event import BaseEvent, BaseDispatcher
+import typing
+from graia.broadcast.entities.event import Dispatchable, BaseDispatcher
 from graia.broadcast.interfaces.dispatcher import DispatcherInterface
-from pydantic.main import BaseModel
 
+if typing.TYPE_CHECKING:
+    from graia.application import GraiaMiraiApplication
 
-class ApplicationLaunched(BaseEvent):
-    app: Any
+class ApplicationLaunched(Dispatchable):
+    app: "GraiaMiraiApplication"
 
     def __init__(self, app) -> None:
-        super().__init__(app=app)
+        self.app = app
 
     class Dispatcher(BaseDispatcher):
         @staticmethod
@@ -19,11 +21,11 @@ class ApplicationLaunched(BaseEvent):
                 return interface.event.app
 
 
-class ApplicationLaunchedBlocking(BaseEvent):
-    app: Any
+class ApplicationLaunchedBlocking(Dispatchable):
+    app: "GraiaMiraiApplication"
 
     def __init__(self, app) -> None:
-        super().__init__(app=app)
+        self.app = app
 
     class Dispatcher(BaseDispatcher):
         @staticmethod
@@ -34,11 +36,11 @@ class ApplicationLaunchedBlocking(BaseEvent):
                 return interface.event.app
 
 
-class ApplicationShutdowned(BaseEvent):
-    app: Any
+class ApplicationShutdowned(Dispatchable):
+    app: "GraiaMiraiApplication"
 
     def __init__(self, app) -> None:
-        super().__init__(app=app)
+        self.app = app
 
     class Dispatcher(BaseDispatcher):
         @staticmethod

@@ -66,6 +66,8 @@ class FileList(BaseModel):
     "是否为文件"
     is_file: Optional[bool] = None
 
+# 我搞不懂为什么写这个的人全部设的 Optional
+
 class FileInfo(BaseModel):
     "群组文件详细信息"
 

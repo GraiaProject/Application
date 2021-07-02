@@ -1,12 +1,11 @@
 from graia.broadcast.entities.dispatcher import BaseDispatcher
 from pydantic import BaseModel, validator
-from graia.broadcast import BaseEvent
+from graia.broadcast import Dispatchable
 from graia.application.context import application
 from graia.application.exceptions import InvalidEventTypeDefinition
 
 
-class MiraiEvent(BaseEvent):
-    __base_event__ = True
+class MiraiEvent(Dispatchable, BaseModel):
     type: str
 
     @validator("type", allow_reuse=True)
