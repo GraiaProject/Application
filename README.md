@@ -7,7 +7,7 @@
 ### 开始使用
 
 文档地址: https://graia-document.vercel.app/  
-API 文档地址(使用 `pdoc` 生成): https://graiaproject.github.io/Application/
+API 文档地址(使用 `pdoc` 生成): https://graiaproject.github.io/Application/graia/application/index.html
 
 Tencent QQ 交流群: [邀请链接](https://jq.qq.com/?_wv=1027&k=VXp6plBD)  
 Discussion: https://github.com/GraiaProject/Application/discussions
