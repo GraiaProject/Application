@@ -64,7 +64,7 @@ class FileList(BaseModel):
     "文件路径"
     path: Optional[str] = None
     "是否为文件"
-    is_file: Optional[bool] = None
+    is_file: Optional[bool] = Field(..., alias="isFile")
 
 # 我搞不懂为什么写这个的人全部设的 Optional
 
@@ -77,15 +77,15 @@ class FileInfo(BaseModel):
     "文件长度"
     length: Optional[int]
     "下载次数"
-    download_times: Optional[int]
+    download_times: Optional[int] = Field(..., alias="downloadTimes")
     "上传者QQ"
-    uploader_id: Optional[int]
+    uploader_id: Optional[int] = Field(..., alias="uploaderId")
     "上传时间"
-    upload_time: Optional[int]
+    upload_time: Optional[int] = Field(..., alias="uploadTime")
     "最后修改时间"
-    last_modify_time: Optional[int]
+    last_modify_time: Optional[int] = Field(..., alias="lastModifyTime")
     "文件下载链接"
-    download_url: Optional[str] = None
+    download_url: Optional[str] = Field(..., alias="downloadUrl")
     "文件 sha1 值"
     sha1: Optional[str] = None
     "文件 md5 值"
