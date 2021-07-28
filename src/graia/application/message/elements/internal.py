@@ -154,6 +154,15 @@ class Face(InternalElement, ExternalElement):
     type: str = "Face"
     faceId: int
     name: Optional[str] = None
+        
+    def __init__(self, text: int) -> None:
+        """实例化一个 Face 消息元素, 用于承载消息中的Id.
+
+        Args:
+            text (int): 元素所包含的文字
+        """
+        super().__init__(faceId=text)
+    
 
     def toExternal(self) -> "Face":
         return self
