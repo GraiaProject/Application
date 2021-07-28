@@ -156,7 +156,7 @@ class Face(InternalElement, ExternalElement):
     name: Optional[str] = None
         
     def __init__(self, faceId: int, name: Optional[str] = None) -> None:
-        """实例化一个 Plain 消息元素, 用于承载消息中的文字.
+        """实例化一个 Face 消息元素, 用于承载消息中的表情.
 
         Args:
             faceId (int): QQ表情编号
