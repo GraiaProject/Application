@@ -1,6 +1,6 @@
 # Graia Application for mirai-api-http
 
-**Avilla 已经发布, 本项目已处随缘更新状态... 所以你真的不去看看这下一代的新玩具吗?**
+**[Avilla](https://github.com/GraiaProject/Avilla) 已经发布, 本项目已处随缘更新状态... 所以你真的不去看看这下一代的新玩具吗?**
 
 当前最新版本: ![PyPI](https://img.shields.io/pypi/v/graia-application-mirai)  
 所需求的最低 CPython 版本: ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/graia-application-mirai)  
