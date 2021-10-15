@@ -56,7 +56,7 @@ from .group import MemberPerm, Group, Member, MemberInfo, GroupConfig
 from .session import Session
 from .exceptions import (
     InvalidEventTypeDefinition,
-    InvaildVerifyKey,
+    InvaildAuthKey,
     AccountNotFound,
     InvaildSession,
     UnauthorizedSession,

@@ -7,7 +7,7 @@ from .exceptions import (
     AccountMuted,
     AccountNotFound,
     InvaildArgument,
-    InvaildVerifyKey,
+    InvaildAuthKey,
     InvaildSession,
     NotSupportedVersion,
     TooLongMessage,
@@ -93,7 +93,7 @@ def DeprecatedSince(*version: int, action: str = "warn"):
 
 
 code_exceptions_mapping = {
-    1: InvaildVerifyKey,
+    1: InvaildAuthKey,
     2: AccountNotFound,
     3: InvaildSession,
     4: UnauthorizedSession,

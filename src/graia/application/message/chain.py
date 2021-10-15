@@ -111,17 +111,20 @@ class MessageChain(BaseModel):
         Returns:
             MessageChain: 以传入的序列作为所承载消息的消息链
         """
-        return cls(__root__=elements)
+        return cls(__root__=type(elements)(cls._get_element_list(elements)))
 
-    @classmethod
-    def parse_obj(cls: Type["MessageChain"], obj: List[Element]) -> "MessageChain":
+    def __init__(self, __root__: Iterable[Element]) -> None:
+        super().__init__(__root__=type(__root__)(self._get_element_list(__root__)))
+
+    @staticmethod
+    def _get_element_list(obj: Union) -> List[Element]:
         """内部接口, 会自动将作为外部态的消息元素转为内部态.
 
         Args:
             obj (List[T]): 需要反序列化的对象
 
         Returns:
-            MessageChain: 内部承载有尽量有效的内部态消息元素的消息链
+            List[Element]: 承载消息元素的列表.
         """
         handled_elements = []
         for i in obj:
@@ -139,7 +142,21 @@ class MessageChain(BaseModel):
                                 handled_elements.append(
                                     iii.fromExternal(ii.parse_obj(i))
                                 )
-        return cls(__root__=tuple(handled_elements))  # 默认是不可变型
+        return handled_elements
+
+    @classmethod
+    def parse_obj(
+        cls: Type["MessageChain"], obj: List[Union[Element, Dict]]
+    ) -> "MessageChain":
+        """内部接口, 会自动将作为外部态的消息元素转为内部态.
+
+        Args:
+            obj (List[T]): 需要反序列化的对象
+
+        Returns:
+            MessageChain: 内部承载有尽量有效的内部态消息元素的消息链
+        """
+        return cls(__root__=tuple(cls._get_element_list(obj)))  # 默认是不可变型
 
     @property
     def isImmutable(self) -> bool:

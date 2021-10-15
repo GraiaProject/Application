@@ -35,7 +35,7 @@ from graia.application.test.request_tracing import HttpRequestTracing
 from .context import enter_context, enter_message_send_context
 from .entities import MiraiConfig, UploadMethods
 from .event.messages import FriendMessage, GroupMessage, TempMessage
-from .exceptions import InvaildArgument, InvaildSession, InvaildVerifyKey, NotSupportedVersion
+from .exceptions import InvaildArgument, InvaildSession, NotSupportedVersion
 from .friend import Friend
 from .group import Group, GroupConfig, Member, MemberInfo, FileList, FileInfo
 from .logger import AbstractLogger, LoggingLogger
@@ -142,7 +142,7 @@ class GraiaMiraiApplication:
         broadcast (Broadcast): 被指定的, 外置的事件系统, 即 `Broadcast Control`,
             通常你不需要干涉该属性;
         session (ClientSession): 即 `aiohttp.ClientSession` 的实例, 用于与 `mirai-api-http` 通讯.
-        connect_info (Session): 用于描述会话对象, 其中最重要的属性是 `verifyKey`, 用于存储当前的会话标识.
+        connect_info (Session): 用于描述会话对象, 其中最重要的属性是 `sessionKey`, 用于存储当前的会话标识.
         logger (AbstractLogger): 日志系统实现类的实例, 默认以 `logging` 为日志驱动.
     """
 
@@ -191,8 +191,8 @@ class GraiaMiraiApplication:
         self.logger = logger or LoggingLogger(**({"debug": True} if debug else {}))
         self.debug = debug
         self.session = session or ClientSession(loop=broadcast.loop)
-        #if debug:
-        #    self.session = HttpRequestTracing(self.logger).build_session(self.session)
+        if debug:
+            self.session = HttpRequestTracing(self.logger).build_session(self.session)
 
         self.chat_log_enabled = enable_chat_log
 
@@ -293,28 +293,24 @@ class GraiaMiraiApplication:
 
     @applicationContextManager
     async def authenticate(self) -> str:
-        """从路由 `/verify` 下获取尚未被激活的会话标识并返回; 通常的, 你还需要使用 `activeSession` 方法激活它.
-        需 mirai-api-http 处启用 `enableVerify` 才可使用。
+        """从路由 `/auth` 下获取尚未被激活的会话标识并返回; 通常的, 你还需要使用 `activeSession` 方法激活它.
 
         Returns:
             str: 即返回的会话标识
         """
-        if self.connect_info.verifyKey is None:
-            raise InvaildVerifyKey("require non-null verifykey.")
         async with self.session.post(
-            self.url_gen("verify"), json={"verifyKey": self.connect_info.verifyKey}
+            self.url_gen("auth"), json={"authKey": self.connect_info.authKey}
         ) as response:
             response.raise_for_status()
             data = await response.json()
             raise_for_return_code(data)
-            self.connect_info.verifyKey = data["session"]
+            self.connect_info.sessionKey = data["session"]
             return data["session"]
 
     @applicationContextManager
     async def activeSession(self) -> NoReturn:
         """激活当前已经存入 connect_info 的会话标识,
         如果没有事先调用 `authenticate` 方法获取未激活的会话标识, 则会触发 `InvaildSession` 错误.
-        若于 mirai-api-http 处启用了 `singleMode`, 该方法不应该被执行, 但仍然建议在 Session 处填写 `account` 字段.
 
         Raises:
             InvaildSession: 没有事先调用 `authenticate` 方法获取未激活的会话标识
@@ -322,14 +318,14 @@ class GraiaMiraiApplication:
         Returns:
             NoReturn: 没有有意义的返回, 或者说, 返回 `None` 就代表这个操作成功了.
         """
-        if not self.connect_info.verifyKey:
+        if not self.connect_info.sessionKey:
             raise InvaildSession(
-                "you should call 'authenticate' before this to get a verifyKey!"
+                "you should call 'authenticate' before this to get a sessionKey!"
             )
         async with self.session.post(
-            self.url_gen("bind"),
+            self.url_gen("verify"),
             json={
-                "verifyKey": self.connect_info.verifyKey,
+                "sessionKey": self.connect_info.sessionKey,
                 "qq": self.connect_info.account,
             },
         ) as response:
@@ -348,18 +344,18 @@ class GraiaMiraiApplication:
         Returns:
             NoReturn: 没有有意义的返回, 或者说, 返回 `None` 就代表这个操作成功了.
         """
-        if not self.connect_info.verifyKey:
+        if not self.connect_info.sessionKey:
             raise InvaildSession(
-                "you should call 'authenticate' before this to get a verifyKey!"
+                "you should call 'authenticate' before this to get a sessionKey!"
             )
         async with self.session.post(
             self.url_gen("release"),
             json={
-                "verifyKey": self.connect_info.verifyKey,
+                "sessionKey": self.connect_info.sessionKey,
                 "qq": self.connect_info.account,
             },
         ) as response:
-            self.connect_info.verifyKey = None
+            self.connect_info.sessionKey = None
 
             response.raise_for_status()
             data = await response.json()
@@ -395,14 +391,14 @@ class GraiaMiraiApplication:
         async with self.session.get(
             str(
                 URL(self.url_gen("groupList")).with_query(
-                    {"verifyKey": self.connect_info.verifyKey}
+                    {"sessionKey": self.connect_info.sessionKey}
                 )
             )
         ) as response:
             response.raise_for_status()
             data = await response.json()
             raise_for_return_code(data)
-            return [Group.parse_obj(i) for i in data['data']]
+            return [Group.parse_obj(i) for i in data]
 
     @error_wrapper
     @requireAuthenticated
@@ -441,7 +437,7 @@ class GraiaMiraiApplication:
             str(
                 URL(self.url_gen("memberList")).with_query(
                     {
-                        "verifyKey": self.connect_info.verifyKey,
+                        "sessionKey": self.connect_info.sessionKey,
                         "target": group.id if isinstance(group, Group) else group,
                     }
                 )
@@ -450,7 +446,7 @@ class GraiaMiraiApplication:
             response.raise_for_status()
             data = await response.json()
             raise_for_return_code(data)
-            return [Member.parse_obj(i) for i in data['data']]
+            return [Member.parse_obj(i) for i in data]
 
     @error_wrapper
     @requireAuthenticated
@@ -464,14 +460,14 @@ class GraiaMiraiApplication:
         async with self.session.get(
             str(
                 URL(self.url_gen("friendList")).with_query(
-                    {"verifyKey": self.connect_info.verifyKey}
+                    {"sessionKey": self.connect_info.sessionKey}
                 )
             )
         ) as response:
             response.raise_for_status()
             data = await response.json()
             raise_for_return_code(data)
-            return [Friend.parse_obj(i) for i in data['data']]
+            return [Friend.parse_obj(i) for i in data]
 
     @error_wrapper
     @requireAuthenticated
@@ -507,7 +503,7 @@ class GraiaMiraiApplication:
             Image(external): 外部态的 Image 消息元素
         """
         data = FormData()
-        data.add_field("verifyKey", self.connect_info.verifyKey)
+        data.add_field("sessionKey", self.connect_info.sessionKey)
         data.add_field("type", method.value)
         data.add_field("img", image_bytes)
         async with self.session.post(
@@ -543,7 +539,7 @@ class GraiaMiraiApplication:
             Voice(external): 外部态的 Voice 消息元素
         """
         data = FormData()
-        data.add_field("verifyKey", self.connect_info.verifyKey)
+        data.add_field("sessionKey", self.connect_info.sessionKey)
         data.add_field("type", method.value)
         data.add_field("voice", voice_bytes)
         async with self.session.post(
@@ -583,7 +579,7 @@ class GraiaMiraiApplication:
             async with self.session.post(
                 self.url_gen("sendFriendMessage"),
                 json={
-                    "verifyKey": self.connect_info.verifyKey,
+                    "sessionKey": self.connect_info.sessionKey,
                     "target": target.id if isinstance(target, Friend) else target,
                     "messageChain": message_result.dict()["__root__"],
                     **(
@@ -635,7 +631,7 @@ class GraiaMiraiApplication:
             async with self.session.post(
                 self.url_gen("sendGroupMessage"),
                 json={
-                    "verifyKey": self.connect_info.verifyKey,
+                    "sessionKey": self.connect_info.sessionKey,
                     "target": group.id if isinstance(group, Group) else group,
                     "messageChain": message_result.dict()["__root__"],
                     **(
@@ -687,7 +683,7 @@ class GraiaMiraiApplication:
             async with self.session.post(
                 self.url_gen("sendTempMessage"),
                 json={
-                    "verifyKey": self.connect_info.verifyKey,
+                    "sessionKey": self.connect_info.sessionKey,
                     "group": group.id if isinstance(group, Group) else group,
                     "qq": target.id if isinstance(target, Member) else target,
                     "messageChain": message_result.dict()["__root__"],
@@ -735,7 +731,7 @@ class GraiaMiraiApplication:
 
         async with self.session.post(
             self.url_gen("recall"),
-            json={"verifyKey": self.connect_info.verifyKey, "target": target},
+            json={"sessionKey": self.connect_info.sessionKey, "target": target},
         ) as response:
             response.raise_for_status()
             data = await response.json()
@@ -758,7 +754,7 @@ class GraiaMiraiApplication:
         async with self.session.get(
             str(
                 URL(self.url_gen("fetchMessage")).with_query(
-                    {"verifyKey": self.connect_info.verifyKey, "count": count}
+                    {"sessionKey": self.connect_info.sessionKey, "count": count}
                 )
             )
         ) as response:
@@ -794,7 +790,7 @@ class GraiaMiraiApplication:
         async with self.session.get(
             str(
                 URL(self.url_gen("fetchLatestMessage")).with_query(
-                    {"verifyKey": self.connect_info.verifyKey, "count": count}
+                    {"sessionKey": self.connect_info.sessionKey, "count": count}
                 )
             )
         ) as response:
@@ -830,7 +826,7 @@ class GraiaMiraiApplication:
         async with self.session.get(
             str(
                 URL(self.url_gen("peekMessage")).with_query(
-                    {"verifyKey": self.connect_info.verifyKey, "count": count}
+                    {"sessionKey": self.connect_info.sessionKey, "count": count}
                 )
             )
         ) as response:
@@ -866,7 +862,7 @@ class GraiaMiraiApplication:
         async with self.session.get(
             str(
                 URL(self.url_gen("peekLatestMessage")).with_query(
-                    {"verifyKey": self.connect_info.verifyKey, "count": count}
+                    {"sessionKey": self.connect_info.sessionKey, "count": count}
                 )
             )
         ) as response:
@@ -911,7 +907,7 @@ class GraiaMiraiApplication:
             str(
                 URL(self.url_gen("messageFromId")).with_query(
                     {
-                        "verifyKey": self.connect_info.verifyKey,
+                        "sessionKey": self.connect_info.sessionKey,
                         "id": source.id if isinstance(source, Source) else source,
                     }
                 )
@@ -947,7 +943,7 @@ class GraiaMiraiApplication:
             str(
                 URL(self.url_gen("countMessage")).with_query(
                     {
-                        "verifyKey": self.connect_info.verifyKey,
+                        "sessionKey": self.connect_info.sessionKey,
                     }
                 )
             )
@@ -973,7 +969,7 @@ class GraiaMiraiApplication:
         async with self.session.post(
             self.url_gen("muteAll"),
             json={
-                "verifyKey": self.connect_info.verifyKey,
+                "sessionKey": self.connect_info.sessionKey,
                 "target": group.id if isinstance(group, Group) else group,
             },
         ) as response:
@@ -996,7 +992,7 @@ class GraiaMiraiApplication:
         async with self.session.post(
             self.url_gen("unmuteAll"),
             json={
-                "verifyKey": self.connect_info.verifyKey,
+                "sessionKey": self.connect_info.sessionKey,
                 "target": group.id if isinstance(group, Group) else group,
             },
         ) as response:
@@ -1030,7 +1026,7 @@ class GraiaMiraiApplication:
         async with self.session.post(
             self.url_gen("mute"),
             json={
-                "verifyKey": self.connect_info.verifyKey,
+                "sessionKey": self.connect_info.sessionKey,
                 "target": group.id if isinstance(group, Group) else group,
                 "memberId": member.id if isinstance(member, Member) else member,
                 "time": time,
@@ -1061,7 +1057,7 @@ class GraiaMiraiApplication:
         async with self.session.post(
             self.url_gen("unmute"),
             json={
-                "verifyKey": self.connect_info.verifyKey,
+                "sessionKey": self.connect_info.sessionKey,
                 "target": group.id if isinstance(group, Group) else group,
                 "memberId": member.id if isinstance(member, Member) else member,
             },
@@ -1092,7 +1088,7 @@ class GraiaMiraiApplication:
         async with self.session.post(
             self.url_gen("kick"),
             json={
-                "verifyKey": self.connect_info.verifyKey,
+                "sessionKey": self.connect_info.sessionKey,
                 "target": group.id if isinstance(group, Group) else group,
                 "memberId": member.id if isinstance(member, Member) else member,
                 **({"msg": message} if message else {}),
@@ -1117,7 +1113,7 @@ class GraiaMiraiApplication:
         async with self.session.post(
             self.url_gen("quit"),
             json={
-                "verifyKey": self.connect_info.verifyKey,
+                "sessionKey": self.connect_info.sessionKey,
                 "target": group.id if isinstance(group, Group) else group,
             },
         ) as response:
@@ -1141,7 +1137,7 @@ class GraiaMiraiApplication:
             str(
                 URL(self.url_gen("groupConfig")).with_query(
                     {
-                        "verifyKey": self.connect_info.verifyKey,
+                        "sessionKey": self.connect_info.sessionKey,
                         "target": group.id if isinstance(group, Group) else group,
                     }
                 )
@@ -1171,7 +1167,7 @@ class GraiaMiraiApplication:
         async with self.session.post(
             self.url_gen("groupConfig"),
             json={
-                "verifyKey": self.connect_info.verifyKey,
+                "sessionKey": self.connect_info.sessionKey,
                 "target": group.id if isinstance(group, Group) else group,
                 "config": config.dict(
                     exclude_none=True, exclude_unset=True, by_alias=True
@@ -1210,7 +1206,7 @@ class GraiaMiraiApplication:
             str(
                 URL(self.url_gen("memberInfo")).with_query(
                     {
-                        "verifyKey": self.connect_info.verifyKey,
+                        "sessionKey": self.connect_info.sessionKey,
                         "target": group.id if isinstance(group, Group) else group,
                         "memberId": member.id if isinstance(member, Member) else member,
                     }
@@ -1254,7 +1250,7 @@ class GraiaMiraiApplication:
         async with self.session.post(
             self.url_gen("memberInfo"),
             json={
-                "verifyKey": self.connect_info.verifyKey,
+                "sessionKey": self.connect_info.sessionKey,
                 "target": group.id if isinstance(group, Group) else group,
                 "memberId": member.id if isinstance(member, Member) else member,
                 "info": info.dict(exclude_none=True, exclude_unset=True, by_alias=True),
@@ -1276,7 +1272,7 @@ class GraiaMiraiApplication:
         async with self.session.get(
             str(
                 URL(self.url_gen("config")).with_query(
-                    {"verifyKey": self.connect_info.verifyKey}
+                    {"sessionKey": self.connect_info.sessionKey}
                 )
             )
         ) as response:
@@ -1305,7 +1301,7 @@ class GraiaMiraiApplication:
             async with self.session.post(
                 self.url_gen("config"),
                 json={
-                    "verifyKey": self.connect_info.verifyKey,
+                    "sessionKey": self.connect_info.sessionKey,
                     **({"cacheSize": cacheSize} if cacheSize is not None else {}),
                     **(
                         {"enableWebsocket": enableWebsocket}
@@ -1330,7 +1326,7 @@ class GraiaMiraiApplication:
         async with self.session.post(
             self.url_gen("setEssence"),
             json={
-                "verifyKey": self.connect_info.verifyKey,
+                "sessionKey": self.connect_info.sessionKey,
                 "target": target.id
                 if isinstance(target, (BotMessage, Source))
                 else target,
@@ -1347,7 +1343,7 @@ class GraiaMiraiApplication:
         async with self.session.post(
             self.url_gen("sendNudge"),
             json={
-                "verifyKey": self.connect_info.verifyKey,
+                "sessionKey": self.connect_info.sessionKey,
                 "target": target.id,
                 "subject": target.group.id if isinstance(target, Member) else target.id,
                 "kind": {Member: "Group", Friend: "Friend"}[target.__class__],
@@ -1358,7 +1354,7 @@ class GraiaMiraiApplication:
             raise_for_return_code(data)
 
     @staticmethod
-    async def auto_parse_by_type(original_dict: dict) -> MiraiEvent:
+    async def auto_parse_by_type(original_dict: dict) -> Dispatchable:
         """从尚未明确指定事件类型的对象中获取事件的定义, 并进行解析
 
         Args:
@@ -1369,7 +1365,7 @@ class GraiaMiraiApplication:
             ValueError: 没有找到对应的字段, 通常的, 这意味着应用获取到了一个尚未被定义的事件, 请报告问题.
 
         Returns:
-            MiraiEvent: 已经被序列化的事件
+            Dispatchable: 已经被序列化的事件
         """
         if not original_dict.get("type") and not isinstance(
             original_dict.get("type"), str
@@ -1411,7 +1407,7 @@ class GraiaMiraiApplication:
         async with self.session.ws_connect(
             str(
                 URL(self.url_gen("all")).with_query(
-                    {"verifyKey": self.connect_info.verifyKey}
+                    {"sessionKey": self.connect_info.sessionKey}
                 )
             ),
             autoping=False,
@@ -1429,7 +1425,7 @@ class GraiaMiraiApplication:
                         raise_for_return_code(received_data)
 
                         try:
-                            event = await self.auto_parse_by_type(received_data['data'])
+                            event = await self.auto_parse_by_type(received_data)
                         except ValueError as e:
                             traceback.print_exc()
                             self.logger.error(
@@ -1528,7 +1524,7 @@ class GraiaMiraiApplication:
             self.logger.error(
                 "| so you had better to update your remote environment, |"
             )
-            self.logger.error("| or you won't get our support!(maybe just python-mirai?) |")
+            self.logger.error("| or you won't get our support! |")
             traceback.print_exc()
         else:
             self.logger.info(
@@ -1613,7 +1609,7 @@ class GraiaMiraiApplication:
         else:
             loop = loop or asyncio.get_event_loop()
 
-        if not self.connect_info.verifyKey:
+        if not self.connect_info.sessionKey:
             loop.run_until_complete(self.initialize())
 
         try:
@@ -1647,7 +1643,9 @@ class GraiaMiraiApplication:
     @error_wrapper
     @requireAuthenticated
     @applicationContextManager
-    async def getGroupFileList(self, group: Union[Group, int], path: Optional[str] = None) -> List[FileList]:
+    async def getGroupFileList(
+        self, group: Union[Group, int], path: Optional[str] = None
+    ) -> List[FileList]:
         """获取指定群组中文件列表
 
         Args:
@@ -1661,9 +1659,9 @@ class GraiaMiraiApplication:
             str(
                 URL(self.url_gen("groupFileList")).with_query(
                     {
-                        "verifyKey": self.connect_info.verifyKey,
+                        "sessionKey": self.connect_info.sessionKey,
                         "target": group.id if isinstance(group, Group) else group,
-                        "dir": path or ''
+                        "dir": path or "",
                     }
                 )
             )
@@ -1676,7 +1674,9 @@ class GraiaMiraiApplication:
     @error_wrapper
     @requireAuthenticated
     @applicationContextManager
-    async def getGroupFileInfo(self, group: Union[Group, int], file_id: str) -> FileInfo:
+    async def getGroupFileInfo(
+        self, group: Union[Group, int], file_id: str
+    ) -> FileInfo:
         """获取指定群文件详细信息
 
         Args:
@@ -1687,15 +1687,15 @@ class GraiaMiraiApplication:
             FileInfo: 获得的文件详情.
         """
         async with self.session.get(
-                str(
-                    URL(self.url_gen("groupFileInfo")).with_query(
-                        {
-                            "verifyKey": self.connect_info.verifyKey,
-                            "target": group.id if isinstance(group, Group) else group,
-                            "id": file_id
-                        }
-                    )
+            str(
+                URL(self.url_gen("groupFileInfo")).with_query(
+                    {
+                        "sessionKey": self.connect_info.sessionKey,
+                        "target": group.id if isinstance(group, Group) else group,
+                        "id": file_id,
+                    }
                 )
+            )
         ) as response:
             response.raise_for_status()
             data = await response.json()
@@ -1705,7 +1705,9 @@ class GraiaMiraiApplication:
     @error_wrapper
     @requireAuthenticated
     @applicationContextManager
-    async def renameGroupFile(self, group: Union[Group, int], file_id: str, rename: str) -> NoReturn:
+    async def renameGroupFile(
+        self, group: Union[Group, int], file_id: str, rename: str
+    ) -> NoReturn:
         """重命名群文件或目录
 
         Args:
@@ -1714,13 +1716,13 @@ class GraiaMiraiApplication:
             rename (str): 指定文件更名后的名称，需要加上文件后缀
         """
         async with self.session.post(
-                self.url_gen("groupFileRename"),
-                json={
-                    "verifyKey": self.connect_info.verifyKey,
-                    "target": group.id if isinstance(group, Group) else group,
-                    "id": file_id,
-                    "rename": rename
-                }
+            self.url_gen("groupFileRename"),
+            json={
+                "sessionKey": self.connect_info.sessionKey,
+                "target": group.id if isinstance(group, Group) else group,
+                "id": file_id,
+                "rename": rename,
+            },
         ) as response:
             response.raise_for_status()
             data = await response.json()
@@ -1729,7 +1731,9 @@ class GraiaMiraiApplication:
     @error_wrapper
     @requireAuthenticated
     @applicationContextManager
-    async def moveGroupFile(self, group: Union[Group, int], file_id: str, move_to: str) -> NoReturn:
+    async def moveGroupFile(
+        self, group: Union[Group, int], file_id: str, move_to: str
+    ) -> NoReturn:
         """移动群文件(目前疑似 Mirai-Api—Http 1.11.0 存在 bug，返回状态码 200 但文件未能移动)
 
         Args:
@@ -1738,13 +1742,13 @@ class GraiaMiraiApplication:
             move_to (str): 指定文件需要移动到的目录即 '/move_to', 目录不存在则自动创建
         """
         async with self.session.post(
-                self.url_gen("groupFileMove"),
-                json={
-                    "verifyKey": self.connect_info.verifyKey,
-                    "target": group.id if isinstance(group, Group) else group,
-                    "id": file_id,
-                    "movePath": move_to
-                }
+            self.url_gen("groupFileMove"),
+            json={
+                "sessionKey": self.connect_info.sessionKey,
+                "target": group.id if isinstance(group, Group) else group,
+                "id": file_id,
+                "movePath": move_to,
+            },
         ) as response:
             response.raise_for_status()
             data = await response.json()
@@ -1761,12 +1765,12 @@ class GraiaMiraiApplication:
             file_id (str): 指定文件的唯一标识符，从 getGroupFileList 方法获得
         """
         async with self.session.post(
-                self.url_gen("groupFileDelete"),
-                json={
-                    "verifyKey": self.connect_info.verifyKey,
-                    "target": group.id if isinstance(group, Group) else group,
-                    "id": file_id
-                }
+            self.url_gen("groupFileDelete"),
+            json={
+                "sessionKey": self.connect_info.sessionKey,
+                "target": group.id if isinstance(group, Group) else group,
+                "id": file_id,
+            },
         ) as response:
             response.raise_for_status()
             data = await response.json()

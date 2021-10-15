@@ -4,6 +4,7 @@ from typing import Optional, Tuple
 import os
 import yarl
 
+
 @dataclass
 class Session:
     """用于描述与上游接口会话, 并存储会话状态的实体类.
@@ -19,7 +20,7 @@ class Session:
 
     host: AnyHttpUrl
     account: int = None
-    verifyKey: str = None
+    authKey: str = None
     sessionKey: str = None
     current_version: Tuple[int, int, int] = None
     websocket: bool = True
@@ -28,7 +29,7 @@ class Session:
     def fromEnv(
         cls,
         host: Optional[AnyHttpUrl] = None,
-        verifyKey: Optional[str] = None,
+        authKey: Optional[str] = None,
         account: Optional[int] = None,
         websocket: Optional[bool] = True,
     ) -> "Session":
@@ -37,7 +38,7 @@ class Session:
 
         环境变量对应列表:
           - `GRAIA_HOST`: 与参数 `host` 同义;
-          - `GRAIA_VERIFYKEY`: 与参数 `verifyKey` 同义;
+          - `GRAIA_VERIFYKEY`: 与参数 `authKey` 同义;
           - `GRAIA_ACCOUNT_ID`: 与参数 `account` 同义;
           - `GRAIA_WEBSOCKET_ENABLED`: 与参数 `websocket` 同义, 规则:
             - `"true"` 或 `"1"` 得 `True`, 即启用 Websocket 方式连接;
@@ -45,7 +46,7 @@ class Session:
 
         Args:
             host (AnyHttpUrl, optional): `mirai-api-http` 服务所在的根接口地址
-            verifyKey (str, optional): 在 `mirai-api-http` 配置流程中定义, 需为相同的值以通过安全验证.
+            authKey (str, optional): 在 `mirai-api-http` 配置流程中定义, 需为相同的值以通过安全验证.
             account (int, optional): 应用所使用账号的整数 ID.
             websocket (bool, optional): 是否使用 Websocket 方式获取事件, 若为 `False` 则使用 HTTP 短轮询方式获取事件, 性能较低, 默认为 `True`.
 
@@ -55,7 +56,7 @@ class Session:
         return cls(
             **{
                 "host": host or os.getenv("GRAIA_HOST"),
-                "verifyKey": verifyKey or os.getenv("GRAIA_VERIFYKEY"),
+                "authKey": authKey or os.getenv("GRAIA_VERIFYKEY"),
                 "account": account or os.getenv("GRAIA_ACCOUNT_ID"),
                 "websocket": websocket
                 or ({"false": False, "true": True, "1": True, "0": False}).get(
