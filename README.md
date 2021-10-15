@@ -8,13 +8,17 @@
 
 ### 开始使用
 
+**注意：本项目仅适用于 mirai-api-http 1.x 版本**
+
+**如果你真的想以类似 Application 的语法使用 mirai-api-http v2 的话... 不妨看看 [Argon](https://github.com/GraiaProject/Argon)**
+
 文档地址: https://graia-document.vercel.app/  
 API 文档地址(使用 `pdoc` 生成): https://graiaproject.github.io/Application/graia/application/index.html
 
 Tencent QQ 交流群: [邀请链接](https://jq.qq.com/?_wv=1027&k=VXp6plBD)  
 Discussion: https://github.com/GraiaProject/Application/discussions
 
-#### 从 Pypi 安装
+#### 从 PyPI 安装
 ``` bash
 pip install graia-application-mirai
 # 或使用 poetry
