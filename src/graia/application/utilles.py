@@ -9,9 +9,9 @@ from .context import enter_context
 from .exceptions import (
     AccountMuted,
     AccountNotFound,
-    InvaildArgument,
-    InvaildAuthKey,
-    InvaildSession,
+    InvalidArgument,
+    InvalidAuthKey,
+    InvalidSession,
     NotSupportedVersion,
     TooLongMessage,
     UnauthorizedSession,
@@ -34,7 +34,7 @@ def requireAuthenticated(func: Callable):
     @functools.wraps(func)
     def wrapper(self, *args, **kwargs):
         if not self.connect_info.sessionKey:
-            raise InvaildSession("you must authenticate before this.")
+            raise InvalidSession("you must authenticate before this.")
         return func(self, *args, **kwargs)
 
     wrapper.__annotations__ = func.__annotations__
@@ -94,16 +94,16 @@ def DeprecatedSince(*version: int, action: str = "warn"):
 
 
 code_exceptions_mapping = {
-    1: InvaildAuthKey,
+    1: InvalidAuthKey,
     2: AccountNotFound,
-    3: InvaildSession,
+    3: InvalidSession,
     4: UnauthorizedSession,
     5: UnknownTarget,
     6: FileNotFoundError,
     10: PermissionError,
     20: AccountMuted,
     30: TooLongMessage,
-    400: InvaildArgument,
+    400: InvalidArgument,
 }
 
 

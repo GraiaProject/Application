@@ -8,7 +8,7 @@ from typing import NoReturn, Optional, Union
 import aiohttp
 from aiohttp import ClientSession
 from pydantic import validator
-from pydantic.fields import Field
+from pydantic.fields imporInvalid
 
 from graia.application.entities import UploadMethods
 from graia.application.message.elements import external as External
@@ -105,7 +105,7 @@ class At(InternalElement, ExternalElement):
     def toExternal(self) -> "At":
         try:
             if image_method.get() != UploadMethods.Group:
-                raise InvaildArgument(
+                raise InvalidArgument(
                     "you cannot use this element in this method: {0}".format(
                         image_method.get().value
                     )
@@ -132,7 +132,7 @@ class AtAll(InternalElement, ExternalElement):
     def toExternal(self) -> "AtAll":
         try:
             if image_method.get() != UploadMethods.Group:
-                raise InvaildArgument(
+                raise InvalidArgument(
                     "you cannot use this element in this method: {0}".format(
                         image_method.get().value
                     )
