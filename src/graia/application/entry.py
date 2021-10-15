@@ -56,14 +56,14 @@ from .message.chain import MessageChain
 from .message.elements.internal import (
     App,
     At,
-    Invalid
+    AtAll,
     Face,
-    Invalidage,
+    FlashImage,
     Image,
     Json,
     Plain,
     Poke,
-    Invalidhods,
+    PokeMethods,
     Quote,
     Source,
     Xml,

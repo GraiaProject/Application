@@ -4,7 +4,7 @@ from typing import Any, Dict, Literal, NoReturn, Optional
 from graia.broadcast.entities.dispatcher import BaseDispatcher
 from graia.broadcast.interfaces.dispatcher import DispatcherInterface
 from pydantic import Field
-from pydantic.class_validators import valInvalidInvalid
+from pydantic.class_validators import validator
 
 from graia.application.context import application
 from graia.application.exceptions import InvaildArgument, InvaildSession
@@ -704,14 +704,14 @@ class NewFriendRequestEvent(MiraiEvent):
         Args:
             message (str, optional): 附带给对方的消息. 默认为 "".
 
-        RaisInvalid
+        Raises:
             LookupError: 尝试上下文外处理事件.
             InvaildSession: 应用实例没准备好!
 
         Returns:
             NoReturn: 没有返回.
         """
-        app = applInvalid.get()
+        app = application.get()
         if not app.connect_info.sessionKey:
             raise InvaildSession("you must authenticate before this.")
         async with app.session.post(
@@ -735,14 +735,14 @@ class NewFriendRequestEvent(MiraiEvent):
         Args:
             message (str, optional): 附带给对方的消息. 默认为 "".
 
-        RaisInvalid
+        Raises:
             LookupError: 尝试上下文外处理事件.
             InvaildSession: 应用实例没准备好!
 
         Returns:
             NoReturn: 没有返回.
         """
-        app = applInvalid.get()
+        app = application.get()
         if not app.connect_info.sessionKey:
             raise InvaildSession("you must authenticate before this.")
         async with app.session.post(
@@ -766,14 +766,14 @@ class NewFriendRequestEvent(MiraiEvent):
         Args:
             message (str, optional): 附带给对方的消息. 默认为 "".
 
-        RaisInvalid
+        Raises:
             LookupError: 尝试上下文外处理事件.
             InvaildSession: 应用实例没准备好!
 
         Returns:
             NoReturn: 没有返回.
         """
-        app = applInvalid.get()
+        app = application.get()
         if not app.connect_info.sessionKey:
             raise InvaildSession("you must authenticate before this.")
         async with app.session.post(
@@ -834,14 +834,14 @@ class MemberJoinRequestEvent(MiraiEvent):
         Args:
             message (str, optional): 附带给对方的消息. 默认为 "".
 
-        RaisInvalid
+        Raises:
             LookupError: 尝试上下文外处理事件.
             InvaildSession: 应用实例没准备好!
 
         Returns:
             NoReturn: 没有返回.
         """
-        app = applInvalid.get()
+        app = application.get()
         if not app.connect_info.sessionKey:
             raise InvaildSession("you must authenticate before this.")
         async with app.session.post(
@@ -865,14 +865,14 @@ class MemberJoinRequestEvent(MiraiEvent):
         Args:
             message (str, optional): 附带给对方的消息. 默认为 "".
 
-        RaisInvalid
+        Raises:
             LookupError: 尝试上下文外处理事件.
             InvaildSession: 应用实例没准备好!
 
         Returns:
             NoReturn: 没有返回.
         """
-        app = applInvalid.get()
+        app = application.get()
         if not app.connect_info.sessionKey:
             raise InvaildSession("you must authenticate before this.")
         async with app.session.post(
@@ -896,14 +896,14 @@ class MemberJoinRequestEvent(MiraiEvent):
         Args:
             message (str, optional): 附带给对方的消息. 默认为 "".
 
-        RaisInvalid
+        Raises:
             LookupError: 尝试上下文外处理事件.
             InvaildSession: 应用实例没准备好!
 
         Returns:
             NoReturn: 没有返回.
         """
-        app = applInvalid.get()
+        app = application.get()
         if not app.connect_info.sessionKey:
             raise InvaildSession("you must authenticate before this.")
         async with app.session.post(
@@ -927,14 +927,14 @@ class MemberJoinRequestEvent(MiraiEvent):
         Args:
             message (str, optional): 附带给对方的消息. 默认为 "".
 
-        RaisInvalid
+        Raises:
             LookupError: 尝试上下文外处理事件.
             InvaildSession: 应用实例没准备好!
 
         Returns:
             NoReturn: 没有返回.
         """
-        app = applInvalid.get()
+        app = application.get()
         if not app.connect_info.sessionKey:
             raise InvaildSession("you must authenticate before this.")
         async with app.session.post(
@@ -958,14 +958,14 @@ class MemberJoinRequestEvent(MiraiEvent):
         Args:
             message (str, optional): 附带给对方的消息. 默认为 "".
 
-        RaisInvalid
+        Raises:
             LookupError: 尝试上下文外处理事件.
             InvaildSession: 应用实例没准备好!
 
         Returns:
             NoReturn: 没有返回.
         """
-        app = applInvalid.get()
+        app = application.get()
         if not app.connect_info.sessionKey:
             raise InvaildSession("you must authenticate before this.")
         async with app.session.post(
@@ -1023,14 +1023,14 @@ class BotInvitedJoinGroupRequestEvent(MiraiEvent):
         Args:
             message (str, optional): 附带给对方的消息. 默认为 "".
 
-        RaisInvalid
+        Raises:
             LookupError: 尝试上下文外处理事件.
             InvaildSession: 应用实例没准备好!
 
         Returns:
             NoReturn: 没有返回.
         """
-        app = applInvalid.get()
+        app = application.get()
         if not app.connect_info.sessionKey:
             raise InvaildSession("you must authenticate before this.")
         async with app.session.post(
@@ -1054,14 +1054,14 @@ class BotInvitedJoinGroupRequestEvent(MiraiEvent):
         Args:
             message (str, optional): 附带给对方的消息. 默认为 "".
 
-        RaisInvalid
+        Raises:
             LookupError: 尝试上下文外处理事件.
             InvaildSession: 应用实例没准备好!
 
         Returns:
             NoReturn: 没有返回.
         """
-        app = applInvalid.get()
+        app = application.get()
         if not app.connect_info.sessionKey:
             raise InvaildSession("you must authenticate before this.")
         async with app.session.post(

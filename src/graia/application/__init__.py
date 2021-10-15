@@ -35,7 +35,7 @@ from graia.application.test.request_tracing import HttpRequestTracing
 from .context import enter_context, enter_message_send_context
 from .entities import MiraiConfig, UploadMethods
 from .event.messages import FriendMessage, GroupMessage, TempMessage
-from .exceptions import InvalidArgument, InvalidSession, NotSupportedVersion
+from .exceptions import InvaildArgument, InvaildSession, NotSupportedVersion
 from .friend import Friend
 from .group import FileInfo, FileList, Group, GroupConfig, Member, MemberInfo
 from .logger import AbstractLogger, LoggingLogger
@@ -65,7 +65,7 @@ def error_wrapper(network_action_callable: Callable):
             running_count += 1
             try:
                 return await network_action_callable(self, *args, **kwargs)
-            except InvalidSession as invaild_session_exc:
+            except InvaildSession as invaild_session_exc:
                 self.logger.error(
                     "Graia detected a invaild session, did you restart your mirai-console?"
                 )
@@ -310,16 +310,16 @@ class GraiaMiraiApplication:
     @applicationContextManager
     async def activeSession(self) -> NoReturn:
         """激活当前已经存入 connect_info 的会话标识,
-        如果没有事先调用 `authenticate` 方法获取未激活的会话标识, 则会触发 `InvalidSession` 错误.
+        如果没有事先调用 `authenticate` 方法获取未激活的会话标识, 则会触发 `InvaildSession` 错误.
 
         Raises:
-            InvalidSession: 没有事先调用 `authenticate` 方法获取未激活的会话标识
+            InvaildSession: 没有事先调用 `authenticate` 方法获取未激活的会话标识
 
         Returns:
             NoReturn: 没有有意义的返回, 或者说, 返回 `None` 就代表这个操作成功了.
         """
         if not self.connect_info.sessionKey:
-            raise InvalidSession(
+            raise InvaildSession(
                 "you should call 'authenticate' before this to get a sessionKey!"
             )
         async with self.session.post(
@@ -339,13 +339,13 @@ class GraiaMiraiApplication:
         """释放当前激活/未激活的会话标识
 
         Raises:
-            InvalidSession: 没有事先调用 `authenticate` 方法获取会话标识
+            InvaildSession: 没有事先调用 `authenticate` 方法获取会话标识
 
         Returns:
             NoReturn: 没有有意义的返回, 或者说, 返回 `None` 就代表这个操作成功了.
         """
         if not self.connect_info.sessionKey:
-            raise InvalidSession(
+            raise InvaildSession(
                 "you should call 'authenticate' before this to get a sessionKey!"
             )
         async with self.session.post(
@@ -1361,7 +1361,7 @@ class GraiaMiraiApplication:
             original_dict (dict): 用 dict 表示的序列化态事件, 应包含有字段 `type` 以供分析事件定义.
 
         Raises:
-            InvalidArgument: 目标对象中不包含字段 `type`
+            InvaildArgument: 目标对象中不包含字段 `type`
             ValueError: 没有找到对应的字段, 通常的, 这意味着应用获取到了一个尚未被定义的事件, 请报告问题.
 
         Returns:
@@ -1370,7 +1370,7 @@ class GraiaMiraiApplication:
         if not original_dict.get("type") and not isinstance(
             original_dict.get("type"), str
         ):
-            raise InvalidArgument(
+            raise InvaildArgument(
                 "you need to provide a 'type' field for automatic parsing"
             )
         event_type = Broadcast.findEvent(original_dict.get("type"))
