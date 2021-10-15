@@ -1,39 +1,45 @@
-from functools import lru_cache
+import copy
 import functools
+import random
+import re
+from functools import lru_cache
 from types import TracebackType
 from typing import Dict, List, Optional, Tuple, TypeVar, Union
-from graia.broadcast.entities.dispatcher import BaseDispatcher
-from graia.broadcast.entities.signatures import Force
-from graia.broadcast.exceptions import ExecutionStop
-from graia.broadcast.interfaces.dispatcher import DispatcherInterface
+
 from graia.broadcast.builtin.factory import (
     AsyncDispatcherContextManager,
     ResponseCodeEnum,
     StatusCodeEnum,
 )
+from graia.broadcast.entities.dispatcher import BaseDispatcher
+from graia.broadcast.entities.signatures import Force
+from graia.broadcast.exceptions import ExecutionStop
+from graia.broadcast.interfaces.dispatcher import DispatcherInterface
 
 from graia.application.exceptions import ConflictItem
-
 from graia.application.message.chain import MessageChain
 from graia.application.message.elements.internal import (
+    App,
     At,
     FlashImage,
+    Json,
     Plain,
-    Source,
+    Poke,
     Quote,
+    Source,
     Voice,
     Xml,
-    Json,
-    App,
-    Poke,
 )
-from .signature import FullMatch, NormalMatch, PatternReceiver
-from .pack import Arguments, merge_signature_chain
 from graia.application.utilles import InsertGenerator
-from .signature import RequireParam, OptionalParam
-import re
-import random
-import copy
+
+from .pack import Arguments, merge_signature_chain
+from .signature import (
+    FullMatch,
+    NormalMatch,
+    OptionalParam,
+    PatternReceiver,
+    RequireParam,
+)
 
 BLOCKING_ELEMENTS = (Xml, Json, App, Poke, Voice, FlashImage)
 

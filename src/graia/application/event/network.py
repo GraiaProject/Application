@@ -1,5 +1,6 @@
 from graia.broadcast import BaseDispatcher
 from graia.broadcast.entities.event import Dispatchable
+
 from . import ApplicationDispatcher, EmptyDispatcher
 
 

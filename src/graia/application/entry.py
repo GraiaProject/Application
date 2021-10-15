@@ -1,71 +1,71 @@
 """这个模块用于为开发者提供一站式的导入体验."""
 
 from . import GraiaMiraiApplication
-from .logger import AbstractLogger, LoggingLogger
 from .event.dispatcher import MessageChainCatcher
 from .event.lifecycle import ApplicationLaunched, ApplicationShutdowned
 from .event.messages import FriendMessage, GroupMessage, TempMessage
 from .event.mirai import (
-    BotOnlineEvent,
-    BotOfflineEventActive,
-    BotOfflineEventForce,
-    BotOfflineEventDropped,
-    BotReloginEvent,
     BotGroupPermissionChangeEvent,
-    BotMuteEvent,
-    BotUnmuteEvent,
+    BotInvitedJoinGroupRequestEvent,
     BotJoinGroupEvent,
-    GroupRecallEvent,
+    BotMuteEvent,
+    BotOfflineEventActive,
+    BotOfflineEventDropped,
+    BotOfflineEventForce,
+    BotOnlineEvent,
+    BotReloginEvent,
+    BotUnmuteEvent,
     FriendRecallEvent,
-    GroupNameChangeEvent,
-    GroupEntranceAnnouncementChangeEvent,
-    GroupMuteAllEvent,
     GroupAllowAnonymousChatEvent,
     GroupAllowConfessTalkEvent,
     GroupAllowMemberInviteEvent,
+    GroupEntranceAnnouncementChangeEvent,
+    GroupMuteAllEvent,
+    GroupNameChangeEvent,
+    GroupRecallEvent,
+    MemberCardChangeEvent,
     MemberJoinEvent,
+    MemberJoinRequestEvent,
     MemberLeaveEventKick,
     MemberLeaveEventQuit,
-    MemberCardChangeEvent,
-    MemberSpecialTitleChangeEvent,
-    MemberPermissionChangeEvent,
     MemberMuteEvent,
+    MemberPermissionChangeEvent,
+    MemberSpecialTitleChangeEvent,
     MemberUnmuteEvent,
     NewFriendRequestEvent,
-    MemberJoinRequestEvent,
-    BotInvitedJoinGroupRequestEvent,
 )
+from .exceptions import (
+    AccountMuted,
+    AccountNotFound,
+    DeprecatedImpl,
+    EntangledSuperposition,
+    InvaildArgument,
+    InvaildAuthKey,
+    InvaildSession,
+    InvalidEventTypeDefinition,
+    MissingNecessaryOne,
+    NotSupportedVersion,
+    TooLongMessage,
+    UnauthorizedSession,
+    UnknownTarget,
+)
+from .friend import Friend
+from .group import Group, GroupConfig, Member, MemberInfo, MemberPerm
+from .logger import AbstractLogger, LoggingLogger
+from .message.chain import MessageChain
 from .message.elements.internal import (
-    Plain,
-    Source,
-    Quote,
+    App,
     At,
     AtAll,
     Face,
-    Image,
     FlashImage,
-    Xml,
+    Image,
     Json,
-    App,
+    Plain,
     Poke,
     PokeMethods,
+    Quote,
+    Source,
+    Xml,
 )
-from .message.chain import MessageChain
-from .friend import Friend
-from .group import MemberPerm, Group, Member, MemberInfo, GroupConfig
 from .session import Session
-from .exceptions import (
-    InvalidEventTypeDefinition,
-    InvaildAuthKey,
-    AccountNotFound,
-    InvaildSession,
-    UnauthorizedSession,
-    UnknownTarget,
-    AccountMuted,
-    TooLongMessage,
-    InvaildArgument,
-    NotSupportedVersion,
-    DeprecatedImpl,
-    EntangledSuperposition,
-    MissingNecessaryOne,
-)

@@ -1,8 +1,11 @@
 import functools
-from typing import Any, Callable, ContextManager, Iterable, List, Union, TypeVar
+import inspect
+from typing import Any, Callable, ContextManager, Iterable, List, TypeVar, Union
+
 from graia.broadcast.entities.dispatcher import BaseDispatcher
 from graia.broadcast.interfaces.dispatcher import DispatcherInterface
 
+from .context import enter_context
 from .exceptions import (
     AccountMuted,
     AccountNotFound,
@@ -14,8 +17,6 @@ from .exceptions import (
     UnauthorizedSession,
     UnknownTarget,
 )
-from .context import enter_context
-import inspect
 
 _T = TypeVar("_T")
 

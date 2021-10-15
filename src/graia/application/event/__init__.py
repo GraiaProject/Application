@@ -1,6 +1,7 @@
+from graia.broadcast import Dispatchable
 from graia.broadcast.entities.dispatcher import BaseDispatcher
 from pydantic import BaseModel, validator
-from graia.broadcast import Dispatchable
+
 from graia.application.context import application
 from graia.application.exceptions import InvalidEventTypeDefinition
 

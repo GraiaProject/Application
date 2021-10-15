@@ -1,15 +1,17 @@
-from typing import List
 from datetime import datetime
-from pydantic import validator, Field
+from typing import List
+
+from graia.broadcast.entities.dispatcher import BaseDispatcher
+from graia.broadcast.interfaces.dispatcher import DispatcherInterface
+from pydantic import Field, validator
 from pydantic.main import BaseModel
 
 from graia.application.event.dispatcher import MessageChainCatcher
-from graia.application.message.chain import MessageChain
-from graia.broadcast.entities.dispatcher import BaseDispatcher
-from graia.broadcast.interfaces.dispatcher import DispatcherInterface
-from graia.application.group import Member, Group
 from graia.application.friend import Friend
+from graia.application.group import Group, Member
+from graia.application.message.chain import MessageChain
 from graia.application.message.elements.internal import Source
+
 from . import ApplicationDispatcher, MiraiEvent
 
 

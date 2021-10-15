@@ -1,5 +1,5 @@
-from contextvars import ContextVar
 from contextlib import contextmanager
+from contextvars import ContextVar
 
 from graia.application.entities import UploadMethods
 

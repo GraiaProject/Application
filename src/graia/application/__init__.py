@@ -9,26 +9,26 @@ from functools import partial
 from typing import Any, Callable, List, NoReturn, Optional, Tuple, TypeVar, Union
 
 import aiohttp.client_exceptions
-import aiohttp.web_exceptions
 import aiohttp.client_ws
-import graia.application.event.mirai  # for init events
+import aiohttp.web_exceptions
 from aiohttp import ClientSession, FormData
 from aiohttp.http_websocket import WSMsgType
+from graia.broadcast import Broadcast
+from graia.broadcast.entities.event import Dispatchable
+from graia.broadcast.utilles import printer, run_always_await
+from yarl import URL
+
+import graia.application.event.mirai  # for init events
 from graia.application.event import MiraiEvent
 from graia.application.event.lifecycle import (  # for init lifecycle events
     ApplicationLaunched,
     ApplicationLaunchedBlocking,
     ApplicationShutdowned,
 )
-from graia.broadcast import Broadcast
-from graia.broadcast.entities.event import Dispatchable
-from graia.broadcast.utilles import printer, run_always_await
-from yarl import URL
-
 from graia.application.event.network import (
     RemoteException,
-    SessionRefreshFailed,
     SessionRefreshed,
+    SessionRefreshFailed,
 )
 from graia.application.test.request_tracing import HttpRequestTracing
 
@@ -37,7 +37,7 @@ from .entities import MiraiConfig, UploadMethods
 from .event.messages import FriendMessage, GroupMessage, TempMessage
 from .exceptions import InvaildArgument, InvaildSession, NotSupportedVersion
 from .friend import Friend
-from .group import Group, GroupConfig, Member, MemberInfo, FileList, FileInfo
+from .group import FileInfo, FileList, Group, GroupConfig, Member, MemberInfo
 from .logger import AbstractLogger, LoggingLogger
 from .message import BotMessage
 from .message.chain import MessageChain

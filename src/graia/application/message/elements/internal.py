@@ -1,21 +1,21 @@
 import asyncio
+import json as MJson
 from datetime import datetime
 from enum import Enum
 from pathlib import Path
 from typing import NoReturn, Optional, Union
+
 import aiohttp
-
-from pydantic.fields import Field
-from graia.application.entities import UploadMethods
-
-from ...exceptions import InvaildArgument
+from aiohttp import ClientSession
 from pydantic import validator
+from pydantic.fields import Field
+
+from graia.application.entities import UploadMethods
+from graia.application.message.elements import external as External
 
 from ...context import application, image_method
+from ...exceptions import InvaildArgument
 from . import ExternalElement, InternalElement, ShadowElement
-from graia.application.message.elements import external as External
-from aiohttp import ClientSession
-import json as MJson
 
 
 class Plain(InternalElement, ExternalElement):

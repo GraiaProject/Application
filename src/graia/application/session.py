@@ -1,8 +1,9 @@
-from dataclasses import dataclass
-from pydantic import BaseModel, AnyHttpUrl
-from typing import Optional, Tuple
 import os
+from dataclasses import dataclass
+from typing import Optional, Tuple
+
 import yarl
+from pydantic import AnyHttpUrl, BaseModel
 
 
 @dataclass

@@ -1,5 +1,6 @@
 from enum import Enum
 from typing import Optional
+
 from pydantic import BaseModel
 from pydantic.fields import Field
 
@@ -55,7 +56,8 @@ class MemberInfo(BaseModel):
 
     class Config:
         allow_mutation = True
-        
+
+
 class FileList(BaseModel):
     "描述群组文件的有关状态"
 
@@ -66,7 +68,9 @@ class FileList(BaseModel):
     "是否为文件"
     is_file: Optional[bool] = Field(..., alias="isFile")
 
+
 # 我搞不懂为什么写这个的人全部设的 Optional
+
 
 class FileInfo(BaseModel):
     "群组文件详细信息"

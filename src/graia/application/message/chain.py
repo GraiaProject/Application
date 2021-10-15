@@ -1,25 +1,27 @@
 from __future__ import annotations
+
+import copy
 from typing import (
     Any,
     Dict,
     Iterable,
     List,
     NoReturn,
+    Optional,
     Sequence,
     Tuple,
     Type,
     TypeVar,
     Union,
-    Optional,
 )
 
-from graia.application.exceptions import EntangledSuperposition
+import regex
 from graia.broadcast.utilles import run_always_await
 from pydantic import BaseModel
 
-from .elements import ExternalElement, InternalElement, Element
-import regex
-import copy
+from graia.application.exceptions import EntangledSuperposition
+
+from .elements import Element, ExternalElement, InternalElement
 
 MessageIndex = Tuple[int, Optional[int]]
 
@@ -420,7 +422,7 @@ class MessageChain(BaseModel):
         Returns:
             MessageChain: 转换后得到的消息链, 所包含的信息可能不完整.
         """
-        from .elements.internal import Plain, At, AtAll, Source, FlashImage, Image, Face
+        from .elements.internal import At, AtAll, Face, FlashImage, Image, Plain, Source
 
         PARSE_FUNCTIONS = {
             "atall": lambda args: AtAll(),
@@ -521,12 +523,12 @@ class MessageChain(BaseModel):
 
     def asHypertext(self) -> "MessageChain":
         from graia.application.message.elements.internal import (
-            Source,
-            Quote,
-            Xml,
-            Json,
             App,
+            Json,
             Poke,
+            Quote,
+            Source,
+            Xml,
         )
 
         """将消息链转换为**不包含以下消息元素**的消息链:

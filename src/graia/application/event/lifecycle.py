@@ -1,11 +1,13 @@
-from typing import Any
 import typing
-from graia.broadcast.entities.event import Dispatchable
+from typing import Any
+
 from graia.broadcast.entities.dispatcher import BaseDispatcher
+from graia.broadcast.entities.event import Dispatchable
 from graia.broadcast.interfaces.dispatcher import DispatcherInterface
 
 if typing.TYPE_CHECKING:
     from graia.application import GraiaMiraiApplication
+
 
 class ApplicationLaunched(Dispatchable):
     app: "GraiaMiraiApplication"

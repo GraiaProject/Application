@@ -1,29 +1,29 @@
-import re
-import shlex
 import getopt
 import itertools
+import re
+import shlex
 from typing import Dict, List, Tuple
+
 from graia.broadcast.entities.dispatcher import BaseDispatcher
 from graia.broadcast.entities.signatures import Force
 from graia.broadcast.exceptions import ExecutionStop
-
 from graia.broadcast.interfaces.dispatcher import DispatcherInterface
 from graia.broadcast.utilles import printer
+
 from graia.application.message.chain import MessageChain, MessageIndex
 from graia.application.message.elements import Element
 from graia.application.message.elements.internal import (
-    At,
     App,
+    At,
+    FlashImage,
     Json,
     Plain,
+    Poke,
     Quote,
     Source,
-    Xml,
     Voice,
-    Poke,
-    FlashImage,
+    Xml,
 )
-
 from graia.application.message.parser.pattern import (
     BoxParameter,
     ParamPattern,
@@ -232,7 +232,7 @@ class Literature(BaseDispatcher):
 
 
 if __name__ == "__main__":
-    from graia.application.message.elements.internal import AtAll, At
+    from graia.application.message.elements.internal import At, AtAll
 
     mc = MessageChain.create(
         [

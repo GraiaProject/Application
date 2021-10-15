@@ -1,11 +1,13 @@
 import functools
+import random
+import string
 from typing import Optional
+
 from aiohttp import TraceConfig
 from aiohttp.client import ClientSession
 from aiohttp.tracing import TraceRequestEndParams, TraceRequestStartParams
+
 from ..logger import AbstractLogger
-import random
-import string
 
 
 class HttpRequestTracing:

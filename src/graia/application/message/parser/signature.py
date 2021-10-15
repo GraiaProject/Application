@@ -1,8 +1,11 @@
 import abc
-from typing import Any, Callable, Optional as O
-from pydantic import BaseModel, validator
-from graia.application.message.chain import MessageChain
+from typing import Any, Callable
+from typing import Optional as O
+
 import regex
+from pydantic import BaseModel, validator
+
+from graia.application.message.chain import MessageChain
 
 
 class NormalMatch(BaseModel, abc.ABC):
