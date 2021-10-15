@@ -22,7 +22,7 @@ class RemoteException(Dispatchable):
     Dispatcher = EmptyDispatcher
 
 
-class InvaildRequest(Dispatchable):
+class InvalidRequest(Dispatchable):
     "网络异常: 意料之外地, 发出了不被无头客户端接收的 HTTP 请求, 你应该通过相应渠道向我们汇报此问题"
 
     Dispatcher = EmptyDispatcher

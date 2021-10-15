@@ -9,9 +9,9 @@ from .context import enter_context
 from .exceptions import (
     AccountMuted,
     AccountNotFound,
-    InvaildArgument,
-    InvaildAuthKey,
-    InvaildSession,
+    InvalidArgument,
+    InvalidAuthKey,
+    InvalidSession,
     NotSupportedVersion,
     TooLongMessage,
     UnauthorizedSession,
@@ -34,7 +34,7 @@ def requireAuthenticated(func: Callable):
     @functools.wraps(func)
     def wrapper(self, *args, **kwargs):
         if not self.connect_info.sessionKey:
-            raise InvaildSession("you must authenticate before this.")
+            raise InvalidSession("you must authenticate before this.")
         return func(self, *args, **kwargs)
 
     wrapper.__annotations__ = func.__annotations__
@@ -45,14 +45,9 @@ def SinceVersion(*version: int):
     def wrapper(func):
         @functools.wraps(func)
         def inside_wrapper(self, *args, **kwargs):
-            if (
-                self.connect_info.current_version
-                and self.connect_info.current_version < version
-            ):
+            if self.connect_info.current_version and self.connect_info.current_version < version:
                 raise NotSupportedVersion(
-                    "the current version does not support this feature: {0}".format(
-                        self.connect_info.current_version
-                    )
+                    "the current version does not support this feature: {0}".format(self.connect_info.current_version)
                 )
             return func(self, *args, **kwargs)
 
@@ -68,15 +63,10 @@ def DeprecatedSince(*version: int, action: str = "warn"):
     def wrapper(func):
         @functools.wraps(func)
         def inside_wrapper(self, *args, **kwargs):
-            if (
-                self.connect_info.current_version
-                and self.connect_info.current_version > version
-            ):
+            if self.connect_info.current_version and self.connect_info.current_version > version:
                 if action == "error":
                     raise NotSupportedVersion(
-                        "the current version deprecated this feature: {0}".format(
-                            self.connect_info.current_version
-                        )
+                        "the current version deprecated this feature: {0}".format(self.connect_info.current_version)
                     )
                 elif action == "warn":
                     import warnings
@@ -94,16 +84,16 @@ def DeprecatedSince(*version: int, action: str = "warn"):
 
 
 code_exceptions_mapping = {
-    1: InvaildAuthKey,
+    1: InvalidAuthKey,
     2: AccountNotFound,
-    3: InvaildSession,
+    3: InvalidSession,
     4: UnauthorizedSession,
     5: UnknownTarget,
     6: FileNotFoundError,
     10: PermissionError,
     20: AccountMuted,
     30: TooLongMessage,
-    400: InvaildArgument,
+    400: InvalidArgument,
 }
 
 

@@ -7,7 +7,7 @@ from pydantic import Field
 from pydantic.class_validators import validator
 
 from graia.application.context import application
-from graia.application.exceptions import InvaildArgument, InvaildSession
+from graia.application.exceptions import InvalidArgument, InvalidSession
 from graia.application.group import Group, Member, MemberPerm
 from graia.application.utilles import raise_for_return_code
 
@@ -706,14 +706,14 @@ class NewFriendRequestEvent(MiraiEvent):
 
         Raises:
             LookupError: 尝试上下文外处理事件.
-            InvaildSession: 应用实例没准备好!
+            InvalidSession: 应用实例没准备好!
 
         Returns:
             NoReturn: 没有返回.
         """
         app = application.get()
         if not app.connect_info.sessionKey:
-            raise InvaildSession("you must authenticate before this.")
+            raise InvalidSession("you must authenticate before this.")
         async with app.session.post(
             app.url_gen("resp/newFriendRequestEvent"),
             json={
@@ -737,14 +737,14 @@ class NewFriendRequestEvent(MiraiEvent):
 
         Raises:
             LookupError: 尝试上下文外处理事件.
-            InvaildSession: 应用实例没准备好!
+            InvalidSession: 应用实例没准备好!
 
         Returns:
             NoReturn: 没有返回.
         """
         app = application.get()
         if not app.connect_info.sessionKey:
-            raise InvaildSession("you must authenticate before this.")
+            raise InvalidSession("you must authenticate before this.")
         async with app.session.post(
             app.url_gen("resp/newFriendRequestEvent"),
             json={
@@ -768,14 +768,14 @@ class NewFriendRequestEvent(MiraiEvent):
 
         Raises:
             LookupError: 尝试上下文外处理事件.
-            InvaildSession: 应用实例没准备好!
+            InvalidSession: 应用实例没准备好!
 
         Returns:
             NoReturn: 没有返回.
         """
         app = application.get()
         if not app.connect_info.sessionKey:
-            raise InvaildSession("you must authenticate before this.")
+            raise InvalidSession("you must authenticate before this.")
         async with app.session.post(
             app.url_gen("resp/newFriendRequestEvent"),
             json={
@@ -836,14 +836,14 @@ class MemberJoinRequestEvent(MiraiEvent):
 
         Raises:
             LookupError: 尝试上下文外处理事件.
-            InvaildSession: 应用实例没准备好!
+            InvalidSession: 应用实例没准备好!
 
         Returns:
             NoReturn: 没有返回.
         """
         app = application.get()
         if not app.connect_info.sessionKey:
-            raise InvaildSession("you must authenticate before this.")
+            raise InvalidSession("you must authenticate before this.")
         async with app.session.post(
             app.url_gen("resp/memberJoinRequestEvent"),
             json={
@@ -867,14 +867,14 @@ class MemberJoinRequestEvent(MiraiEvent):
 
         Raises:
             LookupError: 尝试上下文外处理事件.
-            InvaildSession: 应用实例没准备好!
+            InvalidSession: 应用实例没准备好!
 
         Returns:
             NoReturn: 没有返回.
         """
         app = application.get()
         if not app.connect_info.sessionKey:
-            raise InvaildSession("you must authenticate before this.")
+            raise InvalidSession("you must authenticate before this.")
         async with app.session.post(
             app.url_gen("resp/memberJoinRequestEvent"),
             json={
@@ -898,14 +898,14 @@ class MemberJoinRequestEvent(MiraiEvent):
 
         Raises:
             LookupError: 尝试上下文外处理事件.
-            InvaildSession: 应用实例没准备好!
+            InvalidSession: 应用实例没准备好!
 
         Returns:
             NoReturn: 没有返回.
         """
         app = application.get()
         if not app.connect_info.sessionKey:
-            raise InvaildSession("you must authenticate before this.")
+            raise InvalidSession("you must authenticate before this.")
         async with app.session.post(
             app.url_gen("resp/memberJoinRequestEvent"),
             json={
@@ -929,14 +929,14 @@ class MemberJoinRequestEvent(MiraiEvent):
 
         Raises:
             LookupError: 尝试上下文外处理事件.
-            InvaildSession: 应用实例没准备好!
+            InvalidSession: 应用实例没准备好!
 
         Returns:
             NoReturn: 没有返回.
         """
         app = application.get()
         if not app.connect_info.sessionKey:
-            raise InvaildSession("you must authenticate before this.")
+            raise InvalidSession("you must authenticate before this.")
         async with app.session.post(
             app.url_gen("resp/memberJoinRequestEvent"),
             json={
@@ -960,14 +960,14 @@ class MemberJoinRequestEvent(MiraiEvent):
 
         Raises:
             LookupError: 尝试上下文外处理事件.
-            InvaildSession: 应用实例没准备好!
+            InvalidSession: 应用实例没准备好!
 
         Returns:
             NoReturn: 没有返回.
         """
         app = application.get()
         if not app.connect_info.sessionKey:
-            raise InvaildSession("you must authenticate before this.")
+            raise InvalidSession("you must authenticate before this.")
         async with app.session.post(
             app.url_gen("resp/memberJoinRequestEvent"),
             json={
@@ -1025,14 +1025,14 @@ class BotInvitedJoinGroupRequestEvent(MiraiEvent):
 
         Raises:
             LookupError: 尝试上下文外处理事件.
-            InvaildSession: 应用实例没准备好!
+            InvalidSession: 应用实例没准备好!
 
         Returns:
             NoReturn: 没有返回.
         """
         app = application.get()
         if not app.connect_info.sessionKey:
-            raise InvaildSession("you must authenticate before this.")
+            raise InvalidSession("you must authenticate before this.")
         async with app.session.post(
             app.url_gen("resp/botInvitedJoinGroupRequestEvent"),
             json={
@@ -1056,14 +1056,14 @@ class BotInvitedJoinGroupRequestEvent(MiraiEvent):
 
         Raises:
             LookupError: 尝试上下文外处理事件.
-            InvaildSession: 应用实例没准备好!
+            InvalidSession: 应用实例没准备好!
 
         Returns:
             NoReturn: 没有返回.
         """
         app = application.get()
         if not app.connect_info.sessionKey:
-            raise InvaildSession("you must authenticate before this.")
+            raise InvalidSession("you must authenticate before this.")
         async with app.session.post(
             app.url_gen("resp/botInvitedJoinGroupRequestEvent"),
             json={

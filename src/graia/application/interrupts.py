@@ -20,16 +20,10 @@ def GroupMessageInterrupt(
     @Waiter.create_using_function([GroupMessage], block_propagation=block_propagation)
     def GroupMessageInterruptWaiter(event: GroupMessage):
         if special_group:
-            if event.sender.group.id != (
-                special_group.id if isinstance(special_group, Group) else special_group
-            ):
+            if event.sender.group.id != (special_group.id if isinstance(special_group, Group) else special_group):
                 raise ExecutionStop()
         if special_member:
-            if event.sender.id != (
-                special_member.id
-                if isinstance(special_member, Member)
-                else special_member
-            ):
+            if event.sender.id != (special_member.id if isinstance(special_member, Member) else special_member):
                 raise ExecutionStop()
         if quote_access:
             quotes = event.messageChain.get(Quote)
@@ -59,11 +53,7 @@ def FriendMessageInterrupt(
     @Waiter.create_using_function([FriendMessage], block_propagation=block_propagation)
     def FriendMessageInterruptWaiter(event: FriendMessage):
         if special_friend:
-            if event.sender.id != (
-                special_friend.id
-                if isinstance(special_friend, Friend)
-                else special_friend
-            ):
+            if event.sender.id != (special_friend.id if isinstance(special_friend, Friend) else special_friend):
                 raise ExecutionStop()
         if quote_access:
             quotes = event.messageChain.get(Quote)
@@ -94,16 +84,10 @@ def TempMessageInterrupt(
     @Waiter.create_using_function([TempMessage], block_propagation=block_propagation)
     def TempMessageInterruptWaiter(event: TempMessage):
         if special_group:
-            if event.sender.group.id != (
-                special_group.id if isinstance(special_group, Group) else special_group
-            ):
+            if event.sender.group.id != (special_group.id if isinstance(special_group, Group) else special_group):
                 raise ExecutionStop()
         if special_member:
-            if event.sender.id != (
-                special_member.id
-                if isinstance(special_member, Member)
-                else special_member
-            ):
+            if event.sender.id != (special_member.id if isinstance(special_member, Member) else special_member):
                 raise ExecutionStop()
         if quote_access:
             quotes = event.messageChain.get(Quote)

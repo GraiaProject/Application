@@ -3,7 +3,7 @@ class InvalidEventTypeDefinition(Exception):
     pass
 
 
-class InvaildAuthKey(Exception):
+class InvalidAuthKey(Exception):
     "无效的 AuthKey 或其配置."
     pass
 
@@ -13,7 +13,7 @@ class AccountNotFound(Exception):
     pass
 
 
-class InvaildSession(Exception):
+class InvalidSession(Exception):
     "无效的 sessionKey, 请重新获取."
     pass
 
@@ -43,7 +43,7 @@ class TooLongMessage(Exception):
     pass
 
 
-class InvaildArgument(Exception):
+class InvalidArgument(Exception):
     "操作参数不合法, 请报告问题."
     pass
 

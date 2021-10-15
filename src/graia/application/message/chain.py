@@ -141,15 +141,11 @@ class MessageChain(BaseModel):
                     if ii.__name__ == i["type"]:
                         for iii in InternalElement.__subclasses__():
                             if iii.__name__ == i["type"]:
-                                handled_elements.append(
-                                    iii.fromExternal(ii.parse_obj(i))
-                                )
+                                handled_elements.append(iii.fromExternal(ii.parse_obj(i)))
         return handled_elements
 
     @classmethod
-    def parse_obj(
-        cls: Type["MessageChain"], obj: List[Union[Element, Dict]]
-    ) -> "MessageChain":
+    def parse_obj(cls: Type["MessageChain"], obj: List[Union[Element, Dict]]) -> "MessageChain":
         """内部接口, 会自动将作为外部态的消息元素转为内部态.
 
         Args:
@@ -218,25 +214,20 @@ class MessageChain(BaseModel):
                         [
                             isinstance(i, InternalElement),
                             hasattr(i, "toExternal"),
-                            getattr(i.__class__, "toExternal")
-                            != InternalElement.toExternal,
+                            getattr(i.__class__, "toExternal") != InternalElement.toExternal,
                         ]
                     )
                 ]
             )
         )
 
-    async def build(
-        self, **extra: Dict[InternalElement, Tuple[list, dict]]
-    ) -> "MessageChain":
+    async def build(self, **extra: Dict[InternalElement, Tuple[list, dict]]) -> "MessageChain":
         result = []
         for i in self.__root__:
             if isinstance(i, InternalElement):
                 if getattr(i.__class__, "toExternal") == InternalElement.toExternal:
                     raise EntangledSuperposition(
-                        "You define an object that cannot be sent: {0}".format(
-                            i.__class__.__name__
-                        )
+                        "You define an object that cannot be sent: {0}".format(i.__class__.__name__)
                     )
                 result.append(
                     await run_always_await(
@@ -342,9 +333,7 @@ class MessageChain(BaseModel):
         elif issubclass(item, Element):
             return self.get(item)
         else:
-            raise NotImplementedError(
-                "{0} is not allowed for item getting".format(type(item))
-            )
+            raise NotImplementedError("{0} is not allowed for item getting".format(type(item)))
 
     def subchain(self, item: slice, ignore_text_index: bool = False) -> "MessageChain":
         """对消息链执行分片操作
@@ -366,11 +355,7 @@ class MessageChain(BaseModel):
             if item.start[1] is not None and first_slice:  # text slice
                 if not isinstance(first_slice[0], Plain):
                     if not ignore_text_index:
-                        raise TypeError(
-                            "the sliced chain does not starts with a Plain: {}".format(
-                                first_slice[0]
-                            )
-                        )
+                        raise TypeError("the sliced chain does not starts with a Plain: {}".format(first_slice[0]))
                     else:
                         result = first_slice
                 else:
@@ -385,11 +370,7 @@ class MessageChain(BaseModel):
             first_slice = result[: item.stop[0]]
             if item.stop[1] is not None and first_slice:  # text slice
                 if not isinstance(first_slice[-1], Plain):
-                    raise TypeError(
-                        "the sliced chain does not ends with a Plain: {}".format(
-                            first_slice[-1]
-                        )
-                    )
+                    raise TypeError("the sliced chain does not ends with a Plain: {}".format(first_slice[-1]))
                 final_text = first_slice[-1].text[: item.stop[1]]
                 result = [
                     *first_slice[:-1],
@@ -477,9 +458,7 @@ class MessageChain(BaseModel):
         Returns:
             MessageChain: 返回的消息链中不包含参数中给出的消息元素类型
         """
-        return self.create(
-            type(self.__root__)([i for i in self.__root__ if type(i) not in types])
-        )
+        return self.create(type(self.__root__)([i for i in self.__root__ if type(i) not in types]))
 
     def include(self, *types: Type[Element]) -> MessageChain:
         """将只在给出的消息元素类型中符合的消息元素重新包装为一个新的消息链
@@ -490,9 +469,7 @@ class MessageChain(BaseModel):
         Returns:
             MessageChain: 返回的消息链中只包含参数中给出的消息元素类型
         """
-        return self.create(
-            type(self.__root__)([i for i in self.__root__ if type(i) in types])
-        )
+        return self.create(type(self.__root__)([i for i in self.__root__ if type(i) in types]))
 
     def split(self, pattern: str, raw_string: bool = False) -> List["MessageChain"]:
         """和 `str.split` 差不多, 提供一个字符串, 然后返回分割结果.

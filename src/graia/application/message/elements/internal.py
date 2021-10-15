@@ -14,7 +14,7 @@ from graia.application.entities import UploadMethods
 from graia.application.message.elements import external as External
 
 from ...context import application, image_method
-from ...exceptions import InvaildArgument
+from ...exceptions import InvalidArgument
 from . import ExternalElement, InternalElement, ShadowElement
 
 
@@ -105,10 +105,8 @@ class At(InternalElement, ExternalElement):
     def toExternal(self) -> "At":
         try:
             if image_method.get() != UploadMethods.Group:
-                raise InvaildArgument(
-                    "you cannot use this element in this method: {0}".format(
-                        image_method.get().value
-                    )
+                raise InvalidArgument(
+                    "you cannot use this element in this method: {0}".format(image_method.get().value)
                 )
         except LookupError:
             pass
@@ -132,10 +130,8 @@ class AtAll(InternalElement, ExternalElement):
     def toExternal(self) -> "AtAll":
         try:
             if image_method.get() != UploadMethods.Group:
-                raise InvaildArgument(
-                    "you cannot use this element in this method: {0}".format(
-                        image_method.get().value
-                    )
+                raise InvalidArgument(
+                    "you cannot use this element in this method: {0}".format(image_method.get().value)
                 )
         except LookupError:
             pass
@@ -209,18 +205,12 @@ class Image_LocalFile(ShadowImage):
         try:
             methodd = self.method or image_method.get()
         except LookupError:
-            raise ValueError(
-                "you should give the 'method' for upload when you are out of the event receiver."
-            )
+            raise ValueError("you should give the 'method' for upload when you are out of the event receiver.")
         if not self.is_flash:
-            return await app.uploadImage(
-                self.filepath.read_bytes(), methodd, return_external=True
-            )
+            return await app.uploadImage(self.filepath.read_bytes(), methodd, return_external=True)
         else:
             return FlashImage.fromExternal(
-                await app.uploadImage(
-                    self.filepath.read_bytes(), methodd, return_external=True
-                )
+                await app.uploadImage(self.filepath.read_bytes(), methodd, return_external=True)
             ).toExternal()
 
     async def getReal(self, method: UploadMethods) -> "Image":
@@ -233,17 +223,13 @@ class Image_LocalFile(ShadowImage):
             Image: 所生成的, 真正的 Image 对象.
         """
         app = application.get()
-        return await app.uploadImage(
-            self.filepath.read_bytes(), method, return_external=True
-        )
+        return await app.uploadImage(self.filepath.read_bytes(), method, return_external=True)
 
 
 class Image_UnsafeBytes(ShadowImage):
     image_bytes: bytes
 
-    def __init__(
-        self, image_bytes: bytes, method: Optional[UploadMethods] = None
-    ) -> None:
+    def __init__(self, image_bytes: bytes, method: Optional[UploadMethods] = None) -> None:
         super().__init__(image_bytes=image_bytes, method=method)
 
     async def toExternal(self):
@@ -251,13 +237,9 @@ class Image_UnsafeBytes(ShadowImage):
         try:
             methodd = self.method or image_method.get()
         except LookupError:
-            raise ValueError(
-                "you should give the 'method' for upload when you are out of the event receiver."
-            )
+            raise ValueError("you should give the 'method' for upload when you are out of the event receiver.")
         if not self.is_flash:
-            return await app.uploadImage(
-                self.image_bytes, methodd, return_external=True
-            )
+            return await app.uploadImage(self.image_bytes, methodd, return_external=True)
         else:
             return FlashImage.fromExternal(
                 await app.uploadImage(self.image_bytes, methodd, return_external=True)
@@ -287,21 +269,15 @@ class Image_NetworkAddress(ShadowImage):
         try:
             methodd = self.method or image_method.get()
         except LookupError:
-            raise ValueError(
-                "you should give the 'method' for upload when you are out of the event receiver."
-            )
+            raise ValueError("you should give the 'method' for upload when you are out of the event receiver.")
 
         async with app.session.get(self.url) as response:
             response.raise_for_status()
             if not self.is_flash:
-                return await app.uploadImage(
-                    await response.read(), methodd, return_external=True
-                )
+                return await app.uploadImage(await response.read(), methodd, return_external=True)
             else:
                 return FlashImage.fromExternal(
-                    await app.uploadImage(
-                        await response.read(), methodd, return_external=True
-                    )
+                    await app.uploadImage(await response.read(), methodd, return_external=True)
                 ).toExternal()
 
     async def getReal(self, method: UploadMethods) -> "Image":
@@ -339,9 +315,7 @@ class Image(InternalElement):
                 return ImageType.Friend
             else:
                 return ImageType.Temp
-        elif values["imageId"].startswith("{") and values["imageId"].endswith(
-            "}.mirai"
-        ):
+        elif values["imageId"].startswith("{") and values["imageId"].endswith("}.mirai"):
             return ImageType.Group
         else:
             return ImageType.Unknown
@@ -352,9 +326,7 @@ class Image(InternalElement):
             if self.type != want_type and self.url:
                 app = application.get()
                 image_byte = await self.http_to_bytes()
-                return await app.uploadImage(
-                    image_byte, image_method.get(), return_external=True
-                )
+                return await app.uploadImage(image_byte, image_method.get(), return_external=True)
         except LookupError:
             pass
         return External.Image(imageId=self.imageId, url=self.url)
@@ -367,9 +339,7 @@ class Image(InternalElement):
         )
 
     @classmethod
-    def fromLocalFile(
-        cls, filepath: Union[Path, str], method: Optional[UploadMethods] = None
-    ) -> "Image":
+    def fromLocalFile(cls, filepath: Union[Path, str], method: Optional[UploadMethods] = None) -> "Image":
         """从本地文件中创建一个 Shadow Element, 以此在发送时自动上传图片至服务器, 并借此使包含的图片成功发送.
 
         Args:
@@ -399,9 +369,7 @@ class Image(InternalElement):
         return Image_LocalFile(filepath, method)
 
     @classmethod
-    def fromUnsafeBytes(
-        cls, image_bytes: bytes, method: Optional[UploadMethods] = None
-    ) -> "Image":
+    def fromUnsafeBytes(cls, image_bytes: bytes, method: Optional[UploadMethods] = None) -> "Image":
         """从不保证有效性的 bytes 中创建一个 Shadow Element, 以此在发送时自动作为图片上传至服务器, 并借此使其可能包含的图片成功发送.
 
         Args:
@@ -415,9 +383,7 @@ class Image(InternalElement):
         return Image_UnsafeBytes(image_bytes, method)
 
     @classmethod
-    def fromNetworkAddress(
-        cls, url: str, method: Optional[UploadMethods] = None
-    ) -> "Image":
+    def fromNetworkAddress(cls, url: str, method: Optional[UploadMethods] = None) -> "Image":
         """从不保证有效性的网络位置中创建一个 Shadow Element, 以此在发送时自动从该指定位置获取并作为图片上传至服务器,
         并借此使其可能包含的图片成功发送.
 
@@ -520,13 +486,9 @@ class Voice_LocalFile(ShadowElement, InternalElement, ExternalElement):
         try:
             methodd = self.method or image_method.get()
         except LookupError:
-            raise ValueError(
-                "you should give the 'method' for upload when you are out of the event receiver."
-            )
+            raise ValueError("you should give the 'method' for upload when you are out of the event receiver.")
 
-        return await app.uploadVoice(
-            self.filepath.read_bytes(), methodd, return_external=True
-        )
+        return await app.uploadVoice(self.filepath.read_bytes(), methodd, return_external=True)
 
     async def getReal(self, method: UploadMethods) -> "Image":
         """从本 Shadow Element 中生成一真正的 Voice 对象.
@@ -538,9 +500,7 @@ class Voice_LocalFile(ShadowElement, InternalElement, ExternalElement):
             Voice: 所生成的, 真正的 Voice 对象.
         """
         app = application.get()
-        return await app.uploadVoice(
-            self.filepath.read_bytes(), method, return_external=True
-        )
+        return await app.uploadVoice(self.filepath.read_bytes(), method, return_external=True)
 
 
 class Voice(InternalElement):
@@ -575,9 +535,7 @@ class Voice(InternalElement):
         if values["voiceId"]:
             return VoiceUploadType.Group  # mirai 当前版本只支持群语音.
 
-    def fromLocalFile(
-        self, filepath: Union[str, Path], method: Optional[UploadMethods] = None
-    ) -> "Voice":
+    def fromLocalFile(self, filepath: Union[str, Path], method: Optional[UploadMethods] = None) -> "Voice":
         """从本地文件中创建一个 Shadow Element, 以此在发送时自动上传语音至服务器, 并借此使包含的语音成功发送.
 
         Args:

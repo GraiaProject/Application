@@ -121,18 +121,14 @@ class Literature(BaseDispatcher):
             map_with_bar[k]: (
                 MessageChain.create(
                     [
-                        Plain(i)
-                        if not re.match("^\$\d+$", i)
-                        else id_elem_map[int(i[1:])]
+                        Plain(i) if not re.match("^\$\d+$", i) else id_elem_map[int(i[1:])]
                         for i in re.split(r"((?<!\\)\$[0-9]+)", v)
                         if i
                     ]
                 ).asMerged()
                 if isinstance(self.arguments[map_with_bar[k]], BoxParameter)
                 else (
-                    self.arguments[map_with_bar[k]].auto_reverse
-                    and not self.arguments[map_with_bar[k]].default
-                    or True
+                    self.arguments[map_with_bar[k]].auto_reverse and not self.arguments[map_with_bar[k]].default or True
                 ),
                 self.arguments[map_with_bar[k]],
             )
@@ -170,30 +166,21 @@ class Literature(BaseDispatcher):
             return
         for index, current_prefix in enumerate(self.prefixs):
             current_frame = chain_frames[index]
-            if (
-                not current_frame.__root__
-                or type(current_frame.__root__[0]) is not Plain
-            ):
+            if not current_frame.__root__ or type(current_frame.__root__[0]) is not Plain:
                 return
             if current_frame.__root__[0].text != current_prefix:
                 return
 
         chain_frames = chain_frames[len(self.prefixs) :]
         return MessageChain.create(
-            list(itertools.chain(*[i.__root__ + [Plain(" ")] for i in chain_frames]))[
-                :-1
-            ]
+            list(itertools.chain(*[i.__root__ + [Plain(" ")] for i in chain_frames]))[:-1]
         ).asMerged()
 
     async def beforeDispatch(self, interface: DispatcherInterface):
         message_chain: MessageChain = (
-            await interface.lookup_param(
-                "__literature_messagechain__", MessageChain, None
-            )
+            await interface.lookup_param("__literature_messagechain__", MessageChain, None)
         ).exclude(Source)
-        if set([i.__class__ for i in message_chain.__root__]).intersection(
-            BLOCKING_ELEMENTS
-        ):
+        if set([i.__class__ for i in message_chain.__root__]).intersection(BLOCKING_ELEMENTS):
             raise ExecutionStop()
         if self.allow_quote and message_chain.has(Quote):
             # 自动忽略自 Quote 后第一个 At
@@ -205,9 +192,7 @@ class Literature(BaseDispatcher):
         if noprefix is None:
             raise ExecutionStop()
 
-        interface.execution_contexts[-1].literature_detect_result = self.parse_message(
-            noprefix
-        )
+        interface.execution_contexts[-1].literature_detect_result = self.parse_message(noprefix)
 
     async def catch(self, interface: DispatcherInterface):
         if interface.name == "__literature_messagechain__":

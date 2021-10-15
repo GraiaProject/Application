@@ -139,17 +139,13 @@ class Kanata(AsyncDispatcherContextManager):
             elif isinstance(signature, NormalMatch):
                 if not matching_recevier:
                     # 如果不要求匹配参数, 从当前位置(reached_message_index)开始匹配FullMatch.
-                    current_chain = message_chain.subchain(
-                        slice(reached_message_index, None, None)
-                    )
+                    current_chain = message_chain.subchain(slice(reached_message_index, None, None))
                     if not current_chain.__root__:  # index 越界
                         return
                     if not isinstance(current_chain.__root__[0], Plain):
                         # 切片后第一个 **不是** Plain.
                         return
-                    re_match_result = re.match(
-                        signature.operator(), current_chain.__root__[0].text
-                    )
+                    re_match_result = re.match(signature.operator(), current_chain.__root__[0].text)
                     if not re_match_result:
                         # 不匹配的
                         return
@@ -163,24 +159,18 @@ class Kanata(AsyncDispatcherContextManager):
                         # 推进 element_index 进度至已匹配到的地方后.
                         reached_message_index = (
                             reached_message_index[0],
-                            origin_or_zero(reached_message_index[1])
-                            + re_match_result.start()
-                            + pattern_length,
+                            origin_or_zero(reached_message_index[1]) + re_match_result.start() + pattern_length,
                         )
                 else:
                     # 需要匹配参数(是否贪婪模式查找, 即是否从后向前)
                     greed = matching_recevier.isGreed
                     for element_index, element in enumerate(
-                        message_chain.subchain(
-                            slice(reached_message_index, None, None)
-                        ).__root__
+                        message_chain.subchain(slice(reached_message_index, None, None)).__root__
                     ):
                         if isinstance(element, Plain):
                             current_text: str = element.text
                             # 完成贪婪判断
-                            text_find_result_list = list(
-                                re.finditer(signature.operator(), current_text)
-                            )
+                            text_find_result_list = list(re.finditer(signature.operator(), current_text))
                             if not text_find_result_list:
                                 continue
                             text_find_result = text_find_result_list[-int(greed)]
@@ -190,11 +180,8 @@ class Kanata(AsyncDispatcherContextManager):
 
                             # 找到了! 这里不仅要推进进度, 还要把当前匹配的参数记录结束位置并清理.
                             stop_index = (
-                                reached_message_index[0]
-                                + element_index
-                                + int(element_index == 0),
-                                origin_or_zero(reached_message_index[1])
-                                + text_find_index,
+                                reached_message_index[0] + element_index + int(element_index == 0),
+                                origin_or_zero(reached_message_index[1]) + text_find_index,
                             )
                             match_result[matching_recevier] = (
                                 copy.copy(start_index),
@@ -204,29 +191,18 @@ class Kanata(AsyncDispatcherContextManager):
                             start_index = (0, None)
                             matching_recevier = None
 
-                            pattern_length = (
-                                text_find_result.end() - text_find_result.start()
-                            )
-                            if (
-                                current_text
-                                == text_find_result.string[
-                                    slice(*text_find_result.span())
-                                ]
-                            ):
+                            pattern_length = text_find_result.end() - text_find_result.start()
+                            if current_text == text_find_result.string[slice(*text_find_result.span())]:
                                 # 此处是如果推进 text_index 就会被爆破....
                                 # 推进 element_index 而不是 text_index
                                 reached_message_index = (
-                                    reached_message_index[0]
-                                    + element_index
-                                    + int(element_index != 0),
+                                    reached_message_index[0] + element_index + int(element_index != 0),
                                     None,
                                 )
                             else:
                                 reached_message_index = (
                                     reached_message_index[0] + element_index,
-                                    origin_or_zero(reached_message_index[1])
-                                    + text_find_index
-                                    + pattern_length,
+                                    origin_or_zero(reached_message_index[1]) + text_find_index + pattern_length,
                                 )
                             break
                     else:
@@ -261,14 +237,7 @@ class Kanata(AsyncDispatcherContextManager):
                 k: message_chain[
                     v[0] : (
                         v[1][0],
-                        (
-                            v[1][1]
-                            - (
-                                origin_or_zero(v[0][1])
-                                if (v[1][0] <= v[0][0] <= v[1][0])
-                                else 0
-                            )
-                        )
+                        (v[1][1] - (origin_or_zero(v[0][1]) if (v[1][0] <= v[0][0] <= v[1][0]) else 0))
                         if v[1][1] is not None
                         else None,
                     )
@@ -277,9 +246,7 @@ class Kanata(AsyncDispatcherContextManager):
             }
 
     @staticmethod
-    def allocation(
-        mapping: Dict[Arguments, MessageChain]
-    ) -> Optional[Dict[str, MessageChain]]:
+    def allocation(mapping: Dict[Arguments, MessageChain]) -> Optional[Dict[str, MessageChain]]:
         if mapping is None:
             return None
         result = {}
@@ -311,9 +278,7 @@ class Kanata(AsyncDispatcherContextManager):
         message_chain: MessageChain = (
             await interface.lookup_param("__kanata_messagechain__", MessageChain, None)
         ).exclude(Source)
-        if set([i.__class__ for i in message_chain.__root__]).intersection(
-            BLOCKING_ELEMENTS
-        ):
+        if set([i.__class__ for i in message_chain.__root__]).intersection(BLOCKING_ELEMENTS):
             raise ExecutionStop()
         if self.allow_quote and message_chain.has(Quote):
             # 0: Quote

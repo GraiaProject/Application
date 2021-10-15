@@ -12,9 +12,7 @@ class MiraiEvent(Dispatchable, BaseModel):
     @validator("type", allow_reuse=True)
     def type_limit(cls, v):
         if cls.type != v:
-            raise InvalidEventTypeDefinition(
-                "{0}'s type must be '{1}', not '{2}'".format(cls.__name__, cls.type, v)
-            )
+            raise InvalidEventTypeDefinition("{0}'s type must be '{1}', not '{2}'".format(cls.__name__, cls.type, v))
         return v
 
     class Config:

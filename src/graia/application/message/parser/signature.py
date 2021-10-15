@@ -24,7 +24,7 @@ class PatternReceiver(BaseModel):
     @validator("name", allow_reuse=True)
     def name_checker(cls, v):
         if not regex.match("^[a-zA-Z_][a-zA-Z0-9_]*$", v):
-            raise ValueError("invaild name")
+            raise ValueError("invalid name")
         return v
 
     def __hash__(self) -> int:

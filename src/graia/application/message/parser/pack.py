@@ -41,9 +41,7 @@ def merge_signature_chain_fullmatch(
     return type(chain)(result)
 
 
-def merge_signature_chain(
-    chain: Sequence[Union[FullMatch, PatternReceiver]]
-) -> Sequence[Union[Arguments, FullMatch]]:
+def merge_signature_chain(chain: Sequence[Union[FullMatch, PatternReceiver]]) -> Sequence[Union[Arguments, FullMatch]]:
     chain = merge_signature_chain_fullmatch(chain)
     result = []
     temp_l1 = []
