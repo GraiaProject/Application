@@ -1,6 +1,6 @@
-# Graia Application for mirai-api-http
+# 此仓库已废弃, 请使用替代品 [Ariadne](GraiaProject/Ariadne); 本项目被标记为 `v4`, 相对的有 `v4+`(Ariadne) 与 `v5`(WIP, 尚未完工), 目前我推荐使用 Ariadne.
 
-**[Avilla](https://github.com/GraiaProject/Avilla) 已经发布, 本项目已处随缘更新状态... 所以你真的不去看看这下一代的新玩具吗?**
+# Graia Application for mirai-api-http
 
 当前最新版本: ![PyPI](https://img.shields.io/pypi/v/graia-application-mirai)  
 所需求的最低 CPython 版本: ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/graia-application-mirai)  
