@@ -1,4 +1,4 @@
-# 此仓库已废弃, 请使用替代品 [Ariadne](GraiaProject/Ariadne); 本项目被标记为 `v4`, 相对的有 `v4+`(Ariadne) 与 `v5`(WIP, 尚未完工), 目前我推荐使用 Ariadne.
+# 此仓库已废弃, 请使用替代品 [Ariadne](https://github.com/GraiaProject/Ariadne); 本项目被标记为 `v4`, 相对的有 `v4+`(Ariadne) 与 `v5`(WIP, 尚未完工), 目前我推荐使用 Ariadne.
 
 # Graia Application for mirai-api-http
 
